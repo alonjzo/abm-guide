@@ -776,6 +776,51 @@
                         html += `<div class="content-item"><h3>LinkedIn Post ${idx + 1}</h3><p><strong>Hook:</strong> ${esc(post.hook)}</p><p>${esc(post.body)}</p>${post.statCallout ? `<p style="color: var(--pink); margin-top: 10px;"><strong>Stat/Research:</strong> ${esc(post.statCallout)}</p>` : ''}<p class="meta"><strong>Hashtags:</strong> ${esc((post.hashtags||[]).join(' '))}</p><p class="meta"><strong>CTA:</strong> ${esc(post.cta)}</p>${copyBtn('li'+copyIdx++, 'Copy Post', copyText)}</div>`;
                     }
                 });
+
+                // EVENT AMPLIFICATION POSTS
+                if (content.eventPosts) {
+                    html += `<div style="border-top: 2px solid var(--light-gray); margin-top: 30px; padding-top: 30px;"><h3 style="color: var(--pink); margin-bottom: 20px;">📅 Event Amplification Posts (Organic Social)</h3></div>`;
+
+                    const preEventCopy = [content.eventPosts.preEvent.hook, content.eventPosts.preEvent.body, (content.eventPosts.preEvent.hashtags||[]).join(' '), content.eventPosts.preEvent.cta].filter(Boolean).join('\n\n');
+                    html += `<div class="content-item" style="border-left: 4px solid #FF6B35;">
+                        <h3>Pre-Event Post (1-2 weeks before)</h3>
+                        <div style="background: #fff3e0; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            <span style="color: #FF6B35; font-weight: bold;">🎯 Character Count: ${content.eventPosts.preEvent.totalChars || 0}</span>
+                        </div>
+                        <p><strong>Hook:</strong> ${esc(content.eventPosts.preEvent.hook)}</p>
+                        <p>${esc(content.eventPosts.preEvent.body)}</p>
+                        <p class="meta"><strong>Hashtags:</strong> ${esc((content.eventPosts.preEvent.hashtags||[]).join(' '))}</p>
+                        <p class="meta"><strong>CTA:</strong> ${esc(content.eventPosts.preEvent.cta)}</p>
+                        ${copyBtn('evtpre'+copyIdx++, 'Copy Pre-Event Post', preEventCopy)}
+                    </div>`;
+
+                    const duringEventCopy = [content.eventPosts.duringEvent.hook, content.eventPosts.duringEvent.body, (content.eventPosts.duringEvent.hashtags||[]).join(' '), content.eventPosts.duringEvent.cta].filter(Boolean).join('\n\n');
+                    html += `<div class="content-item" style="border-left: 4px solid #FFD700;">
+                        <h3>During-Event Post (live from event)</h3>
+                        <div style="background: #fffacd; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            <span style="color: #FF8C00; font-weight: bold;">⚡ Character Count: ${content.eventPosts.duringEvent.totalChars || 0}</span>
+                        </div>
+                        <p><strong>Hook:</strong> ${esc(content.eventPosts.duringEvent.hook)}</p>
+                        <p>${esc(content.eventPosts.duringEvent.body)}</p>
+                        <p class="meta"><strong>Hashtags:</strong> ${esc((content.eventPosts.duringEvent.hashtags||[]).join(' '))}</p>
+                        <p class="meta"><strong>CTA:</strong> ${esc(content.eventPosts.duringEvent.cta)}</p>
+                        ${copyBtn('evtdur'+copyIdx++, 'Copy During-Event Post', duringEventCopy)}
+                    </div>`;
+
+                    const postEventCopy = [content.eventPosts.postEvent.hook, content.eventPosts.postEvent.body, (content.eventPosts.postEvent.hashtags||[]).join(' '), content.eventPosts.postEvent.cta].filter(Boolean).join('\n\n');
+                    html += `<div class="content-item" style="border-left: 4px solid #28a745;">
+                        <h3>Post-Event Post (within 48 hours)</h3>
+                        <div style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            <span style="color: #28a745; font-weight: bold;">🎉 Character Count: ${content.eventPosts.postEvent.totalChars || 0}</span>
+                        </div>
+                        <p><strong>Hook:</strong> ${esc(content.eventPosts.postEvent.hook)}</p>
+                        <p>${esc(content.eventPosts.postEvent.body)}</p>
+                        <p class="meta"><strong>Hashtags:</strong> ${esc((content.eventPosts.postEvent.hashtags||[]).join(' '))}</p>
+                        <p class="meta"><strong>CTA:</strong> ${esc(content.eventPosts.postEvent.cta)}</p>
+                        ${copyBtn('evtpost'+copyIdx++, 'Copy Post-Event Post', postEventCopy)}
+                    </div>`;
+                }
+
                 document.getElementById('linkedin').innerHTML = html;
             }
             if (content.blogArticles) {

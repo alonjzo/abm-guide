@@ -107,7 +107,7 @@ Generate content for these channels:
      * Headline: MAX 25 characters (ENFORCE THIS)
      * Body: MAX 90 characters for standard display
    - Include for each ad:
-     * Creative direction notes (visual style, no stock photos, data viz preference)
+     * Creative direction notes: Visual style recommendations (data viz, modern aesthetic, no stock photos). Always specify "Brand colors" - never name specific colors.
      * Personalization tokens where applicable: [Account.Name], [Industry], [Persona.Title]
      * Ad format type: Leaderboard / Medium Rectangle / Native
    - 5 total variations mixing 1:1 personalized and 1:Few clustered
