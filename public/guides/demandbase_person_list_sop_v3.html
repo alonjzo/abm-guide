@@ -72,9 +72,35 @@
   @media (min-width: 900px) and (max-width: 980px) {
     .compare-row { grid-template-columns: 1fr; }
   }
+  /* Back to top button */
+  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; border-radius: 50%; background: #FF0082; color: #fff; border: none; cursor: pointer; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.18s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255,0,130,0.3); z-index: 1000; }
+  .back-to-top.visible { opacity: 1; visibility: visible; }
+  .back-to-top:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255,0,130,0.4); }
+  .back-to-top svg { width: 20px; height: 20px; }
 </style>
 </head>
 <body>
+
+<button class="back-to-top" aria-label="Back to top">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+  </svg>
+</button>
+
+<script>
+  // Back to top button
+  const backToTop = document.querySelector('.back-to-top');
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
 
 <div class="sop-wrap">
   <a href="/platform-guide/index.html" class="back-link">
