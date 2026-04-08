@@ -174,13 +174,17 @@
         const lightIcon = document.querySelector('.tp-theme-icon-light');
         const darkIcon = document.querySelector('.tp-theme-icon-dark');
 
-        // Check for saved theme preference or default to light
-        const currentTheme = localStorage.getItem('abm-theme') || 'light';
+        // Check for saved theme preference or default to page's data-theme attribute
+        const pageDefault = document.documentElement.getAttribute('data-theme') || 'dark';
+        const currentTheme = localStorage.getItem('abm-theme') || pageDefault;
         if (currentTheme === 'dark') {
             document.body.classList.add('dark-mode');
             document.documentElement.setAttribute('data-theme', 'dark');
             if (lightIcon) lightIcon.style.display = 'none';
             if (darkIcon) darkIcon.style.display = 'block';
+        } else {
+            // Explicitly set light mode if that's what we determined
+            document.documentElement.setAttribute('data-theme', 'light');
         }
 
         if (themeToggle) {
