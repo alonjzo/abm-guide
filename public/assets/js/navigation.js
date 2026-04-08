@@ -5,7 +5,7 @@
     'use strict';
 
     const currentPath = window.location.pathname;
-    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring'));
+    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides'));
     const isPersonas = currentPath.includes('personas');
     const isCompetitiveIntel = currentPath.includes('competitive-intel') || currentPath.includes('command-center');
     const isOrchestration = currentPath.includes('orchestration');
@@ -14,9 +14,10 @@
     const isAdvancedReporting = currentPath.includes('advanced-reporting');
     const isPromptsLab = currentPath.includes('prompts-lab');
     const isROICalculator = currentPath.includes('roi-calculator');
+    const isGuides = currentPath.includes('guides');
 
     function getBasePath() {
-        if (isCompetitiveIntel || isPlatformGuide || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring) return '../';
+        if (isCompetitiveIntel || isPlatformGuide || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides) return '../';
         if (isPersonas && !currentPath.endsWith('personas/index.html') && currentPath.split('/').filter(Boolean).length > 2) return '../../';
         if (isPersonas) return '../';
         return './';
