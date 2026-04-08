@@ -60,6 +60,9 @@
   .compare-label.red { color: #cc0000; }
   .compare-label.good { color: #484C6A; }
   .compare-text { font-size: 12px; color: var(--color-text-muted); line-height: 1.55; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted); font-size: 13px; font-weight: 500; margin-bottom: 1.5rem; text-decoration: none; transition: color 0.18s ease; }
+  .back-link:hover { color: var(--color-text); }
+  .back-link svg { width: 16px; height: 16px; }
   @media (max-width: 980px) {
     .sop-wrap { padding: 1.5rem 1rem 3rem; }
     .selector-grid { grid-template-columns: 1fr; }
@@ -71,6 +74,13 @@
 <body>
 
 <div class="sop-wrap">
+  <a href="/platform-guide/index.html" class="back-link">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Back to Platform Guide
+  </a>
+
   <div class="sop-header">
     <div>
       <div class="meta">Demandbase One · Tenant 15053</div>
