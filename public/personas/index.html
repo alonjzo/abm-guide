@@ -47,6 +47,9 @@
   .filter-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:0;overflow-x:auto}
   .filter-btn{padding:15px 20px;font-size:13px;font-weight:600;color:var(--body-gray);white-space:nowrap;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;transition:.15s;font-family:inherit}
   .filter-btn.active,.filter-btn:hover{color:var(--slate);border-bottom-color:var(--pink)}
+  .segment-btn{padding:8px 16px;font-size:12px;font-weight:600;color:var(--body-gray);background:transparent;border:none;border-radius:6px;cursor:pointer;transition:.15s;font-family:inherit}
+  .segment-btn.active{background:var(--white);color:var(--slate);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+  .segment-toggle{display:flex;gap:8px;padding:4px;background:var(--pastel-light);border-radius:8px;margin-right:20px}
   .page{max-width:1160px;margin:0 auto;padding:0 60px 80px}
   .section-intro{padding:48px 0 32px}
   .section-kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
@@ -146,11 +149,16 @@
 
 <div class="filter-bar">
   <div class="filter-inner">
+    <div class="segment-toggle">
+      <button class="segment-btn active" onclick="switchSegment('enterprise', this)">Enterprise ($1B+)</button>
+      <button class="segment-btn" onclick="switchSegment('midmarket', this)">Midmarket ($100M-$1B)</button>
+    </div>
     <button class="filter-btn active" onclick="filterGroup('all', this)">All Personas</button>
     <button class="filter-btn" onclick="filterGroup('above', this)">Above Powerline</button>
     <button class="filter-btn" onclick="filterGroup('below', this)">Below Powerline</button>
+    <button class="filter-btn" onclick="filterGroup('influencer', this)">Influencers</button>
     <button class="filter-btn" onclick="filterGroup('champion', this)">Champions</button>
-    <button class="filter-btn" onclick="filterGroup('blocker', this)">Blockers / Detractors</button>
+    <button class="filter-btn" onclick="filterGroup('initiator', this)">Initiators</button>
   </div>
 </div>
 
@@ -674,6 +682,209 @@
     </div>
 
   </div>
+
+  <!-- BELOW POWERLINE PERSONAS -->
+  <div class="section-intro">
+    <div class="section-kicker">Below Powerline — Execution Layer</div>
+    <h2>Champions and initiators who build the business case.</h2>
+    <p class="section-desc">These are your day-to-day contacts. They feel the pain, build the ROI story, and navigate internal politics. Without them, you never reach the C-Suite.</p>
+  </div>
+
+  <!-- VP Sales — Below Powerline -->
+  <div class="persona-card" data-powerline="below" data-perception="champion" data-segment="enterprise">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-role-label">Initiator / Champion</div>
+        <div class="card-title">VP Sales / VP Business Development</div>
+        <div class="card-subtitle">EVP/SVP Sales · Head of Revenue · VP Inside Sales</div>
+      </div>
+      <div class="card-badges">
+        <span class="powerline-badge pl-below">Below Powerline</span>
+        <span class="perception-badge p-champion">Champion</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-col">
+        <div class="col-label pink">BUYER DNA</div>
+        <div class="dna-list">
+          <div class="dna-item">Pipeline coverage is their obsession</div>
+          <div class="dna-item">Can't hire SDRs fast enough</div>
+          <div class="dna-item">Reports to CRO or CEO directly</div>
+          <div class="dna-item">2-3 year tenure pressure</div>
+        </div>
+      </div>
+      <div class="card-col">
+        <div class="col-label">KEY PAIN POINTS</div>
+        <div class="pain-list">
+          <div class="pain-item">SDR attrition at 45-60% annually</div>
+          <div class="pain-item">6-month ramp time for new reps</div>
+          <div class="pain-item">Pipeline generation costs rising</div>
+          <div class="pain-item">Can't scale fast enough for growth targets</div>
+        </div>
+      </div>
+      <div class="card-col">
+        <div class="col-label">CONTENT HOLES</div>
+        <div class="hole-list">
+          <div class="hole-chip">SDR capacity calculators</div>
+          <div class="hole-chip">Pipeline velocity metrics</div>
+          <div class="hole-chip">Cost per meeting analysis</div>
+          <div class="hole-chip">Ramp time comparisons</div>
+        </div>
+      </div>
+      <div class="card-col no-border">
+        <div class="col-label">PREFERRED FORMATS</div>
+        <div class="content-list">
+          <div class="content-item">Quick ROI calculators (under 5 fields)</div>
+          <div class="content-item">1-page case studies with metrics</div>
+          <div class="content-item">15-minute demo videos</div>
+        </div>
+      </div>
+      <div class="card-col full">
+        <div class="col-label">TP SOLUTION FIT</div>
+        <div class="decision-block">
+          <div class="decision-role">Growth (RaaS) — Perfect Product Fit</div>
+          <div class="decision-desc">Outsourced SDR/BDR capacity. "I need 50 SDRs tomorrow, not in 6 months." Variable cost model, no ramp time, immediate pipeline impact.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VP Customer Experience — Below Powerline -->
+  <div class="persona-card" data-powerline="below" data-perception="champion" data-segment="enterprise">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-role-label">Initiator</div>
+        <div class="card-title">VP Customer Experience</div>
+        <div class="card-subtitle">VP Customer Success · VP Contact Center · Head of Support</div>
+      </div>
+      <div class="card-badges">
+        <span class="powerline-badge pl-below">Below Powerline</span>
+        <span class="perception-badge p-champion">Champion</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-col">
+        <div class="col-label pink">BUYER DNA</div>
+        <div class="dna-list">
+          <div class="dna-item">Lives and dies by CSAT/NPS</div>
+          <div class="dna-item">Agent attrition keeps them up at night</div>
+          <div class="dna-item">Reports to CXO or COO</div>
+          <div class="dna-item">Budget fights with other departments</div>
+        </div>
+      </div>
+      <div class="card-col">
+        <div class="col-label">KEY PAIN POINTS</div>
+        <div class="pain-list">
+          <div class="pain-item">Can't hire/train agents fast enough</div>
+          <div class="pain-item">Seasonal spikes break the model</div>
+          <div class="pain-item">Channel fragmentation (voice, chat, email)</div>
+          <div class="pain-item">Rising cost per contact</div>
+        </div>
+      </div>
+      <div class="card-col">
+        <div class="col-label">CONTENT HOLES</div>
+        <div class="hole-list">
+          <div class="hole-chip">Omnichannel benchmarks</div>
+          <div class="hole-chip">Agent productivity metrics</div>
+          <div class="hole-chip">CSAT improvement studies</div>
+          <div class="hole-chip">Cost per resolution data</div>
+        </div>
+      </div>
+      <div class="card-col no-border">
+        <div class="col-label">PREFERRED FORMATS</div>
+        <div class="content-list">
+          <div class="content-item">Industry benchmark reports</div>
+          <div class="content-item">45-minute webinars with Q&A</div>
+          <div class="content-item">Peer roundtables and forums</div>
+        </div>
+      </div>
+      <div class="card-col full">
+        <div class="col-label">TP SOLUTION FIT</div>
+        <div class="decision-block">
+          <div class="decision-role">FAB Connect + Assist — Core Solutions</div>
+          <div class="decision-desc">Omnichannel support at scale. Elastic capacity for seasonal spikes. Global coverage with local language support. They know they need help yesterday.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Director Revenue Operations — Below Powerline -->
+  <div class="persona-card" data-powerline="below" data-perception="influencer" data-segment="enterprise">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-role-label">Influencer</div>
+        <div class="card-title">Director Revenue Operations</div>
+        <div class="card-subtitle">Director Sales Ops · VP RevOps · Head of GTM Operations</div>
+      </div>
+      <div class="card-badges">
+        <span class="powerline-badge pl-below">Below Powerline</span>
+        <span class="perception-badge p-influencer">Influencer</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-col">
+        <div class="col-label pink">BUYER DNA</div>
+        <div class="dna-list">
+          <div class="dna-item">Data-obsessed, spreadsheet warrior</div>
+          <div class="dna-item">Owns the tech stack integration</div>
+          <div class="dna-item">Makes the CRO look good</div>
+          <div class="dna-item">Process and efficiency focused</div>
+        </div>
+      </div>
+      <div class="card-col">
+        <div class="col-label">KEY PAIN POINTS</div>
+        <div class="pain-list">
+          <div class="pain-item">Dirty data in CRM</div>
+          <div class="pain-item">Forecasting accuracy under 80%</div>
+          <div class="pain-item">Too many tools, poor integration</div>
+          <div class="pain-item">Can't measure ROI on programs</div>
+        </div>
+      </div>
+      <div class="card-col">
+        <div class="col-label">CONTENT HOLES</div>
+        <div class="hole-list">
+          <div class="hole-chip">Integration documentation</div>
+          <div class="hole-chip">Data quality frameworks</div>
+          <div class="hole-chip">RevOps maturity models</div>
+          <div class="hole-chip">Tech stack optimization</div>
+        </div>
+      </div>
+      <div class="card-col no-border">
+        <div class="col-label">PREFERRED FORMATS</div>
+        <div class="content-list">
+          <div class="content-item">Technical integration guides</div>
+          <div class="content-item">Excel models and calculators</div>
+          <div class="content-item">Process flow diagrams</div>
+        </div>
+      </div>
+      <div class="card-col full">
+        <div class="col-label">TP SOLUTION FIT</div>
+        <div class="decision-block">
+          <div class="decision-role">Growth (RaaS) + Technology Services</div>
+          <div class="decision-desc">They care about HOW outsourced SDRs integrate with Salesforce/HubSpot. Want API access, real-time reporting, clean data flow. Technology Services for RevOps tooling.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIDMARKET SECTION -->
+  <div class="section-intro" style="margin-top: 64px; padding-top: 48px; border-top: 2px solid var(--pastel-light);">
+    <div class="section-kicker">Midmarket Dynamics</div>
+    <h2>Smaller committee. Faster decisions. CEO accessible.</h2>
+    <p class="section-desc">In Midmarket ($100M-$1B), buying committees compress. The VP Sales might BE the CRO. The CFO covers COO duties. Decisions happen in weeks, not quarters. And yes, the CEO takes first meetings.</p>
+  </div>
+
+  <!-- Midmarket Buying Committee Overview -->
+  <div class="procurement-callout" style="background: var(--blue-bg); border-color: var(--blue);">
+    <strong style="color: var(--blue); font-size: 14px;">MIDMARKET REALITY CHECK</strong>
+    <div style="margin-top: 8px; font-size: 13px; line-height: 1.6;">
+      <strong>Decision Speed:</strong> 60-90 day cycles (vs 6-9 months Enterprise)<br>
+      <strong>Committee Size:</strong> 3-5 people (vs 8-12 Enterprise)<br>
+      <strong>CEO Involvement:</strong> Often the actual decision maker<br>
+      <strong>Budget Process:</strong> Less formal, faster approval<br>
+      <strong>What They Buy:</strong> Modular solutions, fast deployment, immediate ROI
+    </div>
+  </div>
 </div>
 
 <footer>
@@ -682,18 +893,45 @@
 </footer>
 
 <script>
+  let currentSegment = 'enterprise';
+
+  function switchSegment(segment, btn) {
+    currentSegment = segment;
+
+    // Update button state
+    document.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Reset filter to "All"
+    document.querySelector('.filter-btn.active').classList.remove('active');
+    document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
+
+    // Apply segment filter
+    filterGroup('all', document.querySelector('.filter-btn.active'));
+  }
+
   function filterGroup(type, el) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     el.classList.add('active');
     document.querySelectorAll('.persona-card').forEach(card => {
       const pl = card.dataset.powerline;
       const perc = card.dataset.perception;
-      let show = type === 'all'
+      const segment = card.dataset.segment || 'enterprise';
+
+      // First check segment
+      let segmentMatch = (currentSegment === 'enterprise' && segment === 'enterprise') ||
+                        (currentSegment === 'midmarket' && (segment === 'midmarket' || pl === 'above'));
+
+      // Then check filter
+      let filterMatch = type === 'all'
         || (type === 'above' && pl === 'above')
         || (type === 'below' && pl === 'below')
         || (type === 'champion' && perc === 'champion')
+        || (type === 'influencer' && perc === 'influencer')
+        || (type === 'initiator' && perc === 'initiator')
         || (type === 'blocker' && (perc === 'blocker' || perc === 'detractor'));
-      card.style.display = show ? '' : 'none';
+
+      card.style.display = (segmentMatch && filterMatch) ? '' : 'none';
     });
   }
 </script>
