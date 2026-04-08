@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persona Playbooks | ABM Content Arsenal</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #363952;
+    --slate-light: #5a5e7d;
+    --pastel-slate: #c2c7cd;
+    --pastel-light: #e8eaed;
+    --white: #FFFFFF;
+    --black: #000000;
+    --dark-gray: #414141;
+    --body-gray: #555555;
+    --pink: #ff0082;
+    --pink-subtle: rgba(255,0,130,0.07);
+    --pink-border: rgba(255,0,130,0.18);
+    --green: #1b8a4e;
+    --green-bg: rgba(27,138,78,0.08);
+    --amber: #b8860b;
+    --amber-bg: rgba(184,134,11,0.08);
+    --red: #c0392b;
+    --red-bg: rgba(192,57,43,0.08);
+    --blue: #1a56db;
+    --blue-bg: rgba(26,86,219,0.08);
+    --card-shadow: 0 1px 3px rgba(72,76,106,0.08), 0 4px 16px rgba(72,76,106,0.06);
+    --card-shadow-hover: 0 4px 12px rgba(72,76,106,0.14), 0 12px 32px rgba(72,76,106,0.10);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:#f5f5f7;color:var(--dark-gray);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .hero{background:var(--slate);color:var(--white);padding:64px 60px 56px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-40%;right:-15%;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1160px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:20px}
+  .kicker-dot{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.4rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:14px}
+  .hero-sub{font-size:15px;opacity:.7;max-width:60ch;line-height:1.6;margin-bottom:32px}
+  .hero-meta{display:flex;gap:28px;flex-wrap:wrap}
+  .hero-meta-item{border-left:2px solid rgba(255,255,255,0.2);padding-left:14px}
+  .hero-meta-num{font-size:24px;font-weight:700;line-height:1}
+  .hero-meta-label{font-size:11px;opacity:.55;text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
+  .filter-bar{background:var(--white);border-bottom:1px solid var(--pastel-light);padding:0 60px;position:sticky;top:0;z-index:40}
+  .filter-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:0;overflow-x:auto}
+  .filter-btn{padding:15px 20px;font-size:13px;font-weight:600;color:var(--body-gray);white-space:nowrap;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;transition:.15s;font-family:inherit}
+  .filter-btn.active,.filter-btn:hover{color:var(--slate);border-bottom-color:var(--pink)}
+  .page{max-width:1160px;margin:0 auto;padding:0 60px 80px}
+  .section-intro{padding:48px 0 32px}
+  .section-kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .section-kicker::before{content:'';width:16px;height:2px;background:var(--pink)}
+  .section-intro h2{font-size:clamp(1.4rem,2vw,1.9rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:6px}
+  .section-desc{font-size:14px;color:var(--body-gray);max-width:70ch}
+  .card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+  .persona-card{background:var(--white);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden;transition:.2s ease;border:1px solid rgba(72,76,106,0.08)}
+  .persona-card:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px)}
+  .card-header{padding:22px 24px 18px;border-bottom:1px solid var(--pastel-light);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .card-role-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pastel-slate);margin-bottom:5px}
+  .card-title{font-size:19px;font-weight:700;color:var(--black);line-height:1.2;margin-bottom:4px}
+  .card-subtitle{font-size:12px;color:var(--body-gray);font-weight:500}
+  .card-badges{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+  .powerline-badge{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:12px;white-space:nowrap}
+  .pl-above{background:var(--slate);color:var(--white)}
+  .pl-on{background:var(--pastel-light);color:var(--slate)}
+  .pl-below{background:#f0f0f0;color:var(--body-gray)}
+  .perception-badge{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:12px;white-space:nowrap}
+  .p-champion{background:var(--green-bg);color:var(--green);border:1px solid rgba(27,138,78,.2)}
+  .p-detractor{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+  .p-blocker{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+  .p-neutral{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(184,134,11,.2)}
+  .p-influencer{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(26,86,219,.2)}
+  .card-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .card-col{padding:18px 24px;border-right:1px solid var(--pastel-light)}
+  .card-col.no-border{border-right:none}
+  .card-col.full{grid-column:1/-1;border-right:none;border-top:1px solid var(--pastel-light)}
+  .col-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pastel-slate);margin-bottom:10px}
+  .col-label.pink{color:var(--pink)}
+  .dna-list,.pain-list,.content-list{display:flex;flex-direction:column;gap:7px}
+  .dna-item,.pain-item,.content-item{font-size:12px;color:var(--body-gray);line-height:1.5;padding-left:14px;position:relative}
+  .dna-item::before{content:'';position:absolute;left:0;top:.52em;width:6px;height:6px;border-radius:50%;background:var(--pink)}
+  .pain-item::before{content:'';position:absolute;left:0;top:.52em;width:6px;height:6px;border-radius:50%;background:var(--amber)}
+  .content-item::before{content:'';position:absolute;left:0;top:.5em;width:5px;height:5px;border-radius:50%;background:var(--slate)}
+  .hole-list{display:flex;flex-wrap:wrap;gap:6px}
+  .hole-chip{font-size:11px;color:var(--slate);background:rgba(72,76,106,0.07);padding:4px 9px;border-radius:6px;font-weight:500}
+  .decision-block{background:var(--slate);color:var(--white);border-radius:8px;padding:12px 14px;margin-top:2px}
+  .decision-role{font-size:13px;font-weight:700;margin-bottom:4px}
+  .decision-desc{font-size:11px;opacity:.72;line-height:1.5}
+  .powerline-overview{background:var(--white);border-radius:14px;border:1px solid var(--pastel-light);padding:24px 28px;margin-bottom:32px;box-shadow:var(--card-shadow)}
+  .powerline-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+  .pl-box{padding:14px 16px;border-radius:10px}
+  .pl-box.above{background:var(--slate);color:var(--white)}
+  .pl-box.on{background:var(--pastel-light);color:var(--slate)}
+  .pl-box.below{background:#f5f5f7;color:var(--body-gray);border:1px solid var(--pastel-light)}
+  .pl-box-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;opacity:.7}
+  .pl-box-roles{font-size:12px;font-weight:600;line-height:1.5}
+  .pl-box-desc{font-size:11px;margin-top:4px;opacity:.7;line-height:1.4}
+  .stat-bar{display:flex;background:var(--white);border-radius:14px;border:1px solid var(--pastel-light);overflow:hidden;margin-bottom:32px;box-shadow:var(--card-shadow)}
+  .stat-item{flex:1;padding:20px 24px;border-right:1px solid var(--pastel-light);text-align:center}
+  .stat-item:last-child{border-right:none}
+  .stat-num{font-size:32px;font-weight:700;color:var(--slate);line-height:1}
+  .stat-num.pink{color:var(--pink)}
+  .stat-label{font-size:11px;color:var(--body-gray);margin-top:5px;line-height:1.4}
+  footer{background:var(--slate);color:rgba(255,255,255,0.6);padding:32px 60px;font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:64px}
+  footer strong{color:var(--white)}
+  @media(max-width:900px){
+    .hero,.filter-bar,.page,footer{padding-left:20px;padding-right:20px}
+    .card-grid,.powerline-grid{grid-template-columns:1fr}
+    .card-body{grid-template-columns:1fr}
+    .card-col{border-right:none;border-top:1px solid var(--pastel-light)}
+    .card-col:first-child{border-top:none}
+    .stat-bar{flex-direction:column}
+    .stat-item{border-right:none;border-bottom:1px solid var(--pastel-light)}
+    .stat-item:last-child{border-bottom:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span class="kicker-dot"></span> ABM Content Arsenal · Persona Playbooks</div>
+    <h1>Know who you're selling to before you say a word.</h1>
+    <p class="hero-sub">Eight C-Suite personas. Powerline position, perception, pain points, watering holes, and the exact content that moves them. Use this before every pursuit.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-num">8</div><div class="hero-meta-label">C-Suite personas</div></div>
+      <div class="hero-meta-item"><div class="hero-meta-num">13</div><div class="hero-meta-label">Avg. stakeholders per B2B deal</div></div>
+      <div class="hero-meta-item"><div class="hero-meta-num">79%</div><div class="hero-meta-label">Require CFO sign-off</div></div>
+      <div class="hero-meta-item"><div class="hero-meta-num">58%</div><div class="hero-meta-label">End in no decision</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" onclick="filterGroup('all', this)">All Personas</button>
+    <button class="filter-btn" onclick="filterGroup('above', this)">Above Powerline</button>
+    <button class="filter-btn" onclick="filterGroup('on', this)">On Powerline</button>
+    <button class="filter-btn" onclick="filterGroup('below', this)">Below Powerline</button>
+    <button class="filter-btn" onclick="filterGroup('champion', this)">Champions</button>
+    <button class="filter-btn" onclick="filterGroup('blocker', this)">Blockers / Detractors</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="section-intro">
+    <div class="section-kicker">Buying Committee Framework</div>
+    <h2>Multi-thread or lose the deal.</h2>
+    <p class="section-desc">CX contacts are your lead-in. Use them to expand horizontally across the full C-Suite buying committee. Every persona has KPIs where TP messaging fits — even when your primary contact is VP of Customer Experience.</p>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat-item"><div class="stat-num pink">13</div><div class="stat-label">Average stakeholders per enterprise B2B deal (Forrester 2024)</div></div>
+    <div class="stat-item"><div class="stat-num">19</div><div class="stat-label">Stakeholders for complex deals at $10B+ accounts</div></div>
+    <div class="stat-item"><div class="stat-num pink">79%</div><div class="stat-label">Enterprise BPO deals require CFO sign-off</div></div>
+    <div class="stat-item"><div class="stat-num">58%</div><div class="stat-label">End in no decision — usually because the wrong people were involved</div></div>
+  </div>
+
+  <div class="powerline-overview">
+    <div class="section-kicker">Powerline Framework</div>
+    <h2 style="font-size:1.3rem;margin-bottom:0">Where does this person sit in the decision hierarchy?</h2>
+    <div class="powerline-grid">
+      <div class="pl-box above">
+        <div class="pl-box-label">Above Powerline</div>
+        <div class="pl-box-roles">CFO · COO · CXO / CCO</div>
+        <div class="pl-box-desc">Final decision authority and budget sign-off. These personas can approve or kill a deal without committee consensus.</div>
+      </div>
+      <div class="pl-box on">
+        <div class="pl-box-label">On Powerline</div>
+        <div class="pl-box-roles">CIO · CPO · CTO · CDO/CAIO</div>
+        <div class="pl-box-desc">Key influencer with approval weight. Can't sign alone but can block or accelerate. Ignore them and lose the deal.</div>
+      </div>
+      <div class="pl-box below">
+        <div class="pl-box-label">Below Powerline</div>
+        <div class="pl-box-roles">CRO · VP-level Operators</div>
+        <div class="pl-box-desc">Evaluator or contributor role. Influences through recommendation, not authority. Still worth warming — they shape internal narratives.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid" id="persona-grid">
+
+    <!-- CFO -->
+    <div class="persona-card" data-powerline="above" data-perception="detractor">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-role-label">Core C-Suite Persona</div>
+          <div class="card-title">Chief Financial Officer</div>
+          <div class="card-subtitle">CFO · EVP/SVP Finance · VP Finance · CAO</div>
+        </div>
+        <div class="card-badges">
+          <span class="powerline-badge pl-above">Above Powerline</span>
+          <span class="perception-badge p-detractor">Detractor</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-col">
+          <div class="col-label">Strategic Initiatives</div>
+          <div class="dna-list">
+            <div class="dna-item">Cost optimization, margin protection, cash flow management</div>
+            <div class="dna-item">Digital finance transformation, predictable cost structures</div>
+            <div class="dna-item">KPIs: EBITDA, OpEx ratios, cost per transaction, working capital</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Pain Points</div>
+          <div class="pain-list">
+            <div class="pain-item">Unpredictable operational costs</div>
+            <div class="pain-item">Labor cost volatility</div>
+            <div class="pain-item">Hidden costs in contracts</div>
+            <div class="pain-item">Proving ROI on transformation</div>
+          </div>
+        </div>
+        <div class="card-col full">
+          <div class="col-label pink">Watering Holes</div>
+          <div class="hole-list">
+            <span class="hole-chip">CFO.com</span><span class="hole-chip">CFO Dive</span><span class="hole-chip">WSJ CFO Journal</span><span class="hole-chip">Deloitte CFO Insights</span><span class="hole-chip">Financial Executives International</span><span class="hole-chip">McKinsey CFO Practice</span><span class="hole-chip">PwC CFO Survey</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-label">Decision Role</div>
+          <div class="decision-block">
+            <div class="decision-role">Final Decision Maker</div>
+            <div class="decision-desc">Investment Evaluator + Executive Sponsor. 79% of enterprise BPO deals require CFO sign-off per Forrester.</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Content That Resonates</div>
+          <div class="content-list">
+            <div class="content-item">TCO analysis tools</div>
+            <div class="content-item">ROI calculators with hard savings numbers</div>
+            <div class="content-item">Cost benchmarking studies</div>
+            <div class="content-item">Financial modeling templates</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CXO -->
+    <div class="persona-card" data-powerline="above" data-perception="champion">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-role-label">Core C-Suite Persona</div>
+          <div class="card-title">Chief Experience Officer</div>
+          <div class="card-subtitle">CXO · CCO · SVP Customer Experience · VP Customer Success</div>
+        </div>
+        <div class="card-badges">
+          <span class="powerline-badge pl-above">Above Powerline</span>
+          <span class="perception-badge p-champion">Champion</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-col">
+          <div class="col-label">Strategic Initiatives</div>
+          <div class="dna-list">
+            <div class="dna-item">Customer satisfaction scores, retention rates, experience consistency</div>
+            <div class="dna-item">Customer-obsessed culture, unified journey orchestration, CX-driven growth</div>
+            <div class="dna-item">KPIs: NPS, CSAT, CES, CLV, first contact resolution</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Pain Points</div>
+          <div class="pain-list">
+            <div class="pain-item">Proving CX ROI to the board</div>
+            <div class="pain-item">Customer journey fragmentation</div>
+            <div class="pain-item">Experience consistency across channels</div>
+            <div class="pain-item">Balancing cost efficiency with quality</div>
+          </div>
+        </div>
+        <div class="card-col full">
+          <div class="col-label pink">Watering Holes</div>
+          <div class="hole-list">
+            <span class="hole-chip">Forrester CX</span><span class="hole-chip">CX Network</span><span class="hole-chip">Gartner Customer Service</span><span class="hole-chip">Harvard Business Review</span><span class="hole-chip">CXPA</span><span class="hole-chip">McKinsey Customer Experience</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-label">Decision Role</div>
+          <div class="decision-block">
+            <div class="decision-role">Final Decision Maker</div>
+            <div class="decision-desc">Budget authority on CX investments. 90% of orgs now have CXO per Gartner. Customer-obsessed firms see 41% faster revenue growth per Forrester.</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Content That Resonates</div>
+          <div class="content-list">
+            <div class="content-item">CX ROI frameworks</div>
+            <div class="content-item">Customer journey mapping tools</div>
+            <div class="content-item">Retention impact studies</div>
+            <div class="content-item">Experience benchmarks with hard metrics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COO -->
+    <div class="persona-card" data-powerline="above" data-perception="champion">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-role-label">Core C-Suite Persona</div>
+          <div class="card-title">Chief Operating Officer</div>
+          <div class="card-subtitle">COO · EVP Operations · VP Operations · Chief Administrative Officer</div>
+        </div>
+        <div class="card-badges">
+          <span class="powerline-badge pl-above">Above Powerline</span>
+          <span class="perception-badge p-champion">Champion</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-col">
+          <div class="col-label">Strategic Initiatives</div>
+          <div class="dna-list">
+            <div class="dna-item">Operational efficiency, workforce optimization, SLA performance</div>
+            <div class="dna-item">Scalable operating model, automation at scale, resilience</div>
+            <div class="dna-item">KPIs: Operational efficiency, cost per unit, capacity utilization</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Pain Points</div>
+          <div class="pain-list">
+            <div class="pain-item">Scalability constraints</div>
+            <div class="pain-item">Workforce volatility</div>
+            <div class="pain-item">Inconsistent service quality</div>
+            <div class="pain-item">Demand forecasting accuracy</div>
+          </div>
+        </div>
+        <div class="card-col full">
+          <div class="col-label pink">Watering Holes</div>
+          <div class="hole-list">
+            <span class="hole-chip">Harvard Business Review</span><span class="hole-chip">McKinsey Operations</span><span class="hole-chip">Deloitte Operations</span><span class="hole-chip">APQC Benchmarking</span><span class="hole-chip">BCG Operations</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-label">Decision Role</div>
+          <div class="decision-block">
+            <div class="decision-role">Initiative Leader / Sponsor</div>
+            <div class="decision-desc">Often the primary driver of BPO transformation initiatives. Owns operational efficiency KPIs — this is TP's natural champion.</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Content That Resonates</div>
+          <div class="content-list">
+            <div class="content-item">Process improvement case studies</div>
+            <div class="content-item">Operational benchmarking data</div>
+            <div class="content-item">Scalability proof points</div>
+            <div class="content-item">Workforce analytics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CIO -->
+    <div class="persona-card" data-powerline="on" data-perception="neutral">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-role-label">Core C-Suite Persona</div>
+          <div class="card-title">Chief Information Officer</div>
+          <div class="card-subtitle">CIO · CTO · VP Information Technology · SVP Technology</div>
+        </div>
+        <div class="card-badges">
+          <span class="powerline-badge pl-on">On Powerline</span>
+          <span class="perception-badge p-neutral">Neutral</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-col">
+          <div class="col-label">Strategic Initiatives</div>
+          <div class="dna-list">
+            <div class="dna-item">AI/automation pilots, tech debt reduction, cybersecurity</div>
+            <div class="dna-item">Digital transformation roadmap, cloud migration, data ops</div>
+            <div class="dna-item">KPIs: System uptime, integration speed, security incidents, automation rate</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Pain Points</div>
+          <div class="pain-list">
+            <div class="pain-item">Legacy system integration complexity</div>
+            <div class="pain-item">Data security compliance</div>
+            <div class="pain-item">Vendor lock-in concerns</div>
+            <div class="pain-item">AI hype vs practical value</div>
+          </div>
+        </div>
+        <div class="card-col full">
+          <div class="col-label pink">Watering Holes</div>
+          <div class="hole-list">
+            <span class="hole-chip">CIO.com</span><span class="hole-chip">CIO Dive</span><span class="hole-chip">Gartner IT Symposium</span><span class="hole-chip">Forrester Tech Research</span><span class="hole-chip">MIT Sloan CIO Symposium</span><span class="hole-chip">McKinsey Digital</span><span class="hole-chip">MIT CISR</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-label">Decision Role</div>
+          <div class="decision-block">
+            <div class="decision-role">Technical Gatekeeper</div>
+            <div class="decision-desc">Technical Evaluator + Influencer. Validates technology fit, integration requirements, and security posture. Can block without being obvious about it.</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Content That Resonates</div>
+          <div class="content-list">
+            <div class="content-item">Integration architecture docs</div>
+            <div class="content-item">Security certifications</div>
+            <div class="content-item">AI/automation use cases with practical results</div>
+            <div class="content-item">Vendor comparison matrices</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CPO -->
+    <div class="persona-card" data-powerline="on" data-perception="blocker">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-role-label">Core C-Suite Persona</div>
+          <div class="card-title">Chief Procurement Officer</div>
+          <div class="card-subtitle">CPO · VP Procurement · VP Strategic Sourcing · VP Vendor Management</div>
+        </div>
+        <div class="card-badges">
+          <span class="powerline-badge pl-on">On Powerline</span>
+          <span class="perception-badge p-blocker">Blocker</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-col">
+          <div class="col-label">Strategic Initiatives</div>
+          <div class="dna-list">
+            <div class="dna-item">Cost savings realization, vendor consolidation, compliance</div>
+            <div class="dna-item">Strategic supplier relationships, risk mitigation, procurement digitization</div>
+            <div class="dna-item">KPIs: Cost savings %, contract compliance, vendor performance, cycle time</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Pain Points</div>
+          <div class="pain-list">
+            <div class="pain-item">Vendor performance inconsistency</div>
+            <div class="pain-item">Contract leakage</div>
+            <div class="pain-item">Supplier risk exposure</div>
+            <div class="pain-item">RFP process fatigue</div>
+          </div>
+        </div>
+        <div class="card-col full">
+          <div class="col-label pink">Watering Holes</div>
+          <div class="hole-list">
+            <span class="hole-chip">Procurement Leaders</span><span class="hole-chip">ISM</span><span class="hole-chip">Gartner Procurement Summit</span><span class="hole-chip">Supply Chain Dive</span><span class="hole-chip">Hackett Group</span><span class="hole-chip">Deloitte Procurement</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-label">Decision Role</div>
+          <div class="decision-block">
+            <div class="decision-role">Process Gatekeeper</div>
+            <div class="decision-desc">Controls vendor selection, RFP management, and contract negotiations. Can accelerate or slow deals — never ignore them.</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Content That Resonates</div>
+          <div class="content-list">
+            <div class="content-item">Vendor scorecards</div>
+            <div class="content-item">SLA frameworks</div>
+            <div class="content-item">Supplier risk assessments</div>
+            <div class="content-item">Procurement ROI calculators</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chief Transformation Officer -->
+    <div class="persona-card" data-powerline="on" data-perception="champion">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-role-label">Core C-Suite Persona</div>
+          <div class="card-title">Chief Transformation Officer</div>
+          <div class="card-subtitle">CTO (Transformation) · Chief Strategy Officer · Chief Innovation Officer · VP Digital Transformation</div>
+        </div>
+        <div class="card-badges">
+          <span class="powerline-badge pl-on">On Powerline</span>
+          <span class="perception-badge p-champion">Champion</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-col">
+          <div class="col-label">Strategic Initiatives</div>
+          <div class="dna-list">
+            <div class="dna-item">Quick wins, pilot programs, change management, stakeholder alignment</div>
+            <div class="dna-item">Enterprise transformation roadmap, operating model redesign, cultural change</div>
+            <div class="dna-item">KPIs: Transformation milestones, adoption rates, value realization, time-to-impact</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Pain Points</div>
+          <div class="pain-list">
+            <div class="pain-item">Change resistance</div>
+            <div class="pain-item">Transformation fatigue</div>
+            <div class="pain-item">Proving ROI on transformation</div>
+            <div class="pain-item">Competing priorities</div>
+          </div>
+        </div>
+        <div class="card-col full">
+          <div class="col-label pink">Watering Holes</div>
+          <div class="hole-list">
+            <span class="hole-chip">Harvard Business Review</span><span class="hole-chip">McKinsey Quarterly</span><span class="hole-chip">MIT Sloan Management Review</span><span class="hole-chip">BCG Change Management</span><span class="hole-chip">Kotter</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-label">Decision Role</div>
+          <div class="decision-block">
+            <div class="decision-role">Initiative Leader / Champion</div>
+            <div class="decision-desc">Drives enterprise-wide change. Often sponsors BPO transformation as part of broader digital strategy. One of TP's most natural entry points.</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Content That Resonates</div>
+          <div class="content-list">
+            <div class="content-item">Transformation roadmaps</div>
+            <div class="content-item">Change management frameworks</div>
+            <div class="content-item">Value realization models</div>
+            <div class="content-item">Best practice playbooks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CDO / CAIO -->
+    <div class="persona-card" data-powerline="on" data-perception="neutral">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-role-label">Core C-Suite Persona</div>
+          <div class="card-title">Chief Data / AI Officer</div>
+          <div class="card-subtitle">CDO · CAIO · Chief Analytics Officer · VP Data & Analytics</div>
+        </div>
+        <div class="card-badges">
+          <span class="powerline-badge pl-on">On Powerline</span>
+          <span class="perception-badge p-neutral">Neutral</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-col">
+          <div class="col-label">Strategic Initiatives</div>
+          <div class="dna-list">
+            <div class="dna-item">AI use case pilots, data quality initiatives, analytics enablement</div>
+            <div class="dna-item">Enterprise AI strategy, data monetization, predictive operations</div>
+            <div class="dna-item">KPIs: AI adoption rate, data quality scores, model accuracy, automation %</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Pain Points</div>
+          <div class="pain-list">
+            <div class="pain-item">AI hype vs practical value</div>
+            <div class="pain-item">Data quality and integration gaps</div>
+            <div class="pain-item">AI governance and ethics</div>
+            <div class="pain-item">Scaling pilots to production</div>
+          </div>
+        </div>
+        <div class="card-col full">
+          <div class="col-label pink">Watering Holes</div>
+          <div class="hole-list">
+            <span class="hole-chip">MIT Technology Review</span><span class="hole-chip">CDO Magazine</span><span class="hole-chip">Gartner Data & Analytics</span><span class="hole-chip">AI/ML conferences</span><span class="hole-chip">Andrew Ng</span><span class="hole-chip">MIT CSAIL</span><span class="hole-chip">Forrester AI Research</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-label">Decision Role</div>
+          <div class="decision-block">
+            <div class="decision-role">Technical Evaluator / Influencer</div>
+            <div class="decision-desc">Evaluates AI/automation capabilities, data integration, and analytics potential. Growing influence as AI becomes central to BPO selection criteria.</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Content That Resonates</div>
+          <div class="content-list">
+            <div class="content-item">AI use case demos with real results</div>
+            <div class="content-item">Automation ROI data</div>
+            <div class="content-item">Data architecture docs</div>
+            <div class="content-item">Governance frameworks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRO -->
+    <div class="persona-card" data-powerline="below" data-perception="influencer">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-role-label">Core C-Suite Persona</div>
+          <div class="card-title">Chief Revenue Officer</div>
+          <div class="card-subtitle">CRO · EVP/SVP Revenue · VP Revenue Operations · Chief Commercial Officer</div>
+        </div>
+        <div class="card-badges">
+          <span class="powerline-badge pl-below">Below Powerline</span>
+          <span class="perception-badge p-influencer">Influencer</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-col">
+          <div class="col-label">Strategic Initiatives</div>
+          <div class="dna-list">
+            <div class="dna-item">Revenue predictability, pipeline coverage, sales productivity</div>
+            <div class="dna-item">Unified GTM strategy, AI-driven forecasting, scalable revenue engine</div>
+            <div class="dna-item">KPIs: Revenue growth, win rates, CAC, pipeline velocity, NRR</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Pain Points</div>
+          <div class="pain-list">
+            <div class="pain-item">Revenue unpredictability and forecast accuracy</div>
+            <div class="pain-item">Sales and marketing misalignment</div>
+            <div class="pain-item">Tech stack complexity vs productivity</div>
+            <div class="pain-item">Proving ROI on GTM investments</div>
+          </div>
+        </div>
+        <div class="card-col full">
+          <div class="col-label pink">Watering Holes</div>
+          <div class="hole-list">
+            <span class="hole-chip">Gartner Sales</span><span class="hole-chip">Forrester RevOps</span><span class="hole-chip">Revenue Operations Alliance</span><span class="hole-chip">SaaStr</span><span class="hole-chip">LinkedIn Sales Navigator</span><span class="hole-chip">Sales Benchmark Index</span>
+          </div>
+        </div>
+        <div class="card-col">
+          <div class="col-label">Decision Role</div>
+          <div class="decision-block">
+            <div class="decision-role">Key Influencer</div>
+            <div class="decision-desc">Revenue champion with approval weight. 91% of CROs created to break GTM silos. 2.5-year average tenure creates urgency — they want wins fast.</div>
+          </div>
+        </div>
+        <div class="card-col no-border">
+          <div class="col-label">Content That Resonates</div>
+          <div class="content-list">
+            <div class="content-item">Revenue impact studies</div>
+            <div class="content-item">Pipeline optimization benchmarks</div>
+            <div class="content-item">GTM alignment frameworks</div>
+            <div class="content-item">CAC/LTV modeling tools</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div><strong>Persona Playbooks</strong> · ABM Content Arsenal · US Workspace</div>
+  <div>Source: Demandbase ABG Framework · Forrester 2024 B2B Buying Study · Teleperformance ABM Program · 2026</div>
+</footer>
+
+<script>
+  function filterGroup(type, el) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.persona-card').forEach(card => {
+      const pl = card.dataset.powerline;
+      const perc = card.dataset.perception;
+      let show = type === 'all'
+        || (type === 'above' && pl === 'above')
+        || (type === 'on' && pl === 'on')
+        || (type === 'below' && pl === 'below')
+        || (type === 'champion' && perc === 'champion')
+        || (type === 'blocker' && (perc === 'blocker' || perc === 'detractor'));
+      card.style.display = show ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

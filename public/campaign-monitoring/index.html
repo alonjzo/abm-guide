@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaign Monitoring | ABM Content Arsenal</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  /* HERO */
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-40%;right:-15%;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero::after{content:'';position:absolute;bottom:-30%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,0,130,0.04) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:24px}
+  .hero-kicker-dot{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.6rem);font-weight:700;letter-spacing:-.02em;max-width:16ch;line-height:1.1;margin-bottom:18px}
+  .hero-sub{font-size:16px;opacity:.72;max-width:62ch;line-height:1.65;margin-bottom:36px}
+  .hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+  .hero-stat{border-left:2px solid rgba(255,255,255,0.2);padding-left:16px}
+  .hero-stat-num{font-size:28px;font-weight:700;line-height:1}
+  .hero-stat-label{font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.07em;margin-top:4px}
+
+  /* NAV */
+  .sticky-nav{position:sticky;top:0;z-index:40;background:var(--white);border-bottom:1px solid var(--pastel-slate-light);padding:0 60px}
+  .sticky-nav-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;overflow-x:auto}
+  .nav-item{padding:16px 18px;font-size:13px;font-weight:600;color:var(--body-gray);white-space:nowrap;border-bottom:2px solid transparent;cursor:pointer;transition:.15s}
+  .nav-item:hover{color:var(--slate);border-bottom-color:var(--pastel-slate)}
+
+  /* LAYOUT */
+  .page{max-width:1100px;margin:0 auto;padding:0 60px 80px}
+  section{padding:60px 0 0}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
+  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:70ch;margin-bottom:32px;line-height:1.65}
+  h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:8px;line-height:1.3}
+
+  /* CARDS */
+  .card-grid{display:grid;gap:20px}
+  .card-grid-2{grid-template-columns:1fr 1fr}
+  .card-grid-3{grid-template-columns:1fr 1fr 1fr}
+  .card{background:var(--white);border:1px solid var(--pastel-slate-light);border-radius:12px;padding:24px;box-shadow:var(--card-shadow)}
+  .card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pastel-slate);margin-bottom:8px}
+  .card-title{font-size:16px;font-weight:700;color:var(--black);margin-bottom:10px;line-height:1.3;text-transform:none;letter-spacing:normal}
+  .card-body{font-size:14px;color:var(--body-gray);line-height:1.65;text-transform:none;font-weight:normal;letter-spacing:normal}
+  .card-body p+p{margin-top:10px}
+
+  /* WHERE TO GO */
+  .path-block{display:flex;align-items:center;gap:10px;background:var(--pastel-slate-light);border-radius:8px;padding:12px 18px;margin-bottom:20px;flex-wrap:wrap}
+  .path-step{font-size:13px;font-weight:600;color:var(--slate)}
+  .path-arrow{font-size:12px;color:var(--pastel-slate);font-weight:700}
+
+  /* METRIC ROWS */
+  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0}
+  .metric-box{background:var(--pastel-slate-light);border-radius:10px;padding:18px 20px}
+  .metric-name{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--body-gray);margin-bottom:6px}
+  .metric-read{font-size:14px;font-weight:600;color:var(--black);margin-bottom:6px;line-height:1.3}
+  .metric-action{font-size:12px;color:var(--body-gray);line-height:1.45}
+
+  /* ACTION ITEMS */
+  .action-list{display:grid;gap:12px;margin-top:20px}
+  .action-item{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:flex-start;padding:18px;border-radius:10px;border:1px solid var(--pastel-slate-light)}
+  .action-priority{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.04em;flex-shrink:0;margin-top:1px}
+  .priority-now{background:var(--pink);color:var(--color-bg)}
+  .priority-weekly{background:var(--slate);color:#fff}
+  .priority-monthly{background:var(--pastel-slate);color:var(--slate-dark)}
+  .action-body{font-size:14px;color:var(--dark-gray);line-height:1.6}
+  .action-body strong{color:var(--black)}
+  .action-body .action-where{font-size:12px;color:var(--body-gray);margin-top:6px;font-style:italic}
+
+  /* SIGNAL TABLE */
+  .signal-table{width:100%;border-collapse:collapse;font-size:14px;margin:20px 0}
+  .signal-table th{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--body-gray);background:var(--pastel-slate-light);padding:12px 16px;text-align:left;border-bottom:1px solid var(--pastel-slate)}
+  .signal-table td{padding:14px 16px;border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);vertical-align:top;line-height:1.55}
+  .signal-table tr:last-child td{border-bottom:none}
+  .sig-label{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+  .sig-act{background:var(--pink-subtle);color:var(--pink);border:1px solid var(--pink-border)}
+  .sig-watch{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(184,134,11,.2)}
+  .sig-hold{background:var(--pastel-slate-light);color:var(--body-gray);border:1px solid var(--pastel-slate)}
+
+  /* CALLOUTS */
+  .callout{padding:20px 24px;border-radius:10px;margin:24px 0;font-size:14px;line-height:1.65}
+  .callout.slate{background:rgba(72,76,106,.07);border-left:3px solid var(--slate)}
+  .callout.pink{background:var(--pink-subtle);border-left:3px solid var(--pink)}
+  .callout.amber{background:var(--amber-bg);border-left:3px solid var(--amber)}
+  .callout.green{background:var(--green-bg);border-left:3px solid var(--green)}
+  .callout.blue{background:var(--blue-bg);border-left:3px solid var(--blue)}
+  .callout strong{color:var(--black)}
+
+  /* DIVIDER */
+  .section-divider{height:1px;background:var(--pastel-slate-light);margin:56px 0 0}
+
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:rgba(72,76,106,.1);padding:2px 6px;border-radius:4px}
+
+  /* READING FRAMEWORK */
+  .reading-row{display:grid;grid-template-columns:200px 1fr 1fr;gap:0;border:1px solid var(--pastel-slate-light);border-radius:12px;overflow:hidden;margin:20px 0}
+  .reading-row + .reading-row{margin-top:12px}
+  .reading-section{padding:18px 20px;border-right:1px solid var(--pastel-slate-light);font-size:14px;line-height:1.55}
+  .reading-section:last-child{border-right:none}
+  .reading-section.label-col{background:var(--pastel-slate-light);font-weight:700;font-size:13px;display:flex;align-items:center;color:var(--slate)}
+  .reading-section .col-head{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pastel-slate);margin-bottom:6px}
+  .reading-section .col-body{color:var(--body-gray)}
+
+  /* FOOTER */
+  .footer{background:var(--slate);color:rgba(255,255,255,0.65);padding:36px 60px;font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:64px}
+  .footer strong{color:var(--white)}
+
+  @media(max-width:900px){
+    .hero,.sticky-nav,.page,.footer{padding-left:24px;padding-right:24px}
+    .card-grid-2,.card-grid-3,.metric-grid{grid-template-columns:1fr}
+    .reading-row{grid-template-columns:1fr}
+    .reading-section.label-col{border-right:none;border-bottom:1px solid var(--pastel-slate)}
+    .hero-stats{gap:20px}
+  }
+
+.tp-global-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--color-bg) 84%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+  transition: all 0.3s ease;
+}
+</style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span class="hero-kicker-dot"></span> ABM Content Arsenal · Campaign Monitoring</div>
+    <h1>Campaigns running. Now read what they're telling you.</h1>
+    <p class="hero-sub">The signal is in the data — not the impression count. This guide tells you exactly where to go in Demandbase, what each number means, and the specific action that follows it. Know where they are in the journey, who's engaging, and who's ready to be handed off.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">295</div>
+        <div class="hero-stat-label">Engaged accounts — live SDR queue</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">37</div>
+        <div class="hero-stat-label">MQA — BD-ready now</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">233</div>
+        <div class="hero-stat-label">Open opportunities in pipeline</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">598</div>
+        <div class="hero-stat-label">Customer accounts — watch for expansion signals</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <a class="nav-item" onclick="document.getElementById('analytics').scrollIntoView({behavior:'smooth'});return false" href="#">Analytics</a>
+    <a class="nav-item" onclick="document.getElementById('intent').scrollIntoView({behavior:'smooth'});return false" href="#">Intent</a>
+    <a class="nav-item" onclick="document.getElementById('site').scrollIntoView({behavior:'smooth'});return false" href="#">Site Analytics</a>
+    <a class="nav-item" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'});return false" href="#">Journey</a>
+    <a class="nav-item" onclick="document.getElementById('buying-groups').scrollIntoView({behavior:'smooth'});return false" href="#">Buying Group Insights</a>
+    <a class="nav-item" onclick="document.getElementById('action').scrollIntoView({behavior:'smooth'});return false" href="#">Action Items</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ANALYTICS -->
+  <section id="analytics">
+    <div class="section-label">01 · Analytics</div>
+    <h2>Advanced Reporting — how to read campaign performance</h2>
+    <p class="section-intro">Advanced Reporting lives in the Demandbase DSP layer, not inside the US Workspace. Before reading any number, confirm you're filtered to the US ad plan. Default views show global data and will give you wrong numbers every time.</p>
+
+    <div class="path-block">
+      <span class="path-step">Demandbase</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Advertising</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Advanced Reporting</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Filter: TP USA Ad Plan</span>
+    </div>
+
+    <div class="callout amber">
+      <strong>Always filter to the US ad plan first.</strong> The default view aggregates all global ad plans. Pull numbers before filtering and you will see inflated totals that mix in EMEA and APAC spend. Set the filter before reading anything.
+    </div>
+
+    <h3 style="margin-top:32px;margin-bottom:16px">Four dashboards — what each one tells you</h3>
+
+    <div class="card-grid card-grid-2">
+      <div class="card slate-top">
+        <div class="card-label">Dashboard 1</div>
+        <div class="card-title">Pacing & Account Performance</div>
+        <div class="card-body">
+          <p>Your budget health check. Shows which campaigns are on track, under-pacing, or predicted to hit goal by end date. Read this first — an under-pacing campaign means accounts are not being reached at the planned frequency.</p>
+          <p><strong>What to act on:</strong> Under-pacing campaigns need either a budget check, audience size review, or bid adjustment. If pacing shows predicted to hit goal but engagement is flat, the creative or targeting needs review — budget alone won't fix it.</p>
+        </div>
+      </div>
+      <div class="card slate-top">
+        <div class="card-label">Dashboard 2</div>
+        <div class="card-title">Creative Performance</div>
+        <div class="card-body">
+          <p>Ad group KPIs ranked by impressions vs. CTR. These two metrics rarely rank the same assets at the top, and that gap tells you something important.</p>
+          <p><strong>What to act on:</strong> High impressions + low CTR means broad reach but weak relevance — the asset is getting seen but not acting. High CTR + low impressions means the asset works when it reaches the right person but your audience is too narrow or the budget isn't supporting delivery. Shift spend toward the combination of both.</p>
+        </div>
+      </div>
+      <div class="card slate-top">
+        <div class="card-label">Dashboard 3</div>
+        <div class="card-title">JourneyIQ Reporting</div>
+        <div class="card-body">
+          <p>Funnel visualization from Aware through Customer. This is your ABM story in one view — how many accounts entered the funnel, where they moved, and where they stalled. Pre-One Tag, click attribution is absent so stage movement comes from ad impressions and intent data only.</p>
+          <p><strong>What to act on:</strong> Accounts stuck at Aware for more than 30 days need a content shift or targeting adjustment. Aware-to-Engaged conversion rate is your primary campaign health metric until attribution is fully live.</p>
+        </div>
+      </div>
+      <div class="card slate-top">
+        <div class="card-label">Dashboard 4</div>
+        <div class="card-title">Country-Level Reporting</div>
+        <div class="card-body">
+          <p>Geographic performance breakdown. Useful primarily as a governance check — if you see Canada-only or Mexico results showing in here, your geo-targeting needs correction. Mexico is LATAM and should never appear in US campaign reporting.</p>
+          <p><strong>What to act on:</strong> Any country other than United States appearing with spend means the campaign's geo-targeting was set to North America instead of United States. Fix the campaign targeting immediately and note the affected date range for reporting accuracy.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:40px;margin-bottom:4px">The metrics that matter — and what to do with them</h3>
+    <p style="font-size:14px;color:var(--body-gray);margin-bottom:0">Impression counts and click rates are inputs. Account-level progression is the output that matters for ABM.</p>
+
+    <div class="metric-grid">
+      <div class="metric-box">
+        <div class="metric-name">Impressions</div>
+        <div class="metric-read">How often your ads reached target accounts</div>
+        <div class="metric-action">Low impressions on a T1-A account means either budget is too low, the audience is too narrow, or the account isn't matching at the platform level. Check account list sync in Global.</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-name">CTR</div>
+        <div class="metric-read">Click-through rate by ad group</div>
+        <div class="metric-action">Demandbase CTR benchmarks for B2B display run 0.08–0.15%. Below that range on a T1-A account = creative or persona mismatch. Swap the asset or tighten the persona filter.</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-name">Engagement Minutes</div>
+        <div class="metric-read">Cumulative engagement across all touchpoints</div>
+        <div class="metric-action">Read against velocity — an account that went from 0 to 4.3 engagement minutes in a week is more urgent than one sitting at 4.3 for two months. Watch the change, not the total.</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-name">Aware-to-Engaged Rate</div>
+        <div class="metric-read">% of Aware accounts crossing into Engaged</div>
+        <div class="metric-action">This is your pre-attribution proxy metric for campaign effectiveness. If accounts are staying at Aware, they're seeing ads but not engaging. Content and targeting need a second look.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTENT -->
+  <section id="intent">
+    <div class="section-label">02 · Intent</div>
+    <h2>Reading intent data in context of campaign activity</h2>
+    <p class="section-intro">Intent data tells you what accounts are researching, not just whether they clicked your ad. An account showing strong intent on four keyword sets while simultaneously receiving your campaign is a different conversation than one receiving ads with no intent activity at all.</p>
+
+    <div class="path-block">
+      <span class="path-step">Demandbase</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Accounts</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Intent</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Filter by Tier or Account List</span>
+    </div>
+
+    <table class="signal-table">
+      <thead>
+        <tr>
+          <th>What you see</th>
+          <th>What it means</th>
+          <th>Status</th>
+          <th>What to do</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>High intent + campaign active</td>
+          <td>Account is in an active research cycle and your brand is visible during it. This is the ideal state — you're present when the buying conversation is happening.</td>
+          <td><span class="sig-act">Act</span></td>
+          <td>Route to SDR or BD based on Pipeline Predict score. If score is 60+, BD gets it. If 40+, SDR. Don't wait for the next weekly review.</td>
+        </tr>
+        <tr>
+          <td>High intent + no campaign impressions</td>
+          <td>Account is researching actively but your ads aren't reaching them. Either the account isn't in the target list, the audience hasn't synced to Global, or the campaign isn't covering their industry segment.</td>
+          <td><span class="sig-act">Act</span></td>
+          <td>Confirm the account is in the US Workspace list AND in the Global <code>[US]</code> version. If missing from Global, add it. If present, check campaign targeting for audience size constraints.</td>
+        </tr>
+        <tr>
+          <td>Intent surge on 3+ keyword sets simultaneously</td>
+          <td>Multi-set surges indicate an active buying committee, not a single researcher. When CX Core, LOBs, and a vertical set are all spiking at the same account, multiple personas are in research mode at the same time.</td>
+          <td><span class="sig-act">Act</span></td>
+          <td>Escalate immediately regardless of tier. Check buying group completeness. If personas are matched, route to BD. If personas are incomplete, send to Lighthouse for enrichment and flag the account as hot.</td>
+        </tr>
+        <tr>
+          <td>Medium intent + campaign active</td>
+          <td>Account is building toward a signal. Research activity is present but hasn't peaked yet. The campaign is reaching them during the awareness phase.</td>
+          <td><span class="sig-watch">Watch</span></td>
+          <td>Add to a watch list. If intent accelerates over the next 7–14 days, act on it. If it flattens, it may be passive research rather than an active buying motion.</td>
+        </tr>
+        <tr>
+          <td>No intent + high engagement minutes</td>
+          <td>Account is engaging with your content (site visits, ad clicks, downloads) but not showing category-level research through the keyword layer. Could indicate existing awareness or a contact that's consuming your content without being in an active evaluation.</td>
+          <td><span class="sig-watch">Watch</span></td>
+          <td>Check the specific touchpoints driving engagement. If it's a known contact, the engagement may signal relationship maintenance. If it's anonymous, it may be competitive research.</td>
+        </tr>
+        <tr>
+          <td>No intent + campaign active</td>
+          <td>Ads are running but no research signals are firing. The account may not be in an active buying cycle, or your keyword sets may not be aligned to how this specific account's buyers research.</td>
+          <td><span class="sig-hold">Hold</span></td>
+          <td>Don't escalate. Continue impressions for awareness. Review keyword set alignment against this account's industry. If a T1-A or T1 account shows this pattern for 30+ days, flag for persona enrichment review.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout pink">
+      <strong>Intent surge velocity beats raw score.</strong> A T2 account that jumped 20 points in 7 days is more actionable than a T1-A holding a steady high score. The surge means the buying window just opened. Steady-state high intent often means the account monitors the category passively. Sudden movement means someone internally started a project.
+    </div>
+  </section>
+
+  <!-- SITE ANALYTICS -->
+  <section id="site">
+    <div class="section-label">03 · Site Analytics</div>
+    <h2>What Site Analytics shows — and its current limits</h2>
+    <p class="section-intro">Site Analytics connects ad exposure to on-site behavior. When the Demandbase One Tag is confirmed live on tp.com/en-us, you get click-through attribution, page-level engagement, and content consumption mapped back to account identity. Before that, the view is partial.</p>
+
+    <div class="path-block">
+      <span class="path-step">Demandbase</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Analytics</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Site Analytics</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Filter by US Account List</span>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-bottom:24px">
+      <div class="card green-top">
+        <div class="card-label">What's available now</div>
+        <div class="card-title">Account-level site activity (IP-based)</div>
+        <div class="card-body">Demandbase identifies accounts visiting tp.com/en-us through IP resolution and its identity graph. You can see which accounts are on the site, which pages they visited, and how many times — without the One Tag. The limitation is that individual contact-level behavior and click attribution from ads aren't available yet.</div>
+      </div>
+      <div class="card amber-top">
+        <div class="card-label">What unlocks with One Tag confirmed live</div>
+        <div class="card-title">Click attribution + person-level tracking</div>
+        <div class="card-body">Once the One Tag is confirmed firing, clicks from Demandbase ads tie back to specific on-site sessions. You get the full chain: ad impression → click → page visited → content consumed → engagement score updated. This turns Site Analytics from an observation layer into an attribution layer.</div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:16px">How to read Site Analytics today</h3>
+
+    <div class="reading-row">
+      <div class="reading-section label-col">Pages Visited</div>
+      <div class="reading-section">
+        <div class="col-head">What it tells you</div>
+        <div class="col-body">Which solutions, industries, or content areas an account is spending time on. A T1-A Healthcare account spending 3 visits on the Healthcare CX page is a different signal than a generic homepage visit.</div>
+      </div>
+      <div class="reading-section">
+        <div class="col-head">What to do</div>
+        <div class="col-body">Cross-reference the specific pages against your active keyword sets. If a Healthcare account is deep in Healthcare content and your Healthcare keyword set is also firing, that's a compounded signal worth escalating to SDR.</div>
+      </div>
+    </div>
+    <div class="reading-row">
+      <div class="reading-section label-col">Visit Frequency</div>
+      <div class="reading-section">
+        <div class="col-head">What it tells you</div>
+        <div class="col-body">How often the account is returning. One visit could be noise. Three visits to the same solution page in two weeks is an active evaluation pattern.</div>
+      </div>
+      <div class="reading-section">
+        <div class="col-head">What to do</div>
+        <div class="col-body">Flag repeat visitors on T1-A and T1 accounts for SDR notification. If the same account keeps returning to the same content, someone inside that organization is building a business case.</div>
+      </div>
+    </div>
+    <div class="reading-row">
+      <div class="reading-section label-col">Time on Page</div>
+      <div class="reading-section">
+        <div class="col-head">What it tells you</div>
+        <div class="col-body">Depth of engagement. A 4-minute session on a capabilities overview page is qualitatively different from a 15-second bounce on the homepage.</div>
+      </div>
+      <div class="reading-section">
+        <div class="col-head">What to do</div>
+        <div class="col-body">Pair time-on-page with account tier. Deep engagement on solution content from a T1-A account should update the account's journey stage assessment. If they're still sitting at Aware, the data suggests they should be moving to Engaged.</div>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <strong>Pre-One Tag reporting note:</strong> Click volume in Site Analytics will show zero or near-zero for campaign-attributed traffic until the One Tag is confirmed live and running. Impressions, account-level site visits, and intent data are accurate and actionable now. Attribution from ad clicks to on-site behavior is the gap that closes when the tag is confirmed active.
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="journey">
+    <div class="section-label">04 · Journey</div>
+    <h2>Reading the journey numbers — what each stage means for campaigns</h2>
+    <p class="section-intro">Journey stages are your proxy performance metric for the entire ABM program. When Campaign Influence 2.0 is live, you'll have hard attribution. Until then, stage progression is how you tell the story of what campaigns are doing to the pipeline.</p>
+
+    <div class="path-block">
+      <span class="path-step">Demandbase</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Dashboard</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">US Marketing ABX Dashboard</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Journey Stages</span>
+    </div>
+
+    <div class="callout slate">
+      <strong>Current US journey snapshot (Jan 7 – Apr 7, 2026):</strong> Target Account 2,068 (35.7%) · Aware 2,555 (44.2%) · Engaged 295 (5.1%) · MQA 37 (0.6%) · Opportunity 233 (4.0%) · Customer 598 (10.3%) · Total: 5,786 accounts.
+    </div>
+
+    <div class="card-grid card-grid-3" style="margin-top:24px">
+      <div class="card">
+        <div class="card-label">Target Account (2,068)</div>
+        <div class="card-title">In universe, no signals yet</div>
+        <div class="card-body">These accounts qualify by tier and revenue but aren't showing any intent or engagement activity. Campaigns haven't reached them yet, or they're not in an active buying cycle. This is the top-of-funnel pool that advertising is working against. Track this number week-over-week — if it's not converting to Aware over a 30-day campaign window, targeting or creative needs review.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Aware (2,555)</div>
+        <div class="card-title">Seeing signals, not yet engaging</div>
+        <div class="card-body">The largest stage and the one your campaigns are actively feeding. 44% of the universe is showing research behavior — they're aware of the category and are in a passive research posture. The campaign's job here is to accelerate movement from Aware to Engaged. If accounts are staying at Aware for 60+ days, content relevance or targeting precision is the issue.</div>
+      </div>
+      <div class="card pink-top">
+        <div class="card-label">Engaged (295) — SDR queue</div>
+        <div class="card-title">Active research + engagement</div>
+        <div class="card-body">Three or more intent signals, plus a site visit or ad engagement, have qualified this account into the Engaged stage. This is your live SDR queue right now. 295 accounts are warm enough to receive an intelligent outreach sequence tied to the specific content and keywords driving their engagement. If SDR isn't working this list actively, this is where to start the conversation.</div>
+      </div>
+      <div class="card pink-top">
+        <div class="card-label">MQA (37) — BD queue</div>
+        <div class="card-title">Marketing has done its job</div>
+        <div class="card-body">37 accounts have crossed all three thresholds: intent surge, engagement, and buying group activity. At 60%+ on Pipeline Predict, these are BD-led pursuits. Orchestration automation should be writing SFDC tasks for all 37 when it's live. If it's not confirmed firing, these accounts need to be manually verified against open BD assignments in SFDC to ensure none are sitting unworked.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Opportunity (233)</div>
+        <div class="card-title">Active pipeline — use for air cover</div>
+        <div class="card-body">More accounts are in active deals than in MQA, which tells you deals are entering pipeline through channels beyond the ABM journey — either pre-program activity or rep-sourced. Campaigns should be running air cover on these 233 now: reinforce the deal, keep competitive noise out, and support the rep's motion. This is where advertising and BD work as a team.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Customer (598)</div>
+        <div class="card-title">Expansion signals — different play</div>
+        <div class="card-body">One in ten accounts in the universe is already a customer. Watch these accounts for intent on LOBs or vertical keywords — back-office automation, workforce management, compliance, digital transformation. A customer showing new intent isn't a net-new prospect; they're an expansion opportunity. Route these signals to the owning BD rep, not to the standard new-business sequence.</div>
+      </div>
+    </div>
+
+    <div class="callout pink" style="margin-top:28px">
+      <strong>The pre-attribution performance story:</strong> When the question comes up about what campaigns are doing for pipeline, the answer lives in stage progression. Target Account to Aware = campaigns are reaching the right universe. Aware to Engaged = content and targeting are resonating. Engaged to MQA = the buying signal is strong enough for sales. MQA to Opportunity = BD accepted the handoff. Track stage-to-stage conversion rates weekly. That's your performance narrative until Campaign Influence 2.0 is live.
+    </div>
+  </section>
+
+  <!-- BUYING GROUP INSIGHTS -->
+  <section id="buying-groups">
+    <div class="section-label">05 · Buying Group Insights</div>
+    <h2>What buying group data tells you about campaign reach</h2>
+    <p class="section-intro">Buying Group Insights shows whether your campaigns are actually reaching the right people inside target accounts — not just the account itself. An account can show high engagement while the actual economic buyer has never seen your content. Buying group data closes that gap.</p>
+
+    <div class="path-block">
+      <span class="path-step">Demandbase</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Accounts</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Select Account</span>
+      <span class="path-arrow">›</span>
+      <span class="path-step">Buying Groups tab</span>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-bottom:24px">
+      <div class="card slate-top">
+        <div class="card-label">Persona Completeness</div>
+        <div class="card-title">What percentage of required roles are matched</div>
+        <div class="card-body">
+          <p>Persona completeness shows how many of the required buying group roles have matched contacts in SFDC. At 100%, all three roles are matched and the account is eligible for full Pipeline Predict scoring. Below 100%, at least one required persona is missing — either the contact doesn't exist in SFDC or it hasn't been enriched through Lighthouse.</p>
+          <p><strong>Under 100% on T1-A or T1 = enrichment task first, routing second.</strong> The Pipeline Predict score is capped until the missing role is filled. A 58 score can become an 82 after a single persona is added.</p>
+        </div>
+      </div>
+      <div class="card slate-top">
+        <div class="card-label">Buying Group Score</div>
+        <div class="card-title">How engaged the group is as a whole</div>
+        <div class="card-body">
+          <p>The buying group score aggregates engagement across all matched personas using Demandbase's Powerline weighting. Economic Buyers (CCO, CFO) carry more weight than functional participants. If the score is low despite high account engagement, it usually means ad clicks and site visits are concentrated in lower-influence roles — not the actual decision-maker.</p>
+          <p><strong>High account engagement + low buying group score = you're reaching the wrong people.</strong> Adjust persona filters in the campaign or enrich the missing economic buyer role.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:16px">How to read a buying group row</h3>
+
+    <div class="reading-row">
+      <div class="reading-section label-col">Engagement by Role</div>
+      <div class="reading-section">
+        <div class="col-head">What it tells you</div>
+        <div class="col-body">Which specific personas inside the buying group have engagement activity — ad exposure, site visits, content downloads. If the CCO shows zero engagement and the VP of Operations shows 4.2 engagement minutes, campaigns are reaching an influencer but not the economic buyer.</div>
+      </div>
+      <div class="reading-section">
+        <div class="col-head">What to do</div>
+        <div class="col-body">Segment creative by persona. If the CCO isn't engaging, the content being served may not be speaking to their priorities — cost reduction, NPS, customer retention — at the executive level. Adjust ad copy and landing page alignment to match economic buyer language.</div>
+      </div>
+    </div>
+    <div class="reading-row">
+      <div class="reading-section label-col">Missing Personas</div>
+      <div class="reading-section">
+        <div class="col-head">What it tells you</div>
+        <div class="col-body">A role slot exists in the buying group definition but has no matched contact in SFDC. This blocks MQA progression and caps Pipeline Predict scoring. The account may be showing strong intent signals, but without the persona match, it won't route correctly.</div>
+      </div>
+      <div class="reading-section">
+        <div class="col-head">What to do</div>
+        <div class="col-body">Send to the Lighthouse team with the account name and the specific missing job function. Include the current engagement and intent context so they understand the urgency. Once the role is enriched in SFDC, the account re-scores automatically.</div>
+      </div>
+    </div>
+    <div class="reading-row">
+      <div class="reading-section label-col">Blank Buying Group Role</div>
+      <div class="reading-section">
+        <div class="col-head">What it tells you</div>
+        <div class="col-body">A contact is matched to the account but their role within the buying group isn't populating. This is typically an SFDC mapping gap — the contact exists but their title or role field doesn't align to the persona matching criteria.</div>
+      </div>
+      <div class="reading-section">
+        <div class="col-head">What to do</div>
+        <div class="col-body">Flag the contact in SFDC for a title/role field review. The contact exists and may be the right person — they just aren't being recognized by Demandbase's persona matching. A clean title field update in SFDC resolves it without Lighthouse involvement.</div>
+      </div>
+    </div>
+
+    <div class="callout green" style="margin-top:24px">
+      <strong>Known Contacts for advertising:</strong> Build person lists natively in Demandbase under the People tab. Filter by your T1A–T3 account lists combined with persona and title criteria. Adding these Known Contact lists to ad campaigns shifts targeting from anonymous account-level to named-person level — you're serving ads directly to matched CCOs and CFOs, not just hoping the right person at the right company sees them. The team is currently running account-level targeting only. Person-level targeting is the next step.
+    </div>
+  </section>
+
+  <!-- ACTION ITEMS -->
+  <section id="action">
+    <div class="section-label">06 · Action Items</div>
+    <h2>What to do with all of this — prioritized</h2>
+    <p class="section-intro">Reading the data is one thing. Here's the specific action framework based on what you find. Three tiers: act now, review weekly, review monthly.</p>
+
+    <div class="action-list">
+      <div class="action-item">
+        <div class="action-priority priority-now">NOW</div>
+        <div class="action-body">
+          <strong>Work the 37 MQA accounts.</strong> These have crossed every qualification threshold. Check SFDC — confirm each has an open BD assignment or task. If orchestration automation is confirmed active, tasks should exist already. If any are unassigned, route to BD manually with the account's intent context attached.
+          <div class="action-where">Where: Demandbase › Dashboard › US Marketing ABX Dashboard › Journey Stages › MQA filter</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-priority priority-now">NOW</div>
+        <div class="action-body">
+          <strong>Queue SDR on the 295 Engaged accounts.</strong> This is a live, warm list. SDR outreach should lead with the specific keyword themes and content driving each account's engagement — not a generic sequence. Pull the intent data for each account before the first touch. Personalization is what separates this from cold outreach.
+          <div class="action-where">Where: Demandbase › Accounts › Filter: Journey Stage = Engaged + US Tier list</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-priority priority-now">NOW</div>
+        <div class="action-body">
+          <strong>Confirm campaigns have air cover on the 233 Opportunity accounts.</strong> Verify each open opportunity account is in an active Demandbase ad audience. BD should feel the marketing presence behind their deals. If any open opp accounts aren't in a campaign audience, add them immediately.
+          <div class="action-where">Where: SFDC › Open Opportunities › cross-reference against Demandbase Opportunity stage accounts</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-priority priority-weekly">WEEKLY</div>
+        <div class="action-body">
+          <strong>Review intent surge accounts — specifically any account that moved 15+ points in the last 7 days.</strong> These are the accounts that just opened a buying window. Check whether they're in an active campaign, whether persona completeness is at 100%, and whether SDR or BD knows about the spike. If they're not in any campaign and showing this signal, they need to be added to the relevant ad audience immediately.
+          <div class="action-where">Where: Demandbase › Accounts › Sort by Intent Score Change (7-day)</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-priority priority-weekly">WEEKLY</div>
+        <div class="action-body">
+          <strong>Check pacing on all active campaigns.</strong> Anything under-pacing by more than 15% needs a diagnosis: audience size, bid level, or budget. Campaigns that aren't spending aren't reaching accounts. Pacing issues left unaddressed for a full week compound quickly by end of quarter.
+          <div class="action-where">Where: Demandbase › Advertising › Advanced Reporting › Pacing & Account Performance</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-priority priority-weekly">WEEKLY</div>
+        <div class="action-body">
+          <strong>Review buying group completeness on T1-A accounts showing high intent or Engaged+ stage.</strong> If any T1-A account is at Engaged or MQA with a missing persona, that's an enrichment task that needs to go to Lighthouse this week — not next month. The enrichment unblocks the account from full Pipeline Predict scoring and proper BD routing.
+          <div class="action-where">Where: Demandbase › Accounts › T1-A filter › Buying Groups tab per account</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-priority priority-monthly">MONTHLY</div>
+        <div class="action-body">
+          <strong>Review Aware-to-Engaged conversion rate.</strong> Currently 2,555 accounts at Aware and 295 at Engaged — roughly an 11.5% conversion rate. This is your ABM program's top-of-funnel health metric. If conversion drops month-over-month, campaign targeting, creative, or keyword alignment is the root cause. If it improves, document what changed so it can be repeated.
+          <div class="action-where">Where: Demandbase › Dashboard › US Marketing ABX Dashboard › Journey stage counts, month-over-month comparison</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-priority priority-monthly">MONTHLY</div>
+        <div class="action-body">
+          <strong>Audit the 598 Customer accounts for expansion intent signals.</strong> Run a filter for Customer stage accounts showing High or Medium intent on LOB keyword sets. Any account with active LOB research signals should have a note in SFDC and the owning BD rep should be aware. This is the expansion motion — it runs on a different play from new business and it's being underutilized right now.
+          <div class="action-where">Where: Demandbase › Accounts › Filter: Journey Stage = Customer + High Intent flag</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout pink" style="margin-top:32px">
+      <strong>The one number to report to leadership when asked how campaigns are performing:</strong> Stage progression rate. How many accounts moved from one stage to a higher stage this month, and how does that compare to last month? That's the story. Impressions and CTR are inputs. Account advancement is the output.
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<footer class="footer">
+  <div><strong>Campaign Monitoring</strong> · ABM Content Arsenal · US Workspace</div>
+  <div>Teleperformance ABM Program · 2026</div>
+</footer>
+
+<script src="../assets/js/navigation.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+<script src="/assets/js/back-to-top.js"></script>
+</body>
+</html>

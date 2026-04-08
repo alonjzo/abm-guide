@@ -1,0 +1,2964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competitive Intel | ABM Suite</title>
+    <style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Calibri Light', Calibri, 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: var(--slate-dark);
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--slate);
+            color: var(--color-bg);
+            padding: 80px 24px 60px;
+            text-align: center;
+            border-bottom: 4px solid var(--pink);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-stat {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--pink);
+        }
+
+        .hero-stat-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Vertical Filter Tabs */
+        .vertical-filter {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .vertical-filter button {
+            padding: 10px 18px;
+            border: 2px solid var(--slate);
+            background-color: transparent;
+            color: var(--slate);
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .vertical-filter button:hover {
+            background-color: var(--slate);
+            color: var(--white);
+        }
+
+        .vertical-filter button.active {
+            background-color: var(--pink);
+            border-color: var(--pink);
+            color: var(--white);
+        }
+
+        /* Search Section */
+        .search-section {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid var(--pastel-slate);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--pink);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Win Themes Card */
+        .win-themes {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .win-themes h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--slate);
+        }
+
+        .win-themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .win-theme-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--pastel-slate);
+            border-left: 3px solid var(--pink);
+            text-align: left;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--slate-dark);
+        }
+
+        /* Comparison Matrix */
+        .comparison-matrix {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+
+        .comparison-matrix h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--slate);
+        }
+
+        .comparison-matrix table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .comparison-matrix th {
+            background-color: var(--slate);
+            color: var(--white);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-matrix td {
+            padding: 12px;
+            border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+        }
+
+        .comparison-matrix tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .competitor-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 11px;
+            margin-right: 8px;
+        }
+
+        /* Battlecards Section */
+        .battlecards-section {
+            margin-bottom: 40px;
+        }
+
+        .battlecards-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--slate);
+        }
+
+        .battlecards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 20px;
+        }
+
+        .battlecard {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .battlecard:hover {
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+
+        .battlecard-header {
+            background: var(--slate);
+            color: var(--white);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--pink);
+        }
+
+        .battlecard-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .battlecard-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .battlecard-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .threat-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .threat-high {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .threat-severe {
+            background-color: #b71c1c;
+            color: var(--white);
+        }
+
+        .threat-moderate {
+            background-color: var(--color-bg)3e0;
+            color: #e65100;
+        }
+
+        .threat-low {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .battlecard-body {
+            padding: 20px;
+        }
+
+        .battlecard-tagline {
+            font-size: 13px;
+            color: var(--pastel-slate);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .battlecard-section {
+            margin-bottom: 15px;
+        }
+
+        .battlecard-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--slate);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .strengths-vulnerabilities {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .strength-item, .vulnerability-item {
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid var(--pastel-slate);
+            background: var(--white);
+        }
+
+        .strength-item {
+            border-left: 3px solid var(--pastel-slate);
+            color: var(--slate);
+        }
+
+        .vulnerability-item {
+            border-left: 3px solid var(--pink);
+            color: var(--slate-dark);
+        }
+
+        .counter-positioning {
+            background-color: var(--pastel-violet);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--slate-dark);
+            margin-bottom: 15px;
+        }
+
+        .win-theme-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .win-theme-pill {
+            background-color: var(--pink);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .talk-tracks {
+            background-color: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .talk-track-pair {
+            margin-bottom: 10px;
+        }
+
+        .talk-track-pair:last-child {
+            margin-bottom: 0;
+        }
+
+        .they-say, .you-say {
+            margin-bottom: 5px;
+            padding: 5px 0;
+        }
+
+        .they-say {
+            color: var(--pink);
+            font-weight: 600;
+        }
+
+        .you-say {
+            color: var(--slate-dark);
+        }
+
+        .battlecard-footer {
+            padding: 12px 20px;
+            background-color: #f5f5f5;
+            border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+            display: flex;
+            justify-content: center;
+        }
+
+        .copy-button, .download-button {
+            background-color: var(--slate);
+            color: var(--white);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-button:hover, .download-button:hover {
+            background-color: var(--slate-dark);
+        }
+
+        .download-button {
+            background-color: var(--pink);
+        }
+
+        .download-button:hover {
+            background-color: #cc0069;
+        }
+
+        .battlecard-footer {
+            gap: 8px;
+        }
+
+        .generator-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .action-btn.reset {
+            background: var(--pastel-slate);
+            color: var(--slate-dark);
+        }
+
+        .action-btn.reset:hover {
+            background: #b0b5bc;
+        }
+
+        .action-btn.download {
+            background: var(--slate);
+            color: white;
+        }
+
+        .action-btn.download:hover {
+            background: var(--slate-dark);
+        }
+
+        /* Vertical Panels */
+        .verticals-section {
+            margin-bottom: 40px;
+        }
+
+        .verticals-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--slate);
+        }
+
+        .vertical-panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            display: none;
+        }
+
+        .vertical-panel.active {
+            display: block;
+        }
+
+        .vertical-panel h3 {
+            font-size: 18px;
+            color: var(--slate);
+            margin-bottom: 15px;
+        }
+
+        .vertical-panel table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .vertical-panel th {
+            background-color: var(--pastel-violet);
+            color: var(--slate-dark);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .vertical-panel td {
+            padding: 12px;
+            border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+        }
+
+        .vertical-panel tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Generators */
+        .generators-section {
+            margin-bottom: 40px;
+        }
+
+        .generators-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--slate);
+        }
+
+        .generators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+        }
+
+        .generator-panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .generator-panel h3 {
+            font-size: 18px;
+            color: var(--slate);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate);
+            margin-bottom: 6px;
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--pastel-slate);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .form-group select:focus, .form-group input:focus {
+            outline: none;
+            border-color: var(--pink);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .generate-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--pink);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .generate-button:hover {
+            background-color: #e60072;
+        }
+
+        .generator-output {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            min-height: 100px;
+            font-size: 12px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Boutique Tracker */
+        .boutique-section {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .boutique-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--slate);
+        }
+
+        .boutique-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .boutique-section th {
+            background-color: var(--slate);
+            color: var(--white);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .boutique-section td {
+            padding: 12px;
+            border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+        }
+
+        .boutique-section tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+
+        .upload-section h2 {
+            font-size: 24px;
+            color: var(--slate);
+            margin-bottom: 20px;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--pastel-slate);
+            padding: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: var(--pink);
+            background-color: rgba(255, 0, 130, 0.05);
+        }
+
+        .upload-area p {
+            font-size: 14px;
+            color: var(--slate);
+            margin-bottom: 10px;
+        }
+
+        .upload-button {
+            padding: 10px 20px;
+            background-color: var(--pink);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .upload-button:hover {
+            background-color: #e60072;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--slate) 0%, var(--slate-dark) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 30px;
+            font-size: 12px;
+            margin-top: 60px;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .ai-enhance-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 12px;
+        }
+        .ai-enhance-row input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--pastel-slate);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .ai-enhance-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--pink), #cc0069);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .ai-enhance-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        .ai-enhance-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--pink), #cc0069);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .generator-output.ai-loading {
+            position: relative;
+            opacity: 0.7;
+        }
+        .generator-output.ai-loading::after {
+            content: 'Generating with AI...';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--slate);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 10;
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Competitive Intel</h1>
+        <p>Strategic battlecards and competitive positioning for ABM targeting</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-number">10</div>
+                <div class="hero-stat-label">Key Competitors</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">10</div>
+                <div class="hero-stat-label">Vertical Markets</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">100+</div>
+                <div class="hero-stat-label">Win Themes</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">Live</div>
+                <div class="hero-stat-label">Updated Daily</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Vertical Filter -->
+        <div class="vertical-filter">
+            <button class="active" onclick="filterByVertical('all')">All Competitors</button>
+            <button onclick="filterByVertical('healthcare')">Healthcare</button>
+            <button onclick="filterByVertical('banking')">Banking/Finance</button>
+            <button onclick="filterByVertical('retail')">Retail/E-Commerce</button>
+            <button onclick="filterByVertical('technology')">Technology/TaaS</button>
+            <button onclick="filterByVertical('government')">Government</button>
+            <button onclick="filterByVertical('insurance')">Insurance</button>
+        </div>
+
+        <!-- Search -->
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search competitors, keywords, verticals..." onkeyup="searchBattlecards()">
+            </div>
+        </div>
+
+        <!-- Win Themes -->
+        <div class="win-themes">
+            <h2>Teleperformance Win Themes</h2>
+            <div class="win-themes-grid">
+                <div class="win-theme-item">Speed to Results</div>
+                <div class="win-theme-item">Pure-Play CX Expertise</div>
+                <div class="win-theme-item">AI in Production</div>
+                <div class="win-theme-item">Multi-Vertical Breadth</div>
+                <div class="win-theme-item">Talent Stability</div>
+                <div class="win-theme-item">Operational Excellence</div>
+            </div>
+        </div>
+
+        <!-- Comparison Matrix -->
+        <div class="comparison-matrix">
+            <h2>Quick Competitor Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Competitor</th>
+                        <th>HQ Region</th>
+                        <th>Est. Revenue</th>
+                        <th>Key Strength</th>
+                        <th>Primary Weakness</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--accenture-blue);">AC</span>Accenture</td>
+                        <td>Dublin, IE</td>
+                        <td>$64B+</td>
+                        <td>Global scale & tech portfolio</td>
+                        <td>High cost structure</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--pink);">TM</span>Tech Mahindra</td>
+                        <td>Pune, India</td>
+                        <td>$6.5B+</td>
+                        <td>Telecom & IT engineering</td>
+                        <td>Generic CX positioning</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--cognizant-purple);">CG</span>Cognizant</td>
+                        <td>New Jersey, US</td>
+                        <td>$19B+</td>
+                        <td>BPO + IT hybrid model</td>
+                        <td>Legacy infrastructure</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--tcs-blue);">TCS</span>Tata Consulting</td>
+                        <td>Mumbai, India</td>
+                        <td>$28B+</td>
+                        <td>Cost efficiency</td>
+                        <td>Limited vertical specialization</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--ttec-orange);">TTEC</span>TTEC Holdings</td>
+                        <td>Denver, US</td>
+                        <td>$2.8B+</td>
+                        <td>Pure-play CX focus</td>
+                        <td>Smaller global footprint</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--ibm-blue);">IBM</span>IBM Services</td>
+                        <td>Armonk, US</td>
+                        <td>$60B+ (parent)</td>
+                        <td>Enterprise relationships</td>
+                        <td>High overhead, slower decisions</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--atento-green);">AT</span>Atento</td>
+                        <td>Bogota, Colombia</td>
+                        <td>$1.5B+</td>
+                        <td>LATAM regional strength</td>
+                        <td>Limited scale outside LATAM</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--taskus-red);">TU</span>TaskUs</td>
+                        <td>Manila, Philippines</td>
+                        <td>$0.7B+</td>
+                        <td>Tech-savvy, growth-focused</td>
+                        <td>Limited enterprise credibility</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--concentrix-gold);">CX</span>Concentrix</td>
+                        <td>Fremont, US</td>
+                        <td>$6B+ (TTEC subsidiary)</td>
+                        <td>Customer loyalty programs</td>
+                        <td>Brand confusion with parent</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--foundever-teal);">FE</span>Foundever</td>
+                        <td>Manila, Philippines</td>
+                        <td>$3B+</td>
+                        <td>Digital transformation focus</td>
+                        <td>Newer market presence</td>
+                    </tr>
+                    <tr>
+                        <td><span class="competitor-logo" style="background-color: var(--alorica-indigo);">AL</span>Alorica</td>
+                        <td>Irvine, US</td>
+                        <td>$1.2B+</td>
+                        <td>CX center of excellence</td>
+                        <td>Private company, limited transparency</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Battlecards -->
+        <div class="battlecards-section">
+            <h2>Battlecard Library</h2>
+            <div class="battlecards-grid">
+                <!-- Accenture -->
+                <div class="battlecard" data-competitor="accenture" data-verticals="all,healthcare,banking,retail,technology,government,insurance">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--accenture-blue);">AC</div>
+                            <div>
+                                <div class="battlecard-name">Accenture</div>
+                                <div class="battlecard-tagline">Global digital transformation giant</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-high">High Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ $1B+ AWS strategic AI partnership (Jan 2025)</div>
+                                <div class="vulnerability-item">✗ Focuses on consulting vs embedded execution</div>
+                                <div class="strength-item">✓ Global scale & resources</div>
+                                <div class="vulnerability-item">✗ Expensive cost structure</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "Accenture provides high-level AI consulting. Teleperformance delivers TP.ai FAB at scale. We run 400+ active AI projects globally with the largest human-in-the-loop workforce, driving operational execution directly into workflows like Demandbase."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">Orchestrated Execution</div>
+                                <div class="win-theme-pill">Human-in-the-Loop AI</div>
+                                <div class="win-theme-pill">400+ Active Projects</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We announced a $1B+ AWS partnership for enterprise AI transformation."</div>
+                                    <div class="you-say">You Say: "Accenture scales consulting. TP scales actual AI execution. TP.ai FAB integrates CONNECT, COLLECT, ASSIST, and GROWTH—these aren't just microservices, they are the operational fabric of our AI ecosystem delivering 360-degree visibility."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('accenture')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('accenture')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Cognizant -->
+                <div class="battlecard" data-competitor="cognizant" data-verticals="all,healthcare,banking,retail,technology,government,insurance">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--cognizant-purple);">CG</div>
+                            <div>
+                                <div class="battlecard-name">Cognizant</div>
+                                <div class="battlecard-tagline">BPO + IT hybrid services provider</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-high">High Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ BPO + IT integrated model</div>
+                                <div class="vulnerability-item">✗ Legacy technology stack</div>
+                                <div class="strength-item">✓ Established enterprise base</div>
+                                <div class="vulnerability-item">✗ Outdated CX approach</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "Cognizant built their BPO business 20 years ago. CX has evolved. We're native cloud, modern tech stack, with world-class talent at competitive cost."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">Modern Tech Stack</div>
+                                <div class="win-theme-pill">Speed to Results</div>
+                                <div class="win-theme-pill">Pure CX Focus</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We have BPO and IT integration."</div>
+                                    <div class="you-say">You Say: "Cognizant's IT practice and BPO operate separately. Teleperformance's CX-first approach means IT supports human-centered outcomes from day one."</div>
+                                </div>
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We have proven CX services."</div>
+                                    <div class="you-say">You Say: "Cognizant was built in the contact center era. We've been rebuilding for the AI and omnichannel era. Newer platform, faster innovation."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('cognizant')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('cognizant')">Download</button>
+                    </div>
+                </div>
+
+                <!-- TCS -->
+                <div class="battlecard" data-competitor="tcs" data-verticals="all,healthcare,banking,retail,technology,government">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--tcs-blue);">TCS</div>
+                            <div>
+                                <div class="battlecard-name">Tata Consulting Services</div>
+                                <div class="battlecard-tagline">Indian IT services juggernaut</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-moderate">Moderate Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ Cost competitive delivery</div>
+                                <div class="vulnerability-item">✗ Limited vertical expertise</div>
+                                <div class="strength-item">✓ Massive scale</div>
+                                <div class="vulnerability-item">✗ Generalist approach</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "TCS competes on cost and scale. Teleperformance specializes in CX outcomes. A 20% cheaper solution that underperforms costs more than a specialized partner delivering 2x NPS."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">Vertical Specialization</div>
+                                <div class="win-theme-pill">Outcome Focus</div>
+                                <div class="win-theme-pill">CX Expertise</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We have the lowest cost model."</div>
+                                    <div class="you-say">You Say: "Lowest cost + poor outcomes = highest total cost of ownership. TP's blended cost per NPS point is 40% lower than TCS."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('tcs')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('tcs')">Download</button>
+                    </div>
+                </div>
+
+                <!-- TTEC -->
+                <div class="battlecard" data-competitor="ttec" data-verticals="all,healthcare,banking,retail,technology,insurance">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--ttec-orange);">TTEC</div>
+                            <div>
+                                <div class="battlecard-name">TTEC Holdings</div>
+                                <div class="battlecard-tagline">Pure-play CX services competitor</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-severe">SEVERE Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ Pure CX specialization</div>
+                                <div class="vulnerability-item">✗ Limited global footprint</div>
+                                <div class="strength-item">✓ Strong tech platforms</div>
+                                <div class="vulnerability-item">✗ Higher cost than TP</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "TTEC competes on pure CX. Teleperformance matches their specialization + adds multi-vertical industry expertise, 40% cost advantage, and 60+ countries vs. their 20+."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">Global Scale</div>
+                                <div class="win-theme-pill">Cost Competitive</div>
+                                <div class="win-theme-pill">Multi-Vertical Breadth</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We're the pure-play CX leader."</div>
+                                    <div class="you-say">You Say: "TTEC is strong in CX. Teleperformance is equally specialized in CX + we bring vertical expertise in Healthcare, Finance, Tech, and Government. Same quality + more industry wisdom."</div>
+                                </div>
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We have enterprise relationships and proven platforms."</div>
+                                    <div class="you-say">You Say: "So do we—with 400+ enterprise clients and proven wins at TTEC accounts. The difference: we're 30-40% more cost competitive with equivalent or better outcomes."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('ttec')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('ttec')">Download</button>
+                    </div>
+                </div>
+
+                <!-- IBM Services -->
+                <div class="battlecard" data-competitor="ibm" data-verticals="all,healthcare,banking,technology,government">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--ibm-blue);">IBM</div>
+                            <div>
+                                <div class="battlecard-name">IBM Global Services</div>
+                                <div class="battlecard-tagline">Enterprise IT services behemoth</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-moderate">Moderate Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ Enterprise relationships</div>
+                                <div class="vulnerability-item">✗ Very high cost structure</div>
+                                <div class="strength-item">✓ Brand recognition</div>
+                                <div class="vulnerability-item">✗ Slow to innovate</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "IBM Services is siloed. IT doesn't talk to CX. Teleperformance operates as one team—IT enables CX, not the reverse. Faster, more aligned, 50% cost savings."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">CX-First Architecture</div>
+                                <div class="win-theme-pill">Cost Efficiency</div>
+                                <div class="win-theme-pill">Speed to Market</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We have deep enterprise relationships."</div>
+                                    <div class="you-say">You Say: "IBM's relationships are IT-centric. CX requires a different lens. We're displacing IBM in enterprise accounts where CX outcomes matter more than tech architecture."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('ibm')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('ibm')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Atento -->
+                <div class="battlecard" data-competitor="atento" data-verticals="all,banking,retail,technology">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--atento-green);">AT</div>
+                            <div>
+                                <div class="battlecard-name">Atento</div>
+                                <div class="battlecard-tagline">LATAM-focused BPO provider</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-low">Low Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ LATAM regional strength</div>
+                                <div class="vulnerability-item">✗ Limited global footprint</div>
+                                <div class="strength-item">✓ Cost competitive in region</div>
+                                <div class="vulnerability-item">✗ Weak enterprise presence</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "Atento is strong in LATAM SMB space. Teleperformance competes at enterprise level across 60+ countries. Their regional advantage becomes irrelevant at scale."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">Global Scale</div>
+                                <div class="win-theme-pill">Enterprise Credibility</div>
+                                <div class="win-theme-pill">Multi-Vertical Expertise</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We're the LATAM leader."</div>
+                                    <div class="you-say">You Say: "Atento leads in LATAM SMB. Teleperformance leads in LATAM enterprise + we're global. If you need to scale across regions, Atento can't follow."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('atento')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('atento')">Download</button>
+                    </div>
+                </div>
+
+                <!-- TaskUs -->
+                <div class="battlecard" data-competitor="taskus" data-verticals="all,technology,retail">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--taskus-red);">TU</div>
+                            <div>
+                                <div class="battlecard-name">TaskUs</div>
+                                <div class="battlecard-tagline">Tech-savvy, growth-focused BPO</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-low">Low Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ Aggressive 'Trust & Safety' AI campaign (Jan 2025)</div>
+                                <div class="vulnerability-item">✗ Marketing saturation masks scale limitations</div>
+                                <div class="strength-item">✓ Growth-oriented mindset</div>
+                                <div class="vulnerability-item">✗ Smaller scale vs enterprise architectures</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "TaskUs relies on 'Trust & Safety' marketing saturation. Our operational reality is stronger: TP.ai FAB. We embed human expertise at every decision point across 400+ active enterprise AI projects—a scale TaskUs cannot match."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">TP.ai FAB Operations</div>
+                                <div class="win-theme-pill">True Enterprise Scale</div>
+                                <div class="win-theme-pill">Human-in-the-Loop Leader</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We are the leaders in AI Trust & Safety."</div>
+                                    <div class="you-say">You Say: "TaskUs launched a branding campaign, but Teleperformance operates the largest human-in-the-loop AI workforce. We deliver end-to-end operational execution through TP.ai FAB, not piecemeal services."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('taskus')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('taskus')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Concentrix -->
+                <div class="battlecard" data-competitor="concentrix" data-verticals="all,healthcare,banking,retail,insurance">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--concentrix-gold);">CX</div>
+                            <div>
+                                <div class="battlecard-name">Concentrix</div>
+                                <div class="battlecard-tagline">TTEC's customer loyalty platform</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-high">High Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ Unified 'Modular AI' umbrella campaign</div>
+                                <div class="vulnerability-item">✗ Discrete, assembled (frankenstein) components</div>
+                                <div class="strength-item">✓ High market visibility</div>
+                                <div class="vulnerability-item">✗ Lacks integrated 360-degree orchestration</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "Concentrix leans on a 'Modular AI' brand campaign. We focus on operational reality: TP.ai FAB. Our microservices aren't just assembled; they are the resilient fabric of our execution engine."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">TP.ai FAB Execution</div>
+                                <div class="win-theme-pill">Unified Architecture</div>
+                                <div class="win-theme-pill">End-to-End Visibility</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We can build any solution with our Modular AI framework."</div>
+                                    <div class="you-say">You Say: "Concentrix sells discrete components you must assemble into an architecture. TP.ai FAB integrates CONNECT, COLLECT, ASSIST, and GROWTH—the operational fabric of our AI ecosystem working as one unified engine."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('concentrix')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('concentrix')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Foundever -->
+                <div class="battlecard" data-competitor="foundever" data-verticals="all,technology,retail,healthcare">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--foundever-teal);">FE</div>
+                            <div>
+                                <div class="battlecard-name">Foundever</div>
+                                <div class="battlecard-tagline">Digital transformation-focused BPO</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-moderate">Moderate Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ Digital transformation focus</div>
+                                <div class="vulnerability-item">✗ Newer market presence</div>
+                                <div class="strength-item">✓ Modern tech approach</div>
+                                <div class="vulnerability-item">✗ Limited enterprise track record</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "Foundever talks digital transformation. Teleperformance executes it. 25 years of proven outcomes, not transformation theory. We're the execution partner Foundever tries to become."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">Proven Track Record</div>
+                                <div class="win-theme-pill">Execution Excellence</div>
+                                <div class="win-theme-pill">Enterprise Credibility</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We focus on digital transformation."</div>
+                                    <div class="you-say">You Say: "Foundever is new at this. Teleperformance has transformed CX for 400+ enterprises across 60 countries. We don't talk transformation—we deliver it."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('foundever')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('foundever')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Alorica -->
+                <div class="battlecard" data-competitor="alorica" data-verticals="all,banking,retail,insurance">
+                    <div class="battlecard-header">
+                        <div class="battlecard-header-left">
+                            <div class="battlecard-logo" style="background-color: var(--alorica-indigo);">AL</div>
+                            <div>
+                                <div class="battlecard-name">Alorica</div>
+                                <div class="battlecard-tagline">CX center of excellence</div>
+                            </div>
+                        </div>
+                        <div class="threat-badge threat-moderate">Moderate Threat</div>
+                    </div>
+                    <div class="battlecard-body">
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Strengths vs. Vulnerabilities</div>
+                            <div class="strengths-vulnerabilities">
+                                <div class="strength-item">✓ CX center of excellence</div>
+                                <div class="vulnerability-item">✗ Private company, limited transparency</div>
+                                <div class="strength-item">✓ Strong US presence</div>
+                                <div class="vulnerability-item">✗ Weaker international scale</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Counter-Positioning</div>
+                            <div class="counter-positioning">TP: "Alorica excels at US CX centers. Teleperformance is global CX + enterprise scale + vertical expertise. If you need to expand beyond US, Alorica can't follow. We're already there."</div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Win Themes</div>
+                            <div class="win-theme-pills">
+                                <div class="win-theme-pill">Global Footprint</div>
+                                <div class="win-theme-pill">Vertical Expertise</div>
+                                <div class="win-theme-pill">Public Company Transparency</div>
+                            </div>
+                        </div>
+                        <div class="battlecard-section">
+                            <div class="battlecard-section-title">Talk Tracks</div>
+                            <div class="talk-tracks">
+                                <div class="talk-track-pair">
+                                    <div class="they-say">They Say: "We have CX excellence."</div>
+                                    <div class="you-say">You Say: "Alorica excels in US CX. Teleperformance is global CX with healthcare, finance, and tech specialization. Same quality + we follow your global footprint."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-footer">
+                        <button class="copy-button" onclick="copyBattlecard('alorica')">Copy</button>
+                        <button class="download-button" onclick="downloadBattlecard('alorica')">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vertical Panels -->
+        <div class="verticals-section">
+            <h2>Vertical Market Analysis</h2>
+            
+            <!-- Healthcare -->
+            <div class="vertical-panel active" data-vertical="healthcare">
+                <h3>Healthcare Vertical</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Competitor</th>
+                            <th>Est. Healthcare Revenue</th>
+                            <th>Threat Level</th>
+                            <th>TP Displacement Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TTEC</td>
+                            <td>$400M+</td>
+                            <td>High</td>
+                            <td>Match CX expertise + undersell 30% + demonstrate TP's HIPAA excellence</td>
+                        </tr>
+                        <tr>
+                            <td>Accenture</td>
+                            <td>$6B+ (enterprise health IT)</td>
+                            <td>High</td>
+                            <td>Position TP as CX partner vs. Accenture's IT-first approach. Cost advantage: 50%+</td>
+                        </tr>
+                        <tr>
+                            <td>Cognizant</td>
+                            <td>$2B+ (health/pharma combined)</td>
+                            <td>Moderate</td>
+                            <td>Emphasize modern cloud platforms. Healthcare clients need speed; Cognizant delivers legacy.</td>
+                        </tr>
+                        <tr>
+                            <td>Concentrix</td>
+                            <td>$200M+</td>
+                            <td>High</td>
+                            <td>Match capabilities, undercut pricing 35%. Clarity of brand positioning.</td>
+                        </tr>
+                        <tr>
+                            <td>Alorica</td>
+                            <td>$150M+</td>
+                            <td>Moderate</td>
+                            <td>US-centric competitor. Emphasize TP's global healthcare compliance network.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Banking/Finance -->
+            <div class="vertical-panel" data-vertical="banking">
+                <h3>Banking & Finance Vertical</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Competitor</th>
+                            <th>Est. Finance Revenue</th>
+                            <th>Threat Level</th>
+                            <th>TP Displacement Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IBM Services</td>
+                            <td>$8B+ (enterprise finance IT)</td>
+                            <td>Moderate</td>
+                            <td>CX outcomes vs. IT infrastructure. Finance clients want relationship management. TP delivers.</td>
+                        </tr>
+                        <tr>
+                            <td>Accenture</td>
+                            <td>$10B+ (finance consulting)</td>
+                            <td>High</td>
+                            <td>Accenture sells strategy. TP executes CX. Position as execution partner post-transformation.</td>
+                        </tr>
+                        <tr>
+                            <td>TTEC</td>
+                            <td>$300M+</td>
+                            <td>High</td>
+                            <td>Match specialization, undersell 25%. Emphasize multi-product expertise (retail + SMB banking).</td>
+                        </tr>
+                        <tr>
+                            <td>Cognizant</td>
+                            <td>$1.5B+ (finance services)</td>
+                            <td>Moderate</td>
+                            <td>Legacy stack weakness. Finance modernization is priority. Position TP as modern alternative.</td>
+                        </tr>
+                        <tr>
+                            <td>TCS</td>
+                            <td>$4B+ (finance IT)</td>
+                            <td>Moderate</td>
+                            <td>TCS cost advantage is offset by poor outcomes. Cost per NPS point: TP wins 40%.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Retail/E-Commerce -->
+            <div class="vertical-panel" data-vertical="retail">
+                <h3>Retail & E-Commerce Vertical</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Competitor</th>
+                            <th>Est. Retail Revenue</th>
+                            <th>Threat Level</th>
+                            <th>TP Displacement Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TTEC</td>
+                            <td>$500M+</td>
+                            <td>Severe</td>
+                            <td>Direct competitor. Match capabilities, undersell 20%. Emphasize omnichannel expertise.</td>
+                        </tr>
+                        <tr>
+                            <td>Concentrix</td>
+                            <td>$600M+ (Concentrix ecommerce focus)</td>
+                            <td>High</td>
+                            <td>Match customer loyalty expertise, undercut 30%. Emphasize TP's ecommerce scale globally.</td>
+                        </tr>
+                        <tr>
+                            <td>Atento</td>
+                            <td>$400M+ (LATAM retail)</td>
+                            <td>Moderate</td>
+                            <td>Regional player with SMB clients. Emphasis: Enterprise scaling, global omnichannel.</td>
+                        </tr>
+                        <tr>
+                            <td>Alorica</td>
+                            <td>$250M+ (retail CX centers)</td>
+                            <td>Moderate</td>
+                            <td>US retail specialist. Emphasize TP's global retail network + technology integration.</td>
+                        </tr>
+                        <tr>
+                            <td>TaskUs</td>
+                            <td>$50M+ (tech retail niche)</td>
+                            <td>Low</td>
+                            <td>Tech services startup. Emphasize enterprise SLA certainty, proven retail outcomes.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Technology/TaaS -->
+            <div class="vertical-panel" data-vertical="technology">
+                <h3>Technology & SaaS Vertical</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Competitor</th>
+                            <th>Est. Tech Revenue</th>
+                            <th>Threat Level</th>
+                            <th>TP Displacement Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TaskUs</td>
+                            <td>$400M+ (tech focus)</td>
+                            <td>Moderate</td>
+                            <td>TaskUs is scrappy startup. TP is enterprise-grade + startup agility. SLA certainty: key win.</td>
+                        </tr>
+                        <tr>
+                            <td>TTEC</td>
+                            <td>$200M+ (SaaS)</td>
+                            <td>High</td>
+                            <td>Match CX expertise, undersell 20%. Emphasize developer-centric CX + technical onboarding.</td>
+                        </tr>
+                        <tr>
+                            <td>Foundever</td>
+                            <td>$300M+ (digital transformation)</td>
+                            <td>Moderate</td>
+                            <td>Foundever talks transformation. TP executes it. Proven track record: key advantage.</td>
+                        </tr>
+                        <tr>
+                            <td>Cognizant</td>
+                            <td>$5B+ (IT services)</td>
+                            <td>Moderate</td>
+                            <td>Cognizant IT focus misses CX nuance. TP: pure CX play for tech vendors. Cost advantage: 40%.</td>
+                        </tr>
+                        <tr>
+                            <td>Accenture</td>
+                            <td>$15B+ (tech consulting)</td>
+                            <td>Moderate</td>
+                            <td>Accenture: strategy and architecture. TP: execution and CX outcomes. Position as partner.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Government -->
+            <div class="vertical-panel" data-vertical="government">
+                <h3>Government Vertical</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Competitor</th>
+                            <th>Est. Gov't Revenue</th>
+                            <th>Threat Level</th>
+                            <th>TP Displacement Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Accenture</td>
+                            <td>$6B+ (federal/state/local)</td>
+                            <td>High</td>
+                            <td>Accenture dominates federal IT contracts. TP wins on CX for citizen services. Emphasis: citizen satisfaction metrics.</td>
+                        </tr>
+                        <tr>
+                            <td>Cognizant</td>
+                            <td>$800M+ (gov't IT)</td>
+                            <td>Moderate</td>
+                            <td>Cognizant: legacy contracts. Government modernization = TP's opportunity. Cloud-native advantage.</td>
+                        </tr>
+                        <tr>
+                            <td>IBM Services</td>
+                            <td>$2B+ (federal IT)</td>
+                            <td>Moderate</td>
+                            <td>IBM owns federal IT relationships. TP displaces on citizen CX. Different conversation, new stakeholder.</td>
+                        </tr>
+                        <tr>
+                            <td>TCS</td>
+                            <td>$300M+ (gov't IT)</td>
+                            <td>Low</td>
+                            <td>TCS weak in US gov't. TP's advantage: security clearances + government-focused CX specialization.</td>
+                        </tr>
+                        <tr>
+                            <td>TTEC</td>
+                            <td>$100M+ (gov't CX)</td>
+                            <td>Moderate</td>
+                            <td>TTEC has gov't CX presence. TP wins on scale and multi-agency expertise.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Insurance -->
+            <div class="vertical-panel" data-vertical="insurance">
+                <h3>Insurance Vertical</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Competitor</th>
+                            <th>Est. Insurance Revenue</th>
+                            <th>Threat Level</th>
+                            <th>TP Displacement Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TTEC</td>
+                            <td>$350M+</td>
+                            <td>High</td>
+                            <td>TTEC strong in insurance CX. Match expertise, undersell 25%. Emphasize multi-line expertise (P&C + health + life).</td>
+                        </tr>
+                        <tr>
+                            <td>Concentrix</td>
+                            <td>$400M+ (loyalty programs for insurers)</td>
+                            <td>High</td>
+                            <td>Concentrix loyalty focus. TP: CX outcomes vs. programs. Cost advantage: 35%.</td>
+                        </tr>
+                        <tr>
+                            <td>Accenture</td>
+                            <td>$4B+ (insurance consulting)</td>
+                            <td>Moderate</td>
+                            <td>Accenture: transformation strategy. TP: CX execution post-transformation. Execution partner positioning.</td>
+                        </tr>
+                        <tr>
+                            <td>Alorica</td>
+                            <td>$200M+ (insurance CX)</td>
+                            <td>Moderate</td>
+                            <td>Alorica: US insurance strength. TP: global + multi-line expertise + cloud platforms.</td>
+                        </tr>
+                        <tr>
+                            <td>Cognizant</td>
+                            <td>$1B+ (insurance IT/BPO)</td>
+                            <td>Moderate</td>
+                            <td>Cognizant: legacy tech. Insurers modernizing. TP: modern CX partner. Cloud-native advantage.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Generators -->
+        <div class="generators-section">
+            <h2>Deal Generators</h2>
+            <div class="generators-grid">
+                <!-- Displacement Offer Generator -->
+                <div class="generator-panel">
+                    <h3>Displacement Offer Generator</h3>
+                    <div class="form-group">
+                        <label>Competitor</label>
+                        <select id="competitorSelect" onchange="generateDisplacementOffer()">
+                            <option value="">Select a competitor...</option>
+                            <option value="accenture">Accenture</option>
+                            <option value="cognizant">Cognizant</option>
+                            <option value="tcs">TCS</option>
+                            <option value="ttec">TTEC</option>
+                            <option value="ibm">IBM</option>
+                            <option value="atento">Atento</option>
+                            <option value="taskus">TaskUs</option>
+                            <option value="concentrix">Concentrix</option>
+                            <option value="foundever">Foundever</option>
+                            <option value="alorica">Alorica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Channel</label>
+                        <select id="channelSelect" onchange="generateDisplacementOffer()">
+                            <option value="">Select a channel...</option>
+                            <option value="email">Email</option>
+                            <option value="linkedin">LinkedIn InMail</option>
+                            <option value="call">Call Script</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Persona</label>
+                        <select id="personaSelect" onchange="generateDisplacementOffer()">
+                            <option value="">Select a persona...</option>
+                            <option value="cxo">CXO/SVP Customer Experience</option>
+                            <option value="procurement">VP Procurement</option>
+                            <option value="ops">VP Operations</option>
+                            <option value="finance">CFO/Finance Lead</option>
+                        </select>
+                    </div>
+                    <div class="ai-enhance-row">
+                        <input type="text" id="displacementAccountName" placeholder="Account name (e.g., Blue Cross, Chase, Target)">
+                        <button class="ai-enhance-btn" onclick="enhanceWithAI('displacement')" id="displacementAiBtn">Generate with AI</button>
+                    </div>
+                    <div class="generator-output" id="displacementOutput">Select options to generate offer...</div>
+                    <div class="generator-actions">
+                        <button class="action-btn reset" onclick="resetGenerator('displacement')">Reset</button>
+                        <button class="action-btn download" onclick="downloadGenerator('displacement')">Download .txt</button>
+                    </div>
+                </div>
+
+                <!-- Conversation Angle Generator -->
+                <div class="generator-panel">
+                    <h3>Conversation Angle Generator</h3>
+                    <div class="form-group">
+                        <label>Trigger Scenario</label>
+                        <select id="triggerSelect" onchange="generateConversationAngle()">
+                            <option value="">Select a scenario...</option>
+                            <option value="layoffs">Recent Layoffs</option>
+                            <option value="market-exit">Market Exit/Divestiture</option>
+                            <option value="merger">Merger Announcement</option>
+                            <option value="ai-announce">AI Initiative Announcement</option>
+                            <option value="client-loss">Client Loss Reported</option>
+                            <option value="revenue-decline">Revenue Decline</option>
+                            <option value="rfp">Active RFP</option>
+                            <option value="contract-renewal">Contract Renewal Window</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Vertical (Optional)</label>
+                        <select id="verticalSelect" onchange="generateConversationAngle()">
+                            <option value="all">All Verticals</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="banking">Banking/Finance</option>
+                            <option value="retail">Retail/E-Commerce</option>
+                            <option value="technology">Technology/SaaS</option>
+                            <option value="government">Government</option>
+                            <option value="insurance">Insurance</option>
+                        </select>
+                    </div>
+                    <div class="ai-enhance-row">
+                        <input type="text" id="conversationAccountName" placeholder="Account name (e.g., Anthem, Wells Fargo)">
+                        <button class="ai-enhance-btn" onclick="enhanceWithAI('conversation')" id="conversationAiBtn">Generate with AI</button>
+                    </div>
+                    <div class="generator-output" id="conversationOutput">Select a scenario to generate talking points...</div>
+                    <div class="generator-actions">
+                        <button class="action-btn reset" onclick="resetGenerator('conversation')">Reset</button>
+                        <button class="action-btn download" onclick="downloadGenerator('conversation')">Download .txt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutique BPO Tracker -->
+        <div class="boutique-section">
+            <h2>Boutique BPO Tracker</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>HQ</th>
+                        <th>Est. Revenue</th>
+                        <th>Specialty</th>
+                        <th>Key Markets</th>
+                        <th>Threat Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TELUS Digital</td>
+                        <td>Vancouver, Canada</td>
+                        <td>$2B+</td>
+                        <td>Digital Customer Experience</td>
+                        <td>North America, LATAM</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>Sutherland</td>
+                        <td>Rochester, NY</td>
+                        <td>$1.2B+</td>
+                        <td>CX & Digital Solutions</td>
+                        <td>North America, Europe</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>Transcom</td>
+                        <td>Stockholm, Sweden</td>
+                        <td>$800M+</td>
+                        <td>Multilingual CX</td>
+                        <td>Europe, MENA</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>ibex</td>
+                        <td>Manila, Philippines</td>
+                        <td>$500M+</td>
+                        <td>Tech-focused BPO</td>
+                        <td>Asia-Pacific, North America</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>IntouchCX</td>
+                        <td>Denver, US</td>
+                        <td>$1B+</td>
+                        <td>Customer Experience</td>
+                        <td>North America, Europe</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>TDCX</td>
+                        <td>Singapore</td>
+                        <td>$900M+</td>
+                        <td>Omnichannel Customer Support</td>
+                        <td>Asia-Pacific, North America</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>Probe Group</td>
+                        <td>Malaysia</td>
+                        <td>$400M+</td>
+                        <td>Multilingual Support</td>
+                        <td>Asia-Pacific</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>iQor</td>
+                        <td>Las Vegas, US</td>
+                        <td>$600M+</td>
+                        <td>CX & Digital Services</td>
+                        <td>North America, LATAM</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>Startek</td>
+                        <td>Denver, US</td>
+                        <td>$250M+</td>
+                        <td>Customer Service</td>
+                        <td>North America</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Firstsource</td>
+                        <td>New Delhi, India</td>
+                        <td>$1B+</td>
+                        <td>Digital & Analytics BPO</td>
+                        <td>North America, Europe, India</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>HGS</td>
+                        <td>Jacksonville, FL</td>
+                        <td>$800M+</td>
+                        <td>BPO & Healthcare CX</td>
+                        <td>North America, Europe, Asia</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>ResultsCX</td>
+                        <td>Austin, TX</td>
+                        <td>$300M+</td>
+                        <td>CX Nearshore Services</td>
+                        <td>North America, LATAM</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Everise</td>
+                        <td>New York, US</td>
+                        <td>$400M+</td>
+                        <td>Customer Experience</td>
+                        <td>North America, Europe, LATAM</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>Qualfon</td>
+                        <td>Montreal, Canada</td>
+                        <td>$200M+</td>
+                        <td>Multilingual Customer Service</td>
+                        <td>North America, Europe</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Conduent</td>
+                        <td>Florham Park, NJ</td>
+                        <td>$4B+ (parent: Xerox spinoff)</td>
+                        <td>Business Services & Transformation</td>
+                        <td>Global</td>
+                        <td>Moderate</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h2>Upload Competitive Intelligence</h2>
+            <div class="upload-area" onclick="triggerFileUpload()">
+                <p>Drag and drop competitive intelligence files here, or click to select</p>
+                <button class="upload-button">Choose Files</button>
+                <input type="file" id="fileInput" style="display: none;" multiple onchange="handleFileUpload()">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Teleperformance Confidential</strong> | ABM Suite — Competitive Intelligence</p>
+        <p>Last updated: April 2026 | Owner: Josh Alonzo, ABX Strategic Intelligence</p>
+    </footer>
+
+    <script>
+        // Filter by vertical
+        function filterByVertical(vertical) {
+            // Update button states
+            document.querySelectorAll('.vertical-filter button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update battlecards visibility
+            const battlecards = document.querySelectorAll('.battlecard');
+            battlecards.forEach(card => {
+                const verticals = card.getAttribute('data-verticals').split(',');
+                if (vertical === 'all' || verticals.includes(vertical)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Update vertical panels
+            document.querySelectorAll('.vertical-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            if (vertical !== 'all') {
+                const activePanel = document.querySelector(`[data-vertical="${vertical}"]`);
+                if (activePanel) {
+                    activePanel.classList.add('active');
+                }
+            }
+        }
+
+        // Search all intel sections
+        function searchBattlecards() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            // 1. Filter Battlecards
+            document.querySelectorAll('.battlecard').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = (searchTerm === '' || text.includes(searchTerm)) ? 'block' : 'none';
+            });
+            
+            // 2. Filter Table Rows across all intelligence sections
+            document.querySelectorAll('.comparison-matrix tbody tr, .vertical-panel tbody tr, .boutique-section tbody tr').forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = (searchTerm === '' || text.includes(searchTerm)) ? '' : 'none';
+            });
+        }
+
+        // Copy battlecard to clipboard
+        function copyBattlecard(competitor) {
+            const card = document.querySelector(`[data-competitor="${competitor}"]`);
+            const text = card.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = card.querySelector('.copy-button');
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+
+        // Download battlecard as .txt file
+        function downloadBattlecard(competitor) {
+            const card = document.querySelector(`[data-competitor="${competitor}"]`);
+            const text = card.innerText;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `TP_Battlecard_${competitor.charAt(0).toUpperCase() + competitor.slice(1)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Reset generator to defaults
+        function resetGenerator(type) {
+            if (type === 'displacement') {
+                document.getElementById('competitorSelect').selectedIndex = 0;
+                document.getElementById('channelSelect').selectedIndex = 0;
+                document.getElementById('personaSelect').selectedIndex = 0;
+                document.getElementById('displacementAccountName').value = '';
+                document.getElementById('displacementOutput').textContent = 'Select options to generate offer...';
+                document.getElementById('displacementOutput').innerHTML = 'Select options to generate offer...';
+            } else {
+                document.getElementById('triggerSelect').selectedIndex = 0;
+                document.getElementById('verticalSelect').selectedIndex = 0;
+                document.getElementById('conversationAccountName').value = '';
+                document.getElementById('conversationOutput').textContent = 'Select a scenario to generate talking points...';
+                document.getElementById('conversationOutput').innerHTML = 'Select a scenario to generate talking points...';
+            }
+        }
+
+        // Download generator output as .txt
+        function downloadGenerator(type) {
+            let output, filename;
+            if (type === 'displacement') {
+                output = document.getElementById('displacementOutput');
+                const competitor = document.getElementById('competitorSelect').value || 'general';
+                const channel = document.getElementById('channelSelect').value || 'multi';
+                filename = `TP_Displacement_${competitor}_${channel}.txt`;
+            } else {
+                output = document.getElementById('conversationOutput');
+                const trigger = document.getElementById('triggerSelect').value || 'general';
+                const vertical = document.getElementById('verticalSelect').value || 'all';
+                filename = `TP_ConversationAngle_${trigger}_${vertical}.txt`;
+            }
+            const text = output.innerText;
+            if (!text || text.includes('Select options') || text.includes('Select a scenario')) {
+                alert('Generate content first before downloading.');
+                return;
+            }
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Generate displacement offer
+        function generateDisplacementOffer() {
+            const competitor = document.getElementById('competitorSelect').value;
+            const channel = document.getElementById('channelSelect').value;
+            const persona = document.getElementById('personaSelect').value;
+            const output = document.getElementById('displacementOutput');
+
+            if (!competitor || !channel || !persona) {
+                output.textContent = 'Select all options to generate offer...';
+                return;
+            }
+
+            const offers = {
+                email: {
+                    cxo: `Subject: CX Outcomes You're Missing—Teleperformance Case Study
+
+Hi [Name],
+
+I was reviewing ${competitor}'s recent earnings, and something stood out: their CX satisfaction scores are flat despite 20% headcount growth. That's expensive.
+
+Teleperformance just delivered a similar client with 35% higher CSAT, 45% faster resolution times, and 25% lower cost. No magic—just CX-first architecture that ${competitor} hasn't caught up to.
+
+If you're curious how we stack up for [your use case], let's spend 15 minutes. No pitch, just outcomes.
+
+Best,
+[Your Name]`,
+                    procurement: `Subject: Cost Reduction Opportunity—${competitor} Overlap Analysis
+
+Hi [Name],
+
+We modeled your current contract with ${competitor} against Teleperformance's pricing, and the math is compelling:
+
+25-30% savings (no SLA degradation)
+Faster onboarding (4 weeks vs. ${competitor}'s 12)
+Modern platform (cloud-native, not legacy infrastructure)
+
+If you're managing procurement costs this year, this is worth 20 minutes.
+
+[Link to cost comparison deck]
+
+Best,
+[Your Name]`,
+                    ops: `Subject: Operational Efficiency Play—[Your Company] Benchmark
+
+Hi [Name],
+
+${competitor}'s operational model is expensive to maintain: legacy platforms, complex governance, slow innovation cycles. We've helped 150+ companies transition to a leaner model.
+
+Results: 40% faster time-to-value, 50% fewer critical issues, more time on strategy.
+
+Would you be open to a brief discussion about your operational pain points?
+
+Best,
+[Your Name]`,
+                    finance: `Subject: COGS Reduction—BPO Efficiency Benchmark Report
+
+Hi [Name],
+
+Just finished a benchmark analysis of ${competitor}'s cost structure vs. Teleperformance. The gap is significant.
+
+Our latest clients saw:
+- 30-35% blended cost reduction
+- Same or better SLAs
+- Faster scaling (no recruitment bottleneck)
+
+Attached: Quick 2-page summary. Happy to walk through for your specific use case.
+
+Best,
+[Your Name]`
+                },
+                linkedin: {
+                    cxo: `Hi [Name],
+
+Saw your recent promotion to lead CX strategy. Congrats.
+
+Quick observation: ${competitor}'s pure-play CX story is strong, but their cost structure isn't competitive at scale. Teleperformance delivers the same specialization at 35-40% lower cost.
+
+If you're in a renewal cycle, we should talk. If not, let's stay connected—these windows always open.
+
+Would you be open to a brief call?
+
+[Your Name]
+Teleperformance ABX`,
+                    procurement: `Hi [Name],
+
+Working with procurement leaders managing BPO vendor rationalization. ${competitor} is a strong vendor, but they often aren't the most cost-efficient choice.
+
+We're helping companies reduce CX vendor costs by 25-30% without SLA compromise. Your account might be a fit.
+
+Worth a conversation?
+
+[Your Name]
+Teleperformance`,
+                    ops: `Hi [Name],
+
+Leading digital transformation initiatives at a few companies in your space. One consistent theme: legacy BPO platforms are a bottleneck.
+
+Teleperformance's cloud-native platform cuts deployment time by 50% and operational complexity by 40%.
+
+If ${competitor}'s infrastructure is slowing you down, let's talk.
+
+[Your Name]
+Teleperformance`,
+                    finance: `Hi [Name],
+
+Seen your recent earnings guidance. CX is a major cost driver for your type of business.
+
+We're helping CFOs optimize BPO spend without sacrificing outcomes. 30-35% reduction is typical.
+
+Would a benchmarking call be useful?
+
+[Your Name]
+Teleperformance CFO Advisory`
+                },
+                call: {
+                    cxo: `"Hi [Name], thanks for taking the call. I know you're busy, so I'll be quick.
+
+I was looking at your team's roadmap—really impressive CX transformation work. One thing I noticed: ${competitor}'s cost per interaction is trending up, not down. You're probably seeing the same thing.
+
+We just wrapped a project for [similar company] with the same CX goals, but 40% lower cost. Same platforms, better architecture.
+
+Curious if you're in a renewal cycle or thinking about this at all?"`,
+                    procurement: `"Hi [Name], I know you're managing vendor consolidation. Quick question: are you satisfied with ${competitor}'s cost structure?
+
+Most of our conversations start here: companies are paying for 'enterprise' solutions but getting 'standard' outcomes.
+
+We're 25-30% cheaper for the same SLA. Would it make sense to run a side-by-side comparison?"`,
+                    ops: `"Hi [Name], I've been talking to ops leaders about a consistent pain point: ${competitor}'s platform and governance model is enterprise-grade, but it's also slow.
+
+We've built something leaner—cloud-native, faster to deploy, easier to scale. Most teams see 4-week deployments vs. ${competitor}'s 12-week timeline.
+
+Curious if platform speed is on your priority list?"`,
+                    finance: `"Hi [Name], I'm working with CFOs on BPO cost optimization. Typical opportunity: 30-35% savings without SLA compromise.
+
+${competitor} is a solid vendor, but often not the most efficient choice. Would it be worth 15 minutes to walk through a cost model for your scenario?"`
+                }
+            };
+
+            const offerText = offers[channel][persona] || 'Offer not available for this combination.';
+            output.textContent = offerText;
+        }
+
+        // Generate conversation angle
+        function generateConversationAngle() {
+            const trigger = document.getElementById('triggerSelect').value;
+            const vertical = document.getElementById('verticalSelect').value;
+            const output = document.getElementById('conversationOutput');
+
+            if (!trigger) {
+                output.textContent = 'Select a scenario to generate talking points...';
+                return;
+            }
+
+            const angles = {
+                layoffs: {
+                    all: `LAYOFF ANGLE: "Efficiency Through Specialization"
+
+Opening: "Saw the [company] restructuring news. Tough moment. Quick thought: if you're optimizing headcount, CX vendor efficiency becomes critical."
+
+Talking Points:
+1. "Layoffs often mean fewer internal resources. CX shouldn't be the victim—it should be the lever."
+2. "We've helped companies post-restructuring improve outcomes while reducing vendor spend 30%."
+3. "How much of your CX budget went to inefficiency vs. outcomes? That's what we fix."
+
+Close: "Would a benchmarking conversation help clarify what's possible?"`,
+                    healthcare: `HEALTHCARE LAYOFF ANGLE: "Member Experience, Not Headcount"
+
+Opening: "Healthcare layoffs often hit patient-facing operations. That's risky. Teleperformance specializes in healthcare CX resilience."
+
+Talking Points:
+1. "Reduced headcount + reduced member satisfaction = churn, risk, reputational damage."
+2. "Our model: same member experience, 40% lower cost. HIPAA-compliant, proven across health plans."
+3. "Post-layoff, you need a vendor who can do more with less. That's our specialty."
+
+Close: "Would a health plan-specific benchmarking call be valuable?"`,
+                    banking: `BANKING LAYOFF ANGLE: "Customer Relationship Resilience"
+
+Opening: "Banking restructuring often hits customer-facing ops. That's where customer relationships live. Don't cut there."
+
+Talking Points:
+1. "Layoffs + poor customer experience = account migration to competitors."
+2. "Teleperformance banking teams are trained to maintain relationships at lower cost."
+3. "We've helped 3 major banks post-restructuring maintain NPS while reducing vendor spend."
+
+Close: "Would a benchmarking conversation around your customer retention strategy be useful?"`,
+                    retail: `RETAIL LAYOFF ANGLE: "Customer Loyalty, Not Cost-Cutting"
+
+Opening: "Retail restructuring is often short-sighted on CX. That's where you win or lose."
+
+Talking Points:
+1. "Layoffs that damage customer experience are expensive—churn, negative NPS, lost repeat purchase."
+2. "Teleperformance keeps customer experience premium while reducing your operational burden."
+3. "Retail is thin-margin. We help you cut costs without cutting customer value."
+
+Close: "Would a retail-specific cost-per-NPS benchmark be useful?"`,
+                    technology: `TECH LAYOFF ANGLE: "Support Efficiency During Scale-Back"
+
+Opening: "Tech layoffs hit product support hard. That's dangerous for churn and reputation."
+
+Talking Points:
+1. "Layoffs often mean less hands-on support. Our platform makes up the gap with AI + human balance."
+2. "We've helped 5 SaaS companies maintain NPS post-restructuring while reducing support costs 35%."
+3. "Tech support is a churn driver. Don't compromise there."
+
+Close: "Would a SaaS-specific support efficiency benchmarking be valuable?"`,
+                    government: `GOVERNMENT LAYOFF ANGLE: "Citizen Experience Continuity"
+
+Opening: "Government headcount reductions often impact citizen-facing services. That affects trust and satisfaction."
+
+Talking Points:
+1. "Citizen experience is your accountability metric. Don't let layoffs damage it."
+2. "Teleperformance specializes in government CX resilience—prove capability during uncertainty."
+3. "We've helped 4 agencies maintain CSAT through restructuring."
+
+Close: "Would a government-specific citizen experience resilience discussion help?"`,
+                    insurance: `INSURANCE LAYOFF ANGLE: "Claims Handling Resilience"
+
+Opening: "Insurance layoffs often hit claims operations. That's your core function—protect it."
+
+Talking Points:
+1. "Claims handling is your brand promise. Layoffs that slow claims processing damage trust."
+2. "We've helped 6 insurance carriers maintain claims SLA through headcount reductions."
+3. "Cost management + claims excellence = Teleperformance specialty."
+
+Close: "Would a benchmark on claims handling efficiency be valuable?"`
+                },
+                'market-exit': {
+                    all: `MARKET EXIT ANGLE: "Transition Partner Opportunity"
+
+Opening: "Saw the [company] exit news. Transitions are messy. Smart vendors step in and simplify."
+
+Talking Points:
+1. "During exit/divestiture, CX is often neglected. That's the risk."
+2. "We specialize in transition management—minimal customer disruption, often lower cost."
+3. "Post-exit, you need a vendor who can handle uncertainty. We've done this 50+ times."
+
+Close: "Would a transition planning conversation be helpful?"`,
+                    healthcare: `HEALTH PLAN EXIT ANGLE: "Member Continuity During Transition"
+
+Opening: "Healthcare market exit = member risk. We specialize in frictionless member experience during transitions."
+
+Talking Points:
+1. "Exiting = risk of member churn. Smooth transition = retained lives."
+2. "Our healthcare team has managed 20+ plan transitions without member satisfaction dips."
+3. "Post-exit, members need reassurance their care isn't disrupted. We provide that."
+
+Close: "Would member continuity planning be valuable?"`,
+                    banking: `BANK DIVESTITURE ANGLE: "Customer Continuity During Portfolio Transition"
+
+Opening: "Banking divest = customer relationship risk. We specialize in transition without churn."
+
+Talking Points:
+1. "Divest = customer uncertainty. Smooth CX = retained deposits and relationships."
+2. "We've managed 15+ bank transitions with zero customer satisfaction impact."
+3. "Post-close, you need a vendor who can handle rapid change. That's our expertise."
+
+Close: "Would customer retention planning during transition be useful?"`,
+                    retail: `RETAILER EXIT ANGLE: "Customer Experience Continuity"
+
+Opening: "Retail market exit = customer confusion. Smooth experience = retained loyalty."
+
+Talking Points:
+1. "Exits often = worse customer experience temporarily. That's churn."
+2. "We've managed 25+ retail transitions maintaining NPS throughout."
+3. "Customers don't care about your exit. They care about their experience. We protect that."
+
+Close: "Would a transition communication strategy be helpful?"`,
+                    technology: `SAAS DIVESTITURE ANGLE: "User Experience During Acquisition"
+
+Opening: "Tech divestitures are risky for user experience. We manage that risk."
+
+Talking Points:
+1. "Users worry about product support, feature roadmap, security during ownership change. Address their concerns."
+2. "We've managed 10+ SaaS transitions with zero user churn from support degradation."
+3. "Post-close, users need confidence in support continuity. We provide that."
+
+Close: "Would user experience strategy during transition help?"`,
+                    government: `GOVERNMENT DIVESTITURE ANGLE: "Citizen Experience & Regulatory Continuity"
+
+Opening: "Government program exit/reorg = citizen confusion. Smooth transition = maintained trust."
+
+Talking Points:
+1. "Citizens don't understand transitions. Smooth CX = maintained trust in government."
+2. "We've managed 8 government program transitions with zero citizen satisfaction impact."
+3. "Regulatory bodies scrutinize transitions closely. We ensure you exceed expectations."
+
+Close: "Would transition communication and continuity planning be helpful?"`,
+                    insurance: `INSURANCE PORTFOLIO EXIT ANGLE: "Policyholder Continuity"
+
+Opening: "Insurance portfolio exit = policyholder churn risk. Smooth transition = retained premiums."
+
+Talking Points:
+1. "Policyholders fear coverage disruption during ownership change. Prove continuity."
+2. "We've managed 12 insurance portfolio transitions with zero policyholder satisfaction impact."
+3. "Post-exit, you need a vendor trusted by policyholders. That's us."
+
+Close: "Would policyholder experience strategy during transition be valuable?"`
+                },
+                merger: {
+                    all: `MERGER ANGLE: "Merged Entity CX Optimization"
+
+Opening: "Saw the [merger] announcement. Post-merger integration is where most value is lost. CX integration is critical."
+
+Talking Points:
+1. "Merged entities have redundant CX platforms and teams. Consolidation = cost reduction + capability retention."
+2. "We've helped 30+ post-merger entities consolidate CX operations and save 30-40%."
+3. "CX due diligence is often skipped. That's expensive. We help identify integration leverage."
+
+Close: "Would a post-merger CX integration conversation be valuable?"`,
+                    healthcare: `HEALTH PLAN MERGER ANGLE: "Member Experience Integration"
+
+Opening: "Merger = member experience risk. Smart operators consolidate CX and improve experience."
+
+Talking Points:
+1. "Merged health plans often have conflicting member experience standards. Standardization = efficiency + better experience."
+2. "We've integrated 8 health plan mergers—standard member experience, 35% CX cost reduction."
+3. "Post-close, members need certainty about their care. Unified CX = confidence."
+
+Close: "Would member experience integration planning be helpful?"`,
+                    banking: `BANK MERGER ANGLE: "Customer Experience & Cross-Sell Integration"
+
+Opening: "Post-merger, CX integration determines whether you realize cross-sell value. That's where synergies live."
+
+Talking Points:
+1. "Merged banks fail at CX integration, losing cross-sell upside. Unified experience = more revenue."
+2. "We've guided 12 bank mergers through CX consolidation—captured 20%+ of projected synergies."
+3. "Customers expect seamless experience post-merger. Unified CX platforms = expectation met."
+
+Close: "Would post-merger CX and cross-sell strategy be useful?"`,
+                    retail: `RETAILER MERGER ANGLE: "Omnichannel Customer Experience Post-Merge"
+
+Opening: "Merged retailers often have channel conflict and redundant CX. Unify experience, capture synergies."
+
+Talking Points:
+1. "Post-merger omnichannel integration is where most value is lost. Unified experience = efficiency."
+2. "We've integrated 15 retail mergers—unified customer journey, 40% CX cost reduction."
+3. "Customers don't care about your org structure. Unified experience = value captured."
+
+Close: "Would post-merger customer experience integration planning be valuable?"`,
+                    technology: `SAAS MERGER ANGLE: "Product + Support Integration Strategy"
+
+Opening: "SaaS mergers fail at product + support integration. Unified platform = customer retention + cost reduction."
+
+Talking Points:
+1. "Merged SaaS companies often have conflicting product & support strategies. Customers churn from confusion."
+2. "We've guided 10 SaaS mergers through support integration—captured 25%+ of support cost synergies."
+3. "Post-merger, users need single source of truth on product, features, support. That's where we help."
+
+Close: "Would product + support integration planning be useful?"`,
+                    government: `GOVERNMENT AGENCY MERGER ANGLE: "Citizen Experience & Service Continuity"
+
+Opening: "Merged government agencies often have fractured citizen experiences. Unified experience = trust + efficiency."
+
+Talking Points:
+1. "Citizens don't understand organizational change. Unified service experience = confidence in government."
+2. "We've guided 5 government mergers through citizen experience consolidation—zero citizen satisfaction impact."
+3. "Post-merger, audit bodies scrutinize citizen experience. Proactive unification = regulatory confidence."
+
+Close: "Would citizen experience integration planning be helpful?"`,
+                    insurance: `INSURANCE MERGER ANGLE: "Policyholder Experience & Claims Integration"
+
+Opening: "Merged insurers often have redundant claims platforms. Consolidation = cost reduction + better experience."
+
+Talking Points:
+1. "Merged insurers lose synergies on claims consolidation. Unified platform = 30% cost reduction."
+2. "We've guided 8 insurance mergers through claims experience consolidation—captured full synergy potential."
+3. "Policyholders expect seamless claims experience post-merger. Unified platform = expectation met."
+
+Close: "Would post-merger claims integration planning be valuable?"`
+                },
+                'ai-announce': {
+                    all: `AI ANNOUNCEMENT ANGLE: "AI is Table Stakes—Execution Matters"
+
+Opening: "Saw your AI announcement. Smart move—every vendor is announcing AI now. Execution is what separates leaders."
+
+Talking Points:
+1. "AI in CX is capital-intensive and risky. Most vendors are testing. Teleperformance is in production at scale."
+2. "We've deployed AI in 150+ enterprise operations. Real outcomes: 35% reduction in handle time, 25% cost savings."
+3. "Your customers want AI-augmented CX, not fully automated. We handle that balance."
+
+Close: "Would a discussion on AI execution strategies help?"`,
+                    healthcare: `HEALTH CARE AI ANGLE: "AI for Provider Relations & Member Experience"
+
+Opening: "Healthcare AI announcement = good positioning. Implementation is hard, especially for compliance."
+
+Talking Points:
+1. "Health AI must balance automation with human touch. Wrong balance = compliance risk."
+2. "We've deployed HIPAA-compliant AI in 25+ health plans. Results: faster claims processing, better member experience."
+3. "Your members trust humans on critical decisions. Our AI handles routing and low-risk automation. Humans handle complexity."
+
+Close: "Would an AI strategy discussion specific to healthcare help?"`,
+                    banking: `BANKING AI ANGLE: "AI for Fraud Detection & Customer Retention"
+
+Opening: "Bank AI play makes sense. Fraud detection and retention are where AI adds value."
+
+Talking Points:
+1. "Most banking AI is hype. Real value: fraud pattern recognition + churn prediction."
+2. "We've deployed AI in 20+ banks. Results: 40% fraud detection improvement, 15% churn reduction."
+3. "Customers want fast, smart fraud handling, not friction. AI + human judgment = confidence."
+
+Close: "Would an AI strategy specific to banking help?"`,
+                    retail: `RETAIL AI ANGLE: "AI for Customer Personalization & Churn Prevention"
+
+Opening: "Retail AI announcement targets right problem. Personalization at scale is complex."
+
+Talking Points:
+1. "Retail AI pays off in personalization and churn prevention. Most vendors are learning. We're operating at scale."
+2. "We've deployed AI in 30+ retail operations. Results: 25% higher CLV, 20% churn reduction."
+3. "Customers want AI-enabled recommendations, not AI replaces customer service. We deliver both."
+
+Close: "Would a retail AI strategy conversation be helpful?"`,
+                    technology: `SAAS AI ANGLE: "AI for Product Support & Upsell Automation"
+
+Opening: "SaaS companies announcing AI for support + upsell. Execution is where most fail."
+
+Talking Points:
+1. "SaaS AI value: automate routine support, detect upsell opportunities, improve NPS. Balance is critical."
+2. "We've deployed AI in 25+ SaaS operations. Results: 40% reduction in routine support, 30% upsell lift."
+3. "Users want smart support, not bot hell. We handle that balance—AI for efficiency, humans for relationships."
+
+Close: "Would a SaaS AI strategy discussion help?"`,
+                    government: `GOVERNMENT AI ANGLE: "AI for Citizen Service & Compliance"
+
+Opening: "Government AI initiative is bold. Citizen trust requires careful implementation."
+
+Talking Points:
+1. "Government AI must balance automation with human oversight. Citizens need to trust they're not dealing with just bots."
+2. "We've deployed government-compliant AI in 8 agencies. Results: faster service, improved citizen satisfaction, full audit compliance."
+3. "Transparency is critical in government AI. We document decisions, maintain human override. Citizens feel confident."
+
+Close: "Would a government-specific AI strategy discussion be valuable?"`,
+                    insurance: `INSURANCE AI ANGLE: "AI for Claims Processing & Fraud Prevention"
+
+Opening: "Insurance AI announcement targets right problems. Claims speed and fraud are big leverage points."
+
+Talking Points:
+1. "Insurance AI value: faster claims processing, fraud pattern detection, policy decision support. Execution is hard."
+2. "We've deployed AI in 12 insurance operations. Results: 50% faster claims processing, 35% fraud detection improvement."
+3. "Policyholders want faster claims and fraud confidence. AI handles routing; humans handle decisions. Policyholders trust that."
+
+Close: "Would an insurance-specific AI strategy discussion help?"`
+                },
+                'client-loss': {
+                    all: `CLIENT LOSS ANGLE: "Win-Back Through Operational Excellence"
+
+Opening: "Heard about the [client] loss. Tough. Quick thought: we specialize in operational improvements that prevent that."
+
+Talking Points:
+1. "Client losses are usually operational, not strategic. SLA miss, cost overruns, slow innovation."
+2. "We've helped 40+ companies recapture lost clients through operational improvements."
+3. "Your next vendor pitch to them: Teleperformance + your vision = client confidence."
+
+Close: "Would a win-back strategy conversation be useful?"`,
+                    healthcare: `HEALTH PLAN CLIENT LOSS ANGLE: "Plan Retention Through Claims Excellence"
+
+Opening: "Heard about the health plan departure. Claims experience matters. Let's recapture."
+
+Talking Points:
+1. "Health plan losses usually stem from claims processing delays or member experience gaps."
+2. "Teleperformance specializes in claims excellence. 50% faster processing, 25% better member satisfaction."
+3. "Win-back play: position TP as operational partner, not just vendor. Focus on member retention metrics."
+
+Close: "Would a win-back strategy be valuable?"`,
+                    banking: `BANK CLIENT LOSS ANGLE: "Relationship Recovery Through Efficiency"
+
+Opening: "Heard the [bank] relationship ended. Bank relationships are hard to win back, but possible."
+
+Talking Points:
+1. "Bank losses often stem from cost + service gaps. Operational excellence closes that gap."
+2. "Teleperformance banking: 30% cost reduction + better customer relationship metrics."
+3. "Win-back play: prove you've fixed the operational issues. Cost + quality together."
+
+Close: "Would a bank win-back strategy be helpful?"`,
+                    retail: `RETAILER CLIENT LOSS ANGLE: "Customer Satisfaction Recovery"
+
+Opening: "Heard about the retail client departure. Retail churn is often avoidable."
+
+Talking Points:
+1. "Retail client losses often = customer satisfaction gap. Fix that, win back relationship."
+2. "We've helped 15 retailers recapture lost clients through omnichannel experience improvements."
+3. "Win-back play: position as partner in customer loyalty recovery, not just vendor."
+
+Close: "Would a retail win-back strategy be useful?"`,
+                    technology: `SAAS CLIENT LOSS ANGLE: "User Experience Recovery"
+
+Opening: "Heard the [SaaS] customer relationship ended. SaaS churn is often reversible."
+
+Talking Points:
+1. "SaaS churn often = support gap or feature delivery misalignment. Address that, recover relationship."
+2. "We've helped 12 SaaS companies recapture churned accounts through support excellence + product alignment."
+3. "Win-back play: prove support is no longer a liability—it's a competitive advantage."
+
+Close: "Would a SaaS win-back strategy be helpful?"`,
+                    government: `GOVERNMENT PROGRAM LOSS ANGLE: "Agency Relationship Recovery"
+
+Opening: "Heard about the government program change. Government relationships are hard to win back."
+
+Talking Points:
+1. "Government losses usually = compliance gap or audit issue. Fix that, recapture relationship."
+2. "We've helped 6 organizations recapture government relationships through compliance excellence + transparency."
+3. "Win-back play: position as compliance + citizen experience partner. Address the original gap."
+
+Close: "Would a government win-back strategy be valuable?"`,
+                    insurance: `INSURANCE CLIENT LOSS ANGLE: "Policyholder Satisfaction Recovery"
+
+Opening: "Heard about the insurance client change. Insurance relationships are hard to win back."
+
+Talking Points:
+1. "Insurance losses usually = claims handling gap or policyholder experience issue."
+2. "We've helped 8 organizations recapture insurance clients through claims excellence recovery."
+3. "Win-back play: position as claims excellence partner. Prove you've fixed the core issue."
+
+Close: "Would an insurance win-back strategy help?"`
+                },
+                'revenue-decline': {
+                    all: `REVENUE DECLINE ANGLE: "Cost Efficiency as Margin Protection"
+
+Opening: "Saw the revenue guidance. Margin compression is coming. CX vendor efficiency becomes critical."
+
+Talking Points:
+1. "Revenue decline = margin pressure. CX is often 10-20% of revenue. Vendor efficiency = margin recovery."
+2. "We've helped 35+ companies protect margins through CX cost reduction: 30-40% typical."
+3. "Smart executives: revenue down = focus on margin. CX vendor efficiency is a lever most miss."
+
+Close: "Would a margin protection strategy conversation help?"`,
+                    healthcare: `HEALTH PLAN REVENUE DECLINE ANGLE: "Medical Loss Ratio Protection"
+
+Opening: "Saw the plan guidance. Revenue decline pressure = MLR pressure. CX efficiency becomes critical."
+
+Talking Points:
+1. "Health plans under revenue pressure often cut costs everywhere. CX shouldn't be cut—it should be optimized."
+2. "We've helped 8 plans protect MLR through CX cost reduction + member satisfaction protection."
+3. "Revenue down = member retention becomes critical. Efficient CX = retention protection."
+
+Close: "Would an MLR protection strategy be valuable?"`,
+                    banking: `BANK REVENUE DECLINE ANGLE: "NIM Compression & Cross-Sell Efficiency"
+
+Opening: "Saw the NIM guidance. Margin compression is real. CX efficiency + cross-sell optimization = recovery."
+
+Talking Points:
+1. "Banks under revenue pressure need CX efficiency (cost down) + cross-sell optimization (revenue up)."
+2. "We've helped 10 banks manage NIM compression through CX cost reduction + relationship deepening."
+3. "Revenue down = relationship value becomes critical. Efficient, high-quality CX = relationship deepening."
+
+Close: "Would a NIM protection strategy be helpful?"`,
+                    retail: `RETAILER REVENUE DECLINE ANGLE: "Gross Margin Protection Through CX Efficiency"
+
+Opening: "Retail revenue guidance = margin pressure. CX efficiency + customer retention = margin recovery."
+
+Talking Points:
+1. "Retailers under revenue pressure need CX cost reduction + customer loyalty protection."
+2. "We've helped 12 retailers manage margin compression through CX efficiency + churn prevention."
+3. "Revenue down = customer lifetime value becomes critical. Efficient CX = LTV protection."
+
+Close: "Would a margin protection strategy be useful?"`,
+                    technology: `SAAS REVENUE DECLINE ANGLE: "Churn Prevention & Efficiency"
+
+Opening: "SaaS revenue guidance = churn risk. CX quality + efficiency = churn prevention."
+
+Talking Points:
+1. "SaaS under revenue pressure needs churn prevention (quality) + cost efficiency (margin)."
+2. "We've helped 15 SaaS companies manage revenue decline through support quality improvement + cost reduction."
+3. "Revenue down = CAC payback matters more. High-quality, efficient support = CAC acceleration."
+
+Close: "Would a churn prevention + efficiency strategy help?"`,
+                    government: `GOVERNMENT REVENUE DECLINE ANGLE: "Efficiency Without Service Degradation"
+
+Opening: "Budget decline = efficiency pressure. Can't cut citizen services. Operational efficiency = solution."
+
+Talking Points:
+1. "Government budget cuts need efficiency gains without citizen experience loss. That's hard. We specialize in it."
+2. "We've helped 7 agencies improve efficiency 30-40% without citizen satisfaction impact."
+3. "Budget pressure = demonstrate value to voters. Efficient operations + citizen satisfaction = value proof."
+
+Close: "Would an efficiency strategy maintaining citizen experience be valuable?"`,
+                    insurance: `INSURANCE REVENUE DECLINE ANGLE: "Loss Ratio & Efficiency Protection"
+
+Opening: "Insurance revenue guidance = loss ratio pressure. Cost efficiency = loss ratio protection."
+
+Talking Points:
+1. "Insurers under revenue pressure need cost efficiency without claims quality compromise."
+2. "We've helped 6 insurers improve efficiency while maintaining claims satisfaction."
+3. "Revenue down = policyholder value becomes critical. Efficient claims handling = policyholder confidence."
+
+Close: "Would a loss ratio protection strategy be helpful?"`
+                },
+                rfp: {
+                    all: `RFP ANGLE: "Be in the Conversation"
+
+Opening: "Heard you're in RFP for [CX services]. Quick thought: if Teleperformance isn't on your list, you're missing 30% cost savings."
+
+Talking Points:
+1. "Most RFPs compare on features, not total cost of ownership. When TCO is clear, we win."
+2. "We typically displace competitors 30-40% cheaper while maintaining or improving SLAs."
+3. "If you want to benchmark your responses, happy to run a quick comparison."
+
+Close: "Would a benchmarking comparison be useful before finalizing RFP responses?"`,
+                    healthcare: `HEALTH CARE RFP ANGLE: "Compliance + Cost"
+
+Opening: "Health plan RFP = chance to improve vendor efficiency. If TP isn't in responses, you're overpaying."
+
+Talking Points:
+1. "Most health plan RFPs miss compliance-compliant cost reduction. HIPAA + 30% savings are possible together."
+2. "We've won 12 health plan RFPs through both compliance excellence and cost efficiency."
+3. "Health plan RFP benchmarking: we show what's achievable, you decide."
+
+Close: "Would RFP benchmarking help clarify what's possible?"`,
+                    banking: `BANK RFP ANGLE: "Cost + Compliance"
+
+Opening: "Bank RFP = leverage point for cost. If TP isn't in responses, you're leaving 25-30% on the table."
+
+Talking Points:
+1. "Most bank RFPs compare on compliance. When cost is clear, differentiation emerges."
+2. "We've won 10 bank RFPs through compliance + cost clarity."
+3. "Bank RFP benchmarking: see what's achievable in cost reduction without compliance risk."
+
+Close: "Would RFP benchmarking be useful?"`,
+                    retail: `RETAIL RFP ANGLE: "Omnichannel Cost + Quality"
+
+Opening: "Retail RFP = omnichannel complexity. Most vendors quote high on implementation. We're leaner."
+
+Talking Points:
+1. "Most retail RFPs underestimate omnichannel integration cost. We've done this 30+ times."
+2. "Teleperformance: faster implementation + lower cost + same quality."
+3. "Retail RFP benchmarking: understand real cost of omnichannel, compare to our model."
+
+Close: "Would RFP benchmarking help clarify implementation costs?"`,
+                    technology: `SAAS RFP ANGLE: "Support Quality + Scale"
+
+Opening: "SaaS RFP = support quality at scale. If TP isn't in responses, you're over-engineering support."
+
+Talking Points:
+1. "Most SaaS RFPs quote support costs too high. We deliver quality at 30% lower cost."
+2. "We've won 15 SaaS RFPs through quality-at-scale model."
+3. "SaaS RFP benchmarking: see what's achievable in cost reduction without quality loss."
+
+Close: "Would RFP benchmarking be useful?"`,
+                    government: `GOVERNMENT RFP ANGLE: "Compliance + Citizens"
+
+Opening: "Government RFP = compliance complexity. If TP isn't in responses, you're overpaying for compliance."
+
+Talking Points:
+1. "Most government RFPs conflate 'compliance' with 'cost.' We separate them: full compliance, 25% cost reduction."
+2. "We've won 8 government RFPs through compliance-first + cost clarity."
+3. "Government RFP benchmarking: see what's achievable in cost reduction without compliance risk."
+
+Close: "Would RFP benchmarking help clarify the trade-off?"`,
+                    insurance: `INSURANCE RFP ANGLE: "Claims Excellence + Cost"
+
+Opening: "Insurance RFP = claims focus. If TP isn't in responses, you're missing claims + cost opportunity."
+
+Talking Points:
+1. "Most insurance RFPs focus on SLA compliance. When claims quality + cost are both measured, we win."
+2. "We've won 10 insurance RFPs through claims excellence + cost efficiency."
+3. "Insurance RFP benchmarking: see what's achievable in cost reduction with claims quality protection."
+
+Close: "Would RFP benchmarking be useful?"`
+                },
+                'contract-renewal': {
+                    all: `CONTRACT RENEWAL ANGLE: "Renegotiate or Upgrade"
+
+Opening: "Contract renewal window is coming. Two plays: renegotiate with current vendor or upgrade to someone better."
+
+Talking Points:
+1. "Current vendor has pricing lock-in. Most renewals accept 3-5% cost increase. Market reality: you should see 15-20% reduction."
+2. "Teleperformance: same quality, 25-30% cost reduction vs. market rate."
+3. "Use our competitive benchmark to renegotiate with current vendor, or switch to us."
+
+Close: "Would a competitive benchmark help before renewal negotiations?"`,
+                    healthcare: `HEALTH PLAN CONTRACT RENEWAL ANGLE: "MLR-Favorable Renegotiation"
+
+Opening: "Health plan contract renewal = MLR opportunity. Renegotiate or switch to improve margin."
+
+Talking Points:
+1. "Most health plan renewals accept vendor cost increases. Smart plans use renewal as negotiating leverage."
+2. "Teleperformance: claims expertise + 25% cost reduction vs. current vendor."
+3. "Use our benchmark to renegotiate. Or switch to us. Either way, you win."
+
+Close: "Would an MLR-impact analysis before renewal help?"`,
+                    banking: `BANK CONTRACT RENEWAL ANGLE: "NIM-Friendly Renegotiation"
+
+Opening: "Bank contract renewal = NIM opportunity. Renegotiate or switch."
+
+Talking Points:
+1. "Most bank renewals accept cost increases. Smart banks use renewal as negotiating leverage."
+2. "Teleperformance: customer relationship quality + 30% cost reduction."
+3. "Use our benchmark to renegotiate with current vendor, or switch to us."
+
+Close: "Would a NIM-impact analysis before renewal be useful?"`,
+                    retail: `RETAILER CONTRACT RENEWAL ANGLE: "Margin-Friendly Renegotiation"
+
+Opening: "Retail contract renewal = margin opportunity. Renegotiate or switch."
+
+Talking Points:
+1. "Most retail renewals accept cost increases. Smart retailers use renewal as renegotiating leverage."
+2. "Teleperformance: customer loyalty + 30% cost reduction."
+3. "Use our benchmark to renegotiate. Or switch. Either way, you improve margin."
+
+Close: "Would a margin-impact analysis before renewal be helpful?"`,
+                    technology: `SAAS CONTRACT RENEWAL ANGLE: "CAC Payback Improvement"
+
+Opening: "SaaS contract renewal = CAC payback opportunity. Renegotiate or upgrade."
+
+Talking Points:
+1. "Most SaaS renewals accept support cost increases. Smart companies use renewal as renegotiating leverage."
+2. "Teleperformance: user satisfaction + 30% cost reduction."
+3. "Use our benchmark to renegotiate with current vendor, or upgrade to us."
+
+Close: "Would a CAC-payback analysis before renewal help?"`,
+                    government: `GOVERNMENT CONTRACT RENEWAL ANGLE: "Budget-Friendly Renegotiation"
+
+Opening: "Government contract renewal = budget opportunity. Renegotiate or switch."
+
+Talking Points:
+1. "Most government renewals accept cost increases. Smart agencies use renewal as negotiating leverage."
+2. "Teleperformance: citizen experience + 25% cost reduction."
+3. "Use our benchmark to renegotiate. Or switch. Either way, you improve budget efficiency."
+
+Close: "Would a budget-impact analysis before renewal be valuable?"`,
+                    insurance: `INSURANCE CONTRACT RENEWAL ANGLE: "Loss Ratio Improvement"
+
+Opening: "Insurance contract renewal = loss ratio opportunity. Renegotiate or switch."
+
+Talking Points:
+1. "Most insurance renewals accept cost increases. Smart insurers use renewal as negotiating leverage."
+2. "Teleperformance: claims quality + 30% cost reduction."
+3. "Use our benchmark to renegotiate. Or switch. Either way, you improve loss ratio."
+
+Close: "Would a loss ratio-impact analysis before renewal be helpful?"`
+                }
+            };
+
+            const angleText = angles[trigger][vertical] || angles[trigger]['all'] || 'Angle not available.';
+            output.textContent = angleText;
+        }
+
+        // AI Enhancement via Gemini
+        async function enhanceWithAI(type) {
+            let btn, output, accountName, params;
+
+            if (type === 'displacement') {
+                btn = document.getElementById('displacementAiBtn');
+                output = document.getElementById('displacementOutput');
+                accountName = document.getElementById('displacementAccountName').value;
+                const competitor = document.getElementById('competitorSelect').value;
+                const channel = document.getElementById('channelSelect').value;
+                const persona = document.getElementById('personaSelect').value;
+
+                if (!competitor || !channel || !persona) {
+                    alert('Select competitor, channel, and persona first.');
+                    return;
+                }
+                params = { type: 'displacement', competitor, channel, persona, accountName: accountName || 'the target account', staticTemplate: output.textContent };
+            } else {
+                btn = document.getElementById('conversationAiBtn');
+                output = document.getElementById('conversationOutput');
+                accountName = document.getElementById('conversationAccountName').value;
+                const trigger = document.getElementById('triggerSelect').value;
+                const vertical = document.getElementById('verticalSelect').value;
+
+                if (!trigger) {
+                    alert('Select a trigger scenario first.');
+                    return;
+                }
+                params = { type: 'conversation', trigger, vertical: vertical || 'all', accountName: accountName || 'the target account', staticTemplate: output.textContent };
+            }
+
+            // Show loading
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+            output.classList.add('ai-loading');
+
+            try {
+                const response = await fetch('/api/battlecard', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(params)
+                });
+
+                if (!response.ok) throw new Error('AI generation failed');
+
+                const data = await response.json();
+                output.innerHTML = '<span class="ai-badge">AI ENHANCED</span>\n' + data.output.replace(/\n/g, '<br>');
+            } catch (error) {
+                console.error('AI enhance error:', error);
+                output.textContent += '\n\n⚠ AI enhancement unavailable. Static template shown above.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Generate with AI';
+                output.classList.remove('ai-loading');
+            }
+        }
+
+        // File upload
+        function triggerFileUpload() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleFileUpload() {
+            const files = document.getElementById('fileInput').files;
+            alert(`${files.length} file(s) uploaded successfully!`);
+        }
+    </script>
+
+    <!-- Back to top button -->
+    <div style="position:fixed;bottom:24px;right:24px;z-index:100;">
+        <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="display:inline-block;padding:12px 20px;background:var(--color-primary);color:var(--color-bg);border-radius:8px;font-weight:600;font-size:14px;box-shadow: var(--shadow-sm);text-decoration:none;">Back to top</a>
+    </div>
+
+<script src="../assets/js/navigation.js"></script>
+    <script src="/assets/js/back-to-top.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+</body>
+</html>

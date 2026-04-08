@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompts Lab | ABM Suite</title>
+    <style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Calibri Light', 'Calibri', 'Segoe UI', Arial, sans-serif;
+            background: var(--light-bg);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, var(--slate) 0%, var(--slate-dark) 100%);
+            color: var(--color-bg);
+            padding: 52px 24px 44px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+            font-size: 2.6rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1rem;
+            color: var(--pastel-slate);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,0,130,0.18);
+            border: 1px solid rgba(255,0,130,0.4);
+            color: #ff6eb8;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+
+        /* LAYOUT */
+        .page-wrap {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* TAB NAV */
+        .tab-nav {
+            display: flex;
+            gap: 0;
+            margin-bottom: 28px;
+            border-bottom: 2px solid var(--pastel-slate);
+            overflow-x: auto;
+        }
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            color: var(--gray);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.18s;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+        .tab-btn:hover { color: var(--slate); background: var(--pastel-violet); }
+        .tab-btn.active { color: var(--pink); border-bottom-color: var(--pink); }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* CARD */
+        .card {
+            background: var(--white);
+            border-radius: 10px;
+            border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+            padding: 32px 36px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--slate-dark);
+            margin-bottom: 6px;
+        }
+        .card-sub {
+            font-size: 0.88rem;
+            color: var(--slate-mid);
+            margin-bottom: 26px;
+        }
+
+        /* FORM */
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+        .field-row.single { grid-template-columns: 1fr; }
+
+        .field { display: flex; flex-direction: column; }
+        .field label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--slate-dark);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .field input,
+        .field select,
+        .field textarea {
+            padding: 11px 14px;
+            border: 1.5px solid var(--pastel-slate);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.92rem;
+            color: var(--dark-gray);
+            background: var(--white);
+            transition: border 0.18s;
+        }
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: var(--pink);
+        }
+        .field textarea { resize: vertical; min-height: 80px; }
+
+        .optional-tag {
+            font-size: 0.72rem;
+            color: var(--slate-mid);
+            font-weight: 400;
+            margin-left: 6px;
+            text-transform: none;
+        }
+
+        /* GENERATE BUTTON */
+        .gen-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--pink);
+            color: var(--white);
+            border: none;
+            border-radius: 7px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s;
+            margin-top: 6px;
+            font-family: inherit;
+            letter-spacing: 0.02em;
+        }
+        .gen-btn:hover { background: #d90070; transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+        .gen-btn:active { transform: translateY(0); }
+        .gen-btn:disabled { background: var(--pastel-slate); cursor: not-allowed; transform: none; box-shadow: var(--shadow-sm); }
+
+        /* OUTPUT */
+        .output-wrap {
+            margin-top: 28px;
+            display: none;
+        }
+        .output-wrap.visible { display: block; }
+
+        .output-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .output-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--slate-mid);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .copy-btn {
+            background: var(--slate);
+            color: var(--white);
+            border: none;
+            padding: 7px 16px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s;
+            font-family: inherit;
+        }
+        .copy-btn:hover { background: var(--slate-dark); }
+        .copy-btn.copied { background: var(--green); color: var(--black); }
+
+        .output-box {
+            background: var(--light-bg);
+            border: 1.5px solid #e4e4ec;
+            border-left: 4px solid var(--pink);
+            border-radius: 0 8px 8px 0;
+            padding: 24px;
+            font-size: 0.9rem;
+            line-height: 1.75;
+            max-height: 520px;
+            overflow-y: auto;
+        }
+
+        /* Rendered markdown styles */
+        .output-box h1 { font-size: 1.15rem; font-weight: 700; color: var(--slate-dark); margin: 20px 0 8px; padding-bottom: 6px; border-bottom: 2px solid var(--pink); }
+        .output-box h1:first-child { margin-top: 0; }
+        .output-box h2 { font-size: 1rem; font-weight: 700; color: var(--slate); margin: 16px 0 6px; }
+        .output-box h3 { font-size: 0.93rem; font-weight: 600; color: var(--slate-mid); margin: 12px 0 4px; }
+        .output-box ul { padding-left: 18px; margin: 6px 0; }
+        .output-box li { margin-bottom: 5px; list-style: disc; }
+        .output-box strong { color: var(--slate-dark); font-weight: 700; }
+        .output-box em { color: var(--gray); }
+        .output-box p { margin-bottom: 10px; }
+        .output-box hr { border: none; border-top: 1px solid var(--pastel-slate); margin: 14px 0; }
+
+        /* LOADING */
+        .loading-state {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 32px 24px;
+            color: var(--slate-mid);
+            font-size: 0.92rem;
+        }
+        .spinner {
+            width: 22px; height: 22px;
+            border: 3px solid var(--pastel-slate);
+            border-top-color: var(--pink);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            flex-shrink: 0;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ERROR */
+        .error-state {
+            padding: 16px 20px;
+            background: var(--color-bg)5f0;
+            border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+            border-radius: 6px;
+            color: var(--orange);
+            font-size: 0.88rem;
+        }
+        .retry-link {
+            color: var(--pink);
+            cursor: pointer;
+            text-decoration: underline;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* HINT ROW */
+        .hint {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: #f0f0f8;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 0.83rem;
+            color: var(--slate-mid);
+            margin-bottom: 20px;
+        }
+        .hint-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+        @media (max-width: 600px) {
+            .card { padding: 22px 18px; }
+            .field-row { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+            .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-badge">POWERED BY GEMINI</div>
+    <h1>Prompts Lab</h1>
+    <p>Two inputs. Full intelligence output. No prompt engineering required.</p>
+</div>
+
+<!-- Site Navigation (auto-inserted by navigation.js) -->
+<div id="nav-placeholder"></div>
+
+<div class="page-wrap">
+    <div class="tab-nav">
+        <button class="tab-btn active" data-tab="account-intel">Account Intel</button>
+        <button class="tab-btn" data-tab="outreach">Outreach Copy</button>
+        <button class="tab-btn" data-tab="intent">Intent Interpreter</button>
+        <button class="tab-btn" data-tab="campaign">Campaign Brief</button>
+        <button class="tab-btn" data-tab="exec-summary">Exec Summary</button>
+        <button class="tab-btn" data-tab="team-onboarding">Team Onboarding</button>
+    </div>
+
+    <!-- TAB 1: ACCOUNT INTEL -->
+    <div class="tab-panel active" id="account-intel">
+        <div class="card">
+            <div class="card-title">Account Intelligence Brief</div>
+            <div class="card-sub">Company name and vertical — AI builds the full intel brief.</div>
+            <div class="hint">
+                
+                <span>Use this before any first meeting or new pursuit. Gives you buying signals, personas to target, and the right angle for TP outreach.</span>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Account Name *</label>
+                    <input type="text" id="ai-account" placeholder="e.g., Humana, JP Morgan Chase" />
+                </div>
+                <div class="field">
+                    <label>Vertical *</label>
+                    <select id="ai-vertical">
+                        <option value="">Select vertical...</option>
+                        <option value="Healthcare (General)">Healthcare (General)</option>
+                        <option value="Healthcare - Medtech">Healthcare — Medtech</option>
+                        <option value="Healthcare - Payer">Healthcare — Payer</option>
+                        <option value="Healthcare - Provider">Healthcare — Provider</option>
+                        <option value="Healthcare - Pharma">Healthcare — Pharma</option>
+                        <option value="Banking / Financial Services">Banking / Financial Services</option>
+                        <option value="Insurance (General)">Insurance (General)</option>
+                        <option value="Insurance - P&C">Insurance — P&C</option>
+                        <option value="Insurance - Life & Annuities">Insurance — Life & Annuities</option>
+                        <option value="Insurance - Carriers & Wholesale">Insurance — Carriers & Wholesale</option>
+                        <option value="Insurance - Underwriting & Claims">Insurance — Underwriting & Claims</option>
+                        <option value="Technology / SaaS">Technology / SaaS</option>
+                        <option value="Government">Government</option>
+                        <option value="Retail (General)">Retail (General)</option>
+                        <option value="Retail - FMCG">Retail — FMCG</option>
+                        <option value="Retail - QSR/FSR">Retail — QSR/FSR</option>
+                        <option value="Retail - eCommerce">Retail — eCommerce</option>
+                        <option value="Telecom">Telecom</option>
+                        <option value="LOB - Technology Services (TaaS)">LOB - Technology Services (TaaS)</option>
+                        <option value="LOB - Revenue Services (Sales, FAB Growth)">LOB - Revenue Services (Sales, FAB Growth)</option>
+                        <option value="LOB - F&A">LOB - F&A</option>
+                        <option value="LOB - Collections">LOB - Collections</option>
+                        <option value="LOB - Trust & Safety">LOB - Trust & Safety</option>
+                        <option value="LOB - Data Services">LOB - Data Services</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Revenue Tier <span class="optional-tag">(optional)</span></label>
+                    <select id="ai-tier">
+                        <option value="">Select tier...</option>
+                        <option value="Tier 1A ($50B+ or Leadership Approved)">Tier 1A — $50B+ / Leadership Approved</option>
+                        <option value="Tier 1 ($1B–$49.9B)">Tier 1 — $1B–$49.9B</option>
+                        <option value="Tier 2 ($400M–$999M)">Tier 2 — $400M–$999M</option>
+                        <option value="Tier 3 ($100M–$399M)">Tier 3 — $100M–$399M</option>
+                        <option value="Tier 4 ($50M–$99M)">Tier 4 — $50M–$99M</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Market Segment <span class="optional-tag">(optional)</span></label>
+                    <select id="ai-segment">
+                        <option value="">Select segment...</option>
+                        <option value="Enterprise">Enterprise</option>
+                        <option value="Mid-Market">Mid-Market</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Additional Details <span class="optional-tag">(optional)</span></label>
+                    <textarea id="ai-details" placeholder="Pain point examples, KPIs, milestones, business outcomes, personalization context for the AI..."></textarea>
+                </div>
+            </div>
+            <button class="gen-btn" id="btn-account-intel" onclick="generate('account-intel')">Generate Account Brief →</button>
+        </div>
+        <div class="output-wrap" id="out-account-intel">
+            <div class="output-header">
+                <span class="output-label">Account Intelligence Brief</span>
+                <button class="copy-btn" onclick="copyOutput('result-account-intel', this)">Copy</button>
+            </div>
+            <div class="output-box" id="result-account-intel"></div>
+        </div>
+    </div>
+
+    <!-- TAB 2: OUTREACH COPY -->
+    <div class="tab-panel" id="outreach">
+        <div class="card">
+            <div class="card-title">Personalized Outreach Copy</div>
+            <div class="card-sub">Account and persona — AI writes the copy for the channel you choose.</div>
+            <div class="hint">
+                
+                <span>Select a trigger to sharpen the message. Leave it blank and AI will build general awareness outreach.</span>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Account Name *</label>
+                    <input type="text" id="oc-account" placeholder="e.g., Elevance Health" />
+                </div>
+                <div class="field">
+                    <label>Target Persona *</label>
+                    <select id="oc-persona">
+                        <option value="">Select persona...</option>
+                        <optgroup label="Contact Center & Ops Leaders">
+                            <option value="COO (Chief Operating Officer)">COO — Chief Operating Officer</option>
+                            <option value="CCO (Chief Customer Officer)">CCO — Chief Customer Officer</option>
+                            <option value="VP Customer Experience">VP Customer Experience</option>
+                            <option value="VP Operations">VP Operations</option>
+                            <option value="EVP">EVP</option>
+                            <option value="SVP">SVP</option>
+                            <option value="VP">VP</option>
+                            <option value="Global Head">Global Head</option>
+                            <option value="Head">Head</option>
+                            <option value="Director">Director</option>
+                        </optgroup>
+                        <optgroup label="Technology Leaders">
+                            <option value="CIO (Chief Information Officer)">CIO — Chief Information Officer</option>
+                            <option value="CTO (Chief Technology Officer)">CTO — Chief Technology Officer</option>
+                            <option value="CISO (Chief Info Security Officer)">CISO — Chief Info Security Officer</option>
+                            <option value="Chief Digital Officer">Chief Digital Officer</option>
+                            <option value="CPO (Chief Product Officer)">CPO — Chief Product Officer</option>
+                        </optgroup>
+                        <optgroup label="F&A & Collections Ops Leaders">
+                            <option value="CFO (Chief Financial Officer)">CFO — Chief Financial Officer</option>
+                            <option value="CRO (Chief Revenue Officer)">CRO — Chief Revenue Officer</option>
+                            <option value="CAO (Chief Administrative Officer)">CAO — Chief Administrative Officer</option>
+                            <option value="VP Revenue Cycle">VP Revenue Cycle</option>
+                            <option value="CUO (Chief Underwriting Officer)">CUO — Chief Underwriting Officer</option>
+                            <option value="CGO (Chief Growth Officer)">CGO — Chief Growth Officer</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Channel *</label>
+                    <select id="oc-channel">
+                        <option value="">Select channel...</option>
+                        <option value="Demandbase">Demandbase</option>
+                        <option value="LinkedIn">LinkedIn</option>
+                        <option value="Social (Organic/Paid)">Social (Organic/Paid)</option>
+                        <option value="GoogleAds">GoogleAds</option>
+                        <option value="AEO">AEO</option>
+                        <option value="Email">Email</option>
+                        <option value="Events">Events</option>
+                        <option value="TIEC">TIEC</option>
+                        <option value="TP Flagship Events (Immersive)">TP Flagship Events (Immersive)</option>
+                        <option value="SDR Outreach">SDR Outreach</option>
+                        <option value="Content Syndication">Content Syndication</option>
+                        <option value="Partner Community">Partner Community</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Trigger Signal <span class="optional-tag">(optional)</span></label>
+                    <select id="oc-trigger">
+                        <option value="">No specific trigger</option>
+                        <option value="Intent surge (20+ point spike in Demandbase)">Intent Surge — 20+ point spike</option>
+                        <option value="High-value site visit on TP solution pages">High-Value Site Visit</option>
+                        <option value="MQA threshold crossed">MQA Threshold Crossed</option>
+                        <option value="Event attendance or registration">Event Attendance</option>
+                        <option value="Recent executive hire or leadership change">Leadership Change</option>
+                        <option value="Recent funding or M&A announcement">Funding / M&A</option>
+                        <option value="Contract renewal window approaching">Contract Renewal Window</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Market Segment <span class="optional-tag">(optional)</span></label>
+                    <select id="oc-segment">
+                        <option value="">Select segment...</option>
+                        <option value="Enterprise">Enterprise</option>
+                        <option value="Mid-Market">Mid-Market</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Additional Details <span class="optional-tag">(optional)</span></label>
+                    <textarea id="oc-details" placeholder="Pain point examples, KPIs, milestones, business outcomes, personalization context for the AI..."></textarea>
+                </div>
+            </div>
+            <button class="gen-btn" id="btn-outreach" onclick="generate('outreach')">Generate Outreach Copy →</button>
+        </div>
+        <div class="output-wrap" id="out-outreach">
+            <div class="output-header">
+                <span class="output-label">Outreach Copy</span>
+                <button class="copy-btn" onclick="copyOutput('result-outreach', this)">Copy</button>
+            </div>
+            <div class="output-box" id="result-outreach"></div>
+        </div>
+    </div>
+
+    <!-- TAB 3: INTENT INTERPRETER -->
+    <div class="tab-panel" id="intent">
+        <div class="card">
+            <div class="card-title">Intent Signal Interpreter</div>
+            <div class="card-sub">Account name and the keywords firing — AI tells you what it means and what to do next.</div>
+            <div class="hint">
+                
+                <span>Paste the intent keywords directly from Demandbase. AI will interpret what they're evaluating and give your BDR a ready-to-use next step.</span>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Account Name *</label>
+                    <input type="text" id="int-account" placeholder="e.g., Costco Wholesale" />
+                </div>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Intent Keywords Firing *</label>
+                    <textarea id="int-keywords" placeholder="Paste keywords from Demandbase — e.g., AI customer service, omnichannel contact center, CX automation, outsourcing vendors"></textarea>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Vertical <span class="optional-tag">(optional)</span></label>
+                    <select id="int-vertical">
+                        <option value="">Any vertical</option>
+                        <option value="Healthcare (General)">Healthcare (General)</option>
+                        <option value="Healthcare - Medtech">Healthcare — Medtech</option>
+                        <option value="Healthcare - Payer">Healthcare — Payer</option>
+                        <option value="Healthcare - Provider">Healthcare — Provider</option>
+                        <option value="Healthcare - Pharma">Healthcare — Pharma</option>
+                        <option value="Banking / Financial Services">Banking / Financial Services</option>
+                        <option value="Insurance (General)">Insurance (General)</option>
+                        <option value="Insurance - P&C">Insurance — P&C</option>
+                        <option value="Insurance - Life & Annuities">Insurance — Life & Annuities</option>
+                        <option value="Insurance - Carriers & Wholesale">Insurance — Carriers & Wholesale</option>
+                        <option value="Insurance - Underwriting & Claims">Insurance — Underwriting & Claims</option>
+                        <option value="Technology / SaaS">Technology / SaaS</option>
+                        <option value="Government">Government</option>
+                        <option value="Retail (General)">Retail (General)</option>
+                        <option value="Retail - FMCG">Retail — FMCG</option>
+                        <option value="Retail - QSR/FSR">Retail — QSR/FSR</option>
+                        <option value="Retail - eCommerce">Retail — eCommerce</option>
+                        <option value="Telecom">Telecom</option>
+                        <option value="LOB - Technology Services (TaaS)">LOB - Technology Services (TaaS)</option>
+                        <option value="LOB - Revenue Services (Sales, FAB Growth)">LOB - Revenue Services (Sales, FAB Growth)</option>
+                        <option value="LOB - F&A">LOB - F&A</option>
+                        <option value="LOB - Collections">LOB - Collections</option>
+                        <option value="LOB - Trust & Safety">LOB - Trust & Safety</option>
+                        <option value="LOB - Data Services">LOB - Data Services</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Journey Stage <span class="optional-tag">(optional)</span></label>
+                    <select id="int-stage">
+                        <option value="">Unknown</option>
+                        <option value="Target Account">Target Account</option>
+                        <option value="Aware (Intent firing)">Aware — Intent Firing</option>
+                        <option value="Engaged">Engaged</option>
+                        <option value="MQA">MQA</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Buying Groups <span class="optional-tag">(optional)</span></label>
+                    <select id="int-buying-group">
+                        <option value="">Select buying group...</option>
+                        <option value="CX Core">CX Core</option>
+                        <option value="LOB">LOB</option>
+                        <option value="Vertical Specialist">Vertical Specialist</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Market Segment <span class="optional-tag">(optional)</span></label>
+                    <select id="int-segment">
+                        <option value="">Select segment...</option>
+                        <option value="Enterprise">Enterprise</option>
+                        <option value="Mid-Market">Mid-Market</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Additional Details <span class="optional-tag">(optional)</span></label>
+                    <textarea id="int-details" placeholder="Pain point examples, KPIs, milestones, business outcomes, personalization context for the AI..."></textarea>
+                </div>
+            </div>
+            <button class="gen-btn" id="btn-intent" onclick="generate('intent')">Interpret Signals →</button>
+        </div>
+        <div class="output-wrap" id="out-intent">
+            <div class="output-header">
+                <span class="output-label">Signal Intelligence</span>
+                <button class="copy-btn" onclick="copyOutput('result-intent', this)">Copy</button>
+            </div>
+            <div class="output-box" id="result-intent"></div>
+        </div>
+    </div>
+
+    <!-- TAB 4: CAMPAIGN BRIEF -->
+    <div class="tab-panel" id="campaign">
+        <div class="card">
+            <div class="card-title">Campaign Brief Generator</div>
+            <div class="card-sub">Vertical and persona — AI builds the full Demandbase campaign brief.</div>
+            <div class="hint">
+                
+                <span>Use this to build a campaign brief for Leslie or your BDR team. Outputs ad copy variants, keyword targeting, and audience build instructions.</span>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Vertical *</label>
+                    <select id="cb-vertical">
+                        <option value="">Select vertical...</option>
+                        <option value="Healthcare (General)">Healthcare (General)</option>
+                        <option value="Healthcare - Medtech">Healthcare — Medtech</option>
+                        <option value="Healthcare - Payer">Healthcare — Payer</option>
+                        <option value="Healthcare - Provider">Healthcare — Provider</option>
+                        <option value="Healthcare - Pharma">Healthcare — Pharma</option>
+                        <option value="Banking / Financial Services">Banking / Financial Services</option>
+                        <option value="Insurance (General)">Insurance (General)</option>
+                        <option value="Insurance - P&C">Insurance — P&C</option>
+                        <option value="Insurance - Life & Annuities">Insurance — Life & Annuities</option>
+                        <option value="Insurance - Carriers & Wholesale">Insurance — Carriers & Wholesale</option>
+                        <option value="Insurance - Underwriting & Claims">Insurance — Underwriting & Claims</option>
+                        <option value="Technology / SaaS">Technology / SaaS</option>
+                        <option value="Government">Government</option>
+                        <option value="Retail (General)">Retail (General)</option>
+                        <option value="Retail - FMCG">Retail — FMCG</option>
+                        <option value="Retail - QSR/FSR">Retail — QSR/FSR</option>
+                        <option value="Retail - eCommerce">Retail — eCommerce</option>
+                        <option value="Telecom">Telecom</option>
+                        <option value="LOB - Technology Services (TaaS)">LOB - Technology Services (TaaS)</option>
+                        <option value="LOB - Revenue Services (Sales, FAB Growth)">LOB - Revenue Services (Sales, FAB Growth)</option>
+                        <option value="LOB - F&A">LOB - F&A</option>
+                        <option value="LOB - Collections">LOB - Collections</option>
+                        <option value="LOB - Trust & Safety">LOB - Trust & Safety</option>
+                        <option value="LOB - Data Services">LOB - Data Services</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Target Persona *</label>
+                    <select id="cb-persona">
+                        <option value="">Select persona...</option>
+                        <optgroup label="Contact Center & Ops Leaders">
+                            <option value="COO (Chief Operating Officer)">COO — Chief Operating Officer</option>
+                            <option value="CCO (Chief Customer Officer)">CCO — Chief Customer Officer</option>
+                            <option value="VP Customer Experience">VP Customer Experience</option>
+                            <option value="VP Operations">VP Operations</option>
+                            <option value="EVP">EVP</option>
+                            <option value="SVP">SVP</option>
+                            <option value="VP">VP</option>
+                            <option value="Global Head">Global Head</option>
+                            <option value="Head">Head</option>
+                            <option value="Director">Director</option>
+                        </optgroup>
+                        <optgroup label="Technology Leaders">
+                            <option value="CIO (Chief Information Officer)">CIO — Chief Information Officer</option>
+                            <option value="CTO (Chief Technology Officer)">CTO — Chief Technology Officer</option>
+                            <option value="CISO (Chief Info Security Officer)">CISO — Chief Info Security Officer</option>
+                            <option value="Chief Digital Officer">Chief Digital Officer</option>
+                            <option value="CPO (Chief Product Officer)">CPO — Chief Product Officer</option>
+                        </optgroup>
+                        <optgroup label="F&A & Collections Ops Leaders">
+                            <option value="CFO (Chief Financial Officer)">CFO — Chief Financial Officer</option>
+                            <option value="CRO (Chief Revenue Officer)">CRO — Chief Revenue Officer</option>
+                            <option value="CAO (Chief Administrative Officer)">CAO — Chief Administrative Officer</option>
+                            <option value="VP Revenue Cycle">VP Revenue Cycle</option>
+                            <option value="CUO (Chief Underwriting Officer)">CUO — Chief Underwriting Officer</option>
+                            <option value="CGO (Chief Growth Officer)">CGO — Chief Growth Officer</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Campaign Goal <span class="optional-tag">(optional)</span></label>
+                    <input type="text" id="cb-goal" placeholder="e.g., Generate MQAs for AI-assisted CX" />
+                </div>
+                <div class="field">
+                    <label>Timeline <span class="optional-tag">(optional)</span></label>
+                    <input type="text" id="cb-timeline" placeholder="e.g., Q2 2026 (April–June)" />
+                </div>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Market Segment <span class="optional-tag">(optional)</span></label>
+                    <select id="cb-segment">
+                        <option value="">Select segment...</option>
+                        <option value="Enterprise">Enterprise</option>
+                        <option value="Mid-Market">Mid-Market</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Additional Details <span class="optional-tag">(optional)</span></label>
+                    <textarea id="cb-details" placeholder="Pain point examples, KPIs, milestones, business outcomes, personalization context for the AI..."></textarea>
+                </div>
+            </div>
+            <button class="gen-btn" id="btn-campaign" onclick="generate('campaign')">Generate Campaign Brief →</button>
+        </div>
+        <div class="output-wrap" id="out-campaign">
+            <div class="output-header">
+                <span class="output-label">Campaign Brief</span>
+                <button class="copy-btn" onclick="copyOutput('result-campaign', this)">Copy</button>
+            </div>
+            <div class="output-box" id="result-campaign"></div>
+        </div>
+    </div>
+
+    <!-- TAB 5: EXEC SUMMARY -->
+    <div class="tab-panel" id="exec-summary">
+        <div class="card">
+            <div class="card-title">Executive Summary Builder</div>
+            <div class="card-sub">Drop in your metrics — AI writes the leadership-ready summary for Leslie.</div>
+            <div class="hint">
+                
+                <span>Skip any metrics you don't have. AI will write around what you give it. Just cover the period and your biggest wins.</span>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Reporting Period *</label>
+                    <input type="text" id="es-period" placeholder="e.g., Q1 2026, March 2026, Week of April 7" />
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Impressions <span class="optional-tag">(optional)</span></label>
+                    <input type="text" id="es-impressions" placeholder="e.g., 1,250,000" />
+                </div>
+                <div class="field">
+                    <label>Accounts Engaged <span class="optional-tag">(optional)</span></label>
+                    <input type="text" id="es-engaged" placeholder="e.g., 342 of Top Tier accounts" />
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>MQAs Generated <span class="optional-tag">(optional)</span></label>
+                    <input type="text" id="es-mqa" placeholder="e.g., 28" />
+                </div>
+                <div class="field">
+                    <label>Pipeline Influenced <span class="optional-tag">(optional)</span></label>
+                    <input type="text" id="es-pipeline" placeholder="e.g., $4.2M" />
+                </div>
+            </div>
+            <div class="field-row single">
+                <div class="field">
+                    <label>Key Wins / Context <span class="optional-tag">(optional)</span></label>
+                    <textarea id="es-notes" placeholder="Strategic wins, notable account progressions, blockers resolved, next priorities..."></textarea>
+                </div>
+            </div>
+            <button class="gen-btn" id="btn-exec" onclick="generate('exec-summary')">Generate Exec Summary →</button>
+        </div>
+        <div class="output-wrap" id="out-exec-summary">
+            <div class="output-header">
+                <span class="output-label">Executive Summary</span>
+                <button class="copy-btn" onclick="copyOutput('result-exec-summary', this)">Copy</button>
+            </div>
+            <div class="output-box" id="result-exec-summary"></div>
+        </div>
+    </div>
+
+    <!-- TAB 6: TEAM ONBOARDING -->
+    <div class="tab-panel" id="team-onboarding">
+        <div class="card">
+            <div class="card-title">Enablement & Onboarding</div>
+            <div class="card-sub">Generate tailored BDR/AE training guides using our Demandbase metrics.</div>
+            <div class="hint" style="background:var(--slate-dark); color:var(--color-bg); border-left:none; border-top: 3px solid var(--pink);">
+                
+                <span>Produces specific ramp-up playbooks, roleplays, or cheat sheets built on our actual architecture.</span>
+            </div>
+            
+            <div class="field-row">
+                <div class="field">
+                    <label>Trainee Role *</label>
+                    <select id="ob-role">
+                        <option value="">Select role...</option>
+                        <option value="BDR">Business Development Rep (BDR)</option>
+                        <option value="Enterprise AE">Enterprise Account Executive</option>
+                        <option value="Account Director">Account Director</option>
+                        <option value="Field Marketing">Field Marketing Manager</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Output Format *</label>
+                    <select id="ob-format">
+                        <option value="">Select format...</option>
+                        <option value="30-Day Quick Start Playbook">30-Day Quick Start Playbook</option>
+                        <option value="Roleplay / Mock Pitch Scenario">Roleplay / Mock Pitch Scenario</option>
+                        <option value="Knowledge Check (Quiz)">Knowledge Check (5-Question Quiz)</option>
+                        <option value="Field Guide Cheat Sheet">Field Guide Cheat Sheet</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field" style="grid-column: 1 / -1;">
+                    <label>Enablement Focus *</label>
+                    <select id="ob-focus">
+                        <option value="">Select focus area...</option>
+                        <option value="Demandbase 101 & Intent Logic">Demandbase 101 & Intent Logic</option>
+                        <option value="The 3 Buying Groups Strategy">The 3 Buying Groups Strategy</option>
+                        <option value="Account Tiering (T1A down to T4)">Account Tiering (T1A Exceptions down to T4)</option>
+                        <option value="Competitive Displacement">Competitive Displacement</option>
+                        <option value="General Program Overview">General Program Overview</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field" style="grid-column: 1 / -1;">
+                    <label>Additional Details <span class="optional-tag">(optional)</span></label>
+                    <textarea id="ob-details" placeholder="e.g., SDR needs heavy focus on spotting intent keywords vs noise."></textarea>
+                </div>
+            </div>
+            <button class="gen-btn" id="btn-onboarding" onclick="generate('team-onboarding')">Generate Training Guide →</button>
+        </div>
+        <div class="output-wrap" id="out-team-onboarding">
+            <div class="output-header">
+                <span class="output-label">Training Collateral</span>
+                <button class="copy-btn" onclick="copyOutput('result-team-onboarding', this)">Copy</button>
+            </div>
+            <div class="output-box" id="result-team-onboarding"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/navigation.js"></script>
+<script>
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.dataset.tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(target).classList.add('active');
+        });
+    });
+
+    // Markdown renderer
+    function mdToHtml(md) {
+        if (!md) return '';
+        return md
+            .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+            .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+            .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.+?)\*/g, '<em>$1</em>')
+            .replace(/^\s{2,}[-*] (.+)$/gm, '<li style="margin-left:18px">$1</li>')
+            .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
+            .replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>')
+            .replace(/((?:<li[^>]*>.*<\/li>\n?)+)/g, '<ul>$1</ul>')
+            .replace(/^---$/gm, '<hr>')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n/g, '<br>')
+            .replace(/^(?!<[hup])/, '<p>')
+            .replace(/(?<![>])$/, '</p>')
+            .replace(/<p><\/p>/g, '')
+            .replace(/<p>(<h[1-3]>)/g, '$1')
+            .replace(/(<\/h[1-3]>)<\/p>/g, '$1')
+            .replace(/<p>(<ul>)/g, '$1')
+            .replace(/(<\/ul>)<\/p>/g, '$1')
+            .replace(/<p>(<hr>)<\/p>/g, '$1');
+    }
+
+    // Prompt builders
+    const prompts = {
+        'account-intel': () => {
+            const account = document.getElementById('ai-account').value.trim();
+            const vertical = document.getElementById('ai-vertical').value;
+            const tier = document.getElementById('ai-tier').value;
+            const segment = document.getElementById('ai-segment').value;
+            const details = document.getElementById('ai-details').value.trim();
+            if (!account || !vertical) return null;
+            const tierCtx = tier ? ` (${tier})` : '';
+            const segmentCtx = segment ? ` Market Focus: ${segment}.` : '';
+            const detailsCtx = details ? `\n\nAdditional Context to Incorporate:\n${details}` : '';
+            return {
+                valid: true,
+                btnId: 'btn-account-intel',
+                payload: {
+                    category: 'account-intel',
+                    prompt: `Generate a comprehensive account intelligence brief for ${account}${tierCtx} in the ${vertical} vertical.${segmentCtx}${detailsCtx}
+
+Structure the output as follows:
+
+## ACCOUNT SNAPSHOT
+3 sentences: what they do, scale, and their current strategic priorities based on public signals.
+
+## BUYING SIGNALS & BUSINESS DRIVERS
+What's likely driving CX/BPO evaluation right now. Reference industry-level pressures, regulatory shifts, or operational patterns specific to ${vertical}.
+
+## KEY PERSONAS TO TARGET
+4 titles with a one-line description of what each person cares about most. Rank by accessibility and influence.
+
+## TP OUTREACH ANGLE
+The strongest positioning angle for Teleperformance given this account's context. One paragraph, specific to ${account} — not generic BPO language.
+
+## DEMANDBASE KEYWORD CLUSTERS
+8–10 intent keywords to monitor in Demandbase for this account. Use buyer-brain language — what they'd search, not what we'd call our solution.
+
+## COMPETITIVE CONTEXT
+Who they're likely already working with or evaluating. One sentence on each relevant competitor and their vulnerability.
+
+## FIRST TOUCH RECOMMENDATION
+Exact recommendation: which persona, which channel, which angle, and what timing signal to watch for before reaching out.
+
+Keep it actionable and TP-specific throughout.`,
+                    inputs: { account, vertical, tier, segment, details }
+                }
+            };
+        },
+
+        'outreach': () => {
+            const account = document.getElementById('oc-account').value.trim();
+            const persona = document.getElementById('oc-persona').value;
+            const channel = document.getElementById('oc-channel').value;
+            const trigger = document.getElementById('oc-trigger').value;
+            const segment = document.getElementById('oc-segment').value;
+            const details = document.getElementById('oc-details').value.trim();
+            if (!account || !persona || !channel) return null;
+            const triggerCtx = trigger ? `\nTrigger context: ${trigger}` : '\nNo specific trigger — build general awareness outreach.';
+            const segmentCtx = segment ? `\nMarket segment focus: ${segment} (${segment === 'Enterprise' ? 'emphasize scale, compliance, and robust capability' : 'emphasize agility, speed to deploy, and rapid growth'}).` : '';
+            const detailsCtx = details ? `\nAdditional Context to Incorporate:\n${details}` : '';
+            return {
+                valid: true,
+                btnId: 'btn-outreach',
+                payload: {
+                    category: 'outreach',
+                    prompt: `Write personalized ${channel} outreach for ${account}, targeting the ${persona} persona.${triggerCtx}${segmentCtx}${detailsCtx}
+
+Requirements:
+- Open with a business outcome or market observation — never a feature or product mention
+- Use buyer language throughout — speak to the KPIs this persona owns
+- Reference Teleperformance as a CX transformation partner, not a vendor
+- Make the ask low-friction (benchmark, brief conversation, or a proof point — not a demo)
+- Tone: peer-to-peer, confident, no fluff
+
+Channel optimization:
+- LinkedIn InMail: 4–5 sentences, subject line + body
+- Email: 6–8 sentences, subject line + body + PS line
+- Cold Call Script: 60-second opener + 3 probing questions + soft close
+
+Generate the complete ${channel} copy, ready to send.`,
+                    inputs: { account, persona, channel, trigger, segment, details }
+                }
+            };
+        },
+
+        'intent': () => {
+            const account = document.getElementById('int-account').value.trim();
+            const keywords = document.getElementById('int-keywords').value.trim();
+            const vertical = document.getElementById('int-vertical').value;
+            const stage = document.getElementById('int-stage').value;
+            const buyingGroup = document.getElementById('int-buying-group').value;
+            const segment = document.getElementById('int-segment').value;
+            const details = document.getElementById('int-details').value.trim();
+            if (!account || !keywords) return null;
+            const ctx = [
+                vertical && `Vertical: ${vertical}`, 
+                stage && `Journey stage: ${stage}`,
+                buyingGroup && `Buying Group target: ${buyingGroup}`,
+                segment && `Market Segment: ${segment}`
+            ].filter(Boolean).join('. ');
+            const detailsCtx = details ? `\nAdditional Context to Incorporate:\n${details}` : '';
+            return {
+                valid: true,
+                btnId: 'btn-intent',
+                payload: {
+                    category: 'intent',
+                    prompt: `Interpret intent signals for ${account}. ${ctx}${detailsCtx}
+
+Intent keywords currently firing:
+${keywords}
+
+Provide a complete signal intelligence read:
+
+## WHAT THEY'RE EVALUATING
+In 3 sentences: what business problem these keywords indicate they're actively researching, and what decision they're likely building toward.
+
+## TIMING ASSESSMENT
+Are they early-stage researching, mid-funnel evaluating, or late-stage vendor shortlisting? What signals indicate where they are.
+
+## RECOMMENDED NEXT ACTION
+Exact next step for the BDR/SDR. Be specific: which persona to target, which channel, and what the opening line should reference.
+
+## READY-TO-USE TALKING POINTS
+Three TP talking points that directly map to the intent keywords firing. Each should feel like you've done your homework on their research pattern.
+
+## NURTURE VS. REACH OUT NOW
+Decision: should the team engage immediately or nurture for 2–3 weeks? Explain why based on the signal pattern.
+
+Keep it actionable. Sales team should be able to act on this within the hour.`,
+                    inputs: { account, keywords, vertical, stage, segment, details }
+                }
+            };
+        },
+
+        'campaign': () => {
+            const vertical = document.getElementById('cb-vertical').value;
+            const persona = document.getElementById('cb-persona').value;
+            const goal = document.getElementById('cb-goal').value.trim();
+            const timeline = document.getElementById('cb-timeline').value.trim();
+            const segment = document.getElementById('cb-segment').value;
+            const details = document.getElementById('cb-details').value.trim();
+            if (!vertical || !persona) return null;
+            const goalCtx = goal ? `\nCampaign goal: ${goal}` : '';
+            const timeCtx = timeline ? `\nTimeline: ${timeline}` : '';
+            const segmentCtx = segment ? `\nTarget Segment: ${segment}` : '';
+            const detailsCtx = details ? `\nAdditional Context to Incorporate:\n${details}` : '';
+            return {
+                valid: true,
+                btnId: 'btn-campaign',
+                payload: {
+                    category: 'campaign',
+                    prompt: `Create a full Demandbase campaign brief for Teleperformance targeting ${persona} in the ${vertical} vertical.${goalCtx}${timeCtx}${segmentCtx}${detailsCtx}
+
+## CAMPAIGN POSITIONING
+One paragraph: the core message this campaign should land. What problem are we connecting to? What outcome are we promising? No vendor language.
+
+## AD COPY VARIANTS
+Three headline options (under 8 words each) and two body copy options (2–3 sentences each). Write from the buyer's perspective — lead with their pain or outcome, not TP features.
+
+## KEYWORD TARGETING
+10 Demandbase intent keywords to build the audience around. Use buyer-brain language — what a ${persona} in ${vertical} would actually search.
+
+## DEMANDBASE AUDIENCE BUILD
+Step-by-step instructions for building the audience in Demandbase: company size filters, intent topic clusters, journey stage triggers, and account list to include.
+
+## SUCCESS METRICS & KPIS
+What does winning look like for this campaign? List the 4–5 metrics to track, with industry benchmarks for reference.
+
+## 30-DAY LAUNCH PLAN
+Week-by-week actions: audience build, content deployment, BDR follow-up triggers, and optimization checkpoints.
+
+Format for TP team execution — clear and actionable at every step.`,
+                    inputs: { vertical, persona, goal, timeline, segment, details }
+                }
+            };
+        },
+
+        'exec-summary': () => {
+            const period = document.getElementById('es-period').value.trim();
+            if (!period) return null;
+            const impressions = document.getElementById('es-impressions').value.trim();
+            const engaged = document.getElementById('es-engaged').value.trim();
+            const mqa = document.getElementById('es-mqa').value.trim();
+            const pipeline = document.getElementById('es-pipeline').value.trim();
+            const notes = document.getElementById('es-notes').value.trim();
+
+            const metrics = [
+                impressions && `Impressions: ${impressions}`,
+                engaged && `Accounts Engaged: ${engaged}`,
+                mqa && `MQAs Generated: ${mqa}`,
+                pipeline && `Pipeline Influenced: ${pipeline}`
+            ].filter(Boolean).join('\n');
+
+            return {
+                valid: true,
+                btnId: 'btn-exec',
+                payload: {
+                    category: 'exec-summary',
+                    prompt: `Write an executive summary for Leslie (EVP Marketing) covering ${period}.
+
+${metrics ? `Performance metrics:\n${metrics}` : 'Note: specific metrics not provided — write around outcomes and momentum.'}
+${notes ? `\nAdditional context: ${notes}` : ''}
+
+Write 3 tight paragraphs:
+1. Business impact lead — open with the most meaningful outcome (pipeline, MQAs, or strategic account progression). No "I'm pleased to report" or similar opener.
+2. Program momentum — what's working, what advanced this period, any notable account or vertical wins.
+3. Forward momentum — what's coming next, what signals we're watching, what investments are positioned to compound.
+
+Voice: confident, results-focused, direct. Sound like Josh — a revenue-minded strategist, not a marketing coordinator. No buzzwords. No "tip of spear." No "connective tissue." Metrics woven in naturally, not listed.`,
+                    inputs: { period, impressions, engaged, mqa, pipeline, notes }
+                }
+            };
+        },
+
+        'team-onboarding': () => {
+            const role = document.getElementById('ob-role').value;
+            const format = document.getElementById('ob-format').value;
+            const focus = document.getElementById('ob-focus').value;
+            const details = document.getElementById('ob-details').value.trim();
+
+            if (!role || !format || !focus) return null;
+
+            const detailsCtx = details ? `\nAdditional Context/Constraints:\n${details}` : '';
+
+            return {
+                valid: true,
+                btnId: 'btn-onboarding',
+                payload: {
+                    category: 'team-onboarding',
+                    prompt: `You are the Director of Sales Enablement at Teleperformance. Generate a highly tailored ${format} for a ${role} focusing specifically on ${focus}.${detailsCtx}
+
+CRITICAL RULES & TP DEFINITIONS TO BAKE INTO YOUR RESPONSE:
+1. Funnel Terms:
+- TOFU (Awareness): Target Accounts showing no engagement. Educational content.
+- MOFU (Consideration): Engaged accounts (10+ min or 3+ visits). How-To guides / Case Studies.
+- BOFU (Decision): 100+ engagement minutes (MQA). Pricing / Why We Win. 
+- "One Bucket" Rule: An account is never in two stages at once. Movement is automatic.
+
+2. The 10 Persona Limit:
+- We ONLY target 10 specific Personas.
+- Executives (Horizontals): Technology Stakeholder, Sales-Revenue Leader, Contact Center & Ops Leader, Finance & Procurement Leader.
+- Verticals (Industry Experts): Healthcare, BFS, Insurance, Retail, Utilities, CMT/Telecom. NOTE: Govt, Travel, Auto are NOT personas, they are Account Lists.
+- We have 3 Buying Groups: CX Core, LOBs, Vertical.
+
+3. The 7 Journey Stages:
+- 1) All Other 2) Target Accounts (Qualified) 3) Intent (Aware) 4) Engaged (MOFU) 5) Marketing Qualified (MQA) 6) Opportunity (EXIT - Stop spending) 7) Customer.
+
+4. Intent vs Engagement & Scale:
+- Intent is off-site (we track 84 Keyword Sets across the web, e.g. Competitors like Concentrix or TTEC).
+- Engagement is on-site (minutes spent on tp.com).
+- We currently track ~5,700 Tiered target accounts (scaling toward 7,000 by end of FY).
+
+Draft the ${format} exactly as requested based on this underlying vocabulary. Make it highly actionable and strictly designed to quickly ramp up the ${role} on Teleperformance's exact Demandbase architecture. 
+DO NOT USE EMOJIS. Maintain a strictly executive, professional tone. Format with clean headers and markdown.`,
+                    inputs: { role, format, focus, details }
+                }
+            };
+        }
+    };
+
+    // Core generate function
+    async function generate(tabId) {
+        const builder = prompts[tabId];
+        if (!builder) return;
+
+        const config = builder();
+        if (!config) {
+            // Find empty required fields and highlight them
+            const requiredInputs = document.querySelectorAll(`#${tabId} input[id], #${tabId} select[id]`);
+            requiredInputs.forEach(el => {
+                if (!el.value.trim() && !el.closest('.field').querySelector('.optional-tag')) {
+                    el.style.borderColor = 'var(--orange)';
+                    el.addEventListener('input', () => el.style.borderColor = '', { once: true });
+                }
+            });
+            return;
+        }
+
+        const btn = document.getElementById(config.btnId);
+        const outputWrap = document.getElementById(`out-${tabId}`);
+        const resultBox = document.getElementById(`result-${tabId}`);
+
+        btn.disabled = true;
+        btn.textContent = 'Generating...';
+        outputWrap.classList.add('visible');
+        resultBox.innerHTML = `<div class="loading-state"><div class="spinner"></div><span>Building intelligence for you...</span></div>`;
+
+        try {
+            const res = await fetch('/api/prompt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(config.payload)
+            });
+
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.error || `Server error ${res.status}`);
+            }
+
+            const data = await res.json();
+            resultBox.innerHTML = mdToHtml(data.output);
+
+        } catch (err) {
+            console.error(err);
+            resultBox.innerHTML = `<div class="error-state">
+                Generation failed: ${err.message || 'Unknown error'}.
+                <span class="retry-link" onclick="generate('${tabId}')">Try again →</span>
+            </div>`;
+        } finally {
+            btn.disabled = false;
+            btn.textContent = btn.textContent.includes('→') ? btn.textContent : btn.getAttribute('data-label') || 'Generate →';
+            // Restore original button labels
+            const labels = {
+                'btn-account-intel': 'Generate Account Brief →',
+                'btn-outreach': 'Generate Outreach Copy →',
+                'btn-intent': 'Interpret Signals →',
+                'btn-campaign': 'Generate Campaign Brief →',
+                'btn-exec': 'Generate Exec Summary →',
+                'btn-onboarding': 'Generate Training Guide →'
+            };
+            if (labels[config.btnId]) btn.textContent = labels[config.btnId];
+        }
+    }
+
+    // Copy to clipboard
+    function copyOutput(elementId, btn) {
+        const text = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = 'Copied ✓';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        }).catch(() => {
+            btn.textContent = 'Copy failed';
+            setTimeout(() => btn.textContent = 'Copy', 2000);
+        });
+    }
+</script>
+<script src="../assets/js/navigation.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+<script src="/assets/js/back-to-top.js"></script>
+</body>
+</html>

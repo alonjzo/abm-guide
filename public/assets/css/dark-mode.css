@@ -1,0 +1,156 @@
+/* ABM Suite Global Dark Mode CSS Variables */
+/* This file defines the theme variables used across all pages */
+
+:root, [data-theme="light"] {
+  /* Core Colors */
+  --color-bg: #ffffff;
+  --color-surface: #f9f9fb;
+  --color-surface-2: #f5f5f7;
+  --color-surface-offset: #edeaf0;
+  --color-text: #1a1a1a;
+  --color-text-secondary: #6b7280;
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+
+  /* Brand Colors */
+  --color-pink: #ec4899;
+  --color-purple: #8b5cf6;
+  --color-blue: #3b82f6;
+  --color-cyan: #06b6d4;
+
+  /* Semantic Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+}
+
+[data-theme="dark"] {
+  /* Core Colors - Navy to Purple gradient feel */
+  --color-bg: #1E1C2E;
+  --color-surface: #2a2c40;
+  --color-surface-2: #2e3150;
+  --color-surface-offset: #353855;
+  --color-text: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-border: #3f4266;
+  --color-border-strong: #4a4d70;
+
+  /* Brand Colors - More vibrant in dark mode */
+  --color-pink: #ec4899;
+  --color-purple: #a78bfa;
+  --color-blue: #60a5fa;
+  --color-cyan: #22d3ee;
+
+  /* Semantic Colors */
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #60a5fa;
+}
+
+/* Apply backgrounds and text colors automatically */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Card/Panel styling */
+.content-item,
+.card,
+.panel,
+.tab-content {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+/* Input fields */
+input, textarea, select {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--color-pink);
+  outline: none;
+}
+
+/* Navigation */
+.tp-global-nav {
+  background: color-mix(in srgb, var(--color-bg) 95%, var(--color-surface));
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Buttons */
+button, .btn {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+button:hover, .btn:hover {
+  background: var(--color-surface-offset);
+}
+
+/* Code blocks */
+pre, code {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+}
+
+/* Links */
+a {
+  color: var(--color-pink);
+}
+
+/* Meta text */
+.meta, .text-secondary {
+  color: var(--color-text-secondary);
+}
+
+/* Table styling */
+table {
+  background: var(--color-surface);
+}
+
+th {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+td {
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+tr:nth-child(even) {
+  background: var(--color-surface-offset);
+}
+
+/* Dark mode toggle button */
+.theme-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-surface-2);
+  border: 2px solid var(--color-border);
+  color: var(--color-text);
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn:hover {
+  transform: scale(1.1);
+  background: var(--color-pink);
+  color: white;
+}

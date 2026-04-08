@@ -1,0 +1,339 @@
+/* Executive-Clean Print Mode CSS
+ * Hides all internal markers, prompts, framework references for clean PDF output
+ */
+
+@media print {
+    /* Page Setup */
+    @page {
+        size: letter;
+        margin: 0.75in;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body {
+        background: white !important;
+        color: #1a1a2e !important;
+        padding-top: 0 !important; /* Remove nav padding for print */
+    }
+
+    /* Hide Navigation & UI Elements */
+    .abm-global-nav,
+    .export-btn,
+    .copy-btn,
+    .toggle-talking-points,
+    .nav-mobile-toggle,
+    button,
+    .expand-indicator {
+        display: none !important;
+    }
+
+    /* Hide Internal Markers in Executive Mode */
+    body.executive-mode .prompt-box,
+    body.executive-mode .framework-reference,
+    body.executive-mode .technical-note,
+    body.executive-mode .timestamp,
+    body.executive-mode .internal-note,
+    body.executive-mode [data-framework],
+    body.executive-mode .modifier-section {
+        display: none !important;
+    }
+
+    /* Clean Up Card Styling for Print */
+    .framework-card {
+        border: 1px solid #ddd !important;
+        background: white !important;
+        page-break-inside: avoid;
+        margin-bottom: 1em;
+    }
+
+    .framework-card .card-content {
+        display: block !important; /* Show all content in print */
+    }
+
+    .card-header {
+        background: #f5f5f5 !important;
+        border-bottom: 2px solid #da7036 !important;
+    }
+
+    .card-title {
+        color: #da7036 !important;
+    }
+
+    /* Typography for Print */
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        color: #1a1a2e !important;
+    }
+
+    h1 {
+        font-size: 24pt;
+        margin-bottom: 0.5em;
+    }
+
+    h2 {
+        font-size: 18pt;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+    }
+
+    h3 {
+        font-size: 14pt;
+        margin-top: 1em;
+        margin-bottom: 0.3em;
+    }
+
+    /* Phase Sections */
+    .phase-section {
+        page-break-before: always;
+    }
+
+    .phase-section:first-of-type {
+        page-break-before: auto;
+    }
+
+    /* Week Sections */
+    .week-section {
+        page-break-inside: avoid;
+        margin-bottom: 1.5em;
+    }
+
+    /* Day Sections */
+    .day-section {
+        margin-bottom: 1em;
+        padding-left: 1em;
+        border-left: 2px solid #e0e0e0;
+    }
+
+    /* Lists */
+    ul, ol {
+        margin-left: 1.5em;
+        page-break-inside: avoid;
+    }
+
+    li {
+        margin-bottom: 0.3em;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        page-break-inside: avoid;
+        margin: 1em 0;
+    }
+
+    th {
+        background: #f0f0f0 !important;
+        padding: 0.5em;
+        text-align: left;
+        border-bottom: 2px solid #da7036 !important;
+    }
+
+    td {
+        padding: 0.4em 0.5em;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    /* Metrics Tables */
+    .metrics-table {
+        font-size: 10pt;
+    }
+
+    /* Content Sections */
+    .content-section {
+        margin-bottom: 1em;
+    }
+
+    .content-label {
+        color: #da7036 !important;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.5em;
+    }
+
+    /* Use Cases and Expected Outputs */
+    .use-case,
+    .expected-output {
+        background: #f8f8f8 !important;
+        border-left: 3px solid #da7036 !important;
+        padding: 0.75em;
+        margin-bottom: 0.75em;
+        page-break-inside: avoid;
+    }
+
+    /* Talking Points - Optional in Executive Mode */
+    body.executive-mode .talking-points {
+        display: none !important;
+    }
+
+    .talking-points {
+        page-break-inside: avoid;
+        margin-top: 1em;
+    }
+
+    .talking-points-content {
+        background: #f5f5f5 !important;
+        border: 2px solid #da7036 !important;
+        padding: 1em;
+        font-style: italic;
+    }
+
+    /* Plan Builder Specific */
+    .plan-builder-section {
+        page-break-before: always;
+    }
+
+    .plan-metadata {
+        background: #f5f5f5 !important;
+        padding: 1em;
+        margin-bottom: 2em;
+        border-left: 4px solid #da7036 !important;
+    }
+
+    .plan-week-title {
+        color: #da7036 !important;
+        font-weight: 600;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+    }
+
+    .plan-day-title {
+        color: #0f3460 !important;
+        font-weight: 600;
+        margin-top: 1em;
+        margin-bottom: 0.3em;
+    }
+
+    .plan-activity {
+        margin-left: 1.5em;
+        margin-bottom: 0.5em;
+    }
+
+    .plan-framework-ref {
+        font-style: italic;
+        color: #666 !important;
+        font-size: 10pt;
+        margin-left: 1.5em;
+    }
+
+    /* Executive Mode Overrides */
+    body.executive-mode .plan-framework-ref {
+        display: none !important;
+    }
+
+    .plan-deliverable {
+        font-weight: 600;
+        color: #0f3460 !important;
+        margin-left: 1.5em;
+    }
+
+    /* Success Metrics */
+    .success-metrics-section {
+        page-break-before: always;
+    }
+
+    .metric-category {
+        margin-bottom: 1.5em;
+    }
+
+    .metric-category-title {
+        color: #da7036 !important;
+        font-weight: 600;
+        margin-bottom: 0.5em;
+    }
+
+    .metric-item {
+        margin-left: 1em;
+        margin-bottom: 0.3em;
+    }
+
+    /* Demandbase Orchestration */
+    .demandbase-section {
+        page-break-before: always;
+    }
+
+    .scoring-threshold {
+        margin-bottom: 0.75em;
+    }
+
+    .journey-stage {
+        margin-bottom: 0.75em;
+    }
+
+    /* Modifier Library - Hide in Print */
+    .modifier-section,
+    .modifier-library {
+        display: none !important;
+    }
+
+    /* Footer for each page */
+    @page {
+        @bottom-center {
+            content: "ABM Intelligence Platform | Page " counter(page);
+        }
+    }
+
+    /* Orphan and Widow Control */
+    p, li {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        orphans: 4;
+        widows: 4;
+    }
+}
+
+/* Screen-Only Styles for Executive Mode Toggle */
+body.executive-mode .prompt-box,
+body.executive-mode .framework-reference,
+body.executive-mode .copy-btn,
+body.executive-mode .technical-note,
+body.executive-mode .timestamp,
+body.executive-mode .internal-note,
+body.executive-mode [data-framework],
+body.executive-mode .modifier-section {
+    display: none !important;
+}
+
+body.executive-mode .talking-points {
+    display: none !important;
+}
+
+/* Executive Mode Indicator */
+.mode-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: rgba(218, 112, 54, 0.95);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.executive-mode .mode-indicator {
+    background: rgba(15, 52, 96, 0.95);
+}
+
+.mode-indicator::before {
+    content: "Working Mode";
+}
+
+body.executive-mode .mode-indicator::before {
+    content: "Executive Mode";
+}
+
+@media print {
+    .mode-indicator {
+        display: none !important;
+    }
+}

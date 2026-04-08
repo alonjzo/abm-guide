@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demandbase One — VP & SVP BD Starter Guide | Teleperformance</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+
+  
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans', Arial, sans-serif;
+    background: #f3f4f7;
+    color: var(--dark-gray);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(180deg, var(--color-primary), var(--color-primary-hover));
+    color: var(--color-bg);
+    padding: 68px 64px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute;
+    bottom:-80px; right:-40px;
+    width:500px; height:500px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,0,130,0.06) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  .hero::after {
+    content:'';
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:4px;
+    background:var(--pink);
+  }
+  .hero-eyebrow {
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--pink);
+    font-weight:600;
+    margin-bottom:16px;
+  }
+  .hero h1 {
+    font-family:'DM Serif Display', Georgia, serif;
+    font-size:42px;
+    font-weight:400;
+    line-height:1.15;
+    margin-bottom:14px;
+    max-width:700px;
+  }
+  .hero h1 em { font-style:italic; color:#ff99cc; }
+  .hero-sub {
+    font-size:16px;
+    color:var(--pastel-slate);
+    max-width:580px;
+    font-weight:300;
+    line-height:1.65;
+  }
+  .hero-pills {
+    display:flex;
+    gap:10px;
+    margin-top:28px;
+    flex-wrap:wrap;
+  }
+  .pill {
+    background:rgba(255,255,255,0.09);
+    border:1px solid rgba(255,255,255,0.14);
+    color:var(--pastel-slate);
+    font-size:12px;
+    padding:5px 14px;
+    border-radius:20px;
+  }
+
+  /* ── WRAP ── */
+  .wrap { max-width:940px; margin:0 auto; padding:0 24px 80px; }
+
+  /* ── SHARATH NOTE ── */
+  .sharath-note {
+    background: var(--slate-dark);
+    border-left:4px solid var(--pink);
+    border-radius:0 8px 8px 0;
+    padding:18px 24px;
+    margin:28px 0 0;
+    display:flex;
+    gap:14px;
+  }
+  .sharath-note .icon { font-size:20px; flex-shrink:0; }
+  .sharath-note p { font-size:13.5px; color:var(--pastel-slate); line-height:1.6; }
+  .sharath-note strong { color:var(--white); }
+
+  /* ── BD CONTEXT CARD ── */
+  .context-card {
+    background:var(--white);
+    border-radius:10px;
+    box-shadow: var(--shadow-sm);
+    padding:32px 36px;
+    margin-top:24px;
+    border-left:4px solid var(--pink);
+  }
+  .context-card p { font-size:15.5px; color:var(--body-gray); line-height:1.8; margin-bottom:12px; }
+  .context-card p:last-child { margin-bottom:0; }
+  .context-card strong { color:var(--slate); }
+
+  /* ── SECTION ── */
+  .section {
+    background:var(--white);
+    border-radius:10px;
+    box-shadow: var(--shadow-sm);
+    margin-top:24px;
+    overflow:hidden;
+  }
+  .section-head {
+    background:var(--slate);
+    padding:20px 32px 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .section-num {
+    background:var(--pink);
+    color:var(--white);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    padding:3px 9px;
+    border-radius:3px;
+    flex-shrink:0;
+  }
+  .section-title { color:var(--white); font-size:17px; font-weight:400; }
+  .section-body { padding:28px 32px 32px; }
+  .section-intro { font-size:14.5px; color:var(--body-gray); margin-bottom:22px; line-height:1.75; }
+
+  /* ── TIER OWNERSHIP ── */
+  .tier-ownership {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-bottom:24px;
+  }
+  @media(max-width:620px){ .tier-ownership{ grid-template-columns:1fr; } }
+  .tier-card {
+    background:var(--slate);
+    border-radius:8px;
+    padding:22px 22px 20px;
+    position:relative;
+    overflow:hidden;
+  }
+  .tier-card::before {
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:4px;
+    background:var(--pink);
+  }
+  .tier-label {
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--pink);
+    margin-bottom:6px;
+  }
+  .tier-name { font-size:16px; font-weight:600; color:var(--white); margin-bottom:8px; }
+  .tier-range { font-size:13px; color:var(--pastel-slate); margin-bottom:12px; }
+  .tier-desc { font-size:13px; color:rgba(255,255,255,0.8); line-height:1.6; }
+
+  /* ── SDR PROTOCOL ── */
+  .sdr-protocol {
+    background:rgba(255,92,0,0.05);
+    border:1.5px solid rgba(255,92,0,0.2);
+    border-radius:8px;
+    padding:22px 26px;
+    margin-bottom:24px;
+  }
+  .sdr-protocol h4 { font-size:14px; font-weight:600; color:#cc3a00; margin-bottom:10px; }
+  .sdr-protocol p { font-size:13.5px; color:var(--body-gray); line-height:1.65; }
+  .sdr-protocol strong { color:#cc3a00; }
+  .sdr-protocol ul { margin:10px 0 0 18px; }
+  .sdr-protocol li { font-size:13.5px; color:var(--body-gray); margin-bottom:6px; line-height:1.5; }
+
+  /* ── VIEW CARDS ── */
+  .view-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media(max-width:620px){ .view-grid{ grid-template-columns:1fr; } }
+  .view-card {
+    border:1.5px solid var(--pastel-light);
+    border-radius:8px;
+    padding:18px 18px 16px;
+    transition:border-color 0.15s;
+  }
+  .view-card:hover { border-color:var(--pastel-slate); }
+  .vc-top {
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .vc-icon { font-size:22px; flex-shrink:0; }
+  .vc-name { font-size:14px; font-weight:600; color:var(--slate); }
+  .vc-sub { font-size:12px; color:var(--body-gray); }
+  .vc-desc { font-size:13px; color:var(--body-gray); line-height:1.6; margin-bottom:10px; }
+  .vc-insight {
+    padding-top:10px;
+    border-top:1px solid var(--pastel-light);
+    font-size:12.5px;
+    color:var(--slate);
+    font-weight:500;
+  }
+  .vc-insight span { color:var(--pink); font-weight:700; }
+
+  /* ── INTEL TABLE ── */
+  .intel-table { width:100%; border-collapse:collapse; margin-top:10px; font-size:13.5px; }
+  .intel-table th {
+    background:var(--slate);
+    color:var(--white);
+    padding:10px 14px;
+    font-weight:500;
+    text-align:left;
+    font-size:11.5px;
+    letter-spacing:0.4px;
+  }
+  .intel-table td {
+    padding:11px 14px;
+    border-bottom:1px solid var(--pastel-light);
+    vertical-align:top;
+  }
+  .intel-table tr:last-child td { border-bottom:none; }
+  .intel-table tr:nth-child(even) td { background:#fafafa; }
+  .badge {
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    padding:2px 8px;
+    border-radius:3px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  .badge-act { background:rgba(255,0,130,0.1); color:var(--pink); }
+  .badge-str { background:rgba(0,175,155,0.1); color:var(--teal); }
+  .badge-ctx { background:rgba(72,76,106,0.1); color:var(--slate); }
+
+  /* ── ALIGNMENT SECTION ── */
+  .align-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media(max-width:620px){ .align-grid{ grid-template-columns:1fr; } }
+  .align-card {
+    border-radius:8px;
+    padding:20px 20px 18px;
+  }
+  .align-card.dark { background:var(--slate); }
+  .align-card.light { background:var(--pastel-light); }
+  .align-head {
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .dark .align-head { color:var(--pink); }
+  .light .align-head { color:var(--slate); }
+  .align-title { font-size:15px; font-weight:600; margin-bottom:8px; }
+  .dark .align-title { color:var(--white); }
+  .light .align-title { color:var(--slate); }
+  .align-body { font-size:13px; line-height:1.65; }
+  .dark .align-body { color:rgba(255,255,255,0.8); }
+  .light .align-body { color:var(--body-gray); }
+
+  /* ── COURSE LIST ── */
+  .course-list { margin-top:4px; }
+  .course-row {
+    display:flex;
+    gap:14px;
+    padding:13px 0;
+    border-bottom:1px solid var(--pastel-light);
+    align-items:flex-start;
+  }
+  .course-row:last-child { border-bottom:none; }
+  .cdot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:6px; }
+  .cdot-pink { background:var(--pink); }
+  .cdot-blue { background:var(--blue); }
+  .cdot-teal { background:var(--teal); }
+  .cdot-slate { background:var(--slate); }
+  .course-info { flex:1; }
+  .course-name { font-size:14px; font-weight:500; margin-bottom:2px; }
+  .course-name a { color:var(--blue); text-decoration:none; }
+  .course-name a:hover { text-decoration:underline; }
+  .ctag {
+    display:inline-block;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+    padding:1px 7px;
+    border-radius:3px;
+    margin-left:6px;
+    vertical-align:middle;
+  }
+  .ctag-req { background:var(--pink-subtle); color:var(--pink); border:1px solid var(--pink-border); }
+  .ctag-ai { background:rgba(0,135,255,0.08); color:var(--blue); border:1px solid rgba(0,135,255,0.2); }
+  .ctag-str { background:rgba(0,175,155,0.08); color:var(--teal); border:1px solid rgba(0,175,155,0.2); }
+  .course-meta { font-size:12.5px; color:var(--body-gray); line-height:1.5; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-radius:0 6px 6px 0;
+    padding:14px 18px;
+    margin-top:18px;
+    font-size:14px;
+    line-height:1.65;
+  }
+  .callout-pink { background:var(--pink-subtle); border-left:3px solid var(--pink); }
+  .callout-blue { background:rgba(0,135,255,0.06); border-left:3px solid var(--blue); }
+  .callout-teal { background:rgba(0,175,155,0.07); border-left:3px solid var(--teal); }
+  .callout strong { color:var(--slate); }
+
+  /* ── COMING SOON ── */
+  .coming-soon {
+    background:var(--slate-dark);
+    border-radius:10px;
+    padding:28px 32px;
+    margin-top:24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .coming-soon::before {
+    content:'COMING SOON';
+    position:absolute;
+    top:18px; right:24px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:2.5px;
+    color:var(--pink);
+    background:rgba(255,0,130,0.12);
+    border:1px solid rgba(255,0,130,0.25);
+    padding:3px 10px;
+    border-radius:3px;
+  }
+  .coming-soon h3 { font-size:17px; font-weight:600; color:var(--white); margin-bottom:10px; }
+  .coming-soon p { font-size:14px; color:var(--pastel-slate); line-height:1.65; max-width:720px; }
+  .coming-soon strong { color:var(--white); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align:center;
+    padding:28px;
+    font-size:12px;
+    color:#aaa;
+    border-top:1px solid var(--pastel-light);
+    margin-top:40px;
+  }
+  .footer strong { color:var(--slate); }
+</style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Teleperformance · US ABM Program · Business Development</div>
+  <h1>Demandbase One<br><em>VP & SVP BD Starter Guide</em></h1>
+  <div class="hero-sub">Your strategic view inside the platform. Account health, intent intelligence, buying group coverage, and how to use this data to protect relationships, prioritize attention, and guide your SDR team to the right doors.</div>
+  <div class="hero-pills">
+    <span class="pill">T1-A & Tier 1 Account Ownership</span>
+    <span class="pill">Intent & Engagement Intelligence</span>
+    <span class="pill">SDR Coordination Layer</span>
+    <span class="pill">AI-Powered Account Insights</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- SHARATH NOTE -->
+  <div class="sharath-note">
+    <span class="icon">📋</span>
+    <p><strong>Note for Sharath Madishetty — Demandbase Ops Manager:</strong> This guide is distributed to VP and SVP BD leadership alongside the SDR guide. BD receives a fuller strategic view of account intelligence — the same platform, different depth. As you build out the Sales enablement track, these two guides define the training split. BD training should reinforce named account ownership, how SDRs coordinate on those accounts, and how to read campaign-level intelligence from a pipeline perspective.</p>
+  </div>
+
+  <!-- BD CONTEXT CARD -->
+  <div class="context-card">
+    <p>You built the relationships that make your named accounts worth protecting. Demandbase doesn't replace that — it gives you a live read on what's happening inside those accounts between your conversations. Intent spikes, buying committee activity, engagement trends — all of it surfaced before a contact ever signals they're ready to talk.</p>
+    <p>SDRs have full range to work the open account universe. Where your named accounts are concerned, they know to check in with you first before reaching out. This guide explains what the platform shows you and how to use that intelligence to stay ahead of your accounts.</p>
+  </div>
+
+  <!-- SECTION 01: YOUR ACCOUNT UNIVERSE -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-title">Your Account Universe — What You Own in the Platform</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">The US Workspace runs approximately 5,200 tiered accounts. Your world is the top of that universe — the most strategic, highest-revenue accounts in the program. These are not marketing targets. These are relationships in motion, and the platform gives you live visibility into what's happening at each one.</p>
+
+      <div class="tier-ownership">
+        <div class="tier-card">
+          <div class="tier-label">BD Primary Territory</div>
+          <div class="tier-name">T1-A Accounts</div>
+          <div class="tier-range">Revenue: $50B and above</div>
+          <div class="tier-desc">The enterprise crown jewels. These accounts get the highest ad frequency, the most intent monitoring, and the most deliberate campaign sequencing. If they're named to you, SDRs know to coordinate with you before making contact.</div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-label">BD Primary Territory</div>
+          <div class="tier-name">Tier 1 Accounts</div>
+          <div class="tier-range">Revenue: $10B – $49.9B</div>
+          <div class="tier-desc">Large enterprise accounts with complex buying committees and longer cycles. Demandbase gives you multi-persona visibility — you can see which part of the buying group is most active right now. That's where a conversation is most likely to land.</div>
+        </div>
+      </div>
+
+      <div class="sdr-protocol">
+        <h4>Named Accounts — SDRs Know to Check In First</h4>
+        <p>SDRs have full access to research and work accounts across the platform. Where it applies to you: if an account is formally assigned to you in SFDC, SDRs know to reach out before engaging. That's not a policy they need to be reminded of — it's how the team operates. When an SDR brings you an MQA from one of your named accounts, they're handing you a qualified signal. Here's what to evaluate:</p>
+        <ul>
+          <li>Which campaign drove the engagement — was it the right messaging for this account?</li>
+          <li>Which personas are showing up as active — does that match who you're already in conversations with?</li>
+          <li>Is the intent topic aligned to an active conversation — or is this a different part of the business entirely?</li>
+          <li>Is the timing right — or would SDR outreach now disrupt an existing thread?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 02: WHAT THE PLATFORM SHOWS YOU -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-title">What the Platform Shows You — The BD Intelligence Layer</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">Every view in Demandbase is telling you something about account health and buying behavior. Here's how each module translates to something actionable for your BD work.</p>
+
+      <div class="view-grid">
+        <div class="view-card">
+          <div class="vc-top">
+            <span class="vc-icon">📡</span>
+            <div><div class="vc-name">Intent Intelligence</div><div class="vc-sub">What accounts are researching right now</div></div>
+          </div>
+          <div class="vc-desc">Demandbase monitors keyword activity across the web — not just on TP's site. When a T1-A account spikes on "AI-powered customer experience," "contact center transformation," or "outsourcing strategy," that surge shows up in real time, weeks before they'd typically signal buying intent through traditional channels.</div>
+          <div class="vc-insight"><span>BD use:</span> An intent spike is often the early signal of an internal initiative forming. If your contact hasn't mentioned it yet, they may not be the champion — or the initiative may be running above them.</div>
+        </div>
+        <div class="view-card">
+          <div class="vc-top">
+            <span class="vc-icon">🧩</span>
+            <div><div class="vc-name">Buying Group Coverage</div><div class="vc-sub">Who inside the account is active</div></div>
+          </div>
+          <div class="vc-desc">Buying Groups in Demandbase track three persona clusters — CX Core (CCOs, VP CX), Lines of Business, and Vertical Specialists. When multiple personas inside one account show engagement, it signals that a buying conversation is spreading through the organization. One engaged persona is curiosity. Three is a committee.</div>
+          <div class="vc-insight"><span>BD use:</span> If the CFO persona at one of your T1-A accounts starts engaging, that's a different conversation than CX engagement. It may mean a deal you thought was CX-driven is actually a finance-led cost reduction play.</div>
+        </div>
+        <div class="view-card">
+          <div class="vc-top">
+            <span class="vc-icon"></span>
+            <div><div class="vc-name">Engagement Minutes</div><div class="vc-sub">Total account warmth over time</div></div>
+          </div>
+          <div class="vc-desc">Engagement Minutes aggregate every interaction an account has had with TP — ads, emails, site visits, content. It's a cumulative warmth score. An account that's been quietly building Engagement Minutes over 6 weeks without a formal conversation may be further along the evaluation track than you think.</div>
+          <div class="vc-insight"><span>BD use:</span> Before a QBR or executive meeting, check your account's Engagement Minutes trend. If it's climbing without a corresponding sales conversation, someone in that account is doing due diligence on their own.</div>
+        </div>
+        <div class="view-card">
+          <div class="vc-top">
+            <span class="vc-icon">🗺️</span>
+            <div><div class="vc-name">Journey Stage</div><div class="vc-sub">Where the account sits in the buying cycle</div></div>
+          </div>
+          <div class="vc-desc">The US Workspace runs a seven-stage account journey. A stage advancement means the account's collective behavior has moved them forward in the buying cycle — more engagement, more intent, more committee activity. Stage changes are tracked so you can see when momentum shifts.</div>
+          <div class="vc-insight"><span>BD use:</span> A Tier 1 account that advances two stages in three weeks is in motion. That's the window to accelerate your engagement, not wait for their next check-in request.</div>
+        </div>
+        <div class="view-card">
+          <div class="vc-top">
+            <span class="vc-icon"></span>
+            <div><div class="vc-name">AI Account Insights</div><div class="vc-sub">Automated account intelligence brief</div></div>
+          </div>
+          <div class="vc-desc">Demandbase's AI panel inside each account profile synthesizes intent trends, recent engagement, buying group activity, and journey stage into a plain-language summary. It's designed to surface patterns that would take 20 minutes to manually piece together — in about 30 seconds.</div>
+          <div class="vc-insight"><span>BD use:</span> Pull this before any executive call. If you've been in a relationship for two years, the AI brief may surface something that's shifted in the last 30 days that you haven't heard directly yet.</div>
+        </div>
+        <div class="view-card">
+          <div class="vc-top">
+            <span class="vc-icon"></span>
+            <div><div class="vc-name">Pipeline Predict Score</div><div class="vc-sub">Predictive model for account readiness</div></div>
+          </div>
+          <div class="vc-desc">Pipeline Predict uses historical engagement patterns, firmographic data, and intent signals to score how likely an account is to enter pipeline in the next 90 days. Two models run independently in the US Workspace — one for the CX motion, one for Vertical/Transformation.</div>
+          <div class="vc-insight"><span>BD use:</span> Use the Pipeline Predict score to prioritize which accounts warrant an accelerated outreach sequence vs. which ones are in a slower-moving watch pattern.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 03: READING SIGNALS TABLE -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-title">Reading the Signals — What Each Data Point Tells You</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">Not every signal demands the same response. Here's a practical read on what each Demandbase data point should trigger for a BD leader.</p>
+
+      <table class="intel-table">
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>What It Means</th>
+            <th>BD Response</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Intent spike this week — topic aligned to active deal</strong></td>
+            <td>Someone inside the account is actively researching the same topic you're pitching. The conversation exists internally whether you know about it or not.</td>
+            <td>Accelerate your timeline. Reach out directly this week. Reference the business problem, not the product.</td>
+            <td><span class="badge badge-act">Act Now</span></td>
+          </tr>
+          <tr>
+            <td><strong>3+ personas in the buying group engaged</strong></td>
+            <td>The evaluation has spread beyond your primary contact. A committee is forming.</td>
+            <td>Ask your contact who else is involved. Request a broader stakeholder meeting. Come with a business case, not a pitch.</td>
+            <td><span class="badge badge-act">Act Now</span></td>
+          </tr>
+          <tr>
+            <td><strong>Journey stage advancement this week</strong></td>
+            <td>The account's collective behavior has crossed a threshold. They are moving forward in their evaluation — with or without your involvement.</td>
+            <td>Pull the AI Account Brief. Check what changed. Reach out before they get further without you.</td>
+            <td><span class="badge badge-act">Act Now</span></td>
+          </tr>
+          <tr>
+            <td><strong>Engagement Minutes climbing but no current conversation</strong></td>
+            <td>Someone in the account is doing due diligence on TP independently. They haven't surfaced yet.</td>
+            <td>Check buying group data to identify which personas are active. Find the person doing the research. They may not be your existing contact.</td>
+            <td><span class="badge badge-str">Investigate</span></td>
+          </tr>
+          <tr>
+            <td><strong>Intent spike on a topic unrelated to current deal</strong></td>
+            <td>A different initiative may be forming in a different part of the business. Separate buying committee, separate budget.</td>
+            <td>Flag to Josh and Marketing. This may be a second thread worth developing — but it needs its own approach, not a bolt-on to the existing conversation.</td>
+            <td><span class="badge badge-str">Investigate</span></td>
+          </tr>
+          <tr>
+            <td><strong>Engagement drops after a campaign</strong></td>
+            <td>The campaign messaging may not be resonating — or the account has gone quiet for a reason. Timing may be off.</td>
+            <td>Don't force outreach. Check with Marketing on what content ran against this account. The message may need to shift before re-engaging.</td>
+            <td><span class="badge badge-ctx">Context</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 04: MARKETING PARTNERSHIP -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-title">The Marketing Partnership — How This Actually Works</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">Marketing is running coordinated campaigns against your accounts right now. Targeted ads, personalized content, intent-triggered sequences — all built to create the context that makes your conversations land. This isn't Marketing working in parallel to Sales. It's Marketing setting the table before you sit down.</p>
+
+      <div class="align-grid">
+        <div class="align-card dark">
+          <div class="align-head">Marketing's Role</div>
+          <div class="align-title">Warming the Account Before You Arrive</div>
+          <div class="align-body">By the time a T1-A account surfaces as an MQA, they've already seen TP messaging multiple times — ads targeted to their industry, content mapped to their intent signals, engagement tracked back to specific personas. Your first meaningful conversation is not the first time they've encountered Teleperformance.</div>
+        </div>
+        <div class="align-card light">
+          <div class="align-head">BD's Role</div>
+          <div class="align-title">Converting Relationship into Pipeline</div>
+          <div class="align-body">You bring something Demandbase can't automate — the trusted relationship, the executive credibility, the institutional knowledge of what that account actually needs. Marketing gets them engaged. You're the one who gets them to commit. The data just tells you when the window is open.</div>
+        </div>
+        <div class="align-card light">
+          <div class="align-head">SDR's Role</div>
+          <div class="align-title">The Qualification Engine</div>
+          <div class="align-body">SDRs work the full open account universe and review engaged accounts 2 weeks post-campaign to qualify MQAs. For your named accounts, they'll bring those signals to you before making contact. They're your early-warning system on what's heating up — and on open accounts, they're moving pipeline forward independently.</div>
+        </div>
+        <div class="align-card dark">
+          <div class="align-head">Shared Platform</div>
+          <div class="align-title">Same Data, Same Accounts, One Truth</div>
+          <div class="align-body">You, Marketing, and SDRs are all looking at the same account intelligence. When an account you're working spikes on intent, Marketing sees it and may increase ad pressure. When you close a deal, that account's journey stage updates for everyone. No information silos. No competing versions of account status.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-pink" style="margin-top:20px;">
+        <strong>Campaign Intelligence Access:</strong> After each campaign activation, you can see which of your accounts engaged, what content resonated, and how the engagement maps to the personas inside the buying committee. This is the briefing you should be pulling before every executive conversation — not after.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 05: TRAINING TRACK -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div class="section-title">Your Training Track — Required Courses Before First Login</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">All courses are self-paced, free, and live at <strong>partneredu.demandbase.com</strong>. Register with your TP email. The BD track is built around strategic account intelligence — not platform administration.</p>
+
+      <div class="course-list">
+        <div class="course-row">
+          <div class="cdot cdot-pink"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/page/ae-learning-track" target="_blank">Account Executive Learning Track</a> <span class="ctag ctag-req">Required · BD Primary Track</span></div>
+            <div class="course-meta">Tips for using Demandbase sales tools for territory planning and account prioritization. This is the closest track to your BD role — covers how to use account intelligence to manage relationships, not just prospect. Work through this track first.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/prospecting-with-demandbase-one-for-aes-elearning-course" target="_blank">Prospecting with Demandbase One for BD/Enterprise</a> <span class="ctag ctag-req">Required</span></div>
+            <div class="course-meta">60 minutes. How to identify, prioritize, and craft personalized outreach to potential customers using Demandbase account intelligence. The frameworks here apply directly to how you approach T1-A and Tier 1 account management. Updated Feb 2026.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/segmenting-accounts-with-demandbase-one-elearning-course" target="_blank">Segmenting and Prioritizing Accounts</a> <span class="ctag ctag-req">Required</span></div>
+            <div class="course-meta">30 minutes. How to use Demandbase insights to plan your territory — which accounts to prioritize right now, which ones to monitor, and how to build a structured account coverage approach. Updated Feb 2026.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-teal"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/demandbase-one-for-sales-and-marketing-overview" target="_blank">Demandbase One for Sales & Marketing Overview</a></div>
+            <div class="course-meta">45 minutes. The full picture of how Marketing and Sales use the same platform — essential for understanding what Marketing is doing with your accounts when you're not in the room. Updated Feb 2026.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-teal"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/running-meetings-that-lead-to-deals-elearning-course" target="_blank">Running Meetings That Lead to Deals</a></div>
+            <div class="course-meta">30 minutes. How to use Demandbase account intelligence to prepare for, lead, and follow up from executive prospect meetings. The prep workflow here should become standard before any T1-A executive conversation. Updated Feb 2026.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/strategizing-long-term-and-at-risk-sales-elearning-course" target="_blank">Strategizing Long-Term and At-Risk Accounts</a> <span class="ctag ctag-str">Strategic</span></div>
+            <div class="course-meta">20 minutes. Practical frameworks for managing long-cycle enterprise accounts and identifying when a relationship may be at risk — before the account goes dark. Updated Feb 2026.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-slate"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/page/power-prospecting-using-ai" target="_blank">Power Prospecting Using AI</a> <span class="ctag ctag-ai">AI Track</span></div>
+            <div class="course-meta">How to use AI tools built into Demandbase for smarter prospecting — AI-powered account insights, intent-based prioritization, and personalized outreach at scale. Updated Oct 2025.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/new-feature-demandbase-one-for-sales-playbooks" target="_blank">Demandbase One for Sales Playbooks</a></div>
+            <div class="course-meta">15 minutes. How BD leaders can use Sales Playbooks to guide SDR coordination — setting priorities, acting on buying signals, and ensuring consistent account coverage across the team.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-teal"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/new-feature-email-personalization-agent" target="_blank">Email Personalization Agent</a> <span class="ctag ctag-ai">AI · New</span></div>
+            <div class="course-meta">15 minutes. Generate intent-informed, account-specific outreach directly inside the platform — without external research or manual drafting. Particularly useful for accelerating follow-up after an intent spike or journey stage change.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-blue" style="margin-top:20px;">
+        <strong>Full Role-Based Training Hub:</strong> All tracks, including SDR, Sales Manager, and Marketing roles, are available at <a href="https://partneredu.demandbase.com/page/role-based-training" target="_blank" style="color:var(--blue)">partneredu.demandbase.com/page/role-based-training</a>. Understanding what your SDR team is learning gives you better context for how to coordinate with them inside the platform.
+      </div>
+    </div>
+  </div>
+
+  <!-- COMING SOON -->
+  <div class="coming-soon">
+    <h3>🔓 Coming Soon: On-Platform Personalized Outreach for Your Accounts</h3>
+    <p>Once Demandbase Sales access is fully activated, BD leaders will be able to generate <strong>personalized, intent-informed outreach emails directly inside the platform</strong> — built from live account intelligence without leaving your workflow. The AI Email Personalization Agent uses the account's intent signals, engagement history, and buying group activity to draft relevant outreach in seconds. SDRs will have access to this capability as well. For your named accounts, the same coordination applies — they'll loop you in before sending anything your way.</p>
+  </div>
+
+</div><!-- /wrap -->
+
+<div class="footer">
+  <strong>Teleperformance</strong> &nbsp;·&nbsp; US GTM Strategy &nbsp;·&nbsp; VP & SVP BD Demandbase Starter Guide<br>
+  Confidential — Internal Use Only &nbsp;·&nbsp; Prepared March 2026 &nbsp;·&nbsp; For BD Leadership — Review with Demandbase Ops: Sharath Madishetty
+</div>
+
+    <script src="/assets/js/back-to-top.js"></script>
+<script src="../assets/js/navigation.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demandbase US Workspace | ABM Content Arsenal</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #2d8a4e;
+    --green-bg: #e8f5e9;
+    --amber: #b86200;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --slate-mid: #848dad;
+    --blue: #3047b0;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  /* ── HERO ── */
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:24px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.4rem);font-weight:700;letter-spacing:-.02em;max-width:14ch;line-height:1.1;margin-bottom:16px}
+  .hero-sub{font-size:16px;opacity:.72;max-width:58ch;line-height:1.6;margin-bottom:36px}
+  .hero-tags{display:flex;gap:10px;flex-wrap:wrap}
+  .hero-tag{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;letter-spacing:.03em}
+
+  /* ── NAV ── */
+  .sticky-nav{position:sticky;top:56px;z-index:39;background:var(--white);border-bottom:1px solid var(--pastel-slate-light);padding:0 60px;position:relative}
+  .sticky-nav-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+  .sticky-nav-inner::-webkit-scrollbar{display:none}
+  .nav-item{padding:16px 18px;font-size:13px;font-weight:600;color:var(--body-gray);white-space:nowrap;border-bottom:2px solid transparent;cursor:pointer;transition:.15s;flex-shrink:0}
+  .nav-item:hover{color:var(--slate);border-bottom-color:var(--pastel-slate)}
+  .nav-item.active{color:var(--pink);border-bottom-color:var(--pink)}
+  /* Scroll indicator */
+  .sticky-nav::after{content:'';position:absolute;right:0;top:0;bottom:0;width:80px;background:linear-gradient(to right,transparent,var(--white) 50%);pointer-events:none;opacity:0;transition:opacity .3s}
+  .sticky-nav.can-scroll::after{opacity:1}
+
+  /* ── LAYOUT ── */
+  .page{max-width:1100px;margin:0 auto;padding:0 60px 80px}
+  section{padding:56px 0 0}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
+  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:68ch;margin-bottom:32px;line-height:1.65}
+  h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:8px}
+
+  /* ── CARDS ── */
+  .card-grid{display:grid;gap:20px}
+  .card-grid-2{grid-template-columns:repeat(2,1fr)}
+  .card-grid-3{grid-template-columns:repeat(3,1fr)}
+  .card-grid-4{grid-template-columns:repeat(4,1fr)}
+  .card{background:var(--white);border:1px solid var(--pastel-slate-light);border-radius:12px;padding:24px;box-shadow: var(--shadow-sm);margin-bottom:8px}
+  .card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pastel-slate);margin-bottom:8px}
+  .card-title{font-size:16px;font-weight:700;color:var(--black);margin-bottom:8px;text-transform:none;letter-spacing:normal}
+  .card-body{font-size:14px;color:var(--body-gray);line-height:1.6;text-transform:none;font-weight:normal;letter-spacing:normal}
+
+  /* ── TIER TABLE ── */
+  .table-wrap{border:1px solid var(--pastel-slate-light);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm);margin:24px 0}
+  .tier-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
+  .tier-table th:nth-child(1){width:8%} /* Tier */
+  .tier-table th:nth-child(2){width:14%} /* Revenue Band */
+  .tier-table th:nth-child(3){width:16%} /* ABM Motion */
+  .tier-table th:nth-child(4){width:12%} /* Count */
+  .tier-table th:nth-child(5){width:50%} /* Treatment */
+  .tier-table th{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--body-gray);background:var(--pastel-slate-light);padding:12px 16px;text-align:left;border-bottom:1px solid var(--pastel-slate);white-space:nowrap}
+  .tier-table td{padding:14px 16px;border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);vertical-align:middle}
+  .tier-table td:last-child{vertical-align:top} /* Treatment column stays top-aligned */
+  .tier-table tr:nth-child(even){background:rgba(237,234,240,0.3)} /* Zebra striping */
+  .tier-table tr:hover{background:rgba(194,199,205,0.15)} /* Hover state */
+  .tier-table tr:last-child td{border-bottom:none}
+  .tier-badge{display:inline-flex;align-items:center;justify-content:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+  .t1a{background:var(--slate-dark);color:var(--white)}
+  .t1{background:var(--slate);color:#fff}
+  .t2{background:var(--pastel-slate);color:var(--slate-dark)}
+  .t3{background:var(--pastel-slate-light);color:var(--slate-dark)}
+
+  /* ── JOURNEY ── */
+  .journey-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:0;position:relative;margin:32px 0}
+  .journey-flow::before{content:'';position:absolute;top:22px;left:5%;right:5%;height:2px;background:linear-gradient(90deg,var(--pastel-slate-light),var(--slate),var(--pink),var(--pink));z-index:0}
+  .journey-step{text-align:center;position:relative;z-index:1;padding:0 4px}
+  .journey-dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:12px;font-weight:700;border:2px solid var(--pastel-slate)}
+  .jd-grey{background:var(--pastel-slate-light);color:var(--body-gray);border-color:var(--pastel-slate)}
+  .jd-slate{background:var(--slate);color:#fff;border-color:var(--slate-dark)}
+  .jd-dark{background:var(--slate-dark);color:#fff;border-color: color-mix(in srgb, var(--color-text) 10%, transparent)}
+  .jd-pink{background:var(--pink);color:#fff;border-color: color-mix(in srgb, var(--color-text) 10%, transparent)}
+  .journey-name{font-size:11px;font-weight:700;color:var(--dark-gray);line-height:1.3;margin-bottom:4px}
+  .journey-trigger{font-size:10px;color:var(--body-gray);line-height:1.4}
+  .journey-owner{display:inline-block;margin-top:6px;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px}
+  .owner-mktg{background:var(--pastel-slate-light);color:var(--slate)}
+  .owner-both{background:#e8f0fe;color:#1a56db}
+  .owner-sales{background:var(--pink-subtle);color:var(--pink)}
+
+  /* ── ROUTING ── */
+  .routing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+  .routing-card{border-radius:12px;padding:28px;position:relative;overflow:hidden}
+  .routing-card.sdr{background:var(--pastel-slate-light);border:1px solid var(--pastel-slate)}
+  .routing-card.bd{background:var(--slate);color:var(--white)}
+  .routing-score{font-size:48px;font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+  .routing-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;opacity:.7}
+  .routing-title{font-size:20px;font-weight:700;margin-bottom:10px}
+  .routing-body{font-size:14px;opacity:.8;line-height:1.6}
+  .routing-card.bd .routing-body{opacity:.75}
+  .routing-signals{margin-top:16px;display:grid;gap:8px}
+  .routing-signal{font-size:13px;padding-left:14px;position:relative;line-height:1.4}
+  .routing-signal::before{content:'';position:absolute;left:0;top:.52em;width:6px;height:6px;border-radius:50%}
+  .sdr .routing-signal::before{background:var(--slate)}
+  .bd .routing-signal::before{background:var(--pink)}
+  .routing-note{font-size:12px;margin-top:14px;padding:10px 14px;border-radius:8px;line-height:1.5}
+  .routing-card.sdr .routing-note{background:rgba(72,76,106,.08);color:var(--body-gray)}
+  .routing-card.bd .routing-note{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8)}
+
+  /* ── LIST CREATION ── */
+  .flow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin:28px 0}
+  .flow-steps::before{content:'';position:absolute;top:20px;left:12%;right:12%;height:2px;background:var(--pastel-slate);z-index:0}
+  .flow-step{text-align:center;position:relative;z-index:1;padding:0 8px}
+  .flow-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin:0 auto 12px;background:var(--white);border:2px solid var(--slate)}
+  .flow-num.active{background:var(--slate);color:var(--white);border-color:var(--slate-dark)}
+  .flow-step-name{font-size:13px;font-weight:700;color:var(--black);margin-bottom:4px}
+  .flow-step-desc{font-size:12px;color:var(--body-gray);line-height:1.4}
+
+  /* ── CALLOUTS ── */
+  .callout{padding:20px 24px;border-radius:10px;margin:24px 0;font-size:14px;line-height:1.65}
+  .callout.slate{background:rgba(72,76,106,.07);border-left:3px solid var(--slate)}
+  .callout.pink{background:var(--pink-subtle);border-left:3px solid var(--pink)}
+  .callout.amber{background:var(--amber-bg);border-left:3px solid var(--amber)}
+  .callout.green{background:var(--green-bg);border-left:3px solid var(--green)}
+  .callout strong{color:var(--black)}
+
+  /* ── KEYWORDS ── */
+  .keyword-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+  .keyword-col{padding:24px;border-radius:12px;border:1px solid}
+  .keyword-col.use{background:var(--green-bg);border-color:rgba(45,138,78,.2)}
+  .keyword-col.avoid{background:#fff5f5;border-color:rgba(192,57,43,.2)}
+  .keyword-col h4{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+  .keyword-col.use h4{color:var(--green)}
+  .keyword-col.avoid h4{color:#c0392b}
+  .kw-list{display:grid;gap:8px;list-style:none}
+  .kw-list li{font-size:13px;padding-left:16px;position:relative;line-height:1.45;color:var(--body-gray)}
+  .kw-list li::before{content:'';position:absolute;left:0;top:.5em;width:6px;height:6px;border-radius:50%}
+  .keyword-col.use li::before{background:var(--green)}
+  .keyword-col.avoid li::before{background:#c0392b}
+
+  /* ── MINI RULE LIST ── */
+  .rule-list{display:grid;gap:12px;margin:20px 0}
+  .rule-item{display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--pastel-slate-light);border-radius:10px}
+  .rule-num{min-width:28px;height:28px;border-radius:50%;background:var(--slate);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-top:1px}
+  .rule-body{font-size:14px;color:var(--dark-gray);line-height:1.55}
+  .rule-body strong{color:var(--black)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:rgba(72,76,106,.1);padding:2px 6px;border-radius:4px}
+
+  /* ── CONTACTS ── */
+  .contact-strip{background:var(--pastel-slate-light);border-radius:12px;padding:28px 32px;margin-top:48px;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
+  .contact-item{}
+  .contact-role{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--body-gray);margin-bottom:4px}
+  .contact-name{font-size:15px;font-weight:700;color:var(--black)}
+  .contact-detail{font-size:13px;color:var(--body-gray)}
+  .divider{width:1px;background:var(--pastel-slate);align-self:stretch}
+
+  /* ── FOOTER ── */
+  .footer{background:var(--slate);color:rgba(255,255,255,0.65);padding:36px 60px;font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:64px}
+  .footer strong{color:var(--white)}
+
+  @media(max-width:900px){
+    .hero,.sticky-nav,.page,.footer{padding-left:24px;padding-right:24px}
+    .card-grid-2,.card-grid-3,.card-grid-4,.routing-grid,.journey-flow,.flow-steps,.keyword-grid{grid-template-columns:1fr}
+    .journey-flow::before,.flow-steps::before{display:none}
+    .contact-strip{flex-direction:column;gap:20px}
+    .divider{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span></span> US Workspace · Operator Guide</div>
+    <h1>Demandbase US Workspace</h1>
+    <p class="hero-sub">How the workspace is structured, how accounts move through the buying journey, how signals route to the right team, and the one rule that makes advertising work: start every list in Global.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">5,241 US Accounts</span>
+      <span class="hero-tag">7 Journey Stages</span>
+      <span class="hero-tag">42+ Keyword Sets</span>
+      <span class="hero-tag">3 Buying Groups</span>
+      <span class="hero-tag">Pipeline Predict: SDR 40 · BD 60</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="sticky-nav" id="workspace-nav">
+  <div class="sticky-nav-inner">
+    <a class="nav-item" onclick="document.getElementById('architecture').scrollIntoView({behavior:'smooth'});return false" href="#">Architecture</a>
+    <a class="nav-item" onclick="document.getElementById('accounts').scrollIntoView({behavior:'smooth'});return false" href="#">Tiers</a>
+    <a class="nav-item" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'});return false" href="#">Journey</a>
+    <a class="nav-item" onclick="document.getElementById('routing').scrollIntoView({behavior:'smooth'});return false" href="#">Routing</a>
+    <a class="nav-item" onclick="document.getElementById('lists').scrollIntoView({behavior:'smooth'});return false" href="#">Lists</a>
+    <a class="nav-item" onclick="document.getElementById('buying-groups').scrollIntoView({behavior:'smooth'});return false" href="#">Buying Groups</a>
+    <a class="nav-item" onclick="document.getElementById('intent').scrollIntoView({behavior:'smooth'});return false" href="#">Intent</a>
+    <a class="nav-item" href="../orchestration/index.html">Orchestration</a>
+    <a class="nav-item" onclick="document.getElementById('governance').scrollIntoView({behavior:'smooth'});return false" href="#">Rules</a>
+    <a class="nav-item" onclick="document.getElementById('contacts').scrollIntoView({behavior:'smooth'});return false" href="#">Contacts</a>
+  </div>
+</nav>
+<script>
+// Check if nav needs scroll indicator
+(function() {
+  const nav = document.querySelector('.sticky-nav');
+  const navInner = document.querySelector('.sticky-nav-inner');
+
+  function checkScroll() {
+    if (navInner.scrollWidth > navInner.clientWidth) {
+      nav.classList.add('can-scroll');
+    } else {
+      nav.classList.remove('can-scroll');
+    }
+  }
+
+  checkScroll();
+  window.addEventListener('resize', checkScroll);
+
+  // Highlight active section on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  function highlightNav() {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (scrollY >= (sectionTop - 200)) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(current)) {
+        item.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', highlightNav);
+})();
+</script>
+
+<div class="page">
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <div class="section-label">01 · Architecture</div>
+    <h2>How the workspace is built</h2>
+    <p class="section-intro">Demandbase runs on a three-layer hierarchy. Understanding where each layer lives tells you where to build assets and why advertising always requires a Global step.</p>
+
+    <div class="card-grid card-grid-3">
+      <div class="card accent">
+        <div class="card-label">Layer 1 · Tenant</div>
+        <div class="card-title">Global / All Regions</div>
+        <div class="card-body">Journey Stage frameworks, Buying Group personas, and the Advertising DSP all live at the tenant level. Changes here affect every region. Advertising campaigns are built here, not inside individual workspaces.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-label">Layer 2 · Workspace</div>
+        <div class="card-title">US · EMEA · APAC</div>
+        <div class="card-body">Each region operates in its own workspace with isolated account lists and reporting data. The US Workspace contains 5,241 tiered accounts. Workspace data does not sync automatically to Global or other regions.</div>
+      </div>
+      <div class="card accent">
+        <div class="card-label">Layer 3 · Assets</div>
+        <div class="card-title">Lists · Keywords · Campaigns</div>
+        <div class="card-body">Account lists, keyword sets, and campaigns live inside their workspace. For advertising to work, assets must also exist in Global with a <code>[US]</code> prefix. Dual-maintenance is required — there is no automatic sync.</div>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <strong>Always confirm you're in US Workspace before pulling data.</strong> The Global workspace mixes in EMEA and APAC buying groups, produces incorrect account counts, and reflects inaccurate journey stage data for the US motion. The workspace dropdown is in the top-right corner of Demandbase.
+    </div>
+  </section>
+
+  <!-- ACCOUNTS -->
+  <section id="accounts">
+    <div class="section-label">02 · Account Tiers</div>
+    <h2>Account universe & tiering</h2>
+    <p class="section-intro">Every US account is tiered by revenue. Tier drives ABM motion — 1:1 for the largest, 1:Many for scale. Tier also determines which orchestration plays fire and whether BD or SDR handles the routing.</p>
+
+    <div class="table-wrap">
+      <table class="tier-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Revenue Band</th>
+          <th>ABM Motion</th>
+          <th>Count</th>
+          <th>Treatment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tier-badge t1a">T1-A</span></td>
+          <td>$50B+</td>
+          <td>1:1 Hyper-Personalized</td>
+          <td>~58 accounts</td>
+          <td>Named pursuit. Full buying group coverage required. BD-led with marketing air cover.</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge t1">T1</span></td>
+          <td>$10B – $49.9B</td>
+          <td>1:1 / 1:Few</td>
+          <td>~425 accounts</td>
+          <td>Named account motion. Persona-level targeting. BD-eligible on Pipeline Predict score.</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge t2">T2</span></td>
+          <td>$400M – $10B</td>
+          <td>1:Few / 1:Many</td>
+          <td>~1,782 accounts</td>
+          <td>Growth ABM. Campaign-driven. Intent surge triggers SDR routing.</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge t3">T3</span></td>
+          <td>$100M – $399M</td>
+          <td>1:Many Scaled</td>
+          <td>~3,289 accounts</td>
+          <td>Programmatic. Advertising-led. SDR handles any hand-raise signals.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout slate" style="margin-top:24px">
+      <strong>Total US universe:</strong> 5,241 tiered accounts in the US Workspace. Data sourced from D&B Hoovers (primary), ZoomInfo (fallback), and PitchBook for private-company coverage. All tier assignments are validated and maintained by the Lighthouse team.
+    </div>
+  </section>
+
+  <!-- JOURNEY STAGES -->
+  <section id="journey">
+    <div class="section-label">03 · Journey Stages</div>
+    <h2>The 7-stage US buying journey</h2>
+    <p class="section-intro">Every account in the US Workspace tracks through seven stages based on signals — not a rep's gut feel. Marketing owns the top of the funnel. Sales takes over at MQA. The handoff is visible, tracked, and automatic when orchestration plays are live.</p>
+
+    <div class="journey-flow">
+      <div class="journey-step">
+        <div class="journey-dot jd-grey">—</div>
+        <div class="journey-name">All Other</div>
+        <div class="journey-trigger">Not in target universe</div>
+        <span class="journey-owner owner-mktg">Out of scope</span>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot jd-grey">01</div>
+        <div class="journey-name">Target Account</div>
+        <div class="journey-trigger">Added to US account list; meets revenue/tier criteria</div>
+        <span class="journey-owner owner-mktg">Marketing</span>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot jd-slate">02</div>
+        <div class="journey-name">Aware (Intent)</div>
+        <div class="journey-trigger">1+ keyword set firing; showing research behavior</div>
+        <span class="journey-owner owner-mktg">Marketing</span>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot jd-slate">03</div>
+        <div class="journey-name">Engaged</div>
+        <div class="journey-trigger">3+ intent signals OR site visit OR ad engagement</div>
+        <span class="journey-owner owner-both">Mktg + SDR</span>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot jd-dark">04</div>
+        <div class="journey-name">MQA</div>
+        <div class="journey-trigger">Intent surge + engagement + buying group activity</div>
+        <span class="journey-owner owner-sales">BD Handoff</span>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot jd-pink">05</div>
+        <div class="journey-name">Opportunity</div>
+        <div class="journey-trigger">SFDC opportunity created; deal in active motion</div>
+        <span class="journey-owner owner-sales">BD / Sales</span>
+      </div>
+      <div class="journey-step">
+        <div class="journey-dot jd-pink">06</div>
+        <div class="journey-name">Customer</div>
+        <div class="journey-trigger">Closed-won; active contract in SFDC</div>
+        <span class="journey-owner owner-sales">Expansion</span>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-top:24px">
+      <div class="card">
+        <div class="card-label">MQA Threshold</div>
+        <div class="card-title">When Marketing Qualifies an Account</div>
+        <div class="card-body">MQA fires when an account crosses three combined thresholds: intent surge on target keyword sets, active engagement (ad clicks, site visits, content consumption), and buying group activity showing multiple personas in motion. When orchestration plays are live, a BD notification fires in SFDC automatically within 48 hours.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Customer Stage = Expansion Signal</div>
+        <div class="card-title">Watch closed-won accounts for new intent</div>
+        <div class="card-body">Existing customers showing intent on LOB or vertical keywords (back-office automation, workforce management, compliance) signal an expansion opportunity. The Customer stage is not a dead end in Demandbase — it's a trigger for a different play. Route these signals to the account's owning BD for upsell motion.</div>
+      </div>
+    </div>
+
+    <div class="callout pink">
+      <strong>Journey stage changes are the most powerful orchestration triggers.</strong> Don't just watch the current stage — watch the movement. An account that moved from Aware to Engaged in the last 7 days is more urgent than an account that has been sitting at Engaged for 60 days. Velocity is the signal.
+    </div>
+  </section>
+
+  <!-- SDR / BD ROUTING -->
+  <section id="routing">
+    <div class="section-label">04 · SDR / BD Routing</div>
+    <h2>Pipeline Predict: who gets the account</h2>
+    <p class="section-intro">Every US account is scored by two Pipeline Predict models — CX Motion and Vertical/Transformation. The scores tell you which team acts and with what urgency. The logic is simple: 40+ goes to SDR, 60+ goes directly to BD.</p>
+
+    <div class="routing-grid">
+      <div class="routing-card sdr">
+        <div class="routing-score">40+</div>
+        <div class="routing-label">CX or Vertical Pipeline Predict Score</div>
+        <div class="routing-title">SDR Outreach</div>
+        <div class="routing-body">Account is showing enough buying signal to warrant a warm outreach sequence — but not enough for a BD-led pursuit. SDR initiates contact, builds context, and surfaces the right personas before the account escalates.</div>
+        <div class="routing-signals">
+          <div class="routing-signal">Journey Stage = Engaged</div>
+          <div class="routing-signal">1-2 keyword sets active</div>
+          <div class="routing-signal">T2 or T3 account tier</div>
+          <div class="routing-signal">Moderate buying group activity</div>
+        </div>
+        <div class="routing-note">SDR priority: warm outreach using the specific keyword themes driving engagement — not a cold sequence. Intent data tells you what they're researching; use it.</div>
+      </div>
+      <div class="routing-card bd">
+        <div class="routing-score" style="color:var(--pink)">60+</div>
+        <div class="routing-label">CX or Vertical Pipeline Predict Score</div>
+        <div class="routing-title">BD-Led Pursuit</div>
+        <div class="routing-body">Account has crossed the threshold where BD energy is justified. Multiple intent signals, high persona completeness, and strong Pipeline Predict score together indicate an active buying motion — not passive research.</div>
+        <div class="routing-signals">
+          <div class="routing-signal">Journey Stage = MQA</div>
+          <div class="routing-signal">3+ keyword sets active</div>
+          <div class="routing-signal">T1-A or T1 account tier</div>
+          <div class="routing-signal">High buying group completeness</div>
+        </div>
+        <div class="routing-note">BD priority: BD receives the account with full intent context already populated — keyword themes, engaged personas, journey stage. The warm-up work is done.</div>
+      </div>
+    </div>
+
+    <div class="callout slate">
+      <strong>Two models, one account.</strong> The same account can score differently on CX Motion vs. Vertical/Transformation. If Honeywell scores 42 on CX and 71 on Vertical, that tells you the deal entry point is transformation — not CX outsourcing. Lead with the higher-scoring motion. Don't default to CX just because it's the flagship pitch.
+    </div>
+
+    <div class="card-grid card-grid-3" style="margin-top:24px">
+      <div class="card">
+        <div class="card-label">Intent Surge > Raw Score</div>
+        <div class="card-title">Velocity matters more than the number</div>
+        <div class="card-body">A T2 account that jumped 20 Pipeline Predict points in 7 days is more actionable than a T1-A sitting at a steady 65. Watch the delta. Surge behavior means the buying window is open right now.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Missing Personas = Block</div>
+        <div class="card-title">Incomplete buying group caps the score</div>
+        <div class="card-body">If persona completeness is below 100% on a T1-A or T1 account, the Pipeline Predict score is artificially capped. Enrich the missing role through Lighthouse first — then let the model re-score. A 58 can become an 82 after one persona is added.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">High Intent + Missing Personas</div>
+        <div class="card-title">Enrich before you route</div>
+        <div class="card-body">High intent with incomplete buying group coverage means the account is active but you don't have the right contact. Don't route it to BD with a half-built account. Enrich first. Route second. The window is usually open long enough.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIST CREATION -->
+  <section id="lists">
+    <div class="section-label">05 · List Creation</div>
+    <h2>Always start in Global. Then push to US Workspace.</h2>
+    <p class="section-intro">This is the single most common mistake. If you build a list in US Workspace first and try to use it for advertising, it won't connect. The advertising DSP reads from Global. Build there first, every time.</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-num active">1</div>
+        <div class="flow-step-name">Build in Global</div>
+        <div class="flow-step-desc">Create the account list or keyword set in the Global workspace. Name it with the <code>[US]</code> prefix.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num active">2</div>
+        <div class="flow-step-name">Name it right</div>
+        <div class="flow-step-desc">Format: <code>[US] Tier 1A — Healthcare</code>. This naming convention keeps US assets identifiable in the Global view.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num active">3</div>
+        <div class="flow-step-name">Mirror in US Workspace</div>
+        <div class="flow-step-desc">Manually duplicate the same list in US Workspace without the <code>[US]</code> prefix. This is your operational copy for reporting and orchestration.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num active">4</div>
+        <div class="flow-step-name">Connect advertising</div>
+        <div class="flow-step-desc">Ad campaigns reference the Global <code>[US]</code> version. Orchestration and reporting reference the US Workspace version.</div>
+      </div>
+    </div>
+
+    <div class="callout pink">
+      <strong>No sync exists between US Workspace and Global.</strong> Every update to a keyword set or account list requires a manual update in both places. When you add a new account to <code>Tier 1A — Healthcare</code> in US Workspace, you must also add it to <code>[US] Tier 1A — Healthcare</code> in Global for it to be included in active ad campaigns. Dual-maintenance is permanent.
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-top:24px">
+      <div class="card">
+        <div class="card-label">Account Lists</div>
+        <div class="card-title">Naming convention</div>
+        <div class="card-body">
+          <strong>US Workspace:</strong> <code>2026 Tier 1A — Healthcare</code><br><br>
+          <strong>Global:</strong> <code>[US] 2026 Tier 1A — Healthcare</code><br><br>
+          Include the year. Tier. Vertical or motion type. Keep it readable — if someone in EMEA sees it in Global, the <code>[US]</code> prefix tells them it's not theirs to touch.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Keyword Sets</div>
+        <div class="card-title">Naming convention</div>
+        <div class="card-body">
+          <strong>US Workspace:</strong> <code>AI Customer Service — CX Core</code><br><br>
+          <strong>Global:</strong> <code>[US] AI Customer Service — CX Core</code><br><br>
+          Keyword sets follow the same dual-maintenance rule. The 42+ sets currently in US Workspace each need a mirrored <code>[US]</code> version in Global to be usable for ad targeting.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <strong>Person Lists for advertising:</strong> Build these natively in Demandbase under the People tab. Filter by T1A–T3 account lists + persona/title criteria. Adding Known Contact person lists to ad campaigns moves targeting from anonymous account-level to named-person level — a significant upgrade in precision.
+    </div>
+  </section>
+
+  <!-- BUYING GROUPS -->
+  <section id="buying-groups">
+    <div class="section-label">06 · Buying Groups</div>
+    <h2>Who you're targeting inside the account</h2>
+    <p class="section-intro">Buying groups define the personas TP pursues within each account. Demandbase targets at the intersection of account list and persona — not account-level only. If your campaign isn't reaching the right people, check persona filters and completeness first.</p>
+
+    <div class="card-grid card-grid-3">
+      <div class="card accent-pink">
+        <div class="card-label">Buying Group 1</div>
+        <div class="card-title">CX Core</div>
+        <div class="card-body">Primary decision-makers for customer experience transformation. CCO, CXO, VP Customer Experience, VP Contact Center Operations, Director of Customer Service. These are the economic buyers for the core CX outsourcing motion.</div>
+      </div>
+      <div class="card accent-pink">
+        <div class="card-label">Buying Group 2</div>
+        <div class="card-title">LOBs — Lines of Business</div>
+        <div class="card-body">Functional leaders controlling budget for back-office and operational outsourcing. CFO, CIO, CHRO, VP Finance, VP IT, VP Operations. This group controls the budget for transformation programs — they're often the unseen power in a deal.</div>
+      </div>
+      <div class="card accent-pink">
+        <div class="card-label">Buying Group 3</div>
+        <div class="card-title">Vertical Specialists</div>
+        <div class="card-body">Industry-specific personas for regulated verticals. Chief Medical Officer (Healthcare), Chief Compliance Officer (Finance), Chief Digital Officer (Retail). When a deal is vertical-led, these personas gate the decision more than the CX buyer.</div>
+      </div>
+    </div>
+
+    <div class="callout slate" style="margin-top:24px">
+      <strong>Persona completeness directly impacts MQA eligibility.</strong> Under 100% completeness on a T1-A or T1 account means at least one required persona has no matched contact in SFDC. The buying group score is capped, and MQA progression is blocked until the missing role is enriched. Send incomplete accounts to Lighthouse with the account name and missing job function.
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-top:20px">
+      <div class="card">
+        <div class="card-label">Powerline Framework</div>
+        <div class="card-title">Not all personas are equal</div>
+        <div class="card-body">Demandbase's Powerline weighting assigns higher influence to Economic Buyers (CCO, CFO) and Technical Buyers (CIO, VP Ops). Engagement from these personas moves Pipeline Predict scores faster than engagement from lower-influence roles. If the CFO is clicking your ads, that's a different conversation than a Director of Operations downloading a white paper.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Global View Warning</div>
+        <div class="card-title">EMEA and APAC groups appear in Global</div>
+        <div class="card-body">Buying group tabs for EMEA and APAC are visible in the Global workspace because personas are configured at the tenant level. This is expected behavior — not a data error. Always filter to your US account list first when pulling buying group data in Global. Otherwise the counts and engagement numbers will be wrong.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTENT & KEYWORDS -->
+  <section id="intent">
+    <div class="section-label">07 · Intent & Keywords</div>
+    <h2>42+ keyword sets. Buyer language only.</h2>
+    <p class="section-intro">Intent monitoring is where Demandbase earns its value. TP tracks 42+ keyword sets across all buying group themes. The most common mistake is building keyword sets in seller language instead of buyer research language — seller keywords return zero intent data because buyers don't search that way.</p>
+
+    <div class="keyword-grid">
+      <div class="keyword-col use">
+        <h4>✓ Buyer Research Language — Use These</h4>
+        <ul class="kw-list">
+          <li>AI customer service platform</li>
+          <li>Contact center cost reduction</li>
+          <li>CX transformation roadmap</li>
+          <li>Omnichannel customer support</li>
+          <li>Back-office automation ROI</li>
+          <li>Workforce management software</li>
+          <li>Digital transformation outsourcing</li>
+          <li>Healthcare revenue cycle management</li>
+        </ul>
+      </div>
+      <div class="keyword-col avoid">
+        <h4>✗ Seller / Procurement Language — Avoid</h4>
+        <ul class="kw-list">
+          <li>Outsourcing RFP</li>
+          <li>Vendor consolidation</li>
+          <li>BPO contract</li>
+          <li>Service provider comparison</li>
+          <li>Teleperformance alternative</li>
+          <li>Contact center outsourcing vendor</li>
+          <li>BPO partner selection</li>
+          <li>Managed services procurement</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-2" style="margin-top:20px">
+      <div class="card">
+        <div class="card-label">Intent Surge vs. Raw Score</div>
+        <div class="card-title">Watch the velocity, not the number</div>
+        <div class="card-body">A Tier 2 account that spiked 20 intent points in 7 days is more actionable than a Tier 1-A sitting at a steady high score. The surge means they are actively researching right now — the buying window is open. High static scores without recent movement can represent a company that always shows some intent but isn't in an active buying cycle.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Cross-Set Overlap</div>
+        <div class="card-title">Intentional, not a data error</div>
+        <div class="card-body">Keywords are designed to overlap across sets. "AI customer service" fires both the CX Core set and the TaaS set simultaneously. This mirrors real buyer behavior — someone researching AI contact center capabilities is relevant to both motions. When an account lights up multiple sets at once, that's a strong multi-motion signal worth escalating.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOVERNANCE -->
+  <section id="governance">
+    <div class="section-label">08 · Rules</div>
+    <h2>The non-negotiables</h2>
+    <p class="section-intro">These rules protect the US Workspace's data integrity and keep advertising working correctly. They're not suggestions.</p>
+
+    <div class="rule-list">
+      <div class="rule-item">
+        <div class="rule-num">1</div>
+        <div class="rule-body"><strong>US Workspace stays isolated.</strong> Do not allow other regional teams to make configuration changes inside the US Workspace. All cross-region coordination happens at the Global/tenant level only. Any tenant-level change — journey stages, buying group personas, global settings — requires ABM leadership sign-off before execution.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">2</div>
+        <div class="rule-body"><strong>Every US asset in Global uses the <code>[US]</code> prefix.</strong> Account lists, keyword sets, person lists, and saved filters. Examples: <code>[US] Tier 1A — Healthcare</code>, <code>[US] AI Customer Service — CX Core</code>. This keeps US assets identifiable and prevents other regions from modifying them accidentally.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">3</div>
+        <div class="rule-body"><strong>No automatic sync between US Workspace and Global.</strong> Every update in US Workspace requires a manual update to the corresponding <code>[US]</code> asset in Global. This applies to keyword sets, account lists, and person lists. Dual-maintenance is permanent architecture — not a temporary workaround.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">4</div>
+        <div class="rule-body"><strong>Advertising campaigns build at tenant/Global level.</strong> The DSP is not workspace-scoped. If you try to build a campaign referencing a US Workspace-only asset, it won't connect to the ad layer. Always reference the <code>[US]</code> Global version in campaign targeting.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">5</div>
+        <div class="rule-body"><strong>Geo-targeting: United States only.</strong> When configuring advertising campaigns, North America defaults to Canada + Mexico + United States. Always deselect Mexico — Mexico is LATAM, not US. Leaving it selected pulls LATAM-owned accounts into US targeting and pollutes data. Set to United States only at the country level, every campaign, every time.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">6</div>
+        <div class="rule-body"><strong>SFDC campaign member status = "Selected for Campaign."</strong> Orchestration-written campaign members always use this status. Never use "Responded," "Filled Out Form," or any status that implies an action the contact hasn't taken. Filter logic on each automation excludes existing members from re-triggering.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">7</div>
+        <div class="rule-body"><strong>All DB admin and integration requests route through the DB Ops Manager.</strong> Analysts and campaign operators do not have admin access. If a configuration change, integration setup, or Salesforce connector issue is needed, route to the DB Ops Manager — not directly to other admin contacts.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section id="contacts">
+    <div class="section-label">09 · Contacts</div>
+    <h2>Who to go to</h2>
+
+    <div class="contact-strip">
+      <div class="contact-item">
+        <div class="contact-role">ABM Operations Manager</div>
+        <div class="contact-name">Sharath Madishetty / Josh Alonzo</div>
+        <div class="contact-detail">US Workspace · Platform Configuration</div>
+      </div>
+      <div class="divider"></div>
+      <div class="contact-item">
+        <div class="contact-role">Demandbase CSM</div>
+        <div class="contact-name">Kate Varvedo</div>
+        <div class="contact-detail">Customer Success Manager</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<footer class="footer">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <strong>Demandbase US Workspace</strong> · ABM Content Arsenal<br>
+      US Region · Teleperformance ABM Program · 2026
+    </div>
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="padding:8px 20px;background:var(--slate);color:var(--color-bg);border-radius:6px;font-weight:600;font-size:13px;">Back to top</a>
+  </div>
+</footer>
+
+<script src="../assets/js/navigation.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+<script src="/assets/js/back-to-top.js"></script>
+</body>
+</html>

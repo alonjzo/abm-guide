@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Reporting Training | ABM Suite</title>
+    <style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Calibri Light', 'Calibri', 'Segoe UI', Arial, sans-serif;
+            background: var(--color-bg);
+            color: var(--dark-gray);
+            line-height: 1.7;
+        }
+
+        .hero {
+            background: linear-gradient(180deg, var(--color-primary), var(--color-primary-hover));
+            color: var(--white);
+            padding: 80px 24px 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--pastel-slate);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .guide-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            gap: 40px;
+        }
+
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .sidebar-nav {
+            background: var(--white);
+            border: 1px solid var(--pastel-slate);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--slate-mid);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 10px 12px;
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--pastel-violet);
+            color: var(--slate-dark);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--pastel-violet);
+            border-left-color: var(--pink);
+            color: var(--slate-dark);
+            font-weight: 600;
+        }
+
+        .content {
+            flex: 1;
+            max-width: 900px;
+        }
+
+        .section {
+            background: var(--white);
+            border: 1px solid var(--pastel-slate);
+            border-radius: 8px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+            scroll-margin-top: 80px;
+        }
+
+        .section h2 {
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+            font-size: 2.2rem;
+            color: var(--black);
+            margin-bottom: 30px;
+            font-weight: 400;
+            border-bottom: 3px solid var(--pink);
+            padding-bottom: 16px;
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            color: var(--slate-dark);
+            margin-top: 40px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .section h4 {
+            font-size: 1.2rem;
+            color: var(--slate);
+            margin-top: 24px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .section p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .section ul, .section ol {
+            margin-left: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        .callout {
+            background: var(--color-bg)beb;
+            border-left: 4px solid var(--orange);
+            padding: 20px;
+            border-radius: 4px;
+            margin: 24px 0;
+        }
+
+        .callout strong {
+            color: var(--orange);
+        }
+
+        .info-box {
+            background: #f0f7ff;
+            border-left: 4px solid var(--blue);
+            padding: 20px;
+            border-radius: 4px;
+            margin: 24px 0;
+        }
+
+        .success-box {
+            background: #f0fff4;
+            border-left: 4px solid var(--turquoise);
+            padding: 20px;
+            border-radius: 4px;
+            margin: 24px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        thead {
+            background: var(--slate);
+            color: var(--white);
+        }
+
+        th {
+            padding: 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid var(--pastel-slate);
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        code {
+            background: var(--slate-dark);
+            color: var(--green);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .filter-combo {
+            background: var(--pastel-violet);
+            padding: 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+            border-left: 3px solid var(--pink);
+        }
+
+        .filter-combo h5 {
+            font-size: 1rem;
+            color: var(--slate-dark);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .filter-combo p {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            .guide-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+
+            .section {
+                padding: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 24px;
+            }
+
+            .section h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+
+<div class="hero">
+    <h1>Advanced Reporting Training</h1>
+    <p>Complete training guide for Demandbase Advanced Advertising Analytics (Beta). Master all four Looker dashboards without external URLs.</p>
+</div>
+
+<div class="guide-container">
+    <aside class="sidebar">
+        <nav class="sidebar-nav" class="tp-global-nav">
+            <div class="sidebar-title">Navigation</div>
+            <a href="#getting-started" class="active">Getting Started</a>
+            <a href="#country-level">Country-Level Reporting</a>
+            <a href="#creative">Creative Performance</a>
+            <a href="#journey">JourneyIQ Reporting</a>
+            <a href="#pacing">Pacing & Account Performance</a>
+            <a href="#filters">Filters</a>
+            <a href="#pro-tips">Pro Tips & Best Practices</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <!-- SECTION 1 -->
+        <section class="section" id="getting-started">
+            <h2>1. Getting Started</h2>
+
+            <h3>Navigation Path</h3>
+            <p>To access Advanced Reporting in Demandbase One:</p>
+            <ol>
+                <li>Log in to Demandbase One</li>
+                <li>Click <strong>Advertising</strong> in the top navigation</li>
+                <li>Select <strong>Advanced Reporting (Beta)</strong> from dropdown</li>
+                <li>Choose your dashboard from the left sidebar</li>
+            </ol>
+
+            <h3>Beta Status</h3>
+            <p>Advanced Reporting is currently in <strong>Beta</strong>. Expect:</p>
+            <ul>
+                <li>Occasional data refresh delays (up to 24 hours)</li>
+                <li>UI changes as Demandbase iterates on dashboard design</li>
+                <li>Some metrics may not populate immediately for new campaigns</li>
+            </ul>
+
+            <h3>Four Dashboards Overview</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dashboard</th>
+                        <th>Purpose</th>
+                        <th>Key Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Country-Level Reporting</strong></td>
+                        <td>Geographic performance breakdown</td>
+                        <td>See spend/engagement by country</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Creative Performance</strong></td>
+                        <td>Ad group and creative analysis</td>
+                        <td>Identify top-performing ad variants</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JourneyIQ Reporting</strong></td>
+                        <td>Account progression through funnel</td>
+                        <td>Visualize journey stage movement</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pacing & Account Performance</strong></td>
+                        <td>Budget pacing and account engagement</td>
+                        <td>Ensure campaigns stay on track</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout">
+                <strong>US Attribution Gap:</strong> Demandbase One Tag (GTM-5J4WZ38R) is NOT yet deployed on tp.com/en-us. Click data will show <strong>zero</strong> until this tag goes live. Use impressions, account engagement, and journey stage progression as proxy metrics.
+            </div>
+
+            <h3>What Each Dashboard Does</h3>
+            <ul>
+                <li><strong>Country-Level:</strong> Shows which countries are driving engagement (critical for US-only filtering)</li>
+                <li><strong>Creative Performance:</strong> Reveals which headlines/body copy/CTAs resonate best</li>
+                <li><strong>JourneyIQ:</strong> Tracks accounts moving from Aware → Engaged → MQA → Opportunity</li>
+                <li><strong>Pacing & Account:</strong> Alerts you if campaigns are under-spending or over-spending</li>
+            </ul>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section class="section" id="country-level">
+            <h2>2. Country-Level Reporting</h2>
+
+            <p>Geographic performance breakdown showing spend, impressions, and engagement by country.</p>
+
+            <h3>Key Components</h3>
+
+            <h4>KPI Scorecards (Top of Dashboard)</h4>
+            <ul>
+                <li><strong>Total Spend:</strong> Cumulative ad spend across all countries</li>
+                <li><strong>Impressions:</strong> Total ad impressions delivered</li>
+                <li><strong>Accounts Reached:</strong> Unique accounts that saw at least 1 ad</li>
+                <li><strong>Engaged Accounts:</strong> Accounts that showed engagement (site visit, intent surge, journey stage movement)</li>
+            </ul>
+
+            <h4>Heat Map</h4>
+            <p>Interactive world map with color-coded spend intensity. Darker colors = higher spend. Click a country to drill down into account-level data.</p>
+
+            <h4>Top 10 Chart</h4>
+            <p>Bar chart showing top 10 countries by spend. Hover to see impressions, accounts reached, and engagement rate.</p>
+
+            <h4>Data Table</h4>
+            <p>Full list of all countries with columns for:</p>
+            <ul>
+                <li>Spend</li>
+                <li>Impressions</li>
+                <li>Accounts Reached</li>
+                <li>Engaged Accounts</li>
+                <li>Engagement Rate (%)</li>
+            </ul>
+
+            <div class="callout">
+                <strong>US Filter Requirement:</strong> ALWAYS filter to <code>Country = United States</code> before reading numbers. Default view shows global data, which will inflate your metrics if other regions are running ads.
+            </div>
+
+            <h3>Why This Matters for US Team</h3>
+            <p>If you see spend in countries other than the United States, it means:</p>
+            <ul>
+                <li>Account list includes non-US HQ companies (check list composition)</li>
+                <li>Cross-border targeting is enabled (review campaign settings)</li>
+                <li>APAC/EMEA campaigns are bleeding into your view (apply ad plan filter)</li>
+            </ul>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section class="section" id="creative">
+            <h2>3. Creative Performance</h2>
+
+            <p>Ad group and creative-level analysis to identify top performers and optimization opportunities.</p>
+
+            <h3>Key Metrics</h3>
+
+            <h4>Ad Group KPIs</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Definition</th>
+                        <th>Good Benchmark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Impressions</td>
+                        <td>Number of times ad was displayed</td>
+                        <td>10K+ per week per ad group</td>
+                    </tr>
+                    <tr>
+                        <td>CTR (Click-Through Rate)</td>
+                        <td>Clicks ÷ Impressions</td>
+                        <td>0.05-0.15% (display ads)</td>
+                    </tr>
+                    <tr>
+                        <td>Accounts Reached</td>
+                        <td>Unique target accounts that saw ad</td>
+                        <td>Varies by list size</td>
+                    </tr>
+                    <tr>
+                        <td>Frequency</td>
+                        <td>Avg impressions per account</td>
+                        <td>5-12 (avoid over-saturation)</td>
+                    </tr>
+                    <tr>
+                        <td>Spend</td>
+                        <td>Total ad spend for this ad group</td>
+                        <td>Track to budget allocation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Top 5 by Impressions vs CTR</h4>
+            <p>Side-by-side comparison showing:</p>
+            <ul>
+                <li><strong>Left Chart:</strong> Top 5 ad groups by impression volume</li>
+                <li><strong>Right Chart:</strong> Top 5 ad groups by CTR</li>
+            </ul>
+            <p><strong>Key Insight:</strong> High impressions with low CTR = creative fatigue or poor relevance. High CTR with low impressions = winner that needs more budget.</p>
+
+            <h4>Trend Line</h4>
+            <p>Performance over time for selected ad group. Shows impressions, clicks, and CTR trends across date range.</p>
+
+            <h3>Frequency Cap Guidance</h3>
+            <p>Monitor <strong>Frequency</strong> metric closely:</p>
+            <ul>
+                <li><strong>Under 5:</strong> Low reach — increase budget or expand targeting</li>
+                <li><strong>5-12:</strong> Optimal — accounts are seeing ads enough to build awareness without fatigue</li>
+                <li><strong>Over 15:</strong> Over-saturation — reduce frequency cap or pause ad group temporarily</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Pro Tip:</strong> Sort by CTR descending to find your best-performing creatives, then use those headlines/body copy patterns for new ad groups.
+            </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section class="section" id="journey">
+            <h2>4. JourneyIQ Reporting</h2>
+
+            <p>Visualize account progression through the US Journey funnel. This is your attribution story in action.</p>
+
+            <h3>Funnel Visualization</h3>
+            <p>Waterfall chart showing accounts at each stage:</p>
+            <ul>
+                <li><strong>Aware:</strong> Accounts showing intent signals</li>
+                <li><strong>Engaged:</strong> Active research + engagement</li>
+                <li><strong>MQA:</strong> Marketing Qualified Accounts</li>
+                <li><strong>Opportunity:</strong> Open deals in SFDC</li>
+                <li><strong>Customer:</strong> Closed-won</li>
+            </ul>
+
+            <h3>Ad Group by Journey Stage</h3>
+            <p>Table showing which ad groups are driving accounts into each stage:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ad Group</th>
+                        <th>Aware</th>
+                        <th>Engaged</th>
+                        <th>MQA</th>
+                        <th>Opportunity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[US] Healthcare - Tier 1A</td>
+                        <td>42</td>
+                        <td>18</td>
+                        <td>6</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>[US] TaaS - AI CX</td>
+                        <td>68</td>
+                        <td>31</td>
+                        <td>9</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>[US] Retail - Tier 2</td>
+                        <td>124</td>
+                        <td>52</td>
+                        <td>14</td>
+                        <td>5</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Account-Level Drill-Down</h3>
+            <p>Click any stage in the funnel to see:</p>
+            <ul>
+                <li>Company names at that stage</li>
+                <li>Days in current stage</li>
+                <li>Previous stage and date of transition</li>
+                <li>Engaged buying group members</li>
+                <li>Intent keywords firing</li>
+            </ul>
+
+            <h3>US Journey Stage Definitions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stage</th>
+                        <th>Definition</th>
+                        <th>What This Means</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aware</td>
+                        <td>Intent signals firing</td>
+                        <td>Ads are working — accounts are researching</td>
+                    </tr>
+                    <tr>
+                        <td>Engaged</td>
+                        <td>3+ signals OR site visit</td>
+                        <td>Warm accounts ready for BDR outreach</td>
+                    </tr>
+                    <tr>
+                        <td>MQA</td>
+                        <td>Intent surge + buying group activity</td>
+                        <td>Hand off to sales — orchestration should fire</td>
+                    </tr>
+                    <tr>
+                        <td>Opportunity</td>
+                        <td>Open SFDC deal</td>
+                        <td>Pipeline attribution — marketing influenced this</td>
+                    </tr>
+                    <tr>
+                        <td>Customer</td>
+                        <td>Closed-won</td>
+                        <td>Revenue attribution — watch for expansion</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <strong>Your North Star Metric:</strong> Accounts moving from Aware → Engaged → MQA. This progression proves marketing is warming accounts for sales handoff.
+            </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section class="section" id="pacing">
+            <h2>5. Pacing & Account Performance</h2>
+
+            <p>Budget pacing analysis and account-level engagement tracking. Ensure campaigns stay on track to hit goals.</p>
+
+            <h3>Pacing Definitions</h3>
+
+            <h4>On Track</h4>
+            <p>Campaign is spending at the expected rate to fully utilize budget by end date.</p>
+            <ul>
+                <li><strong>Calculation:</strong> (Actual Spend / Days Elapsed) ≈ (Total Budget / Total Days)</li>
+                <li><strong>Action:</strong> No changes needed — monitor weekly</li>
+            </ul>
+
+            <h4>Under-Pacing</h4>
+            <p>Campaign is spending slower than needed to fully utilize budget.</p>
+            <ul>
+                <li><strong>Causes:</strong> Narrow targeting, low bids, limited inventory</li>
+                <li><strong>Action:</strong> Increase bid, expand targeting, or add ad groups</li>
+            </ul>
+
+            <h4>Predicted to Hit Goal</h4>
+            <p>Based on current spend velocity, campaign will reach or exceed target accounts/impressions.</p>
+            <ul>
+                <li><strong>Action:</strong> Continue current strategy</li>
+            </ul>
+
+            <h3>Account-Level Drill-Down</h3>
+            <p>Click any campaign to see account-specific performance:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Account Name</th>
+                        <th>Impressions</th>
+                        <th>Engagement</th>
+                        <th>Journey Stage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ford Motor Company</td>
+                        <td>2,847</td>
+                        <td>Site Visit, Intent Surge</td>
+                        <td>Engaged</td>
+                    </tr>
+                    <tr>
+                        <td>Costco Wholesale</td>
+                        <td>1,923</td>
+                        <td>Intent Signals (3)</td>
+                        <td>Aware</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>US Budget Context</h3>
+            <p><strong>TP USA Q-81341:</strong></p>
+            <ul>
+                <li><strong>Total Budget:</strong> $50,000</li>
+                <li><strong>Spent (as of March 2026):</strong> $13,240.88 (26%)</li>
+                <li><strong>Remaining:</strong> $36,759.12</li>
+                <li><strong>Campaigns:</strong> 21 active</li>
+            </ul>
+
+            <div class="callout">
+                <strong>Under-Pacing Alert:</strong> At 26% spend with 21 campaigns, US is under-pacing. Consider increasing bids, expanding account lists, or launching additional ad groups to accelerate spend and reach.
+            </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section class="section" id="filters">
+            <h2>6. Filters</h2>
+
+            <p>Standard filter bar appears at top of all dashboards. Master these for accurate reporting.</p>
+
+            <h3>Filter Bar Usage</h3>
+            <ul>
+                <li><strong>Ad Plan:</strong> ALWAYS set to <code>TP USA – Q-81341</code></li>
+                <li><strong>Date Range:</strong> Use preset ranges (Last 7/30/90 days) or custom</li>
+                <li><strong>Country:</strong> Filter to <code>United States</code> for US-only data</li>
+                <li><strong>Ad Group:</strong> Drill into specific campaigns</li>
+                <li><strong>Journey Stage:</strong> Filter to accounts at specific funnel stages</li>
+                <li><strong>Tier:</strong> Isolate Tier 1A, Tier 1, Tier 2, or Tier 3 performance</li>
+            </ul>
+
+            <h3>6 Pre-Built Filter Combos</h3>
+
+            <div class="filter-combo">
+                <h5>1. US Performance Overview</h5>
+                <p><strong>Filters:</strong> Ad Plan = TP USA Q-81341 | Country = United States | Date = Last 30 days</p>
+                <p><strong>Use Case:</strong> Monthly leadership reporting</p>
+            </div>
+
+            <div class="filter-combo">
+                <h5>2. Tier 1A Elite Account Focus</h5>
+                <p><strong>Filters:</strong> Ad Plan = TP USA Q-81341 | Tier = Tier 1A | Journey Stage = Engaged+</p>
+                <p><strong>Use Case:</strong> High-touch account prioritization</p>
+            </div>
+
+            <div class="filter-combo">
+                <h5>3. MQA Pipeline Visibility</h5>
+                <p><strong>Filters:</strong> Ad Plan = TP USA Q-81341 | Journey Stage = MQA, Opportunity</p>
+                <p><strong>Use Case:</strong> Sales handoff tracking</p>
+            </div>
+
+            <div class="filter-combo">
+                <h5>4. Weekly Campaign Health Check</h5>
+                <p><strong>Filters:</strong> Ad Plan = TP USA Q-81341 | Date = Last 7 days</p>
+                <p><strong>Use Case:</strong> Monday morning status review</p>
+            </div>
+
+            <div class="filter-combo">
+                <h5>5. Creative A/B Testing</h5>
+                <p><strong>Filters:</strong> Ad Plan = TP USA Q-81341 | Ad Group = [select 2-3 variants] | Date = Since campaign start</p>
+                <p><strong>Use Case:</strong> Compare headline/body copy performance</p>
+            </div>
+
+            <div class="filter-combo">
+                <h5>6. Vertical Deep Dive</h5>
+                <p><strong>Filters:</strong> Ad Plan = TP USA Q-81341 | Ad Group = [US] Healthcare* | Journey Stage = All</p>
+                <p><strong>Use Case:</strong> Vertical-specific performance analysis</p>
+            </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section class="section" id="pro-tips">
+            <h2>7. Pro Tips & Best Practices</h2>
+
+            <h3>Weekly Workflow</h3>
+            <p><strong>Monday — Pacing Check:</strong></p>
+            <ul>
+                <li>Open Pacing & Account Performance dashboard</li>
+                <li>Filter to TP USA Q-81341 + Last 7 days</li>
+                <li>Identify under-pacing campaigns → increase bids or expand targeting</li>
+            </ul>
+
+            <p><strong>Wednesday — Creative Optimization:</strong></p>
+            <ul>
+                <li>Open Creative Performance dashboard</li>
+                <li>Sort by CTR descending</li>
+                <li>Pause bottom 20% performers, boost budget to top 20%</li>
+            </ul>
+
+            <p><strong>Friday — Journey Tracking:</strong></p>
+            <ul>
+                <li>Open JourneyIQ Reporting dashboard</li>
+                <li>Review Aware → Engaged → MQA funnel progression</li>
+                <li>Export accounts at MQA stage for BDR team handoff</li>
+            </ul>
+
+            <h3>Pro Tips</h3>
+            <ol>
+                <li><strong>Bookmark Your Filters:</strong> Save common filter combinations to avoid re-configuring every time</li>
+                <li><strong>Compare Week-Over-Week:</strong> Use date range comparison to spot trends early</li>
+                <li><strong>Focus on Velocity, Not Just Volume:</strong> A Tier 2 account spiking 20 points is hotter than a Tier 1 with steady intent</li>
+                <li><strong>Export to CSV:</strong> Use export button (top-right) to pull data into Excel for deeper analysis</li>
+                <li><strong>Cross-Reference with SFDC:</strong> Match MQA/Opportunity accounts in Demandbase with SFDC to validate attribution</li>
+            </ol>
+
+            <h3>Sharath Onboarding Note</h3>
+            <p><strong>For Sharath Madashetti (Manager Platforms):</strong> Start with Country-Level and Pacing dashboards to understand current US campaign status. Then move to JourneyIQ to see attribution story. Advanced Reporting replaces all legacy Excel-based reporting.</p>
+
+            <div class="success-box">
+                <strong>Mastery Checkpoint:</strong> You're ready when you can answer: "Which ad groups are driving MQAs?" and "Are we on pace to spend our $50K budget?" without looking at a deck.
+            </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section class="section" id="faq">
+            <h2>8. FAQ</h2>
+
+            <h3>1. How often does data refresh?</h3>
+            <p><strong>Answer:</strong> Data refreshes every 24 hours (overnight). Expect ~12-24 hour delay between ad delivery and dashboard visibility. Check "Last Updated" timestamp at top of each dashboard.</p>
+
+            <h3>2. Why is click data showing zero?</h3>
+            <p><strong>Answer:</strong> Demandbase One Tag (GTM-5J4WZ38R) is not yet deployed on tp.com/en-us. Until this tag goes live, click-through attribution will not work. Use impressions, account engagement, and journey stage movement as proxy metrics.</p>
+
+            <h3>3. Can I export data?</h3>
+            <p><strong>Answer:</strong> Yes. Click the export button (top-right of each dashboard) to download CSV. Data exports include all filtered rows with full metric columns.</p>
+
+            <h3>4. What does "All Other" mean in Country breakdown?</h3>
+            <p><strong>Answer:</strong> Accounts with no identified country OR accounts outside top 20 countries by spend. Drill down to see full list.</p>
+
+            <h3>5. Why do I see APAC/EMEA data in my Global view?</h3>
+            <p><strong>Answer:</strong> Advertising operates at tenant/Global level. ALL regions' campaigns appear in Global view. ALWAYS filter to <code>Ad Plan = TP USA Q-81341</code> to isolate US data.</p>
+
+            <h3>6. What's the difference between "Predicted to Hit Goal" and "On Track"?</h3>
+            <p><strong>Answer:</strong></p>
+            <ul>
+                <li><strong>On Track:</strong> Current spend rate matches expected budget burn rate</li>
+                <li><strong>Predicted to Hit Goal:</strong> Based on engagement velocity, campaign will reach target account/impression goals</li>
+            </ul>
+            <p>You can be On Track for budget but Under-Pacing for goals (or vice versa).</p>
+
+            <h3>7. Why is a campaign showing spend outside the United States?</h3>
+            <p><strong>Answer:</strong> Three possible causes:</p>
+            <ul>
+                <li>Account list includes non-US HQ companies (check list composition)</li>
+                <li>Cross-border targeting enabled in campaign settings (review settings)</li>
+                <li>IP-based targeting showing employees in other countries (expected for global enterprises)</li>
+            </ul>
+
+            <h3>8. Can I get automated alerts for under-pacing campaigns?</h3>
+            <p><strong>Answer:</strong> Not natively in Beta. Workaround: Set a recurring Monday calendar reminder to check Pacing & Account Performance dashboard manually.</p>
+
+            <h3>9. Who has access to Advanced Reporting?</h3>
+            <p><strong>Answer:</strong> All users with Advertising module access in Demandbase One. For TP US team:</p>
+            <ul>
+                <li>Josh Alonzo — Full access</li>
+                <li>Sharath Madashetti — Full access</li>
+                <li>Kate Varvedo (DB CSM) — Admin access</li>
+                <li>Nick Abernathy (TAM) — Admin access</li>
+            </ul>
+            <p>Request access via Kate Varvedo if needed.</p>
+        </section>
+    </main>
+</div>
+
+<script src="../assets/js/navigation.js"></script>
+<script>
+    // Sidebar navigation scroll spy
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    function setActiveLink() {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', setActiveLink);
+</script>
+    <script src="/assets/js/back-to-top.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+</body>
+</html>

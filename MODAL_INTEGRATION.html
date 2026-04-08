@@ -1,0 +1,118 @@
+<!-- ========================================
+     ABM CONTENT ARSENAL - MODAL INTEGRATION
+     Paste this code into your Account Intel Hub HTML
+     ======================================== -->
+
+<!-- STEP 1: Add this button wherever you want the trigger -->
+<button onclick="openContentArsenal()" style="
+    background: linear-gradient(135deg, #da7036 0%, #c85a2a 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(218, 112, 54, 0.3);
+    transition: all 0.3s ease;
+">
+    🎯 Generate Content Strategy
+</button>
+
+<!-- STEP 2: Add this modal HTML at the bottom of your <body> tag -->
+<div id="contentArsenalModal" style="
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
+    overflow: auto;
+">
+    <div style="
+        position: relative;
+        width: 95%;
+        max-width: 1600px;
+        height: 95vh;
+        margin: 2.5vh auto;
+        background: #1a1a2e;
+        border-radius: 20px;
+        border: 2px solid #da7036;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    ">
+        <!-- Close Button -->
+        <button onclick="closeContentArsenal()" style="
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(218, 112, 54, 0.2);
+            border: 2px solid #da7036;
+            color: #da7036;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 10001;
+            transition: all 0.3s ease;
+        " onmouseover="this.style.background='rgba(218, 112, 54, 0.4)'"
+           onmouseout="this.style.background='rgba(218, 112, 54, 0.2)'">
+            ✕
+        </button>
+
+        <!-- iFrame -->
+        <iframe
+            id="contentArsenalFrame"
+            src="https://abm-content-library-1jear1pdc-joshua-alonzos-projects.vercel.app"
+            style="
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 20px;
+            ">
+        </iframe>
+    </div>
+</div>
+
+<!-- STEP 3: Add this JavaScript at the bottom of your <body> tag -->
+<script>
+    function openContentArsenal() {
+        document.getElementById('contentArsenalModal').style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeContentArsenal() {
+        document.getElementById('contentArsenalModal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
+
+        // Optional: Reload iframe to reset state
+        const iframe = document.getElementById('contentArsenalFrame');
+        iframe.src = iframe.src;
+    }
+
+    // Close modal when clicking outside the content
+    document.getElementById('contentArsenalModal')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeContentArsenal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeContentArsenal();
+        }
+    });
+</script>
+
+<!-- ========================================
+     INSTALLATION COMPLETE!
+
+     Your team will now see a button that opens
+     the Content Arsenal in a modal overlay.
+
+     No separate HTML files to manage!
+     ======================================== -->

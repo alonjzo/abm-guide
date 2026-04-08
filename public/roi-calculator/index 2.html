@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABM ROI Calculator</title>
+
+    <!-- React 18, Babel, Recharts CDNs -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+
+    <style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'DM Sans', sans-serif; 
+            background: #f4f3f7; 
+            min-height: 100vh;
+        }
+        /* Custom scrollbar to keep it clean */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f4f3f7; }
+        ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-text-faint); }
+    </style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Extract React hooks from global React injection
+        const { useState, useEffect, useRef } = React;
+        
+        // Extract Recharts components from global Recharts injection
+        const { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, Radar, LineChart, Line, Legend, Cell, LabelList } = Recharts;
+
+        const TP = {
+          darkSlate: "#4B4C6A", pink: "#ff0082", blue: "#3047b0",
+          turquoise: "#00AF9B", orange: "#ff5c00", green: "#00D769",
+          slate: "#848dad", pastelViolet: "#e2dfe8", mutedViolet: "#706398",
+          lightBlue: "#0087FF", white: "#ffffff", nearBlack: "#1a1a1a",
+          darkGray: "#414141", gray: "#676767", pastelGray: "#e6e6e5",
+        };
+
+        const fmt = (n) => n >= 1000000 ? `$${(n / 1000000).toFixed(1)}M` : n >= 1000 ? `$${(n / 1000).toFixed(0)}K` : `$${Math.round(n).toLocaleString()}`;
+        const fmtPct = (n) => `${(n * 100).toFixed(1)}%`;
+        const fmtX = (n) => `${n.toFixed(1)}x`;
+        const fmtMo = (n) => `${n.toFixed(1)} mo`;
+
+        function AnimatedNumber({ value, formatter }) {
+          const [display, setDisplay] = useState(value);
+          const prev = useRef(value);
+          useEffect(() => {
+            const from = prev.current; const to = value;
+            const dur = 500; const start = Date.now();
+            const tick = () => {
+              const p = Math.min((Date.now() - start) / dur, 1);
+              const e = 1 - Math.pow(1 - p, 3);
+              setDisplay(from + (to - from) * e);
+              if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+            prev.current = value;
+          }, [value]);
+          return <span>{formatter(display)}</span>;
+        }
+
+        function Slider({ label, value, min, max, step, onChange, format, color, note }) {
+          const pct = ((value - min) / (max - min)) * 100;
+          return (
+            <div style={{ marginBottom: 18 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                <span style={{ fontSize: 12, color: TP.darkGray, fontWeight: 500, fontFamily: "'DM Sans',sans-serif" }}>{label}</span>
+                <span style={{ fontSize: 16, fontWeight: 800, color: color || TP.darkSlate, fontFamily: "'Syne',sans-serif" }}>{format(value)}</span>
+              </div>
+              {note && <div style={{ fontSize: 10, color: TP.gray, marginBottom: 5, fontFamily: "'DM Sans',sans-serif" }}>{note}</div>}
+              <div style={{ position: "relative", height: 5, background: TP.pastelViolet, borderRadius: 3 }}>
+                <div style={{ position: "absolute", left: 0, top: 0, height: "100%", width: `${pct}%`, background: color || TP.pink, borderRadius: 3 }} />
+                <input type="range" min={min} max={max} step={step} value={value} onChange={e => onChange(Number(e.target.value))}
+                  style={{ position: "absolute", top: -6, left: 0, width: "100%", height: 18, opacity: 0, cursor: "pointer", margin: 0 }} />
+                <div style={{ position: "absolute", top: -5.5, left: `calc(${pct}% - 8px)`, width: 16, height: 16, borderRadius: "50%", background: color || TP.pink, border: `3px solid white`, boxShadow: "0 2px 6px rgba(0,0,0,0.2)", pointerEvents: "none" }} />
+              </div>
+            </div>
+          );
+        }
+
+        function KPICard({ label, value, formatter, accent, sub, dark }) {
+          return (
+            <div style={{ background: dark ? TP.darkSlate : TP.white, borderRadius: 10, padding: "18px 20px", borderTop: `4px solid ${accent}`, flex: 1, minWidth: 130, boxShadow: "0 2px 12px rgba(75,76,106,0.09)" }}>
+              <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 26, fontWeight: 800, color: dark ? accent : TP.darkSlate, lineHeight: 1 }}>
+                <AnimatedNumber value={typeof value === "number" ? value : 0} formatter={formatter || fmt} />
+              </div>
+              <div style={{ width: 28, height: 2, background: accent, margin: "7px 0" }} />
+              <div style={{ fontSize: 11, fontWeight: 600, color: dark ? TP.slate : TP.darkGray, textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'DM Sans',sans-serif" }}>{label}</div>
+              {sub && <div style={{ fontSize: 10, color: dark ? TP.slate : TP.gray, marginTop: 3, fontFamily: "'DM Sans',sans-serif" }}>{sub}</div>}
+            </div>
+          );
+        }
+
+        const DeckTooltip = ({ active, payload, label }) => {
+          if (!active || !payload?.length) return null;
+          return (
+            <div style={{ background: TP.white, border: `1px solid ${TP.pastelViolet}`, borderRadius: 8, padding: "10px 14px", boxShadow: "0 4px 16px rgba(0,0,0,0.1)" }}>
+              <div style={{ fontSize: 11, color: TP.gray, marginBottom: 4, fontFamily: "'DM Sans',sans-serif" }}>{label}</div>
+              {payload.map((p, i) => <div key={i} style={{ fontSize: 13, fontWeight: 700, color: p.color, fontFamily: "'Syne',sans-serif" }}>{p.name}: {fmt(p.value)}</div>)}
+            </div>
+          );
+        };
+
+        function ABMROICalc() {
+          // Enterprise defaults — real TP numbers
+          const [entAccounts, setEntAccounts] = useState(35);
+          const [entDeal, setEntDeal] = useState(4500000);
+          const [entWin, setEntWin] = useState(0.14);
+          const [entCycle, setEntCycle] = useState(11);
+
+          // Mid-Market defaults
+          const [mmAccounts, setMmAccounts] = useState(35);
+          const [mmDeal, setMmDeal] = useState(1500000);
+          const [mmWin, setMmWin] = useState(0.20);
+          const [mmCycle, setMmCycle] = useState(7);
+
+          // ABM Model
+          const [abmInvestment, setAbmInvestment] = useState(350000);
+          const [influence, setInfluence] = useState(0.42);
+          const [winLift, setWinLift] = useState(0.25);
+          const [dealLift, setDealLift] = useState(0.20);
+          const [cycleReduction, setCycleReduction] = useState(0.22);
+
+          const [tab, setTab] = useState("model");
+
+          // Real TP anchor values
+          const MARKETING_ATTRIBUTED = 110000000;
+          const PIPELINE_INFLUENCED = 350000000;
+
+          // Enterprise calcs
+          const entInfluenced = Math.round(entAccounts * influence);
+          const entBaseRev = Math.round(entAccounts * entWin) * entDeal;
+          const entABMRev = (Math.round(entInfluenced * entWin * (1 + winLift)) * entDeal * (1 + dealLift)) +
+            (Math.round((entAccounts - entInfluenced) * entWin) * entDeal);
+
+          // Mid-Market calcs
+          const mmInfluenced = Math.round(mmAccounts * influence);
+          const mmBaseRev = Math.round(mmAccounts * mmWin) * mmDeal;
+          const mmABMRev = (Math.round(mmInfluenced * mmWin * (1 + winLift)) * mmDeal * (1 + dealLift)) +
+            (Math.round((mmAccounts - mmInfluenced) * mmWin) * mmDeal);
+
+          // Combined
+          const totalBaseRev = entBaseRev + mmBaseRev;
+          const totalABMRev = entABMRev + mmABMRev;
+          const revenueImpact = totalABMRev - totalBaseRev;
+          const roiMultiple = revenueImpact / abmInvestment;
+          const payback = abmInvestment / (revenueImpact / 12);
+          const totalInfluencedPipe = PIPELINE_INFLUENCED;
+          const pipelineCoverage = PIPELINE_INFLUENCED / MARKETING_ATTRIBUTED;
+
+          // Chart data
+          const segmentData = [
+            { name: "Enterprise", Baseline: entBaseRev, "With ABM": entABMRev },
+            { name: "Mid-Market", Baseline: mmBaseRev, "With ABM": mmABMRev },
+            { name: "Combined", Baseline: totalBaseRev, "With ABM": totalABMRev },
+          ];
+
+          const rampData = Array.from({ length: 12 }, (_, i) => ({
+            month: `M${i + 1}`,
+            "ABM Revenue": Math.round((revenueImpact / 12) * (i + 1)),
+            "Investment": abmInvestment,
+            "Pipeline": Math.round((PIPELINE_INFLUENCED / 12) * (i + 1)),
+          }));
+
+          const attributionData = [
+            { name: "Marketing Attributed", value: MARKETING_ATTRIBUTED, fill: TP.blue },
+            { name: "Pipeline Influenced", value: PIPELINE_INFLUENCED, fill: TP.turquoise },
+            { name: "ABM Revenue Impact", value: revenueImpact, fill: TP.green },
+            { name: "ABM Investment", value: abmInvestment, fill: TP.pink },
+          ];
+
+          const radarData = [
+            { metric: "Win Rate", Ent: 60, MM: 75, Target: 85 },
+            { metric: "Deal Size", Ent: 55, MM: 65, Target: 80 },
+            { metric: "Influence", Ent: 50, MM: 60, Target: 75 },
+            { metric: "Velocity", Ent: 45, MM: 70, Target: 80 },
+            { metric: "Coverage", Ent: 65, MM: 60, Target: 85 },
+          ];
+
+          const tabs = [
+            { id: "model", label: "Model Inputs" },
+            { id: "results", label: "Results" },
+            { id: "deck", label: "📊 Deck-Ready Charts" },
+          ];
+
+          const DeckChart = ({ title, sub, children, span }) => (
+            <div style={{ background: TP.white, borderRadius: 10, padding: 24, border: `1px solid ${TP.pastelGray}`, gridColumn: span ? "1 / -1" : undefined }}>
+              <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 14, fontWeight: 700, color: TP.darkSlate, marginBottom: 2 }}>{title}</div>
+              {sub && <div style={{ fontSize: 11, color: TP.gray, marginBottom: 16, fontFamily: "'DM Sans',sans-serif" }}>{sub}</div>}
+              {children}
+              <div style={{ fontSize: 9, color: TP.gray, marginTop: 12, fontFamily: "'DM Sans',sans-serif", borderTop: `1px solid ${TP.pastelGray}`, paddingTop: 8 }}>
+                Source: Teleperformance ABX Strategic Intelligence · Benchmarks: Forrester, Demandbase, SiriusDecisions 2024
+              </div>
+            </div>
+          );
+
+          return (
+            <div style={{ paddingBottom: 60 }}>
+              {/* Header */}
+              <div style={{ background: TP.darkSlate, padding: "24px 36px 20px", borderBottom: `4px solid ${TP.pink}` }}>
+                <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+                  <div style={{ fontSize: 10, color: TP.pink, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 600, marginBottom: 6 }}>ABX Strategic Intelligence · Teleperformance · Top 70 Enterprise</div>
+                  <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 28, fontWeight: 800, color: TP.white, lineHeight: 1.1 }}>ABM Revenue Intelligence Model</div>
+                  <div style={{ fontSize: 13, color: TP.slate, marginTop: 4 }}>Enterprise + Mid-Market Segmented · Real TP Pipeline Economics · Monday Presentation Ready</div>
+                </div>
+              </div>
+
+              {/* Live ticker */}
+              <div style={{ background: TP.nearBlack, padding: "12px 36px" }}>
+                <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", gap: 32, flexWrap: "wrap", alignItems: "center" }}>
+                  {[
+                    { label: "Marketing Attributed Rev", value: MARKETING_ATTRIBUTED, fmt: fmt, color: TP.green },
+                    { label: "Pipeline Influenced", value: PIPELINE_INFLUENCED, fmt: fmt, color: TP.lightBlue },
+                    { label: "ABM Revenue Impact", value: revenueImpact, fmt: fmt, color: TP.turquoise },
+                    { label: "ROI Multiple", value: roiMultiple, fmt: fmtX, color: TP.pink },
+                    { label: "Pipeline Coverage", value: pipelineCoverage, fmt: fmtX, color: TP.orange },
+                  ].map((k, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ width: 3, height: 26, background: k.color, borderRadius: 2 }} />
+                      <div>
+                        <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 18, fontWeight: 800, color: k.color, lineHeight: 1 }}>
+                          <AnimatedNumber value={k.value} formatter={k.fmt} />
+                        </div>
+                        <div style={{ fontSize: 9, color: TP.gray, textTransform: "uppercase", letterSpacing: "0.08em" }}>{k.label}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Tabs */}
+              <div style={{ background: TP.white, borderBottom: `1px solid ${TP.pastelViolet}`, padding: "0 36px" }}>
+                <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex" }}>
+                  {tabs.map(t => (
+                    <button key={t.id} onClick={() => setTab(t.id)}
+                      style={{ padding: "13px 24px", border: "none", background: "transparent", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: tab === t.id ? 600 : 400, color: tab === t.id ? TP.darkSlate : TP.gray, borderBottom: tab === t.id ? `3px solid ${TP.pink}` : "3px solid transparent", marginBottom: -1, transition: "all 0.15s" }}>
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 36px" }}>
+
+                {/* MODEL INPUTS */}
+                {tab === "model" && (
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
+                    {/* Enterprise */}
+                    <div style={{ background: TP.white, borderRadius: 12, padding: 24, boxShadow: "0 2px 12px rgba(75,76,106,0.08)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
+                        <div style={{ width: 4, height: 22, background: TP.blue, borderRadius: 2 }} />
+                        <span style={{ fontFamily: "'Syne',sans-serif", fontSize: 14, fontWeight: 700, color: TP.darkSlate }}>Enterprise Segment</span>
+                      </div>
+                      <div style={{ background: TP.pastelViolet, borderRadius: 8, padding: "10px 14px", marginBottom: 18 }}>
+                        <div style={{ fontSize: 10, color: TP.mutedViolet, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>TP Default</div>
+                        <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 14, fontWeight: 700, color: TP.darkSlate, marginTop: 2 }}>$4.5M ACV · 35 Accounts</div>
+                      </div>
+                      <Slider label="Account Count" value={entAccounts} min={5} max={70} step={1} onChange={setEntAccounts} format={v => `${v} accts`} color={TP.blue} />
+                      <Slider label="Average Deal Size" value={entDeal} min={1000000} max={15000000} step={250000} onChange={setEntDeal} format={fmt} color={TP.blue} note="TP Enterprise BPO avg: $4.5M" />
+                      <Slider label="Win Rate" value={entWin} min={0.05} max={0.35} step={0.01} onChange={setEntWin} format={fmtPct} color={TP.blue} />
+                      <Slider label="Sales Cycle" value={entCycle} min={6} max={24} step={1} onChange={setEntCycle} format={v => `${v} mo`} color={TP.blue} />
+                      <div style={{ marginTop: 16, padding: "12px 14px", background: TP.nearBlack, borderRadius: 8 }}>
+                        <div style={{ fontSize: 10, color: TP.slate, textTransform: "uppercase", letterSpacing: "0.08em" }}>Segment Revenue</div>
+                        <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 20, fontWeight: 800, color: TP.lightBlue, marginTop: 2 }}>{fmt(entABMRev)}</div>
+                        <div style={{ fontSize: 10, color: TP.gray, marginTop: 2 }}>vs. {fmt(entBaseRev)} baseline</div>
+                      </div>
+                    </div>
+
+                    {/* Mid-Market */}
+                    <div style={{ background: TP.white, borderRadius: 12, padding: 24, boxShadow: "0 2px 12px rgba(75,76,106,0.08)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
+                        <div style={{ width: 4, height: 22, background: TP.turquoise, borderRadius: 2 }} />
+                        <span style={{ fontFamily: "'Syne',sans-serif", fontSize: 14, fontWeight: 700, color: TP.darkSlate }}>Mid-Market Segment</span>
+                      </div>
+                      <div style={{ background: TP.pastelViolet, borderRadius: 8, padding: "10px 14px", marginBottom: 18 }}>
+                        <div style={{ fontSize: 10, color: TP.mutedViolet, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>TP Default</div>
+                        <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 14, fontWeight: 700, color: TP.darkSlate, marginTop: 2 }}>$1.5M ACV · 35 Accounts</div>
+                      </div>
+                      <Slider label="Account Count" value={mmAccounts} min={5} max={70} step={1} onChange={setMmAccounts} format={v => `${v} accts`} color={TP.turquoise} />
+                      <Slider label="Average Deal Size" value={mmDeal} min={500000} max={5000000} step={100000} onChange={setMmDeal} format={fmt} color={TP.turquoise} note="TP Mid-Market BPO avg: $1.5M" />
+                      <Slider label="Win Rate" value={mmWin} min={0.08} max={0.45} step={0.01} onChange={setMmWin} format={fmtPct} color={TP.turquoise} />
+                      <Slider label="Sales Cycle" value={mmCycle} min={3} max={18} step={1} onChange={setMmCycle} format={v => `${v} mo`} color={TP.turquoise} />
+                      <div style={{ marginTop: 16, padding: "12px 14px", background: TP.nearBlack, borderRadius: 8 }}>
+                        <div style={{ fontSize: 10, color: TP.slate, textTransform: "uppercase", letterSpacing: "0.08em" }}>Segment Revenue</div>
+                        <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 20, fontWeight: 800, color: TP.turquoise, marginTop: 2 }}>{fmt(mmABMRev)}</div>
+                        <div style={{ fontSize: 10, color: TP.gray, marginTop: 2 }}>vs. {fmt(mmBaseRev)} baseline</div>
+                      </div>
+                    </div>
+
+                    {/* ABM Investment */}
+                    <div style={{ background: TP.white, borderRadius: 12, padding: 24, boxShadow: "0 2px 12px rgba(75,76,106,0.08)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
+                        <div style={{ width: 4, height: 22, background: TP.pink, borderRadius: 2 }} />
+                        <span style={{ fontFamily: "'Syne',sans-serif", fontSize: 14, fontWeight: 700, color: TP.darkSlate }}>ABM Investment Model</span>
+                      </div>
+                      <Slider label="Annual ABM Investment" value={abmInvestment} min={100000} max={2000000} step={25000} onChange={setAbmInvestment} format={fmt} color={TP.pink} note="Demandbase + activation + headcount" />
+                      <Slider label="Pipeline Influence Rate" value={influence} min={0.10} max={0.80} step={0.01} onChange={setInfluence} format={fmtPct} color={TP.pink} note="Forrester avg: 42% enterprise ABM" />
+                      <Slider label="Win Rate Lift" value={winLift} min={0.05} max={0.55} step={0.01} onChange={setWinLift} format={fmtPct} color={TP.turquoise} note="SiriusDecisions avg: 25%" />
+                      <Slider label="Deal Size Lift" value={dealLift} min={0.05} max={0.45} step={0.01} onChange={setDealLift} format={fmtPct} color={TP.blue} note="Demandbase avg: 20%" />
+                      <Slider label="Cycle Reduction" value={cycleReduction} min={0.05} max={0.40} step={0.01} onChange={setCycleReduction} format={fmtPct} color={TP.green} note="ITSMA avg: 22%" />
+                      <div style={{ marginTop: 16, padding: "12px 14px", background: TP.nearBlack, borderRadius: 8 }}>
+                        <div style={{ fontSize: 10, color: TP.slate, textTransform: "uppercase", letterSpacing: "0.08em" }}>Total ROI Multiple</div>
+                        <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 20, fontWeight: 800, color: TP.pink, marginTop: 2 }}>{fmtX(roiMultiple)}</div>
+                        <div style={{ fontSize: 10, color: TP.gray, marginTop: 2 }}>Payback in {fmtMo(payback)}</div>
+                      </div>
+                    </div>
+
+                    {/* Benchmark bar */}
+                    <div style={{ gridColumn: "1 / -1", background: TP.darkSlate, borderRadius: 12, padding: 20, display: "flex", gap: 12, flexWrap: "wrap", boxShadow: "0 2px 12px rgba(75,76,106,0.15)" }}>
+                      <div style={{ fontSize: 10, color: TP.pink, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", width: "100%", marginBottom: 4 }}>Industry Benchmark Reference — Forrester / Demandbase / ITSMA / SiriusDecisions 2024</div>
+                      {[
+                        { label: "Pipeline Influence", range: "38–52%", source: "Forrester" },
+                        { label: "Win Rate Lift", range: "20–31%", source: "SiriusDecisions" },
+                        { label: "Deal Size Lift", range: "15–25%", source: "Demandbase" },
+                        { label: "Cycle Reduction", range: "18–28%", source: "ITSMA" },
+                        { label: "Enterprise ABM ROI", range: "3.2–8.5x", source: "Forrester TEI" },
+                        { label: "Marketing Attribution", range: "28–45%", source: "Gartner" },
+                      ].map((b, i) => (
+                        <div key={i} style={{ background: "rgba(255,255,255,0.07)", borderRadius: 8, padding: "10px 14px", flex: 1, minWidth: 120 }}>
+                          <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 17, fontWeight: 700, color: TP.turquoise }}>{b.range}</div>
+                          <div style={{ fontSize: 11, color: TP.white, fontWeight: 500, marginTop: 2 }}>{b.label}</div>
+                          <div style={{ fontSize: 9, color: TP.slate, marginTop: 1 }}>{b.source}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* RESULTS */}
+                {tab === "results" && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                    <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                      <KPICard label="Total ABM Revenue" value={totalABMRev} formatter={fmt} accent={TP.green} sub="Enterprise + Mid-Market combined" />
+                      <KPICard label="Revenue Impact" value={revenueImpact} formatter={fmt} accent={TP.turquoise} sub={`vs. ${fmt(totalBaseRev)} baseline`} />
+                      <KPICard label="ROI Multiple" value={roiMultiple} formatter={fmtX} accent={TP.pink} sub={`On ${fmt(abmInvestment)} invested`} dark />
+                      <KPICard label="Payback Period" value={payback} formatter={fmtMo} accent={TP.orange} sub="Months to recover investment" />
+                    </div>
+
+                    <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                      <KPICard label="Marketing Attributed" value={MARKETING_ATTRIBUTED} formatter={fmt} accent={TP.blue} sub="TP actual · Anchored" />
+                      <KPICard label="Pipeline Influenced" value={PIPELINE_INFLUENCED} formatter={fmt} accent={TP.lightBlue} sub="TP actual · Anchored" />
+                      <KPICard label="Pipeline Coverage" value={pipelineCoverage} formatter={fmtX} accent={TP.mutedViolet} sub="Pipeline ÷ marketing attributed" />
+                      <KPICard label="Ent. Deal Lift" value={entDeal * (1 + dealLift)} formatter={fmt} accent={TP.green} sub={`Up from ${fmt(entDeal)}`} />
+                    </div>
+
+                    {/* Segment comparison */}
+                    <div style={{ background: TP.white, borderRadius: 12, padding: 24, boxShadow: "0 2px 12px rgba(75,76,106,0.08)" }}>
+                      <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 15, fontWeight: 700, color: TP.darkSlate, marginBottom: 18 }}>Segment Performance — Baseline vs. ABM</div>
+                      <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'DM Sans',sans-serif" }}>
+                        <thead>
+                          <tr>
+                            {["Segment", "Accounts", "Baseline Rev", "ABM Rev", "Delta", "Win Rate → ABM", "Deal Size → ABM"].map((h, i) => (
+                              <th key={i} style={{ textAlign: i === 0 ? "left" : "right", padding: "9px 14px", background: TP.pastelViolet, fontSize: 11, color: TP.darkGray, fontWeight: 600 }}>{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[
+                            { seg: "Enterprise", accts: entAccounts, base: entBaseRev, abm: entABMRev, wr: entWin, deal: entDeal, color: TP.blue },
+                            { seg: "Mid-Market", accts: mmAccounts, base: mmBaseRev, abm: mmABMRev, wr: mmWin, deal: mmDeal, color: TP.turquoise },
+                            { seg: "Combined", accts: entAccounts + mmAccounts, base: totalBaseRev, abm: totalABMRev, wr: null, deal: null, color: TP.darkSlate },
+                          ].map((r, i) => (
+                            <tr key={i} style={{ borderBottom: `1px solid ${TP.pastelViolet}`, background: i === 2 ? '#faf9fc' : "transparent" }}>
+                              <td style={{ padding: "11px 14px", fontSize: 13, fontWeight: 600, color: r.color }}>{r.seg}</td>
+                              <td style={{ padding: "11px 14px", fontSize: 13, color: TP.darkGray, textAlign: "right" }}>{r.accts}</td>
+                              <td style={{ padding: "11px 14px", fontSize: 13, color: TP.gray, textAlign: "right" }}>{fmt(r.base)}</td>
+                              <td style={{ padding: "11px 14px", fontSize: 13, fontWeight: 700, color: TP.darkSlate, textAlign: "right" }}>{fmt(r.abm)}</td>
+                              <td style={{ padding: "11px 14px", fontSize: 13, fontWeight: 700, color: TP.green, textAlign: "right" }}>+{fmt(r.abm - r.base)}</td>
+                              <td style={{ padding: "11px 14px", fontSize: 12, color: TP.darkGray, textAlign: "right" }}>{r.wr ? `${fmtPct(r.wr)} → ${fmtPct(r.wr * (1 + winLift))}` : "—"}</td>
+                              <td style={{ padding: "11px 14px", fontSize: 12, color: TP.darkGray, textAlign: "right" }}>{r.deal ? `${fmt(r.deal)} → ${fmt(r.deal * (1 + dealLift))}` : "—"}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div style={{ background: TP.nearBlack, borderRadius: 12, padding: 22, borderLeft: `4px solid ${TP.pink}`, boxShadow: "0 4px 16px rgba(0,0,0,0.15)" }}>
+                      <div style={{ fontSize: 10, color: TP.pink, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Monday Presentation — Executive Proof Statement</div>
+                      <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 17, fontWeight: 700, color: TP.white, lineHeight: 1.5 }}>
+                        Teleperformance's ABM investment is generating a {fmtX(roiMultiple)} return across cases — with {fmt(PIPELINE_INFLUENCED)} in pipeline directly influenced and {fmt(MARKETING_ATTRIBUTED)} in revenue attributed to marketing-led engagement. That's not a cost center. That's infrastructure.
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* DECK-READY CHARTS — all white bg, screenshot ready */}
+                {tab === "deck" && (
+                  <div>
+                    <div style={{ background: TP.white, borderRadius: 10, padding: "14px 20px", border: `1px solid ${TP.pastelGray}`, marginBottom: 20, display: "flex", alignItems: "center", gap: 10 }}>
+                      <div style={{ width: 4, height: 20, background: TP.pink, borderRadius: 2 }} />
+                      <span style={{ fontSize: 13, color: TP.darkGray, fontFamily: "'DM Sans',sans-serif" }}>All charts below use white backgrounds — screenshot any chart and drop directly into your PowerPoint deck.</span>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+
+                      {/* Chart 1 — Revenue by segment */}
+                      <DeckChart title="Revenue Impact by Segment — Baseline vs. ABM" sub="Enterprise + Mid-Market · Top 70 Account Universe · Teleperformance">
+                        <ResponsiveContainer width="100%" height={220}>
+                          <BarChart data={segmentData} barGap={4}>
+                            <CartesianGrid strokeDasharray="3 3" stroke={TP.pastelGray} vertical={false} />
+                            <XAxis dataKey="name" tick={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fill: TP.darkGray }} axisLine={false} tickLine={false} />
+                            <YAxis tickFormatter={v => `$${(v / 1000000).toFixed(0)}M`} tick={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fill: TP.gray }} axisLine={false} tickLine={false} />
+                            <Tooltip content={<DeckTooltip />} />
+                            <Legend wrapperStyle={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: TP.gray }} />
+                            <Bar dataKey="Baseline" fill={TP.slate} radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="With ABM" fill={TP.blue} radius={[4, 4, 0, 0]} />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </DeckChart>
+
+                      {/* Chart 2 — Pipeline attribution */}
+                      <DeckChart title="Marketing Attribution Funnel" sub="From pipeline influenced to revenue attributed · TP actuals anchored">
+                        <ResponsiveContainer width="100%" height={220}>
+                          <BarChart data={attributionData} layout="vertical">
+                            <CartesianGrid strokeDasharray="3 3" stroke={TP.pastelGray} horizontal={false} />
+                            <XAxis type="number" tickFormatter={v => `$${(v / 1000000).toFixed(0)}M`} tick={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fill: TP.gray }} axisLine={false} tickLine={false} />
+                            <YAxis type="category" dataKey="name" tick={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fill: TP.darkGray }} axisLine={false} tickLine={false} width={130} />
+                            <Tooltip content={<DeckTooltip />} />
+                            <Bar dataKey="value" name="Value" radius={[0, 4, 4, 0]}>
+                              {attributionData.map((e, i) => <rect key={i} fill={e.fill} />)}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </DeckChart>
+
+                      {/* Chart 3 — 12 month ramp */}
+                      <DeckChart title="Cumulative Revenue vs. Fixed Investment — 12 Month Ramp" sub="ABM revenue compounds monthly · Investment is flat · Crossover = payback">
+                        <ResponsiveContainer width="100%" height={220}>
+                          <AreaChart data={rampData}>
+                            <defs>
+                              <linearGradient id="rvGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor={TP.turquoise} stopOpacity={0.15} />
+                                <stop offset="95%" stopColor={TP.turquoise} stopOpacity={0} />
+                              </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" stroke={TP.pastelGray} vertical={false} />
+                            <XAxis dataKey="month" tick={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fill: TP.gray }} axisLine={false} tickLine={false} />
+                            <YAxis tickFormatter={v => `$${(v / 1000000).toFixed(1)}M`} tick={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fill: TP.gray }} axisLine={false} tickLine={false} />
+                            <Tooltip content={<DeckTooltip />} />
+                            <Legend wrapperStyle={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11 }} />
+                            <Area type="monotone" dataKey="ABM Revenue" stroke={TP.turquoise} strokeWidth={2.5} fill="url(#rvGrad)" />
+                            <Line type="monotone" dataKey="Investment" stroke={TP.pink} strokeWidth={2} strokeDasharray="6 4" dot={false} />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                      </DeckChart>
+
+                      {/* Chart 4 — ABM radar */}
+                      <DeckChart title="ABM Performance Radar — Enterprise vs. Mid-Market" sub="Relative performance index across five core GTM dimensions">
+                        <ResponsiveContainer width="100%" height={220}>
+                          <RadarChart data={radarData}>
+                            <PolarGrid stroke={TP.pastelGray} />
+                            <PolarAngleAxis dataKey="metric" tick={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fill: TP.darkGray }} />
+                            <Radar name="Enterprise" dataKey="Ent" stroke={TP.blue} fill={TP.blue} fillOpacity={0.12} strokeWidth={2} />
+                            <Radar name="Mid-Market" dataKey="MM" stroke={TP.turquoise} fill={TP.turquoise} fillOpacity={0.12} strokeWidth={2} />
+                            <Radar name="Target" dataKey="Target" stroke={TP.pink} fill={TP.pink} fillOpacity={0.08} strokeWidth={1.5} strokeDasharray="4 3" />
+                            <Legend wrapperStyle={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10 }} />
+                          </RadarChart>
+                        </ResponsiveContainer>
+                      </DeckChart>
+
+                      {/* Stat cluster — deck drop-in */}
+                      <DeckChart title="ABM Impact Summary — Board-Ready Stat Cluster" sub="Five core KPIs · Teleperformance Top 70 · Monday Presentation" span>
+                        <div style={{ display: "flex", gap: 16, justifyContent: "space-between", flexWrap: "wrap" }}>
+                          {[
+                            { value: fmt(PIPELINE_INFLUENCED), label: "Pipeline Influenced", sub: "42% of total pipeline universe", accent: TP.blue },
+                            { value: fmt(MARKETING_ATTRIBUTED), label: "Revenue Attributed", sub: "Direct marketing contribution", accent: TP.turquoise },
+                            { value: fmtX(roiMultiple), label: "ABM ROI Multiple", sub: `On ${fmt(abmInvestment)} investment`, accent: TP.pink },
+                            { value: fmtPct(winLift), label: "Win Rate Lift", sub: "ABM-influenced vs. baseline", accent: TP.green },
+                            { value: fmtMo(payback), label: "Payback Period", sub: "Time to investment recovery", accent: TP.orange },
+                          ].map((s, i) => (
+                            <div key={i} style={{ flex: 1, minWidth: 140, padding: "16px 20px", background: TP.white, border: `1px solid ${TP.pastelGray}`, borderTop: `4px solid ${s.accent}`, borderRadius: 8 }}>
+                              <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 26, fontWeight: 800, color: TP.darkSlate, lineHeight: 1 }}>{s.value}</div>
+                              <div style={{ width: 24, height: 2, background: s.accent, margin: "7px 0" }} />
+                              <div style={{ fontSize: 11, fontWeight: 600, color: TP.darkGray, textTransform: "uppercase", letterSpacing: "0.05em", fontFamily: "'DM Sans',sans-serif" }}>{s.label}</div>
+                              <div style={{ fontSize: 10, color: TP.gray, marginTop: 3, fontFamily: "'DM Sans',sans-serif" }}>{s.sub}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </DeckChart>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        }
+
+        // Render the app to the root DOM node
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ABMROICalc />);
+    </script>
+    
+    <!-- Render the main application navigation bar -->
+    <script src="../assets/js/navigation.js"></script>
+    <script src="/assets/js/back-to-top.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+</body>
+</html>

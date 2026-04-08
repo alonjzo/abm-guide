@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demandbase One — ABM Manager Field Guide | Teleperformance</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+
+  
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans', Arial, sans-serif;
+    background: #f3f4f7;
+    color: var(--dark-gray);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--slate);
+    color: var(--color-bg);
+    padding: 68px 64px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute;
+    top:-60px; right:-80px;
+    width:500px; height:500px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,0,130,0.06) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  .hero::after {
+    content:'';
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:4px;
+    background:var(--pink);
+  }
+  .hero-eyebrow {
+    font-size:11px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--pink); font-weight:600; margin-bottom:16px;
+  }
+  .hero h1 {
+    font-family:'DM Serif Display', Georgia, serif;
+    font-size:42px; font-weight:400; line-height:1.15;
+    margin-bottom:14px; max-width:700px;
+  }
+  .hero h1 em { font-style:italic; color:#ff99cc; }
+  .hero-sub {
+    font-size:16px; color:var(--pastel-slate);
+    max-width:580px; font-weight:300; line-height:1.65;
+  }
+  .hero-pills {
+    display:flex; gap:10px; margin-top:28px; flex-wrap:wrap;
+  }
+  .pill {
+    background:rgba(255,255,255,0.09);
+    border:1px solid rgba(255,255,255,0.14);
+    color:var(--pastel-slate); font-size:12px;
+    padding:5px 14px; border-radius:20px;
+  }
+  .hero-team {
+    display:flex; gap:10px; margin-top:24px; flex-wrap:wrap;
+  }
+  .team-chip {
+    background:rgba(255,0,130,0.15);
+    border:1px solid rgba(255,0,130,0.3);
+    color:#ff99cc; font-size:11px; font-weight:600;
+    letter-spacing:0.5px; padding:4px 12px; border-radius:20px;
+  }
+
+  /* ── WRAP ── */
+  .wrap { max-width:960px; margin:0 auto; padding:0 24px 80px; }
+
+  /* ── RETURN BANNER ── */
+  .return-banner {
+    background: linear-gradient(135deg, var(--slate-dark), var(--slate));
+    border-left:4px solid var(--teal);
+    border-radius:0 10px 10px 0;
+    padding:22px 28px;
+    margin:28px 0 0;
+    display:flex; gap:16px; align-items:flex-start;
+  }
+  .return-banner .icon { font-size:24px; flex-shrink:0; }
+  .return-banner h4 { font-size:14px; font-weight:600; color:var(--white); margin-bottom:6px; }
+  .return-banner p { font-size:13.5px; color:var(--pastel-slate); line-height:1.6; }
+  .return-banner strong { color:var(--white); }
+
+  /* ── SECTION ── */
+  .section {
+    background:var(--white); border-radius:10px;
+    box-shadow: var(--shadow-sm); margin-top:24px; overflow:hidden;
+  }
+  .section-head {
+    background:var(--slate); padding:20px 32px 18px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .section-num {
+    background:var(--pink); color:var(--white);
+    font-size:10px; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; padding:3px 9px; border-radius:3px; flex-shrink:0;
+  }
+  .section-title { color:var(--white); font-size:17px; font-weight:400; }
+  .section-body { padding:28px 32px 32px; }
+  .section-intro { font-size:14.5px; color:var(--body-gray); margin-bottom:22px; line-height:1.75; }
+
+  /* ── ROLE CARD ── */
+  .role-grid {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px;
+  }
+  @media(max-width:700px){ .role-grid{ grid-template-columns:1fr 1fr; } }
+  .role-card {
+    border:1.5px solid var(--pastel-light); border-radius:8px;
+    padding:18px 16px 16px; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .role-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  }
+  .rc-pink::before { background:var(--pink); }
+  .rc-blue::before { background:var(--blue); }
+  .rc-teal::before { background:var(--teal); }
+  .rc-violet::before { background:var(--violet); }
+  .role-icon { font-size:26px; margin-bottom:8px; }
+  .role-label { font-size:13px; font-weight:600; color:var(--slate); margin-bottom:4px; }
+  .role-desc { font-size:12px; color:var(--body-gray); line-height:1.5; }
+
+  /* ── DUAL MAINT ── */
+  .dual-maint {
+    background:var(--slate-dark); border-radius:10px;
+    padding:28px 32px; margin-top:0;
+  }
+  .dm-title {
+    font-size:15px; font-weight:600; color:var(--white); margin-bottom:6px;
+  }
+  .dm-sub { font-size:13px; color:var(--pastel-slate); margin-bottom:20px; }
+  .dm-steps { display:flex; flex-direction:column; gap:12px; }
+  .dm-step {
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .dm-num {
+    width:28px; height:28px; border-radius:50%;
+    background:var(--pink); color:var(--white);
+    font-size:12px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; margin-top:1px;
+  }
+  .dm-content { flex:1; }
+  .dm-step-title { font-size:13.5px; font-weight:600; color:var(--white); margin-bottom:3px; }
+  .dm-step-desc { font-size:13px; color:var(--pastel-slate); line-height:1.55; }
+  .dm-warn {
+    background:rgba(255,92,0,0.12);
+    border:1px solid rgba(255,92,0,0.3);
+    border-radius:6px; padding:12px 16px; margin-top:16px;
+    font-size:13px; color:#ffb38a; line-height:1.6;
+  }
+  .dm-warn strong { color:var(--orange); }
+
+  /* ── WORKFLOW CARDS ── */
+  .workflow-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  }
+  @media(max-width:620px){ .workflow-grid{ grid-template-columns:1fr; } }
+  .wf-card {
+    border:1.5px solid var(--pastel-light); border-radius:8px;
+    padding:18px 18px 16px;
+  }
+  .wf-card::before {
+    content:''; display:block; height:3px; border-radius:3px 3px 0 0;
+    margin:-18px -18px 14px;
+  }
+  .wfc-pink::before { background:var(--pink); }
+  .wfc-blue::before { background:var(--blue); }
+  .wfc-teal::before { background:var(--teal); }
+  .wfc-violet::before { background:var(--violet); }
+  .wf-icon { font-size:20px; margin-bottom:8px; }
+  .wf-name { font-size:14px; font-weight:600; color:var(--slate); margin-bottom:6px; }
+  .wf-desc { font-size:13px; color:var(--body-gray); line-height:1.6; margin-bottom:10px; }
+  .wf-note {
+    padding-top:10px; border-top:1px solid var(--pastel-light);
+    font-size:12.5px; color:var(--slate); font-weight:500;
+  }
+  .wf-note span { color:var(--pink); font-weight:700; }
+
+  /* ── TABLES ── */
+  .data-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:13.5px; }
+  .data-table th {
+    background:var(--slate); color:var(--white);
+    padding:10px 14px; font-weight:500; text-align:left;
+    font-size:11.5px; letter-spacing:0.4px;
+  }
+  .data-table td {
+    padding:11px 14px; border-bottom:1px solid var(--pastel-light);
+    vertical-align:top;
+  }
+  .data-table tr:last-child td { border-bottom:none; }
+  .data-table tr:nth-child(even) td { background:#fafafa; }
+  .data-table a { color:var(--blue); text-decoration:none; }
+  .data-table a:hover { text-decoration:underline; }
+
+  /* ── STATUS BADGE ── */
+  .sbadge {
+    display:inline-block; font-size:10.5px; font-weight:700;
+    padding:2px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:0.5px;
+  }
+  .sb-live { background:rgba(0,175,155,0.1); color:var(--teal); }
+  .sb-blocked { background:rgba(255,0,130,0.1); color:var(--pink); }
+  .sb-pending { background:rgba(255,92,0,0.1); color:var(--orange); }
+  .sb-draft { background:rgba(72,76,106,0.1); color:var(--slate); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-radius:0 6px 6px 0; padding:14px 18px;
+    margin-top:18px; font-size:14px; line-height:1.65;
+  }
+  .callout-pink { background:var(--pink-subtle); border-left:3px solid var(--pink); }
+  .callout-blue { background:rgba(0,135,255,0.06); border-left:3px solid var(--blue); }
+  .callout-teal { background:rgba(0,175,155,0.07); border-left:3px solid var(--teal); }
+  .callout-orange { background:rgba(255,92,0,0.06); border-left:3px solid var(--orange); }
+  .callout strong { color:var(--slate); }
+
+  /* ── COURSE LIST ── */
+  .course-list { margin-top:4px; }
+  .course-row {
+    display:flex; gap:14px; padding:13px 0;
+    border-bottom:1px solid var(--pastel-light); align-items:flex-start;
+  }
+  .course-row:last-child { border-bottom:none; }
+  .cdot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:6px; }
+  .cdot-pink { background:var(--pink); }
+  .cdot-blue { background:var(--blue); }
+  .cdot-teal { background:var(--teal); }
+  .cdot-violet { background:var(--violet); }
+  .course-info { flex:1; }
+  .course-name { font-size:14px; font-weight:500; margin-bottom:2px; }
+  .course-name a { color:var(--blue); text-decoration:none; }
+  .course-name a:hover { text-decoration:underline; }
+  .ctag {
+    display:inline-block; font-size:10px; font-weight:700;
+    letter-spacing:0.8px; text-transform:uppercase;
+    padding:1px 7px; border-radius:3px; margin-left:6px; vertical-align:middle;
+  }
+  .ctag-req { background:var(--pink-subtle); color:var(--pink); border:1px solid var(--pink-border); }
+  .ctag-new { background:rgba(0,135,255,0.08); color:var(--blue); border:1px solid rgba(0,135,255,0.2); }
+  .ctag-ret { background:rgba(0,175,155,0.08); color:var(--teal); border:1px solid rgba(0,175,155,0.2); }
+  .course-meta { font-size:12.5px; color:var(--body-gray); line-height:1.5; }
+
+  /* ── WHAT'S NEW ── */
+  .whats-new {
+    background: var(--slate-dark); border-radius:10px; padding:28px 32px; margin-top:24px;
+    position:relative; overflow:hidden;
+  }
+  .whats-new::before {
+    content:'WHAT LAUNCHED WHILE YOU WERE OUT';
+    position:absolute; top:18px; right:24px;
+    font-size:9px; font-weight:700; letter-spacing:2px;
+    color:var(--teal); background:rgba(0,175,155,0.12);
+    border:1px solid rgba(0,175,155,0.25); padding:3px 10px; border-radius:3px;
+  }
+  .whats-new h3 { font-size:17px; font-weight:600; color:var(--white); margin-bottom:20px; }
+  .new-item {
+    display:flex; gap:14px; margin-bottom:16px; align-items:flex-start;
+  }
+  .new-item:last-child { margin-bottom:0; }
+  .new-dot {
+    width:8px; height:8px; border-radius:50%;
+    background:var(--teal); flex-shrink:0; margin-top:7px;
+  }
+  .new-content { flex:1; }
+  .new-title { font-size:14px; font-weight:600; color:var(--white); margin-bottom:3px; }
+  .new-desc { font-size:13px; color:var(--pastel-slate); line-height:1.55; }
+
+  /* ── COMING SOON ── */
+  .coming-soon {
+    background:var(--slate-dark); border-radius:10px;
+    padding:28px 32px; margin-top:24px; position:relative; overflow:hidden;
+  }
+  .coming-soon::before {
+    content:'COMING SOON';
+    position:absolute; top:18px; right:24px;
+    font-size:10px; font-weight:700; letter-spacing:2.5px;
+    color:var(--pink); background:rgba(255,0,130,0.12);
+    border:1px solid rgba(255,0,130,0.25); padding:3px 10px; border-radius:3px;
+  }
+  .coming-soon h3 { font-size:17px; font-weight:600; color:var(--white); margin-bottom:10px; }
+  .coming-soon p { font-size:14px; color:var(--pastel-slate); line-height:1.65; max-width:760px; }
+  .coming-soon strong { color:var(--white); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align:center; padding:28px; font-size:12px; color:#aaa;
+    border-top:1px solid var(--pastel-light); margin-top:40px;
+  }
+  .footer strong { color:var(--slate); }
+</style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Teleperformance · US ABM Program · Operator Field Guide</div>
+  <h1>ABM Manager<br><em>Demandbase One Field Guide</em></h1>
+  <div class="hero-sub">The operator-level reference for running the US ABM program inside Demandbase One — campaigns, account lists, reporting, and Sales coordination. Built for the team that keeps the machine running.</div>
+  <div class="hero-pills">
+    <span class="pill">Campaign Management</span>
+    <span class="pill">Account Lists & Segments</span>
+    <span class="pill">Intent & Engagement Reporting</span>
+    <span class="pill">SDR & BD Coordination</span>
+  </div>
+  <div class="hero-team">
+    <span class="team-chip">Swati</span>
+    <span class="team-chip">Ashly</span>
+    <span class="team-chip">Bruce</span>
+    <span class="team-chip">Returning Team Members</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- RETURNING TEAM BANNER -->
+  <div class="return-banner">
+    <span class="icon">👋</span>
+    <div>
+      <h4>Welcome Back — Here's What Launched While You Were Out</h4>
+      <p>The US Workspace went live. The account universe is tiered and running. Campaigns are activated. Orchestration automations are built. A lot happened. This guide covers the full current state of the program so you can pick up exactly where things stand — not where they were when you left. See <strong>Section 07</strong> for a focused catch-up on everything new since Q4 2025.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 01: YOUR ROLE IN THE PROGRAM -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-title">Your Role in the US ABM Program</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">There are four distinct seats in how TP operates Demandbase One. ABM Managers sit at the operator level — you're not configuring the backend infrastructure (that's Sharath), and you're not just reading data (that's SDRs and BD). You're the ones building what the team actually uses to run the program.</p>
+
+      <div class="role-grid">
+        <div class="role-card rc-pink">
+          <div class="role-icon">📣</div>
+          <div class="role-label">Campaign Management</div>
+          <div class="role-desc">Building, launching, and optimizing account-based ad campaigns against tiered account lists and buyer personas</div>
+        </div>
+        <div class="role-card rc-blue">
+          <div class="role-icon">🗂️</div>
+          <div class="role-label">Lists & Segments</div>
+          <div class="role-desc">Creating and maintaining account lists, person lists, and segments — including the dual-maintenance workflow between US Workspace and Global</div>
+        </div>
+        <div class="role-card rc-teal">
+          <div class="role-icon"></div>
+          <div class="role-label">Reporting</div>
+          <div class="role-desc">Monitoring intent trends, engagement data, journey stage movement, and campaign performance across the account universe</div>
+        </div>
+        <div class="role-card rc-violet">
+          <div class="role-icon">🤝</div>
+          <div class="role-label">Sales Coordination</div>
+          <div class="role-desc">Surfacing MQAs, flagging intent spikes to SDRs and BD, and making sure the right accounts get the right attention at the right time</div>
+        </div>
+      </div>
+
+      <div class="callout callout-pink">
+        <strong>Where you sit in the motion:</strong> Marketing warms the account with campaigns you build. SDRs qualify the MQAs you surface. BD converts the relationships you've been heating up. Every piece of the pipeline depends on what you do inside this platform.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 02: ACCOUNT LISTS & THE DUAL-MAINTENANCE MODEL -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-title">Account Lists & the Dual-Maintenance Model</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">This is the single most operationally nuanced part of working in Demandbase One at TP. Understanding it upfront saves hours of frustration. The short version: <strong>advertising campaigns can only pull account lists from the Global workspace</strong>. The US Workspace is where you do your strategic work. For a list to work in a campaign, it needs to exist in both places.</p>
+
+      <div class="dual-maint">
+        <div class="dm-title">The Dual-Maintenance SOP — How to Create a List That Actually Works in Campaigns</div>
+        <div class="dm-sub">Follow these steps every time you create a new account list or person list. Skip any step and the campaign won't be able to pull the audience.</div>
+        <div class="dm-steps">
+          <div class="dm-step">
+            <div class="dm-num">1</div>
+            <div class="dm-content">
+              <div class="dm-step-title">Confirm you're in the US Workspace</div>
+              <div class="dm-step-desc">Top-left dropdown — should read "US Workspace." If it reads "Global" or anything else, switch before building. Everything you create in the wrong workspace lives there permanently.</div>
+            </div>
+          </div>
+          <div class="dm-step">
+            <div class="dm-num">2</div>
+            <div class="dm-content">
+              <div class="dm-step-title">Build the list in US Workspace first</div>
+              <div class="dm-step-desc">Create your account list or person list with all filter logic, segments, and criteria in the US Workspace. Name it clearly — use your vertical or campaign name as a prefix so it's identifiable.</div>
+            </div>
+          </div>
+          <div class="dm-step">
+            <div class="dm-num">3</div>
+            <div class="dm-content">
+              <div class="dm-step-title">Duplicate the list into the Global workspace</div>
+              <div class="dm-step-desc">Use the duplicate function. Switch to the Global workspace and paste or recreate the exact same list there. This is the manual step Demandbase has not automated — there is no sync between workspaces. You are doing this by hand every time.</div>
+            </div>
+          </div>
+          <div class="dm-step">
+            <div class="dm-num">4</div>
+            <div class="dm-content">
+              <div class="dm-step-title">Name the Global copy with the [US] prefix</div>
+              <div class="dm-step-desc">The naming convention for all US assets in the Global workspace is [US] followed by the list name. Example: if the US Workspace list is "T1-A Financial Services," the Global copy becomes "[US] T1-A Financial Services." This is how the team distinguishes US assets from EMEA, APAC, and LATAM assets in the shared Global workspace.</div>
+            </div>
+          </div>
+          <div class="dm-step">
+            <div class="dm-num">5</div>
+            <div class="dm-content">
+              <div class="dm-step-title">Verify selectors carried over correctly</div>
+              <div class="dm-step-desc">After duplicating, open the Global copy and confirm all filter logic is intact. Demandbase may warn that selector references might not work correctly after duplication — this is normal. Open each list, check the selectors, and manually correct anything that didn't transfer. SFDC-based fields carry over cleanly. Calculated Fields and Demandbase-native segments may need to be rebuilt in Global.</div>
+            </div>
+          </div>
+          <div class="dm-step">
+            <div class="dm-num">6</div>
+            <div class="dm-content">
+              <div class="dm-step-title">Now build your campaign — it will find the list</div>
+              <div class="dm-step-desc">When setting up an advertising campaign, the audience picker pulls from Global. Your [US]-prefixed list will now appear. If it doesn't appear in the campaign builder, the Global copy either doesn't exist or the name doesn't match exactly — go back and check Step 4.</div>
+            </div>
+          </div>
+        </div>
+        <div class="dm-warn">
+          <strong>Known platform limitation:</strong> There is no automatic sync between US Workspace and Global. Any update to a list — adding accounts, changing filter criteria, refreshing segment logic — must be manually applied to both copies. This has been flagged to the Demandbase TAM team. Until it's resolved, dual-maintenance is the operational reality. Build the habit of updating both every time.
+        </div>
+      </div>
+
+      <div class="callout callout-orange" style="margin-top:20px;">
+        <strong>Person Lists follow the same rule.</strong> If you're building a person list for persona-based targeting (CCO outreach, CFO personas, etc.) and it needs to serve a campaign, it must exist in Global with the [US] prefix. Same six steps, same manual duplication, same verification check on selectors.
+      </div>
+
+      <!-- Account Universe Reference -->
+      <div style="margin-top:28px;">
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--slate);font-weight:600;border-bottom:2px solid var(--pastel-light);padding-bottom:8px;margin-bottom:14px;">Current Account Universe — Tier Reference</div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Tier</th><th>Revenue Band</th><th>Account Count</th><th>ABM Focus</th><th>SDR Track</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>T1-A</strong></td>
+              <td>$50B+</td>
+              <td>Top priority accounts</td>
+              <td>Highest ad frequency, deepest intent monitoring, most deliberate sequencing</td>
+              <td>Enterprise SDR + BD — named account coordination required</td>
+            </tr>
+            <tr>
+              <td><strong>Tier 1</strong></td>
+              <td>$10B – $49.9B</td>
+              <td>Large enterprise</td>
+              <td>Full buying group coverage, multi-persona targeting, long-cycle nurture</td>
+              <td>Enterprise SDR + BD — named account check before engagement</td>
+            </tr>
+            <tr>
+              <td><strong>Tier 2</strong></td>
+              <td>$400M – $10B</td>
+              <td>Mid-Market core</td>
+              <td>Higher volume, faster cycle, intent-first prioritization</td>
+              <td>Inside Sales SDR — works freely, no named account restriction</td>
+            </tr>
+            <tr>
+              <td><strong>Tier 3</strong></td>
+              <td>$100M – $399M</td>
+              <td>Growth segment</td>
+              <td>Lighter touch, programmatic campaigns, intent monitoring</td>
+              <td>Inside Sales SDR</td>
+            </tr>
+            <tr>
+              <td><strong>Tier 4</strong></td>
+              <td>PE/VC/AI growth-stage</td>
+              <td>Pending build</td>
+              <td>High-growth companies not yet revenue-qualified by traditional bands</td>
+              <td>TBD</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 03: CAMPAIGNS -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-title">Campaign Management — How Campaigns Work at TP</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">Campaigns in Demandbase One for TP are account-based — meaning every campaign is targeted at a defined account list plus a persona layer, not at individual leads. Understanding this structure is what separates an ABM campaign from a generic digital campaign.</p>
+
+      <div class="workflow-grid">
+        <div class="wf-card wfc-pink">
+          <div class="wf-icon"></div>
+          <div class="wf-name">Account List + Persona = Audience</div>
+          <div class="wf-desc">Every campaign targets the intersection of an account list and a persona. A persona applied to a T1-A account list only surfaces contacts at those T1-A accounts who match the persona's job title criteria. Broad enough persona + right account list = the right people see the ad.</div>
+          <div class="wf-note"><span>Watch for:</span> Persona criteria that are too narrow will return zero matched contacts even on a large account list. Check buying group completeness before launching.</div>
+        </div>
+        <div class="wf-card wfc-blue">
+          <div class="wf-icon">🔑</div>
+          <div class="wf-name">Intent Keywords Drive Targeting</div>
+          <div class="wf-desc">The 42+ keyword sets built in the US Workspace (and duplicated in Global) determine which accounts are surfacing in-market intent. When building a campaign, align the target account list to the keyword sets relevant to that campaign's message — don't mix intent signals with mismatched creative.</div>
+          <div class="wf-note"><span>Rule:</span> Buyer research language works. Procurement/vendor language does not — intent engines index published content, not RFP-speak.</div>
+        </div>
+        <div class="wf-card wfc-teal">
+          <div class="wf-icon">🗺️</div>
+          <div class="wf-name">Journey Stage Gates Campaigns</div>
+          <div class="wf-desc">The US Journey has seven stages. Campaign strategy should shift by stage — awareness-stage accounts get thought leadership and problem framing, mid-stage accounts get solution content, late-stage accounts get proof points and case data. Don't run the same creative across all stages.</div>
+          <div class="wf-note"><span>Practical move:</span> Use journey stage as a filter when selecting your account list. Target accounts in stages 2–4 for pipeline acceleration campaigns.</div>
+        </div>
+        <div class="wf-card wfc-violet">
+          <div class="wf-icon">⚙️</div>
+          <div class="wf-name">Buying Groups Confirm Coverage</div>
+          <div class="wf-desc">Three buying groups are live: CX Core, Lines of Business, and Vertical Specialists. Before launching a campaign, check buying group completeness on your target account list. Low completeness means the buying committee isn't covered — the campaign may reach the wrong people or miss the decision-makers entirely.</div>
+          <div class="wf-note"><span>Target:</span> Accounts with 3+ active buying group personas are your strongest MQA candidates post-campaign.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;">
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--slate);font-weight:600;border-bottom:2px solid var(--pastel-light);padding-bottom:8px;margin-bottom:14px;">Current Active Campaigns — Status Reference</div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Campaign Type</th><th>Status</th><th>Audience</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>GTC Event</strong></td>
+              <td><span class="sbadge sb-draft">Automation Built</span></td>
+              <td>Event-targeted account list</td>
+              <td>Orchestration automation built, inactive. Activates on event-based trigger. One Tag deployment required before firing.</td>
+            </tr>
+            <tr>
+              <td><strong>Gartner Data Analytics</strong></td>
+              <td><span class="sbadge sb-draft">Automation Built</span></td>
+              <td>Event-targeted account list</td>
+              <td>Same as above — built, inactive, waiting on One Tag.</td>
+            </tr>
+            <tr>
+              <td><strong>SSOW</strong></td>
+              <td><span class="sbadge sb-draft">Automation Built</span></td>
+              <td>Event-targeted account list</td>
+              <td>Orchestration automation built and inactive.</td>
+            </tr>
+            <tr>
+              <td><strong>TP Immersive Experience</strong></td>
+              <td><span class="sbadge sb-draft">Automation Built</span></td>
+              <td>CCO/CRO/CFO/CIO — May Scottsdale</td>
+              <td>Grand Hyatt Scottsdale May 12–13. By-invitation-only. Cvent tagging is the signal source — NOT intent keywords (no external search signal exists for a TP-hosted private event).</td>
+            </tr>
+            <tr>
+              <td><strong>T1-A / Tier 1 Campaigns</strong></td>
+              <td><span class="sbadge sb-live">Active</span></td>
+              <td>T1-A and Tier 1 account lists</td>
+              <td>Advertising campaigns targeting the top two tiers are live. Advertising clicks report showing no data — blocked by GT One Tag not deployed on tp.com/en-us.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-pink" style="margin-top:18px;">
+        <strong>Attribution chain status:</strong> The GT One Tag is not yet deployed on tp.com/en-us (blocked — Isabella Cruz controls GTM access). Until it's live, the advertising clicks report will show no data and attribution tracking is not functioning. This is the top open blocker. Campaigns are running — we just can't see click-through data yet.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 04: INTENT & ENGAGEMENT REPORTING -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-title">Intent & Engagement Reporting — What to Watch and When</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">Demandbase surfaces two types of signal: intent (what accounts are researching across the web) and engagement (how accounts are interacting with TP specifically). Both matter and they tell different stories. Knowing which signal to act on — and when — is the core skill of the ABM operator role.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Signal</th><th>Where to Find It</th><th>What It Tells You</th><th>What to Do With It</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Intent Spike</strong></td>
+            <td>Intent module → filter by account tier or list</td>
+            <td>An account is actively researching a topic relevant to TP's services — right now, before any conversation has started</td>
+            <td>Flag to the relevant SDR if it's an open account, or to the BD if it's a named account. Consider accelerating ad spend against this account for the next 2 weeks.</td>
+          </tr>
+          <tr>
+            <td><strong>Engagement Minutes Rising</strong></td>
+            <td>Dashboard → sort by Engagement Minutes, last 14 days</td>
+            <td>Contacts at the account are accumulating interactions with TP — ads, emails, site visits, content downloads</td>
+            <td>Add to your weekly MQA review list. If Engagement Minutes have been climbing for 3+ weeks, this account is warming up independently. Pull the buying group coverage report.</td>
+          </tr>
+          <tr>
+            <td><strong>Journey Stage Advancement</strong></td>
+            <td>Journey module → filter by "stage changed this week"</td>
+            <td>The account's collective behavior has crossed a threshold — they moved forward in the buying cycle</td>
+            <td>Surface to SDR immediately. A stage advancement this week is a timing signal — reach out now, not in two weeks.</td>
+          </tr>
+          <tr>
+            <td><strong>Buying Group Completeness Drop</strong></td>
+            <td>Buying Groups → sort by completeness</td>
+            <td>A persona that was engaged has gone quiet — or was never covered in the first place</td>
+            <td>Check if the contact left the company. If coverage is low across an account you're targeting, adjust persona criteria or add a broader job title filter to the targeting layer.</td>
+          </tr>
+          <tr>
+            <td><strong>High Intent + Low Engagement</strong></td>
+            <td>Cross-reference Intent module with Dashboard engagement data</td>
+            <td>An account is researching your space but isn't interacting with TP content — they may not know TP is an option</td>
+            <td>Increase ad frequency against this account. This is the gap your campaigns are designed to close. Check that the account is on the right campaign audience list.</td>
+          </tr>
+          <tr>
+            <td><strong>Campaign Engagement Post-Launch</strong></td>
+            <td>Advertising → campaign performance (note: clicks report blocked until One Tag is live)</td>
+            <td>Which accounts are engaging with specific ad creative and messaging</td>
+            <td>Use impression data and engagement metrics to identify which accounts are responding. Build your MQA list from campaign-engaged accounts 2 weeks post-launch.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue" style="margin-top:18px;">
+        <strong>Weekly rhythm to build:</strong> Check the Dashboard every Monday for engagement trends. Check Intent every Wednesday for new spikes. Pull journey stage changes every Friday and share with the SDR team lead. This 3-touch weekly cadence keeps the MQA pipeline from going stale between campaign runs.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 05: MQA COORDINATION WITH SALES -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div class="section-title">MQA Coordination — How Marketing Hands Off to Sales</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">The MQA (Marketing Qualified Account) is the handoff point between the ABM program and Sales. Marketing brings the account to the door — SDRs and BD take it from there. Your job is to make sure the signal is clean and the context travels with it.</p>
+
+      <div class="workflow-grid">
+        <div class="wf-card wfc-pink">
+          <div class="wf-icon"></div>
+          <div class="wf-name">The 2-Week Window</div>
+          <div class="wf-desc">After a campaign activates, wait 2 weeks before pulling the MQA list. This gives the campaign time to generate engagement signal. SDRs review the list at the 2-week mark — they need that context baked in before they reach out.</div>
+          <div class="wf-note"><span>Your action:</span> Mark campaign launch dates and set a calendar reminder for the 2-week MQA review. Share the filtered account list with the SDR lead on that date.</div>
+        </div>
+        <div class="wf-card wfc-blue">
+          <div class="wf-icon">📋</div>
+          <div class="wf-name">What to Include in the Handoff</div>
+          <div class="wf-desc">Don't just hand SDRs a list of account names. Include: what the account engaged with, which personas showed activity, what intent keywords they were researching, and the account's current journey stage. Context converts — a cold list does not.</div>
+          <div class="wf-note"><span>Format:</span> Export from Demandbase as a filtered account view with engagement and intent columns visible. Or share a saved dashboard view the SDR can access directly.</div>
+        </div>
+        <div class="wf-card wfc-teal">
+          <div class="wf-icon">🔒</div>
+          <div class="wf-name">Named Account Rule for SDRs</div>
+          <div class="wf-desc">SDRs can work any open account freely. If an MQA is a named BD account (visible in SFDC), the SDR coordinates with the BD before engaging. Your role: flag named account MQAs separately from open account MQAs when you share the list. Don't mix them.</div>
+          <div class="wf-note"><span>Practice:</span> Tag named BD accounts in your MQA export so the SDR lead doesn't have to look them up individually in SFDC.</div>
+        </div>
+        <div class="wf-card wfc-violet">
+          <div class="wf-icon">📡</div>
+          <div class="wf-name">Ongoing Signal Sharing</div>
+          <div class="wf-desc">MQAs aren't a one-time handoff. Intent spikes happen between campaigns. Journey stage advancements happen while campaigns are in flight. Keep a standing Slack channel or weekly sync with the SDR lead so real-time signals don't sit in the platform without action.</div>
+          <div class="wf-note"><span>Quick win:</span> Set up Demandbase Slack alert integrations for your top T1-A and Tier 1 accounts so intent spikes surface automatically without manual checking.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-teal" style="margin-top:20px;">
+        <strong>The feedback loop matters:</strong> When SDRs work an MQA and learn something — wrong contact, budget shift, bad timing — that context should come back to Marketing. It tells you whether the campaign messaging landed with the right persona at the right stage. Without feedback, you're optimizing campaigns blind.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 06: PLATFORM NAVIGATION REFERENCE -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <div class="section-title">Platform Navigation — Where Everything Lives</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">Quick reference for where to find the tools you'll use most often. Always confirm "US Workspace" is showing in the top-left dropdown before starting any work session.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>What You Need</th><th>Where to Go</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Account Lists</strong></td>
+            <td>Audiences → Account Lists</td>
+            <td>All US Workspace account lists live here. For campaign use, the corresponding [US]-prefixed copy must exist in Global. Check both.</td>
+          </tr>
+          <tr>
+            <td><strong>Person Lists</strong></td>
+            <td>Audiences → Person Lists</td>
+            <td>Same dual-maintenance rule as account lists. Persona-based campaign targeting requires the Global copy.</td>
+          </tr>
+          <tr>
+            <td><strong>Intent Data</strong></td>
+            <td>Intent → Keyword Sets / Intent Dashboard</td>
+            <td>42+ active keyword sets. Filter by account list to see intent activity for a specific tier or campaign audience.</td>
+          </tr>
+          <tr>
+            <td><strong>Buying Groups</strong></td>
+            <td>Buying Groups (left nav)</td>
+            <td>Three groups: CX Core, Lines of Business, Vertical Specialists. Check completeness by account before launching campaigns.</td>
+          </tr>
+          <tr>
+            <td><strong>Journey Stages</strong></td>
+            <td>Journey (left nav)</td>
+            <td>Seven stages, tier-differentiated logic. Filter by "stage changed this week" to find accounts in motion.</td>
+          </tr>
+          <tr>
+            <td><strong>Campaigns</strong></td>
+            <td>Advertising → Campaigns</td>
+            <td>All ad campaigns live here. Audience picker pulls from Global — your [US]-prefixed lists must exist there first.</td>
+          </tr>
+          <tr>
+            <td><strong>Orchestration Automations</strong></td>
+            <td>Orchestration (left nav)</td>
+            <td>Four automations built, all currently inactive. Do not activate without coordination with Sharath and Josh. One Tag deployment is the prerequisite.</td>
+          </tr>
+          <tr>
+            <td><strong>Dashboard & Reporting</strong></td>
+            <td>Dashboard → US Marketing ABX Dashboard</td>
+            <td>Your primary reporting view. Advertising clicks section will show no data until the GT One Tag is deployed.</td>
+          </tr>
+          <tr>
+            <td><strong>Segments</strong></td>
+            <td>Audiences → Segments</td>
+            <td>Dynamic logic layers used for orchestration triggers and Calculated Field mapping to SFDC. If you need a new segment, coordinate with Sharath before building.</td>
+          </tr>
+          <tr>
+            <td><strong>Workspace Switcher</strong></td>
+            <td>Top-left dropdown</td>
+            <td>US Workspace for all strategic and reporting work. Global only when duplicating lists for campaign use. Never make changes in Global without confirming with Sharath first.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-pink" style="margin-top:18px;">
+        <strong>Active Blockers You'll Run Into:</strong> The advertising clicks report shows no data (One Tag not deployed). The GA4 Account Connector is not connected for the US property (single-tenant limitation, APAC occupying the slot). Google Ads OAuth is pending. These are infrastructure blockers — not platform errors. Document if you see unexpected blank data and flag to Sharath.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 07: WHAT'S NEW — RETURNING TEAM MEMBERS -->
+  <div class="whats-new">
+    <h3>What Launched While You Were Out — Full Program Update</h3>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">US Workspace is Live — 5,241 Accounts Tiered</div>
+        <div class="new-desc">The US Workspace went live on Demandbase Tenant 15053 with the full account universe tiered across T1-A, Tier 1, Tier 2, and Tier 3. 7,130 high-intent accounts identified, 137,135 intent keywords tracked, 869 accounts actively visiting the TP site.</div>
+      </div>
+    </div>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">42+ Keyword Sets Built and Active</div>
+        <div class="new-desc">Keyword sets covering CX Core, Lines of Business, and Vertical Specialist buying motions are live in both US Workspace and Global. These are the intent signal foundation for every campaign. All built using buyer research language — not procurement or vendor terms.</div>
+      </div>
+    </div>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">Three Buying Groups Configured — Powerline Framework</div>
+        <div class="new-desc">CX Core, Lines of Business, and Vertical Specialists are live with persona frameworks built using the Powerline model. Buying group completeness tracking is active across the account universe.</div>
+      </div>
+    </div>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">7-Stage US Journey Published</div>
+        <div class="new-desc">The US account journey is live with seven stages and tier-differentiated logic. Accounts are being scored and moved through stages based on intent and engagement thresholds. Journey stage changes are now a reliable trigger for SDR outreach timing.</div>
+      </div>
+    </div>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">Four Orchestration Automations Built</div>
+        <div class="new-desc">GTC, Gartner Data Analytics, SSOW, and TP Immersive Experience automations are configured and ready. All currently inactive — they activate once the GT One Tag is deployed on tp.com/en-us. The One Tag deployment is the current top infrastructure priority.</div>
+      </div>
+    </div>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">TP Immersive Experience 2026 — May 12–13, Scottsdale</div>
+        <div class="new-desc">By-invitation-only executive summit at Grand Hyatt Scottsdale targeting CCOs, CROs, CFOs, and CIOs. Cvent is the registration signal source — not intent keywords. The automation is built around Cvent tagging, not keyword-triggered intent.</div>
+      </div>
+    </div>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">Dual-Maintenance Model Established</div>
+        <div class="new-desc">The operational reality of running US campaigns in a multi-regional tenant is documented. Any account list or person list used in advertising must exist in both US Workspace and Global with the [US] prefix. There is no sync — manual duplication is required every time. See Section 02 for the full SOP.</div>
+      </div>
+    </div>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">Sharath Madishetty Joining as Demandbase Ops Manager</div>
+        <div class="new-desc">New Demandbase Operations Manager starting in three weeks. Full Admin access to US Workspace and Global (Tenant 15053). He owns backend configuration, integration maintenance, and platform enablement. ABM Managers coordinate with Sharath for any infrastructure changes, new segment builds, or integration questions.</div>
+      </div>
+    </div>
+
+    <div class="new-item">
+      <div class="new-dot"></div>
+      <div class="new-content">
+        <div class="new-title">Site Customization Agent — Beta Access</div>
+        <div class="new-desc">Beta access received from Karthik at Demandbase. Natural language-driven on-site personalization tool. First use cases being scoped for T1-A Financial Services and Healthcare accounts, and CCO/CRO personas for the May Scottsdale event.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 08: TRAINING COURSES -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">08</div>
+      <div class="section-title">Training Courses — ABM Manager Track</div>
+    </div>
+    <div class="section-body">
+      <p class="section-intro">All courses are self-paced, free, and available at <strong>partneredu.demandbase.com</strong>. Register with your TP email. Required courses should be completed before running your first campaign independently. Returning team members — the courses marked ↩ are worth a refresh given what's changed in the platform since late 2025.</p>
+
+      <div class="course-list">
+        <div class="course-row">
+          <div class="cdot cdot-pink"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/page/digital-marketing-manager-learning-track" target="_blank">Digital Marketing Manager Learning Track</a> <span class="ctag ctag-req">Required · Start Here</span></div>
+            <div class="course-meta">Your primary track. Find high-value accounts, track engagement, personalize campaigns, and improve results with data-driven insights. This is the ABM operator foundation.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-pink"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/account-based-go-to-market-gtm-certification" target="_blank">Account-Based GTM Certification</a> <span class="ctag ctag-req">Required</span></div>
+            <div class="course-meta">~5–6 hours. Modern ABM frameworks, GTM architecture, and account-based deployment models. The strategic foundation every operator needs before running campaigns. Returning team: this is fully refreshed for 2025 and worth completing again.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-pink"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/account-based-measurement-and-reporting-certification" target="_blank">Account-Based Measurement & Reporting Certification</a> <span class="ctag ctag-req">Required</span></div>
+            <div class="course-meta">~2–3 hours. How to measure ABM impact, attribute marketing influence, and report to leadership. Covers the Account-Based Arrow™ model. Critical for how you'll present campaign results to Josh and Leslie.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/getting-started-with-demandbase-advertising" target="_blank">Getting Started with Demandbase Advertising</a> <span class="ctag ctag-req">Required</span></div>
+            <div class="course-meta">30 minutes. How Demandbase Advertising works, how ABM-aligned campaigns are structured, and how the audience-building process connects to the account list and persona layer. Updated Oct 2025.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/setting-up-your-ad-campaign-with-demandbase-one" target="_blank">Setting Up Your Ad Campaign</a> <span class="ctag ctag-req">Required</span> <span class="ctag ctag-ret">↩ Refresh</span></div>
+            <div class="course-meta">120 minutes. How to set up Demandbase One for ad campaigns — building account and person lists, setting up intent keywords, buying groups, and journey stages. Updated Feb 2026. This covers the dual-maintenance workflow and is worth completing even if you've built campaigns before.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/building-and-managing-ad-campaigns" target="_blank">Building and Managing Ad Campaigns</a> <span class="ctag ctag-ret">↩ Refresh</span></div>
+            <div class="course-meta">30 minutes. Launch, optimize, and analyze campaigns from initial setup through performance tracking and refinement. Updated Oct 2025.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/measuring-ad-campaign-results" target="_blank">Measuring Ad Campaign Results</a></div>
+            <div class="course-meta">30 minutes. How to use filters and KPIs to dig into campaign performance and refine audience targeting. Note: the advertising clicks report is currently blocked (One Tag not deployed) — this course is still worth completing to understand what the data will look like once it's live. Updated Oct 2025.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-teal"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/driving-digital-marketing-success-with-demandbase-one" target="_blank">Driving Digital Marketing Success with Demandbase One</a></div>
+            <div class="course-meta">60 minutes. How to use DB1 to find high-value accounts, track engagement, personalize campaigns, and improve results with data-driven insights. Updated Oct 2025.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-teal"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/page/digital-advertising-manager-learning-track" target="_blank">Digital Advertising Manager Learning Track</a> <span class="ctag ctag-new">Advanced</span></div>
+            <div class="course-meta">For anyone managing the advertising budget and campaign operations directly. Covers high-performing campaign execution using Demandbase Advertising and Orchestration together.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/optional-working-with-demandbase-orchestration" target="_blank">Automating with Demandbase Orchestration</a> <span class="ctag ctag-new">New · Mar 2026</span></div>
+            <div class="course-meta">30 minutes. How to automate marketing actions and manage dynamic audiences. The four TP event automations are built and waiting on the One Tag. Understanding orchestration now means you're ready to activate and manage them the moment that blocker clears. Updated Mar 2026.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-teal"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/personalizing-your-website" target="_blank">Personalizing Your Website</a> <span class="ctag ctag-new">Beta Relevant</span></div>
+            <div class="course-meta">60 minutes. Use Demandbase Personalization to create tailored web experiences. Directly relevant to the Site Customization Agent beta that's in scoping for T1-A accounts and the May Scottsdale event personas. Updated Feb 2026.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <div class="cdot cdot-blue"></div>
+          <div class="course-info">
+            <div class="course-name"><a href="https://partneredu.demandbase.com/demandbase-one-for-sales-and-marketing-overview" target="_blank">Demandbase One for Sales & Marketing Overview</a></div>
+            <div class="course-meta">45 minutes. How Marketing and Sales use the platform together — the shared data model, handoff logic, and where the ABM Manager role sits in the full account-based motion. Updated Feb 2026.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMING SOON -->
+  <div class="coming-soon">
+    <h3>🔓 What's Coming — Future Build Backlog</h3>
+    <p>These are the open items that will directly expand what ABM Managers can do in the platform. As each one lands, this guide gets updated by Sharath.</p>
+    <br>
+    <p><strong>GT One Tag Deployment</strong> — Once Isabella Cruz grants GTM access for tp.com/en-us, the attribution chain activates: advertising clicks data, GA4 Account Connector, UTM tracking, and Campaign Influence 2.0. The four orchestration automations can also be activated immediately after.</p>
+    <br>
+    <p><strong>Orchestration → Advertising Dynamic Audience Wiring</strong> — Post One Tag, the four event-based automations will be wired to dynamically add and remove accounts from ad audiences. This is the missing link between orchestration and advertising. When it's live, campaign audiences update in real time based on account behavior rather than static list snapshots.</p>
+    <br>
+    <p><strong>Site Customization Agent</strong> — Natural language-driven on-site personalization for targeted accounts. First use cases: T1-A Financial Services and Healthcare, CCO/CRO personas for the May Scottsdale event. ABM Managers will own the use case definition — Sharath owns the technical configuration.</p>
+    <br>
+    <p><strong>Campaign Influence 2.0</strong> — Full multi-touch attribution once UTM fields and CI 2.0 configuration are complete with Eliana Negrisoli and Amit Kumar. This changes how you report campaign impact to leadership — moves from impression-based reporting to influence-on-pipeline reporting.</p>
+    <br>
+    <p><strong>Tier 4 Account Universe</strong> — PE/VC/AI growth-stage accounts are not yet tiered. Once the Tier 4 build is complete, a new campaign motion and account list set will need to be built. Watch for this in the roadmap.</p>
+  </div>
+
+</div><!-- /wrap -->
+
+<div class="footer">
+  <strong>Teleperformance</strong> &nbsp;·&nbsp; US GTM Strategy &nbsp;·&nbsp; ABM Manager Demandbase One Field Guide<br>
+  Confidential — Internal Use Only &nbsp;·&nbsp; Prepared March 2026 &nbsp;·&nbsp; Maintained by: Sharath Madishetty, Demandbase Operations Manager
+</div>
+
+    <script src="/assets/js/back-to-top.js"></script>
+<script src="../assets/js/navigation.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+</body>
+</html>

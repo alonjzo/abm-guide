@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/generate.js": { "maxDuration": 60 },
+    "api/prompt.js": { "maxDuration": 60 },
+    "api/battlecard.js": { "maxDuration": 60 }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/public/$1"
+    }
+  ]
+}

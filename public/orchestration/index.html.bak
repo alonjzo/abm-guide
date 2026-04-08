@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demandbase Orchestration PRD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="../assets/js/navigation.js"></script>
+  <style>
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.7rem, 0.65rem + 0.2vw, 0.8rem);
+      --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
+      --text-base: clamp(0.875rem, 0.85rem + 0.2vw, 0.95rem);
+      --text-lg: clamp(1rem, 0.95rem + 0.5vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.75rem);
+      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem;
+      --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem; --space-20: 5rem;
+      --color-bg: #ffffff; --color-surface: #f9f9fb; --color-surface-2: #f5f5f7; --color-surface-offset: #edeaf0;
+      --color-border: #c2c7cd; --color-text: #2e3150; --color-text-muted: #6b6e85; --color-text-faint: #848dad;
+      --color-primary: #484C6A; --color-primary-hover: #2e3150; --color-primary-highlight: #e2dfe8; --color-blue: #3047b0;
+      --color-accent: #ff0082;
+      --radius-sm: .375rem; --radius-md: .5rem; --radius-lg: .75rem; --radius-xl: 1rem; --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px rgba(46,49,80,.06); --shadow-md: 0 8px 24px rgba(46,49,80,.08); --shadow-lg: 0 18px 48px rgba(46,49,80,.12);
+      --content: 1160px; --font-display: 'Calibri', 'Segoe UI', Georgia, serif; --font-body: 'Calibri Light', 'Calibri', 'Segoe UI', sans-serif;
+    }
+    [data-theme="dark"] {
+      --color-bg: #1E1C2E; --color-surface: #2a2c40; --color-surface-2: #2e3150; --color-surface-offset: #353855;
+      --color-border: #484C6A; --color-text: #e2dfe8; --color-text-muted: #c2c7cd; --color-text-faint: #848dad;
+      --color-primary: #c2c7cd; --color-primary-hover: #e2dfe8; --color-primary-highlight: #353855; --color-blue: #6b8cff;
+      --color-accent: #ff0082;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.18); --shadow-md: 0 8px 24px rgba(0,0,0,.3); --shadow-lg: 0 18px 48px rgba(0,0,0,.38);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;background:var(--color-bg);color:var(--color-text);padding-top:56px}
+    a{color:inherit;text-decoration:none}
+    img,svg{display:block;max-width:100%}
+    .container{width:min(calc(100% - 2rem),var(--content));margin:0 auto}
+    .skip{position:absolute;left:-9999px;top:0}.skip:focus{left:1rem;top:1rem;background:var(--color-surface);padding:.75rem 1rem;border-radius:var(--radius-md);z-index:1000}
+    /* Workspace Section Nav */
+    .workspace-nav{position:sticky;top:56px;z-index:39;background:var(--color-bg);border-bottom:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);overflow:hidden}
+    .workspace-nav-inner{max-width:var(--content);margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:0 1rem}
+    .workspace-nav-inner::-webkit-scrollbar{display:none}
+    .ws-nav-item{padding:1rem 1.25rem;font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);white-space:nowrap;border-bottom:2px solid transparent;cursor:pointer;transition:.15s;flex-shrink:0;text-decoration:none}
+    .ws-nav-item:hover{color:var(--color-primary);border-bottom-color:var(--color-primary)}
+    .ws-nav-item.active{color:var(--color-accent);border-bottom-color:var(--color-accent)}
+    .workspace-nav::after{content:'';position:absolute;right:0;top:0;bottom:0;width:80px;background:linear-gradient(to right,transparent,var(--color-bg) 50%);pointer-events:none;opacity:0;transition:opacity .3s}
+    .workspace-nav.can-scroll::after{opacity:1}
+    header{position:sticky;top:105px;z-index:38;background:color-mix(in srgb, var(--color-bg) 84%, transparent);backdrop-filter:blur(14px);border-bottom:1px solid color-mix(in srgb, var(--color-text) 10%, transparent)}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:var(--space-4) 0;gap:var(--space-4)}
+    .brand{display:flex;align-items:center;gap:var(--space-3);font-weight:700}
+    .brand svg{width:40px;height:40px;color:var(--color-primary)}
+    .nav-links{display:flex;gap:var(--space-5);flex-wrap:wrap;font-size:var(--text-sm);color:var(--color-text-muted)}
+    .actions{display:flex;align-items:center;gap:var(--space-3)}
+    .theme-btn,.btn{border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent);background:var(--color-surface);color:var(--color-text);border-radius:var(--radius-full);padding:.8rem 1rem;cursor:pointer;transition:.18s ease}
+    .btn.primary{background:var(--color-accent);color:#fff;border-color:transparent}
+    .btn.primary:hover,.theme-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+    main{padding-bottom:var(--space-20)}
+    .hero{padding:clamp(3rem,8vw,7rem) 0 var(--space-16)}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--space-8);align-items:end}
+    .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .75rem;border-radius:var(--radius-full);background:var(--color-primary-highlight);color:var(--color-primary);font-size:var(--text-xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+    h1,h2,h3{margin:0;line-height:1.08}
+    h1{font-family:var(--font-display);font-size:48px;max-width:16ch;letter-spacing:-.02em}
+    .lede{margin-top:var(--space-5);max-width:62ch;color:var(--color-text-muted)}
+    .hero-card{background:linear-gradient(180deg,var(--color-surface-2),var(--color-surface));border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-lg)}
+    .hero-card .stat{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-faint);margin-bottom:var(--space-2)}
+    .hero-card strong{display:block;font-size:var(--text-xl);margin-bottom:var(--space-2)}
+    .hero-points{display:grid;gap:var(--space-3);margin-top:var(--space-5)}
+    .hero-points div{padding:var(--space-3) var(--space-4);border-radius:var(--radius-lg);background:var(--color-surface-offset);font-size:var(--text-sm)}
+    section{padding:var(--space-12) 0}
+    .section-head{display:flex;justify-content:space-between;gap:var(--space-6);align-items:end;margin-bottom:var(--space-8)}
+    .section-head p{max-width:64ch;color:var(--color-text-muted);margin:0}
+    h2{font-family:var(--font-display);font-size:24px;letter-spacing:-.02em}
+    .cards{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--space-5)}
+    .card{grid-column:span 4;background:var(--color-surface);border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-sm)}
+    .card.wide{grid-column:span 6}
+    .card.full{grid-column:1/-1}
+    .card h3{font-size:var(--text-lg);font-family:var(--font-body);margin-bottom:var(--space-3)}
+    .card p{margin:0 0 var(--space-4);color:var(--color-text-muted)}
+    .pill{display:inline-flex;padding:.35rem .7rem;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--color-primary-highlight);color:var(--color-primary);margin-bottom:var(--space-4)}
+    .mini-list{display:grid;gap:var(--space-2);padding:0;margin:0;list-style:none}
+    .mini-list li{padding-left:1.1rem;position:relative;color:var(--color-text-muted)}
+    .mini-list li::before{content:'';position:absolute;left:0;top:.72em;width:.45rem;height:.45rem;border-radius:50%;background:var(--color-accent)}
+    .workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4)}
+    .step{background:var(--color-surface);border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);border-radius:var(--radius-xl);padding:var(--space-5)}
+    .step-num{font-size:var(--text-xs);font-weight:700;color:var(--color-accent);text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border-radius:var(--radius-xl);border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);background:var(--color-surface)}
+    table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+    th,td{padding:1rem;vertical-align:top;text-align:left;border-bottom:1px solid color-mix(in srgb, var(--color-text) 8%, transparent)}
+    th{font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-faint);background:var(--color-surface-2)}
+    .quote{padding:var(--space-6);border-radius:var(--radius-xl);background:linear-gradient(135deg,color-mix(in srgb, var(--color-accent) 8%, var(--color-surface)),var(--color-surface));border:1px solid color-mix(in srgb, var(--color-accent) 18%, transparent)}
+    .quote p{font-size:var(--text-lg);max-width:46ch;margin:0 0 var(--space-3)}
+    footer{padding:var(--space-12) 0 var(--space-16);color:var(--color-text-muted)}
+    .footer-box{display:flex;justify-content:space-between;gap:var(--space-6);align-items:flex-start;padding:var(--space-6);background:var(--color-surface);border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);border-radius:var(--radius-xl)}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--color-surface-offset);padding:.15rem .4rem;border-radius:.35rem}
+    @media (max-width: 980px){
+      .hero-grid,.workflow{grid-template-columns:1fr}
+      .card,.card.wide{grid-column:1/-1}
+      .section-head,.footer-box,.nav{align-items:flex-start;flex-direction:column}
+      .nav-links{gap:var(--space-3)}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+
+  <!-- Workspace Section Nav -->
+  <nav class="workspace-nav" id="workspace-nav">
+    <div class="workspace-nav-inner">
+      <a class="ws-nav-item" href="../platform-guide/index.html#architecture">Architecture</a>
+      <a class="ws-nav-item" href="../platform-guide/index.html#accounts">Tiers</a>
+      <a class="ws-nav-item" href="../platform-guide/index.html#journey">Journey</a>
+      <a class="ws-nav-item" href="../platform-guide/index.html#routing">Routing</a>
+      <a class="ws-nav-item" href="../platform-guide/index.html#lists">Lists</a>
+      <a class="ws-nav-item" href="../platform-guide/index.html#buying-groups">Buying Groups</a>
+      <a class="ws-nav-item" href="../platform-guide/index.html#intent">Intent</a>
+      <a class="ws-nav-item active" href="../orchestration/index.html">Orchestration</a>
+      <a class="ws-nav-item" href="../platform-guide/index.html#governance">Rules</a>
+      <a class="ws-nav-item" href="../platform-guide/index.html#contacts">Contacts</a>
+    </div>
+  </nav>
+  <script>
+    // Check if nav needs scroll indicator
+    (function() {
+      const nav = document.querySelector('.workspace-nav');
+      const navInner = document.querySelector('.workspace-nav-inner');
+      if (nav && navInner) {
+        function checkScroll() {
+          if (navInner.scrollWidth > navInner.clientWidth) {
+            nav.classList.add('can-scroll');
+          } else {
+            nav.classList.remove('can-scroll');
+          }
+        }
+        checkScroll();
+        window.addEventListener('resize', checkScroll);
+      }
+    })();
+  </script>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <svg viewBox="0 0 48 48" fill="none" aria-label="Demandbase Orchestration">
+          <rect x="4" y="4" width="40" height="40" rx="12" stroke="currentColor" stroke-width="2.5"></rect>
+          <path d="M14 29c4-10 16-10 20 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+          <circle cx="18" cy="19" r="3" fill="currentColor"></circle>
+          <circle cx="30" cy="16" r="3" fill="currentColor"></circle>
+          <circle cx="34" cy="28" r="3" fill="currentColor"></circle>
+        </svg>
+        <span>Demandbase Orchestration PRD</span>
+      </div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#vision">Vision</a>
+        <a href="#scenarios">Scenarios</a>
+        <a href="#managers">Managers</a>
+        <a href="#requirements">Requirements</a>
+      </nav>
+      <div class="actions">
+        <button class="theme-btn" data-theme-toggle aria-label="Switch theme">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="hero container">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">New US workspace · Manager enablement</span>
+          <h1>Product requirements for turning Orchestration into the ABM manager playbook.</h1>
+          <p class="lede">This PRD frames Demandbase Orchestration as a manager system, not just a feature. It shows how ABM teams in the new US workspace can build dynamic audiences, route them into channels like LinkedIn, and standardize repeatable execution plays across the funnel.</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;">
+            <a class="btn primary" href="#scenarios">Explore scenarios</a>
+            <a class="btn" href="#requirements">See requirements</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="PRD summary">
+          <div class="stat">Primary goal</div>
+          <strong>Help ABM managers activate audiences and plays faster with less guesswork.</strong>
+          <p style="margin:0;color:var(--color-text-muted)">Use Orchestration as the connective layer between Demandbase intelligence, audience logic, and downstream execution in ad, sales, and marketing systems.</p>
+          <div class="hero-points">
+            <div><strong>Who it serves:</strong> ABM Managers, campaign managers, marketing ops, field teams.</div>
+            <div><strong>Core objects:</strong> selectors, audiences, destinations, schedules, Manager-ready play patterns.</div>
+            <div><strong>Key promise:</strong> one workspace where Managers can build once and activate everywhere.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="vision">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="pill">Vision</span>
+            <h2>Why this matters</h2>
+          </div>
+          <p>Demandbase describes Audiences as dynamic groups of accounts or people built from selector logic that can stay synced with third-party destinations as data changes. That makes Orchestration the Manager layer for repeatable ABM execution, especially when teams want coordinated activation across advertising, sales, and marketing systems.</p>
+        </div>
+        <div class="quote">
+          <p>Managers should not have to rebuild the same audience in every channel. They should define the business logic once, validate who qualifies, and let destinations stay current automatically.</p>
+          <span>Positioning statement for the new US workspace</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="pill">Use cases</span>
+            <h2>Core orchestration scenarios</h2>
+          </div>
+          <p>Demandbase highlights audience syncing, journey-stage targeting, content consistency across channels, and deal-momentum support as core outcomes for Orchestration Audiences. It also publishes orchestration examples aligned to milestones in the buyer journey and playbooks for syncing Demandbase-built audiences to LinkedIn.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="pill">Scenario 1</span>
+            <h3>Intent-to-LinkedIn activation</h3>
+            <p>Build a dynamic account audience from keyword intent, engagement, and ICP filters, then sync it to LinkedIn for paid activation.</p>
+            <ul class="mini-list" role="list">
+              <li>Use account selectors tied to solution research behavior.</li>
+              <li>Sync to LinkedIn as a destination and schedule recurring updates.</li>
+              <li>Run native or lead-gen campaigns only after the audience is live.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="pill">Scenario 2</span>
+            <h3>Open opportunity acceleration</h3>
+            <p>Target active pipeline with account and people audiences so sales sees more air cover while deals are live.</p>
+            <ul class="mini-list" role="list">
+              <li>Use opportunity stage, account status, or buying-group filters.</li>
+              <li>Sync account and people lists into LinkedIn for acceleration plays.</li>
+              <li>Exclude closed won, closed lost, or non-priority regions.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="pill">Scenario 3</span>
+            <h3>Net-new demand without customer overlap</h3>
+            <p>Launch awareness or lead-gen to new logos while suppressing customers, active opportunities, or named exclusions.</p>
+            <ul class="mini-list" role="list">
+              <li>Build inclusion logic around ICP and early buying signals.</li>
+              <li>Layer exclusion logic for current customers and in-flight deals.</li>
+              <li>Keep suppression current through dynamic audience syncs.</li>
+            </ul>
+          </article>
+          <article class="card wide">
+            <span class="pill">Scenario 4</span>
+            <h3>Journey-stage messaging by Manager lane</h3>
+            <p>Use separate audiences for awareness, engaged, MQA, and opportunity-stage accounts so Managers can map the right message and channel to the right audience. Demandbase specifically calls out targeting by journey stage, activities, and firmographic or demographic data as part of audience strategy.</p>
+            <ul class="mini-list" role="list">
+              <li>Awareness: broad education and category framing.</li>
+              <li>Engaged: solution-level proof and problem framing.</li>
+              <li>MQA or high-intent: sharper CTA, tighter persona focus.</li>
+              <li>Open opp: customer proof, urgency, and sales air cover.</li>
+            </ul>
+          </article>
+          <article class="card wide">
+            <span class="pill">Scenario 5</span>
+            <h3>Cross-channel consistency</h3>
+            <p>Demandbase states that synced audiences help create a consistent content experience across platforms. For Managers, that means one source of truth for who should be in-market across LinkedIn, Demandbase advertising, and other supported destinations.</p>
+            <ul class="mini-list" role="list">
+              <li>Reuse selectors across paid social, display, and nurture systems.</li>
+              <li>Reduce audience drift between platforms.</li>
+              <li>Improve reporting confidence because the logic starts upstream.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="managers">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="pill">Manager motions</span>
+            <h2>What else Managers can do</h2>
+          </div>
+          <p>Beyond the obvious ad-sync scenario, Demandbase positions Orchestration as a way to prioritize audiences, apply plays by journey milestone, and continuously add or remove qualifying accounts and people from destinations. That opens a broader operating model for ABM teams in the workspace.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Manager scenario</th>
+                <th>What the audience does</th>
+                <th>Why it matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Regional field marketing</td>
+                <td>Create dynamic account sets by territory, named accounts, industry, and engagement thresholds.</td>
+                <td>Lets field teams activate local plays without rebuilding lists manually.</td>
+              </tr>
+              <tr>
+                <td>Event follow-up</td>
+                <td>Build audiences from event attendees, target accounts, and post-event engagement to trigger downstream activation.</td>
+                <td>Turns one-off event lists into reusable multi-channel follow-up plays.</td>
+              </tr>
+              <tr>
+                <td>Buying-group expansion</td>
+                <td>Start from engaged accounts, then add people audiences for personas not yet reached.</td>
+                <td>Helps Managers move from account awareness to buying-group penetration.</td>
+              </tr>
+              <tr>
+                <td>Suppression governance</td>
+                <td>Maintain exclusion audiences for customers, employees, partners, or disqualified accounts.</td>
+                <td>Prevents wasted spend and keeps downstream execution cleaner.</td>
+              </tr>
+              <tr>
+                <td>Sales air-cover</td>
+                <td>Route high-value accounts with active sales motion into paid or coordinated outreach plays.</td>
+                <td>Supports pipeline progression with channel reinforcement.</td>
+              </tr>
+              <tr>
+                <td>Always-on ICP monitoring</td>
+                <td>Keep an always-on audience of best-fit accounts that qualify as signals change.</td>
+                <td>Gives Managers a standing activation pool for quarterly campaigns and tests.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="pill">Workflow</span>
+            <h2>Manager flow in the workspace</h2>
+          </div>
+          <p>Demandbase documents a standard audience flow: go to <code>Orchestration &gt; Audiences</code>, define selector logic, assign destinations, and activate a schedule. For LinkedIn, Demandbase notes that the platform creates or updates the matched audience and that the first sync typically takes 24 to 48 hours, followed by nightly updates.</p>
+        </div>
+        <div class="workflow">
+          <div class="step">
+            <div class="step-num">Step 1</div>
+            <h3>Define the business rule</h3>
+            <p>Start with the Manager question: who should be reached, suppressed, accelerated, or monitored?</p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 2</div>
+            <h3>Build the audience</h3>
+            <p>Translate that rule into selectors using account, people, engagement, intent, journey-stage, and list criteria.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 3</div>
+            <h3>Attach destinations</h3>
+            <p>Push the qualified audience to LinkedIn or other enabled platforms so downstream systems inherit the logic.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 4</div>
+            <h3>Schedule and govern</h3>
+            <p>Turn on recurring syncs, review member previews, and set naming conventions so audiences remain Manager-safe.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="requirements">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="pill">PRD details</span>
+            <h2>Requirements and recommendations</h2>
+          </div>
+          <p>This product frame should make Orchestration easy to understand for ABM managers while grounding the experience in documented capabilities like audience selectors, destinations, schedulers, member previews, and workspace management. Demandbase notes that audiences can be managed in workspaces when that capability is licensed.</p>
+        </div>
+        <div class="cards">
+          <article class="card full">
+            <h3>Problem statement</h3>
+            <p>ABM and marketing ops teams know Demandbase has powerful data and audience logic, but many Managers still treat activation as a series of one-off list pulls, ad-hoc requests, or duplicated channel work. The new US workspace needs a clear Manager narrative that shows Orchestration as the place to define audiences once and activate them repeatedly.</p>
+          </article>
+          <article class="card wide">
+            <h3>Functional requirements</h3>
+            <ul class="mini-list" role="list">
+              <li>Show canonical scenarios with starter audience logic.</li>
+              <li>Document destination patterns, especially LinkedIn sync workflows.</li>
+              <li>Define naming conventions for audience, destination, and schedule objects.</li>
+              <li>Surface Manager checks: permissions, preview validation, sync timing, and suppression logic.</li>
+              <li>Clarify when to use account audiences vs people audiences vs both.</li>
+            </ul>
+          </article>
+          <article class="card wide">
+            <h3>Success metrics</h3>
+            <ul class="mini-list" role="list">
+              <li>More audiences created and activated from within the new workspace.</li>
+              <li>Faster campaign launch time for ABM Managers.</li>
+              <li>Higher reuse of standard audience templates and naming standards.</li>
+              <li>Lower manual list creation across paid and sales-support motions.</li>
+              <li>Better adoption of multi-channel plays built from shared audience logic.</li>
+            </ul>
+          </article>
+          <article class="card wide">
+            <h3>Recommended content blocks for the final shareout</h3>
+            <ul class="mini-list" role="list">
+              <li>"What Managers can do" overview tied to real scenarios.</li>
+              <li>Scenario gallery with selectors, destinations, exclusions, and sample naming.</li>
+              <li>Channel-specific patterns such as LinkedIn demand gen, acceleration, and suppression.</li>
+              <li>Workspace governance notes covering permissions, ownership, and QA.</li>
+              <li>A starter operating model for ABM, field, and marketing ops collaboration.</li>
+            </ul>
+          </article>
+          <article class="card wide">
+            <h3>Suggested naming convention</h3>
+            <p><code>USW | Objective | Audience Type | Segment | Destination | Refresh</code></p>
+            <p>Example: <code>USW | Accelerate Opps | Accounts+People | Cyber Named Accounts | LinkedIn | Nightly</code></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container footer-box">
+        <div>
+          <strong>Built for ABM Managers</strong>
+          <p style="margin:.5rem 0 0;max-width:58ch;">Use this as the starting PRD, internal enablement artifact, or Vercel-hosted microsite to show what the new US workspace unlocks for Managers in Demandbase.</p>
+        </div>
+        <a class="btn primary" href="#vision">Back to top</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const toggle = document.querySelector('[data-theme-toggle]');
+      const root = document.documentElement;
+      let theme = 'light';
+      root.setAttribute('data-theme', theme);
+      toggle.addEventListener('click', function () {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', theme);
+      });
+    })();
+  </script>
+<script src="../assets/js/navigation.js"></script>
+</body>
+</html>

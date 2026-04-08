@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Status | ABM Suite - Admin</title>
+    <script>
+        (function() {
+            const key = 'abm_admin_auth';
+            if (sessionStorage.getItem(key) !== 'true') {
+                const pw = prompt('Admin Access Required. Enter password:');
+                if (pw !== 'tp2026abm') {
+                    document.documentElement.innerHTML = '<body style="background:var(--color-bg);color:var(--color-bg);display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif"><h2>Access Denied</h2>    <script src="/assets/js/back-to-top.js"></script>
+</body>';
+                    return;
+                }
+                sessionStorage.setItem(key, 'true');
+            }
+        })();
+    </script>
+    <style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Calibri Light', 'Calibri', 'Segoe UI', Arial, sans-serif;
+            background: var(--color-bg);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: linear-gradient(180deg, var(--color-primary), var(--color-primary-hover));
+            color: var(--white);
+            padding: 80px 24px 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--pastel-slate);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .status-section {
+            background: var(--white);
+            border: 1px solid var(--pastel-slate);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .status-section h2 {
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+            font-size: 2rem;
+            color: var(--black);
+            margin-bottom: 30px;
+            font-weight: 400;
+            border-bottom: 3px solid var(--pink);
+            padding-bottom: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background: var(--slate);
+            color: var(--white);
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--pastel-slate);
+            font-size: 0.95rem;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-live {
+            background: #d1fae5;
+            color: var(--turquoise);
+        }
+
+        .status-blocked {
+            background: #ffe4e6;
+            color: #dc2626;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-beta {
+            background: #e0e7ff;
+            color: var(--blue);
+        }
+
+        .status-fixed {
+            background: #d1fae5;
+            color: var(--turquoise);
+        }
+
+        .linkedin-section, .budget-section {
+            background: var(--pastel-violet);
+            border-left: 4px solid var(--pink);
+            padding: 24px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+
+        .linkedin-section h3, .budget-section h3 {
+            font-size: 1.3rem;
+            color: var(--slate-dark);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: var(--white);
+            border-radius: 4px;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--slate-mid);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--black);
+            font-weight: 600;
+        }
+
+        .budget-highlight {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--pink);
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 4px;
+        }
+
+        .note {
+            background: var(--color-bg)beb;
+            border-left: 3px solid var(--orange);
+            padding: 16px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+        }
+
+        .note strong {
+            color: var(--orange);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .status-section {
+                padding: 24px;
+                overflow-x: auto;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 12px 8px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+
+<div class="hero">
+    <h1>Campaign Status Board</h1>
+    <p>Live visibility into every open infrastructure item and campaign status. Real-time tracking of blockers, owners, and deployment state.</p>
+</div>
+
+<div class="container">
+    <!-- MAIN STATUS TABLE -->
+    <div class="status-section">
+        <h2>Infrastructure & Campaign Status</h2>
+        <p style="color: var(--gray); margin-bottom: 20px;">Current as of March 2026</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Status</th>
+                    <th>Owner</th>
+                    <th>Blocker / Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>GT One Tag</strong> (tp.com/en-us)</td>
+                    <td><span class="status-badge status-blocked">BLOCKED</span></td>
+                    <td>Isabella Cruz</td>
+                    <td>GTM access not granted</td>
+                </tr>
+                <tr>
+                    <td><strong>GA4 Account Connector</strong> (US)</td>
+                    <td><span class="status-badge status-blocked">BLOCKED</span></td>
+                    <td>Kate/Dusty</td>
+                    <td>APAC occupying single slot</td>
+                </tr>
+                <tr>
+                    <td><strong>Google Ads OAuth</strong></td>
+                    <td><span class="status-badge status-pending">🟡 PENDING</span></td>
+                    <td>Josh + Anirban</td>
+                    <td>MCC setup done, OAuth not connected</td>
+                </tr>
+                <tr>
+                    <td><strong>LinkedIn Account Manager Access</strong></td>
+                    <td><span class="status-badge status-pending">🟡 PENDING</span></td>
+                    <td>Jon Bornstein</td>
+                    <td>Currently Billing Admin only</td>
+                </tr>
+                <tr>
+                    <td><strong>Campaign Influence 2.0</strong></td>
+                    <td><span class="status-badge status-blocked">BLOCKED</span></td>
+                    <td>Eliana + Amit</td>
+                    <td>UTM fields incomplete</td>
+                </tr>
+                <tr>
+                    <td><strong>UTM Fields</strong> (2nd field)</td>
+                    <td><span class="status-badge status-blocked">BLOCKED</span></td>
+                    <td>Eliana + Amit</td>
+                    <td>SFDC ticket pending Ayn</td>
+                </tr>
+                <tr>
+                    <td><strong>US Ad Campaigns</strong> (TP USA Q-81341)</td>
+                    <td><span class="status-badge status-live">LIVE</span></td>
+                    <td>Josh</td>
+                    <td>21 campaigns, $13,240.88 spent</td>
+                </tr>
+                <tr>
+                    <td><strong>US Journey</strong> (7 stages)</td>
+                    <td><span class="status-badge status-live">LIVE</span></td>
+                    <td>Josh</td>
+                    <td>Published and active</td>
+                </tr>
+                <tr>
+                    <td><strong>US Workspace</strong></td>
+                    <td><span class="status-badge status-live">LIVE</span></td>
+                    <td>Josh</td>
+                    <td>5,241 accounts active</td>
+                </tr>
+                <tr>
+                    <td><strong>Buying Groups</strong> (3)</td>
+                    <td><span class="status-badge status-live">LIVE</span></td>
+                    <td>Josh</td>
+                    <td>CX Core, LOBs, Vertical Specialists</td>
+                </tr>
+                <tr>
+                    <td><strong>DB Site Customization Agent</strong></td>
+                    <td><span class="status-badge status-beta">🟣 BETA</span></td>
+                    <td>Karthik/DB</td>
+                    <td>First prompts to be drafted</td>
+                </tr>
+                <tr>
+                    <td><strong>LinkedIn Audience Push Toggle</strong></td>
+                    <td><span class="status-badge status-fixed">FIXED</span></td>
+                    <td>Kate</td>
+                    <td>Was off — now enabled</td>
+                </tr>
+                <tr>
+                    <td><strong>Munchkin Deployment</strong></td>
+                    <td><span class="status-badge status-blocked">BLOCKED</span></td>
+                    <td>Anubha's team</td>
+                    <td>Needs surfacing</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- LINKEDIN SECTION -->
+    <div class="linkedin-section">
+        <h3>LinkedIn Account Details</h3>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Active US Account</div>
+                <div class="info-value">TP | USA | Marketing</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Account ID</div>
+                <div class="info-value">513795388</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Account Owner</div>
+                <div class="info-value">Ana Costa Oliveira</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Josh's Current Role</div>
+                <div class="info-value">Billing Admin</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Required Role</div>
+                <div class="info-value">Account Manager</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Action Required</div>
+                <div class="info-value">Jon Bornstein to upgrade</div>
+            </div>
+        </div>
+        <div class="note">
+            <strong>Note:</strong> Audience-push toggle was off until recently — verify it stays enabled. Billing Admin role is insufficient for audience management.
+        </div>
+    </div>
+
+    <!-- BUDGET SECTION -->
+    <div class="status-section">
+        <h2>Budget Summary</h2>
+
+        <table style="margin-top: 30px;">
+            <thead>
+                <tr>
+                    <th>Ad Plan</th>
+                    <th>Budget</th>
+                    <th>Allocated</th>
+                    <th>Spent</th>
+                    <th>Remaining</th>
+                    <th>Campaigns</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: #f0fff4;">
+                    <td><strong>TP USA – Q-81341</strong></td>
+                    <td>$50,000</td>
+                    <td>$50,000</td>
+                    <td><strong>$13,240.88</strong></td>
+                    <td><strong>$36,759.12</strong></td>
+                    <td>21</td>
+                </tr>
+                <tr>
+                    <td>CEMEA Q-66220</td>
+                    <td>$100,000</td>
+                    <td>$98,903.46</td>
+                    <td>$98,434.26</td>
+                    <td style="color: var(--orange); font-weight: 700;">$1,096.54</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>Renewal Q-89683</td>
+                    <td>$7,000</td>
+                    <td>$0</td>
+                    <td>$0</td>
+                    <td style="color: var(--orange); font-weight: 700;">$7,000</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="budget-section">
+            <h3>Potential Recoverable Budget</h3>
+            <p style="margin-bottom: 16px;">Funds available for reallocation to US operations:</p>
+            <div class="budget-highlight">$8,096.54</div>
+            <p style="margin-top: 12px; color: var(--gray); font-size: 0.9rem;">
+                <strong>Source:</strong> CEMEA remaining ($1,096.54) + Renewal unallocated ($7,000)
+            </p>
+            <div class="note" style="margin-top: 20px;">
+                <strong>Action Required:</strong> Coordinate with Kate/Dusty to reallocate CEMEA + Renewal budget to TP USA Q-81341 for extended campaign reach.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/navigation.js"></script>
+    <script src="/assets/js/back-to-top.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demandbase Ops Manager — Onboarding Kit | Sharath Madishetty</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* CSS Variables */
+  :root {
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --pastel-slate: #c2c7cd;
+    --pastel-slate-light: #edeaf0;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --body-gray: #6b6e85;
+    --green: #00D769;
+    --amber: #ff5c00;
+    --amber-bg: #fff8e1;
+    --pink-subtle: #ffe6f2;
+    --blue: #3047b0;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans', Arial, sans-serif;
+    background: var(--color-surface-2);
+    color: var(--dark-gray);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(180deg, var(--color-primary), var(--color-primary-hover));
+    color: var(--color-bg);
+    padding: 72px 64px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--pink);
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-size: 38px;
+    font-weight: 300;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    max-width: 680px;
+  }
+  .hero h1 strong { font-weight: 600; }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--pastel-slate);
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    margin-top: 36px;
+    display: flex;
+    gap: 40px;
+    font-size: 12px;
+    color: var(--pastel-slate);
+    flex-wrap: wrap;
+  }
+  .hero-meta span strong { color: var(--white); font-weight: 500; }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── ALERT BANNER ── */
+  .alert-banner {
+    background: var(--warn-bg);
+    border-left: 4px solid var(--warn-border);
+    padding: 16px 22px;
+    border-radius: 0 6px 6px 0;
+    margin: 32px 0 0;
+    font-size: 14px;
+    color: #6b4f00;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .alert-banner .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── SECTION ── */
+  .section {
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    margin-top: 28px;
+    overflow: hidden;
+  }
+  .section-header {
+    background: var(--slate);
+    padding: 22px 32px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-number {
+    background: var(--pink);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+  }
+  .section-body { padding: 28px 32px 32px; }
+
+  /* ── TIMELINE ── */
+  .timeline { margin-top: 4px; }
+  .week-block {
+    border-left: 3px solid var(--pastel-slate);
+    padding-left: 24px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .week-block::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 4px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--slate);
+    border: 2px solid var(--white);
+    box-shadow: var(--shadow-sm);
+  }
+  .week-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .week-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 8px;
+  }
+  .week-desc {
+    font-size: 14px;
+    color: var(--body-gray);
+    line-height: 1.65;
+  }
+
+  /* ── LINK CARDS ── */
+  .link-group { margin-top: 20px; }
+  .link-group-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--slate);
+    font-weight: 600;
+    border-bottom: 2px solid var(--pastel-slate-light);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .link-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--pastel-slate-light);
+  }
+  .link-row:last-child { border-bottom: none; }
+  .link-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pastel-slate);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .link-dot.active { background: var(--pink); }
+  .link-dot.required { background: var(--success); }
+  .link-info { flex: 1; }
+  .link-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--slate);
+    margin-bottom: 2px;
+  }
+  .link-title a {
+    color: var(--light-blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .link-title a:hover { text-decoration: underline; }
+  .link-desc {
+    font-size: 13px;
+    color: var(--body-gray);
+    line-height: 1.5;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag-req { background: rgba(0,175,155,0.12); color: #007a6d; }
+  .tag-core { background: rgba(72,76,106,0.1); color: var(--slate); }
+  .tag-it { background: rgba(0,135,255,0.1); color: #0055bb; }
+  .tag-cert { background: var(--pink-subtle); color: var(--pink); border: 1px solid var(--pink-border); }
+
+  /* ── CERT CARDS ── */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 16px;
+  }
+  @media (max-width: 640px) { .cert-grid { grid-template-columns: 1fr; } }
+  .cert-card {
+    border: 1.5px solid var(--pastel-slate-light);
+    border-radius: 8px;
+    padding: 22px 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cert-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--pink);
+  }
+  .cert-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 6px;
+  }
+  .cert-sub {
+    font-size: 13px;
+    color: var(--body-gray);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .cert-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--slate);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: background 0.15s;
+  }
+  .cert-link:hover { background: var(--slate-dark); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--pink-subtle);
+    border-left: 3px solid var(--pink);
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin: 20px 0 0;
+    font-size: 14px;
+    color: var(--dark-gray);
+    line-height: 1.6;
+  }
+  .callout strong { color: var(--slate); }
+  .callout-info {
+    background: #e8f4fe;
+    border-left-color: var(--light-blue);
+    color: #1a3a5c;
+  }
+  .callout-success {
+    background: rgba(0,175,155,0.08);
+    border-left-color: var(--success);
+    color: #004d44;
+  }
+
+  /* ── TRACK TABLE ── */
+  .track-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-top: 16px;
+  }
+  .track-table th {
+    background: var(--slate);
+    color: var(--white);
+    padding: 10px 14px;
+    font-weight: 500;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .track-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--pastel-slate-light);
+    vertical-align: top;
+    color: var(--dark-gray);
+  }
+  .track-table tr:last-child td { border-bottom: none; }
+  .track-table tr:nth-child(even) td { background: #fafafa; }
+  .track-table a { color: var(--light-blue); text-decoration: none; }
+  .track-table a:hover { text-decoration: underline; }
+  .status-done { color: var(--success); font-weight: 600; font-size: 12px; }
+  .status-pending { color: #b8860b; font-weight: 600; font-size: 12px; }
+  .status-ongoing { color: var(--slate); font-weight: 600; font-size: 12px; }
+
+  /* ── CONTACTS GRID ── */
+  .contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .contact-card {
+    background: var(--pastel-slate-light);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .contact-name { font-size: 14px; font-weight: 600; color: var(--slate); margin-bottom: 2px; }
+  .contact-role { font-size: 12px; color: var(--body-gray); line-height: 1.4; }
+  .contact-note { font-size: 11px; color: var(--pink); font-weight: 600; margin-top: 4px; }
+
+  /* ── GOVERNANCE BOX ── */
+  .gov-box {
+    background: var(--slate);
+    color: var(--white);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-top: 20px;
+  }
+  .gov-box h4 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin-bottom: 12px;
+    color: var(--pastel-slate);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+  .gov-rule {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.9);
+  }
+  .gov-rule:last-child { margin-bottom: 0; }
+  .gov-num {
+    color: var(--pink);
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    color: #aaa;
+    border-top: 1px solid var(--pastel-slate-light);
+    margin-top: 40px;
+  }
+  .footer strong { color: var(--slate); }
+</style>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Teleperformance · US GTM Strategy · Confidential — Internal Use Only</div>
+  <h1>Demandbase Ops Manager<br><strong>Onboarding Kit</strong></h1>
+  <div class="hero-sub">Everything Sharath Madishetty needs to be fully operational before Day 1. Complete all certifications and pre-reads within the three-week pre-start window.</div>
+  <div class="hero-meta">
+    <span><strong>Role:</strong> Demandbase Operations Manager</span>
+    <span><strong>Reports to:</strong> Josh Alonzo, Sr. Manager Strategic Intelligence & ABX</span>
+    <span><strong>Tenant:</strong> Demandbase One — Tenant 15053 (US Workspace)</span>
+    <span><strong>Prepared:</strong> March 2026</span>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- REMINDER BANNER -->
+  <div class="alert-banner">
+    <span class="icon"></span>
+    <div><strong>Access Status:</strong> Sharath has been added to Demandbase (Tenant 15053) with full Admin access. He is currently signed in via Gmail until his TP email is provisioned — at that point he should update his Demandbase login credentials to his TP email address. No other access action required from Josh at this time.</div>
+  </div>
+
+  <!-- SECTION 01: THREE-WEEK PRE-START PLAN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div class="section-title">Three-Week Pre-Start Timeline</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--body-gray);margin-bottom:24px;">Sharath starts with three weeks of runway before Day 1. This isn't orientation — it's a head start. The goal is to walk in on the first day already understanding how the platform is architected, why things are built the way they are, and what he's taking over. Each week has a focused objective.</p>
+
+      <div class="timeline">
+
+        <div class="week-block">
+          <div class="week-label">Week 1 — Foundation</div>
+          <div class="week-title">Certifications + Platform Orientation</div>
+          <div class="week-desc">
+            Complete both required Demandbase certifications (Account-Based GTM and ABM Measurement & Reporting — links in Section 02). Read through the US Workspace Platform Guide cover to cover. Understand the tier structure (T1-A through Tier 3), the dual-maintenance model between US Workspace and Global, and why the [US] prefix naming convention exists. No platform access needed yet — this is conceptual grounding.
+          </div>
+        </div>
+
+        <div class="week-block">
+          <div class="week-label">Week 2 — Technical Architecture</div>
+          <div class="week-title">Integration Stack + Support Documentation</div>
+          <div class="week-desc">
+            Work through all IT/backend support docs in Section 03 — starting with the SFDC integration, Marketo integration, and Demandbase One Tag/GTM deployment. Understand the integration chain: SFDC → Demandbase → Marketo and the attribution sequencing model (One Tag → GA4 connector → UTM fields → Campaign Influence 2.0). This is the technical backbone of every campaign Josh runs. Familiarity here prevents mistakes that take weeks to unwind.
+          </div>
+        </div>
+
+        <div class="week-block">
+          <div class="week-label">Week 3 — US Workspace Deep Dive</div>
+          <div class="week-title">Platform Access + Live Exploration</div>
+          <div class="week-desc">
+            Log into Demandbase using the US Workspace (confirm "US Workspace" appears in the top-left dropdown). Walk through the Dashboard, Intent module, Buying Groups, Journey Stages, and Orchestration automations. Review all four existing event-based automations (GTC, Gartner Data Analytics, SSOW, TP Immersive Experience) — understand why they're inactive and what triggers them. Schedule a 1:1 with Josh before Day 1 to align on the open backlog and active blockers.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="callout callout-info">
+        <strong>Day 1 Objective:</strong> Sharath walks in having already earned both certifications, reviewed all support documentation, and done a live walk-through of the US Workspace. The first week on the job is execution, not ramp-up.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 02: REQUIRED CERTIFICATIONS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div class="section-title">Required Certifications — Complete Before Start Date</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--body-gray);margin-bottom:20px;">Both certifications are developed in partnership with ForgeX and are available free for Demandbase customers. They are self-paced, on-demand, and include a final assessment that results in a shareable digital badge. Sharath completes both before Day 1 — no exceptions.</p>
+
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-name">Account-Based GTM Certification <span class="tag tag-cert">Required · ABM Refresher</span></div>
+          <div class="cert-sub">Modern frameworks for aligning the revenue team, defining ICP, prioritizing target accounts, and executing campaigns that drive pipeline. Covers Enterprise ABM, Growth ABM, and the Account-Based GTM Architecture model. ~5–6 hours. Includes final assessment + digital badge.</div>
+          <a class="cert-link" href="https://partneredu.demandbase.com/account-based-go-to-market-gtm-certification" target="_blank">↗ Start Course</a>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Account-Based Measurement & Reporting <span class="tag tag-cert">Required · ABMROI</span></div>
+          <div class="cert-sub">Data-driven frameworks to measure ABM impact, attribute marketing influence, and report to C-suite in ways that matter. Covers the Account-Based Arrow™ unified data model and how to move leadership away from legacy MQL-based reporting. ~2–3 hours. Includes final assessment + digital badge.</div>
+          <a class="cert-link" href="https://partneredu.demandbase.com/account-based-measurement-and-reporting-certification" target="_blank">↗ Start Course</a>
+        </div>
+      </div>
+
+      <div class="link-group" style="margin-top:28px;">
+        <div class="link-group-label">Additional Learning — Demandbase Academy</div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://www.demandbase.com/resources/academy/" target="_blank">Demandbase Academy — Full Course Catalog</a></div>
+            <div class="link-desc">All role-based learning tracks, free for customers. Includes tracks for Marketing Ops, IT Administrators, Advertising, Sales, and more. Sharath's primary track is Marketing Operations & IT Administrators.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://learn.demandbase.com/page/certifications" target="_blank">Demandbase Learn — Certifications Page</a></div>
+            <div class="link-desc">Direct access to all Demandbase One product certifications. Includes individual courses on Journey Stages, Orchestration, Segments, Calculated Fields, Keyword Sets, Buying Groups, Pipeline Predict, and Advertising setup.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://learn.demandbase.com/abm-certification-foundations-course" target="_blank">ABM Certification: Foundations</a></div>
+            <div class="link-desc">6 eLearning modules covering ABM fundamentals — how it impacts business, and how Marketing and Sales alignment works in an account-based model. Good pre-read for Week 1.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://learn.demandbase.com/abm-certification-advanced-course" target="_blank">ABM Certification: Advanced</a></div>
+            <div class="link-desc">8 eLearning modules for targeting high-value accounts, optimizing programs, and demonstrating business value to leadership. Strong supplemental read for a Demandbase Ops Manager role.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://www.demandbase.com/resources/analyst-hours/" target="_blank">Demandbase Analyst Hours — Live Q&A Sessions</a></div>
+            <div class="link-desc">Expert-led live sessions aligned to certification modules. ForgeX and Demandbase analysts cover Enterprise ABM models, ABM architecture, and reporting frameworks. Check calendar for upcoming dates.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 03: BACKEND / IT LINKS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <div class="section-title">Backend & IT Documentation — Support Center Reference Links</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--body-gray);margin-bottom:6px;">These are the operational backbone of the platform. Every integration, tag, sync configuration, and admin setting Sharath will touch has a support article. Bookmark this entire section.</p>
+
+      <!-- PLATFORM ADMIN -->
+      <div class="link-group">
+        <div class="link-group-label">Platform Admin & User Management</div>
+
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us" target="_blank">Demandbase Help Center (Support Portal)</a> <span class="tag tag-core">Core</span></div>
+            <div class="link-desc">Primary support portal. Bookmark this — it's the starting point for every configuration question, error message, and integration troubleshoot.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/40217460428571-Understanding-Integrations-in-Demandbase-One-for-Marketing" target="_blank">Understanding Integrations in Demandbase One</a></div>
+            <div class="link-desc">Overview of all pre-built integrations — setup process, admin privilege requirements, API key management, and the Demandbase Integrations Reference List. Start here before configuring any integration.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/40419184362267-Demandbase-One-for-Marketing-Integrations-Reference-List" target="_blank">Integrations Reference List — All Available Connections</a></div>
+            <div class="link-desc">Full table of every integration available for Demandbase One for Marketing: sync type, configuration location, license requirements. The master reference for the TP tech stack connections.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TAG & TRACKING -->
+      <div class="link-group">
+        <div class="link-group-label">Tag & Tracking — Critical Path for Attribution</div>
+
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/360056967771-Deploy-Demandbase-One-Tag-via-Google-Tag-Manager-GTM" target="_blank">Deploy Demandbase One Tag via Google Tag Manager</a> <span class="tag tag-it">IT</span></div>
+            <div class="link-desc">Step-by-step instructions for deploying the Demandbase tracking tag through GTM. This is currently blocked at TP (Isabella Cruz controls GTM access for tp.com/en-us). Sharath needs to understand this process cold — it's the top open blocker and the foundation for all attribution data. GTM container: GTM-5J4WZ38R.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title">Demandbase Tag — Settings Path</div>
+            <div class="link-desc">In platform: Settings → Demandbase-Wide Settings → Tag Configurations → Demandbase Tag tab. Copy the tag snippet from here before deploying in GTM. Requires Admin privileges in Demandbase and GTM.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SFDC INTEGRATION -->
+      <div class="link-group">
+        <div class="link-group-label">Salesforce (SFDC) Integration</div>
+
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/4406523930651-Map-Segments-to-CRM-Custom-Fields" target="_blank">Map Segments to CRM Custom Fields</a> <span class="tag tag-core">Core</span></div>
+            <div class="link-desc">Demandbase segments can be mapped to custom SFDC fields for account scoring, journey stage data, and tier classification. This is how multi-funnel Journey Stage data reaches SFDC. Amit Kumar is the SFDC admin — coordinate with him on field creation before mapping.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/4408592968987-Create-Demandbase-Calculated-Fields-for-Connected-Mode" target="_blank">Create Demandbase Calculated Fields (Connected Mode)</a></div>
+            <div class="link-desc">Calculated Fields allow custom logic layered on top of standard Demandbase data — used for engagement scoring, tier-based thresholds, and segment tagging. A core skill for the Ops Manager role.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/36186524489755-April-2025-Product-Update" target="_blank">SFDC Integration: April 2025 Platform Update Notes</a></div>
+            <div class="link-desc">Salesforce deprecated Connected Apps — now requires External Client Apps with JWT Bearer Token authentication. The Username/Password method is no longer supported. Sharath must understand this before touching any SFDC integration config.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MARKETO INTEGRATION -->
+      <div class="link-group">
+        <div class="link-group-label">Marketo Integration</div>
+
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/360052305611-Integrate-Marketo-and-Demandbase" target="_blank">Integrate Marketo and Demandbase</a> <span class="tag tag-it">IT</span></div>
+            <div class="link-desc">Full Marketo integration setup: authentication, field selection (ingestion control), and record ingestion. The April 2025 update streamlined this process — fewer fields ingested, faster onboarding. US Marketo owner: Remy Frank. Global owner: Eliana Negrisoli (coordinate carefully here).</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/360052351651-Create-Marketo-Integration-User" target="_blank">Create Marketo Integration User</a></div>
+            <div class="link-desc">Required before adding Marketo as a data source. Recommends granting Access Admin and Access API permissions. Creates a dedicated Demandbase sync user in Marketo — never use a personal account for this connection.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/204478584-Demandbase-for-Marketo-Installation-and-Usage" target="_blank">Demandbase for Marketo Installation and Usage</a></div>
+            <div class="link-desc">Covers tag deployment on Marketo pages via GTM (recommended), template-level installation, and form-by-form fallback. GTM path is preferred — it ensures all Marketo pages get Demandbase tracking without manual form updates.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ORCHESTRATION & AUTOMATION -->
+      <div class="link-group">
+        <div class="link-group-label">Orchestration & Automation</div>
+
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/4404430180251-Automation-Actions" target="_blank">Automation Actions</a> <span class="tag tag-core">Core</span></div>
+            <div class="link-desc">What automations can actually do: create SFDC tasks, add contacts to campaigns, trigger Marketo activities, and manage ad audiences. Four event-based automations are already live in the US Workspace (GTC, Gartner Data Analytics, SSOW, TP Immersive Experience) — all intentionally inactive until the One Tag is deployed.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/hc/en-us/articles/360057142791-Create-and-Manage-Segments" target="_blank">Create and Manage Segments</a></div>
+            <div class="link-desc">Segments are the logic layer — used to push account data to SFDC via Calculated Fields, power orchestration triggers, and gate audience membership. Every major orchestration automation relies on segment logic.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ADVERTISING -->
+      <div class="link-group">
+        <div class="link-group-label">Advertising & Audience Management</div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title">Dual-Maintenance Model — US + Global Advertising Accounts</div>
+            <div class="link-desc">Demandbase Advertising reads from Global-level assets only. All US keyword sets and account lists must exist in both the US Workspace and at Global level with the [US] prefix naming convention. There is no sync mechanism — updates must be made manually in both places. This is a standing rule, not an edge case.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title">Google Ads MCC — OAuth Connection (Pending)</div>
+            <div class="link-desc">US MCC: 502-991-3896 | Child account: 835-560-0225. OAuth connection to Demandbase is pending — coordinate with Kate Varvedo (CSM). Admin email needs to be migrated from joshualonzo1982@gmail.com to joshua.alonzo@teleperformance.com before connecting to Demandbase.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title">LinkedIn Campaign Manager — Access Level</div>
+            <div class="link-desc">Active US LinkedIn account: TP | USA | Marketing (ID: 513795388). Josh currently holds Billing Admin access only — Account Manager upgrade needed via Jon Bornstein. Sharath should confirm his own access level upon start and request Account Manager if needed for audience management.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- JOURNEY & SCORING -->
+      <div class="link-group">
+        <div class="link-group-label">Journey Stages, Scoring & Pipeline Predict</div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://learn.demandbase.com/page/certifications" target="_blank">Journey Stages: Basics + Optimization — Course Links</a></div>
+            <div class="link-desc">Two separate Academy courses: fundamentals (how stages work, customization, ABM tracking) and advanced optimization (aligning marketing and sales, automation integration). US Journey has seven stages with tier-differentiated logic. Updated Jan 2026.</div>
+          </div>
+        </div>
+
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title">Pipeline Predict & Qualification Scores — Platform Overview</div>
+            <div class="link-desc">Two Pipeline Predict models (CX motion + Vertical/Transformation) and two Qualification Scores are in development inside the US Workspace. Predictive models are workspace-independent — they don't require Global provisioning. Scoring model training requires consistent field values across the historical lookback period. Updated Jan 2026.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 04: MARKETING OPS / IT ADMIN FULL TRACK -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">04</div>
+      <div class="section-title">Marketing Operations & IT Administrators Learning Track — All 30 Courses</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--body-gray);margin-bottom:6px;">This is the core technical track. Complete all modules in order. Pass the Final Exam at 80%+ to earn the <strong>Marketing Operations / IT Admin Digital Badge</strong> — shareable on LinkedIn. All courses are free at <a href="https://partneredu.demandbase.com/page/marketing-operations-and-it-administrators" target="_blank" style="color:var(--light-blue)">partneredu.demandbase.com</a>. Estimated total: ~16–18 hours across all 30 modules.</p>
+
+      <div class="callout callout-success" style="margin-bottom:24px;margin-top:16px;">
+        <strong>Digital Badge:</strong> Upon completing the full track and passing the Final Exam (80%+), Sharath earns the Marketing Operations / IT Administrators Digital Badge. Shareable on LinkedIn and verified by Demandbase.
+        &nbsp; <a href="https://partneredu.demandbase.com/marketing-operationsit-administrator-final-exam-test" target="_blank" style="color:var(--success);font-weight:600;">Final Exam →</a>
+      </div>
+
+      <!-- Getting Started -->
+      <div class="link-group">
+        <div class="link-group-label">Getting Started with Demandbase One</div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/demandbase-one-for-sales-and-marketing-overview" target="_blank">1. Demandbase One for Sales and Marketing Overview</a> <span class="tag tag-core">45 min</span></div>
+            <div class="link-desc">How marketing and sales teams use Demandbase One together to find and grow new business. The platform foundation every other course builds on. Updated Feb 2026.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Integrations -->
+      <div class="link-group">
+        <div class="link-group-label">Setting Up Demandbase One & Integrations</div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-demandbase-tag-1" target="_blank">2. Setting Up Demandbase Tag</a> <span class="tag tag-it">15 min · IT</span></div>
+            <div class="link-desc">How the Demandbase Tag works and steps to set it up. Directly tied to the active GT One Tag blocker on tp.com/en-us. This is Day 1 context for Sharath before he ever touches GTM.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-single-sign-on-sso" target="_blank">3. Setting Up Single Sign On (SSO)</a> <span class="tag tag-it">15 min · IT</span></div>
+            <div class="link-desc">Steps for configuring Demandbase One SSO. Updated Oct 2025.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/integrating-salesforce-with-demandbase-one-for-sales-and-marketing" target="_blank">4. Integrating Salesforce with Demandbase One</a> <span class="tag tag-it">45 min · IT</span></div>
+            <div class="link-desc">Full SFDC integration setup. Note: Salesforce deprecated Connected Apps — JWT Bearer Token authentication is now required. Amit Kumar is SFDC admin for TP. Updated Dec 2025.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/integrating-marketo-with-demandbase-one-for-sales-and-marketing" target="_blank">5. Integrating Marketo with Demandbase One</a> <span class="tag tag-it">30 min · IT</span></div>
+            <div class="link-desc">Marketo integration setup including field ingestion control and record sync. US Marketo owner: Remy Frank. Global: Eliana Negrisoli. Coordinate US changes through Remy. Updated Dec 2025.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/integrating-outreach-with-demandbase-one-for-sales-and-marketing" target="_blank">6. Integrating Outreach with Demandbase One</a> <span class="tag tag-it">20 min · IT</span></div>
+            <div class="link-desc">Steps for the Outreach integration. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/integrating-slack-with-demandbase-one-for-sales-and-marketing" target="_blank">7. Integrating Slack with Demandbase One</a> <span class="tag tag-it">20 min · IT</span></div>
+            <div class="link-desc">Slack integration for real-time account alerts. Relevant for SDR and BD Slack alert workflows once the Sales track is enabled. Updated Oct 2025.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Configuration -->
+      <div class="link-group">
+        <div class="link-group-label">Configuring Demandbase One — Core Build</div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/creating-keyword-sets" target="_blank">8. Creating Keyword Sets</a> <span class="tag tag-core">30 min · Core</span></div>
+            <div class="link-desc">Best practices for creating keyword sets and setup steps in Demandbase One. 42+ keyword sets are live in the US Workspace — Sharath owns ongoing maintenance. Buyer research language, not procurement language. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-technographic-fields" target="_blank">9. Setting Up Technographic Fields</a> <span class="tag tag-core">30 min</span></div>
+            <div class="link-desc">Configure and use technographic fields in Demandbase One for tech stack-based targeting. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/building-account-lists-and-person-lists" target="_blank">10. Building Account Lists and Person Lists</a> <span class="tag tag-core">45 min · Core</span></div>
+            <div class="link-desc">Create, manage, and organize account and person lists. 5,200+ tiered accounts across T1-A through Tier 3 require dual-maintenance (US Workspace + Global with [US] prefix). No sync mechanism — manual in both places. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-engagement-minutes" target="_blank">11. Setting Up Engagement Points</a> <span class="tag tag-core">30 min · Core</span></div>
+            <div class="link-desc">Configure Engagement Points in Demandbase One. Engagement Minutes are the core scoring currency — misconfigured points cascade into broken journey stage transitions and intent thresholds. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-segments" target="_blank">12. Setting Up Segments</a> <span class="tag tag-core">30 min · Core</span></div>
+            <div class="link-desc">Create and optimize segments for targeted engagement. Segments are the logic layer behind every orchestration trigger, SFDC Calculated Field mapping, and audience membership gate. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/user-management-access-control" target="_blank">13. User Management & Access Control</a> <span class="tag tag-it">40 min · IT</span></div>
+            <div class="link-desc">Manage user access and permission sets in Demandbase One. Sharath runs the Customer Login Report monthly to monitor team adoption. All US assets follow the [US] prefix naming convention. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/set-up-and-customize-set-up-and-customize-pipeline-predict-and-qualification-score-models" target="_blank">14. Pipeline Predict & Qualification Score Models</a> <span class="tag tag-core">60 min · Core</span></div>
+            <div class="link-desc">What Pipeline Predict and Qualification Scores are and how to use them. Two models (CX motion + Vertical/Transformation) and two Qualification Scores are in development in the US Workspace. Models are workspace-independent. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/set-up-and-customize-journey-stages" target="_blank">15. Setting Up and Customizing Journey Stages</a> <span class="tag tag-core">30 min · Core</span></div>
+            <div class="link-desc">Journey stage basics, customization, and ABM tracking. US Journey has 7 stages with tier-differentiated logic — already published. Sharath maintains and optimizes this. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/optimizing-journey-stages-in-demandbase-one" target="_blank">16. Optimizing Journey Stages in Demandbase One</a> <span class="tag tag-core">30 min · Core</span></div>
+            <div class="link-desc">Advanced journey stage optimization — aligning marketing and sales, refining engagement thresholds, and leveraging automation for better ABM. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/set-up-and-customize-role-based-dashboards" target="_blank">17. Setting Up and Customizing Role-Based Dashboards</a> <span class="tag tag-core">30 min</span></div>
+            <div class="link-desc">Tailor dashboards by role — adding, removing, and rearranging sections and reports, then assigning to user views. Relevant for SDR, BD, and Marketing team setups. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/set-up-and-customize-reports-and-subscriptions" target="_blank">18. Setting Up and Customizing Reports & Subscriptions</a> <span class="tag tag-core">45 min</span></div>
+            <div class="link-desc">Use reports and subscriptions in Demandbase One for deeper data insights. Includes the Global Marketing Dashboard requirements that are currently in progress. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/set-up-and-customize-snapshot-emails" target="_blank">19. Setting Up and Customizing Snapshot Emails</a> <span class="tag tag-core">20 min</span></div>
+            <div class="link-desc">Types of snapshot emails, how to customize them, and use cases. Snapshot emails are the digest delivery mechanism to keep Sales informed on account activity without requiring platform logins. Updated Dec 2025.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/set-up-and-customize-buying-groups" target="_blank">20. Setting Up and Customizing Buying Groups</a> <span class="tag tag-core">45 min · Core</span></div>
+            <div class="link-desc">Identify key decision-makers and influencers within target accounts. Three buying groups are live: CX Core, Lines of Business, Vertical Specialists — all using the Powerline framework. Buying Groups sit at tenant level and appear in all workspaces. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-action-configurations" target="_blank">21. Setting Up Action Configurations</a> <span class="tag tag-core">30 min · Core</span></div>
+            <div class="link-desc">Set up and use Action Configurations in Demandbase One. Direct prerequisite for wiring the four existing event-based automations to dynamically manage ad audiences — the open build item post One Tag deployment. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-data-sync" target="_blank">22. Setting Up Data Sync</a> <span class="tag tag-it">15 min · IT</span></div>
+            <div class="link-desc">Configure and manage Data Sync in Demandbase One — settings, best practices, data availability, and performance optimization. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-auto-archive-lists" target="_blank">23. Setting Up Auto-Archive Lists</a> <span class="tag tag-core">20 min</span></div>
+            <div class="link-desc">Set up and use auto-archive account lists in Demandbase One for list hygiene. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-crm-activity-logging" target="_blank">24. Setting Up CRM Activity Logging</a> <span class="tag tag-it">20 min · IT</span></div>
+            <div class="link-desc">Use CRM activity logging to streamline sales and marketing efforts, enhance collaboration, and improve data-driven decision-making across SFDC and Demandbase. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-system-notifications" target="_blank">25. Setting Up System Notifications</a> <span class="tag tag-it">20 min · IT</span></div>
+            <div class="link-desc">Set up and manage system notifications in Demandbase One. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-calculated-fields" target="_blank">26. Setting Up Calculated Fields</a> <span class="tag tag-core">30 min · Core</span></div>
+            <div class="link-desc">Calculated fields for data enrichment, segmentation, and reporting in Connected and Disconnected Modes. This is how US journey stage and scoring data reaches SFDC. Campaign Influence 2.0 depends on proper Calculated Field setup. Configuration done jointly with Amit Kumar. Updated Jan 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/setting-up-workspaces" target="_blank">27. Setting Up Workspaces</a> <span class="tag tag-core">45 min · Core</span></div>
+            <div class="link-desc">Navigate, organize, and manage workspaces in Demandbase One. Sharath has full Admin access to both US Workspace and Global (Tenant 15053). This course provides the technical foundation for understanding how workspace architecture is structured and how the US build is organized. Updated Jan 2026.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Solutions -->
+      <div class="link-group">
+        <div class="link-group-label">Additional Solutions</div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/optional-working-with-demandbase-orchestration" target="_blank">28. Automating with Demandbase Orchestration</a> <span class="tag tag-core">30 min · Core</span></div>
+            <div class="link-desc">Automate marketing actions, manage dynamic audiences, and optimize campaigns at scale. Four event-based automations (GTC, Gartner Data Analytics, SSOW, TP Immersive Experience) are built but inactive. Post One Tag: wire these to dynamically manage ad audiences. Updated Mar 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/personalizing-your-website" target="_blank">29. Personalizing Your Website</a> <span class="tag tag-core">60 min</span></div>
+            <div class="link-desc">Use Demandbase Personalization to create tailored web experiences, track results, and boost engagement. Relevant to the Site Customization Agent beta (access from Karthik at Demandbase) — first use cases targeting T1-A Financial Services/Healthcare and CCO/CRO personas for the May Scottsdale event. Updated Feb 2026.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/marketing-operationsit-administrator-final-exam-test" target="_blank">30. Marketing Operations/IT Administrators Final Exam</a> <span class="tag tag-cert">Digital Badge · 80%+ Required</span></div>
+            <div class="link-desc">Pass at 80% or higher to earn the Marketing Operations / IT Administrators Digital Badge. Take only after completing all 29 courses above. Schedule on Day 15 of the 3-week plan.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 04B: DAY-BY-DAY 3-WEEK SCHEDULE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">04B</div>
+      <div class="section-title">Day-by-Day Learning Schedule — 3 Weeks to Day 1</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--body-gray);margin-bottom:22px;">Estimated total: ~16–18 hours. All courses must be completed before Day 1. Final exam on Day 15.</p>
+
+      <table class="track-table">
+        <thead>
+          <tr><th>Day</th><th>Focus</th><th>Courses</th><th>Est. Time</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Day 1–2</strong></td>
+            <td><span class="status-done">WEEK 1</span> ABM Refresher</td>
+            <td>Account-Based GTM Certification</td>
+            <td>~5–6 hrs</td>
+          </tr>
+          <tr>
+            <td><strong>Day 3–4</strong></td>
+            <td><span class="status-done">WEEK 1</span> ABMROI</td>
+            <td>Account-Based Measurement & Reporting Certification</td>
+            <td>~2–3 hrs</td>
+          </tr>
+          <tr>
+            <td><strong>Day 5</strong></td>
+            <td><span class="status-done">WEEK 1</span> Platform Intro</td>
+            <td>Demandbase One Overview · Setting Up Tag · SSO</td>
+            <td>~1.25 hrs</td>
+          </tr>
+          <tr>
+            <td><strong>Day 6</strong></td>
+            <td><span class="status-pending">WEEK 2</span> Integrations</td>
+            <td>Salesforce Integration · Marketo Integration</td>
+            <td>~75 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 7</strong></td>
+            <td><span class="status-pending">WEEK 2</span> Integrations + Intent</td>
+            <td>Outreach · Slack · Keyword Sets · Technographic Fields</td>
+            <td>~110 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 8</strong></td>
+            <td><span class="status-pending">WEEK 2</span> Lists + Scoring</td>
+            <td>Account & Person Lists · Engagement Points · Segments</td>
+            <td>~105 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 9</strong></td>
+            <td><span class="status-pending">WEEK 2</span> Users + Models</td>
+            <td>User Management · Pipeline Predict & Qualification Score Models</td>
+            <td>~100 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 10</strong></td>
+            <td><span class="status-pending">WEEK 2</span> Journey</td>
+            <td>Journey Stages Setup · Optimizing Journey Stages</td>
+            <td>~60 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 11</strong></td>
+            <td><span class="status-ongoing">WEEK 3</span> Reporting</td>
+            <td>Role-Based Dashboards · Reports & Subscriptions · Snapshot Emails</td>
+            <td>~95 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 12</strong></td>
+            <td><span class="status-ongoing">WEEK 3</span> Buying Groups + Actions</td>
+            <td>Buying Groups · Action Configurations · Data Sync</td>
+            <td>~90 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 13</strong></td>
+            <td><span class="status-ongoing">WEEK 3</span> Advanced Config</td>
+            <td>Auto-Archive · CRM Activity Logging · System Notifications · Calculated Fields</td>
+            <td>~90 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 14</strong></td>
+            <td><span class="status-ongoing">WEEK 3</span> Workspaces + Orchestration</td>
+            <td>Workspaces · Orchestration · Website Personalization</td>
+            <td>~135 min</td>
+          </tr>
+          <tr>
+            <td><strong>Day 15</strong></td>
+            <td><span class="status-ongoing">WEEK 3</span> 🎓 Final Exam</td>
+            <td><a href="https://partneredu.demandbase.com/marketing-operationsit-administrator-final-exam-test" target="_blank" style="color:var(--light-blue)">Marketing Operations / IT Administrators Final Exam</a> — score 80%+ for Digital Badge</td>
+            <td>TBD</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 04C: RESOURCES & SUPPORT LINKS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">04C</div>
+      <div class="section-title">Key Demandbase Resources & Support Links</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--body-gray);margin-bottom:20px;">Bookmark all of these before Week 1. Every technical question Sharath will encounter in the first 90 days has an answer in one of these destinations.</p>
+
+      <div class="link-group">
+        <div class="link-group-label">Platform & Academy</div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/" target="_blank">Demandbase Partner University — Main Hub</a></div>
+            <div class="link-desc">Register here first. All training tracks, certifications, and course content live at this URL. Register with TP email so access ties to the company tenant.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/page/marketing-operations-and-it-administrators" target="_blank">Marketing Operations & IT Administrators Learning Track</a></div>
+            <div class="link-desc">Sharath's primary training track page. All 30 courses accessible from here. Final exam and Digital Badge also found here.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/page/role-based-training" target="_blank">Role-Based Training Overview</a></div>
+            <div class="link-desc">All role tracks — SDR/BDR, BD/Sales, Sales Manager, Digital Marketing Manager, Advertising Manager, and IT Admin. Useful reference for understanding what other teams are learning and how their training aligns to the platform's shared data model.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://partneredu.demandbase.com/page/certifications" target="_blank">Certifications Page</a></div>
+            <div class="link-desc">All available Demandbase certifications — GTM, Measurement & Reporting, and product-specific credentials. Reference page for tracking completion status.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://web.demandbase.com/" target="_blank">Demandbase One Platform</a></div>
+            <div class="link-desc">The live platform. Log in here and confirm "US Workspace" appears in the top-left dropdown. Tenant 15053 — US Workspace admin only.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="link-group">
+        <div class="link-group-label">Support & Community</div>
+        <div class="link-row">
+          <div class="link-dot active"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://support.demandbase.com/" target="_blank">Demandbase Help Center</a></div>
+            <div class="link-desc">Primary support portal for every configuration question, integration troubleshoot, and error message. Bookmark this — it's the first stop before escalating to Kate Varvedo or Dusty Ferguson.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://www.demandbase.com/why-demandbase/community/" target="_blank">Demandbase Community</a></div>
+            <div class="link-desc">Peer community for Demandbase users — configuration discussions, best practices, and product feedback. Good ongoing resource for edge cases not covered in support docs.</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <div class="link-dot"></div>
+          <div class="link-info">
+            <div class="link-title"><a href="https://www.demandbase.com/resources/demandbase-office-hours-videos/" target="_blank">Office Hours Videos</a></div>
+            <div class="link-desc">Recorded office hours sessions from Demandbase product and customer success teams. Covers common configuration questions, new features, and advanced use cases in a walkthrough format.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 05: US WORKSPACE CONTEXT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">05</div>
+      <div class="section-title">US Workspace — Current State & Active Blockers</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--body-gray);margin-bottom:20px;">This is what Sharath is inheriting. Understanding the current state means he can contribute from Week 1 instead of spending his first month discovering things through trial and error.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:24px;">
+        <div style="background:var(--slate);border-radius:6px;padding:18px 16px;text-align:center;">
+          <div style="font-size:28px;font-weight:300;color:var(--color-bg);line-height:1;">5,241</div>
+          <div style="font-size:11px;color:var(--pastel-slate);margin-top:4px;text-transform:uppercase;letter-spacing:1px;">Tiered Accounts</div>
+        </div>
+        <div style="background:var(--slate);border-radius:6px;padding:18px 16px;text-align:center;">
+          <div style="font-size:28px;font-weight:300;color:var(--color-bg);line-height:1;">42<span style="color:var(--pink)">+</span></div>
+          <div style="font-size:11px;color:var(--pastel-slate);margin-top:4px;text-transform:uppercase;letter-spacing:1px;">Keyword Sets</div>
+        </div>
+        <div style="background:var(--slate);border-radius:6px;padding:18px 16px;text-align:center;">
+          <div style="font-size:28px;font-weight:300;color:var(--color-bg);line-height:1;">3</div>
+          <div style="font-size:11px;color:var(--pastel-slate);margin-top:4px;text-transform:uppercase;letter-spacing:1px;">Buying Groups</div>
+        </div>
+        <div style="background:var(--slate);border-radius:6px;padding:18px 16px;text-align:center;">
+          <div style="font-size:28px;font-weight:300;color:var(--color-bg);line-height:1;">4</div>
+          <div style="font-size:11px;color:var(--pastel-slate);margin-top:4px;text-transform:uppercase;letter-spacing:1px;">Automations Built</div>
+        </div>
+      </div>
+
+      <div class="gov-box">
+        <h4>Active Blockers — Know These Before Day 1</h4>
+        <div class="gov-rule"><div class="gov-num">01</div><div><strong>GT One Tag / GTM Deployment:</strong> Isabella Cruz (Global Marketing Manager) controls GTM access for tp.com/en-us. The Demandbase One Tag is not deployed — this is the critical path for attribution data and the advertising clicks report. Everything downstream (GA4 connector, UTM tracking, Campaign Influence 2.0) is blocked until this is resolved.</div></div>
+        <div class="gov-rule"><div class="gov-num">02</div><div><strong>GA4 Account Connector:</strong> Single-per-tenant limitation. APAC connector (Benedict Yeo, G-PFTFK6HJPT) occupies the only slot. US connector (G-PJ1L3MWXB0) cannot be added until resolved at tenant architecture level with Kate Varvedo and Dusty Ferguson.</div></div>
+        <div class="gov-rule"><div class="gov-num">03</div><div><strong>Google Ads OAuth:</strong> US MCC (502-991-3896) created, child account (835-560-0225) confirmed. OAuth connection to Demandbase pending Kate Varvedo. Admin email migration also pending.</div></div>
+        <div class="gov-rule"><div class="gov-num">04</div><div><strong>UTM Fields / Campaign Influence 2.0:</strong> Only one UTM field is live on the Lead record in SFDC. Two fields are needed plus additional CI 2.0 configuration before Campaign Influence 2.0 can be activated. Eliana Negrisoli and Amit Kumar own this.</div></div>
+      </div>
+
+      <div class="callout callout-success" style="margin-top:20px;">
+        <strong>Platform Exploration — View First, Change Nothing:</strong> Sharath has full Admin access to both US Workspace and Global. During the onboarding period, the expectation is to observe and understand — how the architecture is built, why decisions were made, and how everything connects. All US assets follow the <strong>[US] prefix naming convention</strong>. No modifications to any configurations until fully ramped and aligned with Josh.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 06: KEY CONTACTS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">06</div>
+      <div class="section-title">Key Contacts — Who to Know on Day 1</div>
+    </div>
+    <div class="section-body">
+      <div class="contacts-grid">
+        <div class="contact-card">
+          <div class="contact-name">Josh Alonzo</div>
+          <div class="contact-role">Sr. Manager, Strategic Intelligence & ABX — Direct Manager</div>
+          <div class="contact-note">Primary escalation for all platform decisions</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Kate Varvedo</div>
+          <div class="contact-role">Demandbase CSM — Customer Success Manager</div>
+          <div class="contact-note">Google Ads OAuth + GA4 connector escalation</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Dusty Ferguson</div>
+          <div class="contact-role">Demandbase Senior TAM — Technical Account Manager</div>
+          <div class="contact-note">Technical architecture questions</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Nick Abernathy</div>
+          <div class="contact-role">Demandbase TAM — Technical Account Manager</div>
+          <div class="contact-note">Platform configuration support</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Amit Kumar</div>
+          <div class="contact-role">Salesforce Admin — SFDC field creation and execution</div>
+          <div class="contact-note">All SFDC integration changes go through Amit</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Remy Frank</div>
+          <div class="contact-role">US Marketo Owner</div>
+          <div class="contact-note">Marketo integration sync and US nurture flows</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Eliana Negrisoli</div>
+          <div class="contact-role">Global Marketo & SFDC Owner</div>
+          <div class="contact-note">Coordinate carefully — global scope, change-resistant</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-name">Isabella Cruz</div>
+          <div class="contact-role">Global Marketing Manager — GTM/GA4 Access</div>
+          <div class="contact-note">Controls GTM container for tp.com/en-us</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 07: PLATFORM ACCESS CHECKLIST -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">07</div>
+      <div class="section-title">Day 1 Access Checklist</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--body-gray);margin-bottom:18px;">Every system Sharath needs access to on Day 1. Josh to action items marked with ★ in advance.</p>
+
+      <table class="track-table">
+        <thead>
+          <tr>
+            <th>System</th>
+            <th>Access Type Needed</th>
+            <th>Action Owner</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Demandbase One</strong></td>
+            <td>Full Admin — US Workspace + Global</td>
+            <td> Complete</td>
+            <td>Tenant 15053. Currently signed in via Gmail. Update to TP email once provisioned — Settings → Account → Email</td>
+          </tr>
+          <tr>
+            <td><strong>Salesforce</strong></td>
+            <td>Read access + Marketing Cloud User</td>
+            <td>Amit Kumar</td>
+            <td>Needed for SFDC field review and Calculated Field mapping</td>
+          </tr>
+          <tr>
+            <td><strong>Marketo</strong></td>
+            <td>Marketing User (US instance)</td>
+            <td>Remy Frank</td>
+            <td>US-scoped only — coordinate with Remy, not Eliana for US access</td>
+          </tr>
+          <tr>
+            <td><strong>Google Tag Manager</strong></td>
+            <td>Viewer at minimum, Publisher preferred</td>
+            <td>Josh → Isabella Cruz</td>
+            <td>Container GTM-5J4WZ38R — needed to support One Tag deployment</td>
+          </tr>
+          <tr>
+            <td><strong>Google Analytics 4</strong></td>
+            <td>Editor — US property</td>
+            <td>Josh</td>
+            <td>US property: G-PJ1L3MWXB0 (property 492560255)</td>
+          </tr>
+          <tr>
+            <td><strong>LinkedIn Campaign Manager</strong></td>
+            <td>Account Manager role</td>
+            <td>Jon Bornstein</td>
+            <td>Account: TP | USA | Marketing (ID: 513795388)</td>
+          </tr>
+          <tr>
+            <td><strong>Demandbase Partner University</strong></td>
+            <td>Full access (free for customers)</td>
+            <td>Sharath (self-register)</td>
+            <td><a href="https://partneredu.demandbase.com" target="_blank" style="color:var(--light-blue)">partneredu.demandbase.com</a> — register with TP email before Week 1 starts</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-info" style="margin-top:20px;">
+        <strong>Before Touching Anything in the Platform:</strong> Complete all 30 courses and both certifications first. Once training is done, log in and explore the backend — review configurations, account lists, automations, integrations, and workspace settings. Understand how everything is built before making any changes. No edits, no modifications until fully ramped and aligned with Josh.
+      </div>
+      <div class="callout" style="margin-top:12px;">
+        <strong>Email Migration:</strong> Sharath is currently accessing Demandbase via Gmail. Once the TP email is active, update the Demandbase account email in Settings → Account. Register at <a href="https://partneredu.demandbase.com" target="_blank" style="color:var(--light-blue)">partneredu.demandbase.com</a> using the TP email from day one so Academy progress is tied to the company account.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Teleperformance</strong> &nbsp;·&nbsp; US GTM Strategy &nbsp;·&nbsp; Demandbase Ops Manager Onboarding Kit<br>
+  Confidential — Internal Use Only &nbsp;·&nbsp; Prepared March 2026 &nbsp;·&nbsp; For: Sharath Madishetty
+</div>
+
+    <script src="/assets/js/back-to-top.js"></script>
+<script src="../assets/js/navigation.js"></script>
+<script src="../assets/js/dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+/* ABM Suite — TP Slate Design System (shared CSS) */
+/* Maps legacy persona CSS variables to TP Slate branding */
+
+:root {
+    /* TP Slate Palette */
+    --slate: #484C6A;
+    --slate-dark: #2e3150;
+    --slate-mid: #848dad;
+    --pastel-slate: #c2c7cd;
+    --pastel-violet: #e2dfe8;
+    --pink: #ff0082;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --dark-gray: #414141;
+    --gray: #676767;
+
+    /* Legacy variable mappings → TP Slate */
+    --navy-dark: #2e3150;
+    --navy-primary: #484C6A;
+    --navy-light: #484C6A;
+    --teal-accent: #ff0082;
+    --teal-light: #c2c7cd;
+    --gray-100: #f5f4f7;
+    --gray-200: #e2dfe8;
+    --gray-300: #c2c7cd;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 40px;
+
+    /* Radius */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.05);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Calibri Light', 'Calibri', 'Segoe UI', Arial, sans-serif;
+    background: var(--white);
+    color: var(--dark-gray);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Persona Page Layout */
+.persona-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+/* Hero Banner */
+.persona-hero {
+    background: var(--slate);
+    color: var(--white);
+    padding: 80px 40px 60px;
+    border-radius: 0;
+    margin-bottom: 40px;
+    margin: -40px -24px 40px;
+    width: calc(100% + 48px);
+    text-align: left;
+}
+
+.persona-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    font-weight: 400;
+    color: var(--white);
+}
+
+.persona-hero .subtitle {
+    font-size: 1.15rem;
+    color: var(--pastel-slate);
+    margin-bottom: 16px;
+}
+
+.persona-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.meta-badge {
+    background: rgba(255, 0, 130, 0.15);
+    color: var(--white);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 0, 130, 0.3);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-bottom: 8px;
+}
+
+.breadcrumb a {
+    color: var(--pink);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* Content Sections */
+.content-section {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--pastel-slate);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 30px;
+}
+
+.content-section h2 {
+    color: var(--slate);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--pink);
+    font-weight: 600;
+}
+
+.content-section h3 {
+    color: var(--slate);
+    font-size: 1.15rem;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.content-section h4 {
+    color: var(--dark-gray);
+    font-size: 1rem;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.content-section p {
+    margin-bottom: 12px;
+    color: var(--dark-gray);
+    line-height: 1.8;
+}
+
+.content-section ul, .content-section ol {
+    margin: 12px 0 16px 24px;
+    color: var(--dark-gray);
+}
+
+.content-section li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+}
+
+.content-section strong {
+    color: var(--slate);
+}
+
+/* KPI Grid */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.kpi-item {
+    background: var(--pastel-violet);
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--pink);
+}
+
+.kpi-item strong {
+    color: var(--slate);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+}
+
+/* Prompt Box */
+.prompt-box {
+    background: var(--pastel-violet);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 16px 0;
+    border-left: 3px solid var(--pink);
+    font-family: 'Calibri Light', monospace;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    color: var(--dark-gray);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9rem;
+}
+
+th {
+    background: var(--slate);
+    color: var(--white);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--pastel-slate);
+    color: var(--dark-gray);
+}
+
+tr:hover { background: var(--pastel-violet); }
+
+/* Action Buttons */
+.btn-export, .export-btn, button[onclick*="print"] {
+    background: var(--pink);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-export:hover, .export-btn:hover { background: #e00074; }
+
+/* Back Link */
+.back-link, a[href*="index.html"] {
+    color: var(--pink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.back-link:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .persona-hero { padding: 60px 24px 40px; }
+    .persona-hero h1 { font-size: 1.8rem; }
+    .content-section { padding: 24px; }
+    .kpi-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+    body { background: white; }
+    .persona-hero { background: var(--slate) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .content-section { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+}
