@@ -39,7 +39,7 @@
                     <a href="${bp}index.html" class="tp-nav-link ${isRoot ? 'active' : ''}">Content Engine</a>
                     <a href="${bp}prompts-lab/index.html" class="tp-nav-link ${isPromptsLab ? 'active' : ''}">Prompts Lab</a>
                     <a href="${bp}competitive-intel/index.html" class="tp-nav-link ${isCompetitiveIntel ? 'active' : ''}">Competitive Intel</a>
-                    <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Playbooks</a>
+                    <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Cards</a>
                 </div>
                 <button class="tp-theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
                     <svg class="tp-theme-icon-light" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

@@ -119,7 +119,7 @@ class ABXPlanBuilder {
                             "Develop pain point → solution mapping by persona"
                         ],
                         framework: "Persona Pain Point Extractor",
-                        deliverable: "Messaging Matrix + Persona Playbooks for all target personas"
+                        deliverable: "Messaging Matrix + Persona Cards for all target personas"
                     },
                     {
                         day: "Day 9-11",
