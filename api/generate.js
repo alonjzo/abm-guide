@@ -59,7 +59,28 @@ Generate content for these channels:
       - Stats: 2-3 industry statistics with source citations (Gartner, Forrester, McKinsey)
       - CTA: Softer engagement (Learn more, Join discussion, Share your experience)
 
-2. BLOG ARTICLES with AEO (Answer Engine Optimization): 3 articles with:
+2. EVENT AMPLIFICATION POSTS (Organic Social for ABM Team):
+   Generate 3 event-specific LinkedIn posts for organic employee advocacy:
+   A) PRE-EVENT (1-2 weeks before):
+      - Tease: What attendees will learn/experience
+      - Speaker spotlight or agenda highlight
+      - Personal invite tone ("Hope to see you there")
+      - CTA: Register or save your spot
+      - Format: 400-600 characters, conversational
+   B) DURING-EVENT (live from the event):
+      - Real-time insights or takeaways
+      - Quote from a speaker or attendee reaction
+      - "Happening now" energy and FOMO
+      - CTA: Follow along, join the conversation
+      - Format: 300-500 characters, high energy
+   C) POST-EVENT (within 48 hours):
+      - Key takeaway or insight shared
+      - Thank attendees and speakers
+      - Offer recap content (recording, slides, summary)
+      - CTA: Access the recap, continue the discussion
+      - Format: 400-600 characters, reflective
+
+3. BLOG ARTICLES with AEO (Answer Engine Optimization): 3 articles with:
    - Title: SEO-optimized, question-based when possible
    - Target Featured Snippet: 40-60 word direct answer paragraph
    - FAQ Schema Questions: 3-4 questions that should be H2/H3 headers
@@ -68,7 +89,7 @@ Generate content for these channels:
    - Keywords: Primary and LSI keywords for search optimization
    - Length & Stage: Word count target and funnel position
 
-3. WEBINAR LANDING PAGE FRAMEWORK:
+4. WEBINAR LANDING PAGE FRAMEWORK:
    - Headline: Benefit-driven title (60 chars max)
    - Subheadline: Value proposition statement
    - 3 Key Takeaways: What attendees will learn (bullets)
@@ -80,7 +101,7 @@ Generate content for these channels:
      b) LinkedIn promo: Social proof + FOMO elements
      c) Landing page hero: Benefit-stack + credibility markers
 
-4. DEMANDBASE ONE ADS with Creative Direction:
+5. DEMANDBASE ONE ADS with Creative Direction:
    - Generate BOTH 1:1 and 1:Few versions
    - Display Ad Specs:
      * Headline: MAX 25 characters (ENFORCE THIS)
@@ -91,7 +112,7 @@ Generate content for these channels:
      * Ad format type: Leaderboard / Medium Rectangle / Native
    - 5 total variations mixing 1:1 personalized and 1:Few clustered
 
-5. FUNNEL CONTENT with BUYER DNA:
+6. FUNNEL CONTENT with BUYER DNA:
    For each stage (TOFU/MOFU/BOFU), include:
    - BUYER DNA CARD:
      * Persona snapshot: Role, seniority, KPIs they own
@@ -101,7 +122,7 @@ Generate content for these channels:
      * Behavioral signals: Actions that indicate they're in this stage
    - Content Recommendations: Types and themes flowing FROM the buyer psychology
 
-6. Orchestration Plays: 2 plays showing how this content activates through Demandbase > SFDC. Include trigger condition, action, task payload for rep, and routing logic.
+7. Orchestration Plays: 2 plays showing how this content activates through Demandbase > SFDC. Include trigger condition, action, task payload for rep, and routing logic.
 
 Return ONLY valid JSON:
 {
@@ -125,6 +146,29 @@ Return ONLY valid JSON:
     }
   ],
   "linkedinGuidance": "...",
+  "eventPosts": {
+    "preEvent": {
+      "body": "...",
+      "totalChars": 0,
+      "hook": "...",
+      "cta": "...",
+      "hashtags": ["..."]
+    },
+    "duringEvent": {
+      "body": "...",
+      "totalChars": 0,
+      "hook": "...",
+      "cta": "...",
+      "hashtags": ["..."]
+    },
+    "postEvent": {
+      "body": "...",
+      "totalChars": 0,
+      "hook": "...",
+      "cta": "...",
+      "hashtags": ["..."]
+    }
+  },
   "blogArticles": [
     {
       "title": "...",
