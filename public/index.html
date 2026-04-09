@@ -296,7 +296,7 @@
             gap: 12px;
             margin-top: 12px;
             padding: 14px 16px;
-            background: #FFF9E6;
+            background: var(--color-surface-2);
             border-radius: 10px;
             border: 1px solid rgba(255, 193, 7, 0.2);
             border-left: 4px solid #FFC107;
@@ -749,7 +749,7 @@
                         const paidCopyText = [post.paid.hook, post.paid.body, `Stat: ${post.paid.stat} (Source: ${post.paid.source})`, post.paid.cta].filter(Boolean).join('\n\n');
                         html += `<div class="content-item" style="border-left: 4px solid #0077b5;">
                             <h3>LinkedIn Post ${idx + 1} - PAID (Sponsored)</h3>
-                            <div style="background: #e8f4fd; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            <div style="background: var(--color-surface-2); padding: 10px; border-radius: 5px; margin-bottom: 10px;">
                                 <span style="color: #0077b5; font-weight: bold;">💰 Character Count: ${paidChars}/300</span>
                             </div>
                             <p><strong>Hook:</strong> ${esc(post.paid.hook)}</p>
@@ -765,7 +765,7 @@
                             <h3>LinkedIn Post ${idx + 1} - ORGANIC (Executive)</h3>
                             <p><strong>Hook:</strong> ${esc(post.organic.hook)}</p>
                             <p>${esc(post.organic.body)}</p>
-                            ${(post.organic.stats||[]).length > 0 ? `<div style="background: #f8f9fa; padding: 10px; margin: 10px 0; border-radius: 5px;">${post.organic.stats.map(s => `<p style="color: var(--pink); margin: 5px 0;"><strong>📊 ${esc(s.stat)}</strong> <span style="font-size: 0.85em;">(${esc(s.source)})</span></p>`).join('')}</div>` : ''}
+                            ${(post.organic.stats||[]).length > 0 ? `<div style="background: var(--color-surface-2); padding: 10px; margin: 10px 0; border-radius: 5px;">${post.organic.stats.map(s => `<p style="color: var(--pink); margin: 5px 0;"><strong>📊 ${esc(s.stat)}</strong> <span style="font-size: 0.85em;">(${esc(s.source)})</span></p>`).join('')}</div>` : ''}
                             <p class="meta"><strong>Hashtags:</strong> ${esc((post.organic.hashtags||[]).join(' '))}</p>
                             <p class="meta"><strong>CTA:</strong> ${esc(post.organic.cta)}</p>
                             ${copyBtn('lio'+copyIdx++, 'Copy Organic Version', organicCopyText)}
@@ -784,7 +784,7 @@
                     const preEventCopy = [content.eventPosts.preEvent.hook, content.eventPosts.preEvent.body, (content.eventPosts.preEvent.hashtags||[]).join(' '), content.eventPosts.preEvent.cta].filter(Boolean).join('\n\n');
                     html += `<div class="content-item" style="border-left: 4px solid #FF6B35;">
                         <h3>Pre-Event Post (1-2 weeks before)</h3>
-                        <div style="background: #fff3e0; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                        <div style="background: var(--color-surface-2); padding: 10px; border-radius: 5px; margin-bottom: 10px;">
                             <span style="color: #FF6B35; font-weight: bold;">🎯 Character Count: ${content.eventPosts.preEvent.totalChars || 0}</span>
                         </div>
                         <p><strong>Hook:</strong> ${esc(content.eventPosts.preEvent.hook)}</p>
@@ -797,7 +797,7 @@
                     const duringEventCopy = [content.eventPosts.duringEvent.hook, content.eventPosts.duringEvent.body, (content.eventPosts.duringEvent.hashtags||[]).join(' '), content.eventPosts.duringEvent.cta].filter(Boolean).join('\n\n');
                     html += `<div class="content-item" style="border-left: 4px solid #FFD700;">
                         <h3>During-Event Post (live from event)</h3>
-                        <div style="background: #fffacd; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                        <div style="background: var(--color-surface-2); padding: 10px; border-radius: 5px; margin-bottom: 10px;">
                             <span style="color: #FF8C00; font-weight: bold;">⚡ Character Count: ${content.eventPosts.duringEvent.totalChars || 0}</span>
                         </div>
                         <p><strong>Hook:</strong> ${esc(content.eventPosts.duringEvent.hook)}</p>
@@ -810,7 +810,7 @@
                     const postEventCopy = [content.eventPosts.postEvent.hook, content.eventPosts.postEvent.body, (content.eventPosts.postEvent.hashtags||[]).join(' '), content.eventPosts.postEvent.cta].filter(Boolean).join('\n\n');
                     html += `<div class="content-item" style="border-left: 4px solid #28a745;">
                         <h3>Post-Event Post (within 48 hours)</h3>
-                        <div style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                        <div style="background: var(--color-surface-2); padding: 10px; border-radius: 5px; margin-bottom: 10px;">
                             <span style="color: #28a745; font-weight: bold;">🎉 Character Count: ${content.eventPosts.postEvent.totalChars || 0}</span>
                         </div>
                         <p><strong>Hook:</strong> ${esc(content.eventPosts.postEvent.hook)}</p>
@@ -847,11 +847,11 @@
 
                         html += `<div class="content-item">
                             <h3>${esc(article.title)}</h3>
-                            ${article.featuredSnippet ? `<div style="background: #fff3cd; padding: 12px; border-left: 4px solid #ffc107; margin: 10px 0;">
+                            ${article.featuredSnippet ? `<div style="background: var(--color-surface-2); padding: 12px; border-left: 4px solid #ffc107; margin: 10px 0;">
                                 <strong>🎯 Featured Snippet Target (40-60 words):</strong>
                                 <p style="margin-top: 5px; font-style: italic;">${esc(article.featuredSnippet)}</p>
                             </div>` : ''}
-                            ${(article.faqQuestions||[]).length > 0 ? `<div style="background: #e8f5e9; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                            ${(article.faqQuestions||[]).length > 0 ? `<div style="background: var(--color-surface-2); padding: 10px; margin: 10px 0; border-radius: 5px;">
                                 <strong>❓ FAQ Schema Questions (H2/H3 Headers):</strong>
                                 <ul style="margin: 5px 0 0 20px;">${article.faqQuestions.map(q => `<li>${esc(q)}</li>`).join('')}</ul>
                             </div>` : ''}
@@ -862,7 +862,7 @@
                                     article.outline.map(o => `<li><strong>${esc(o.header)}:</strong> ${esc(o.content)}</li>`).join('') :
                                     (article.outline||[]).map(point => `<li>${esc(point)}</li>`).join('')}
                             </ul>
-                            ${(article.aeoReadiness||[]).length > 0 ? `<div style="background: #f0f8ff; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                            ${(article.aeoReadiness||[]).length > 0 ? `<div style="background: var(--color-surface-2); padding: 10px; margin: 10px 0; border-radius: 5px;">
                                 <strong>🤖 AEO Schema Verified ✓</strong> - Answers for AI models:
                                 <ul style="margin: 5px 0 0 20px; font-size: 0.9em;">${article.aeoReadiness.map(q => `<li>${esc(q)}</li>`).join('')}</ul>
                             </div>` : ''}
@@ -899,7 +899,7 @@
                             <p style="margin: 10px 0 0 0; opacity: 0.95;">${esc(w.subheadline)}</p>
                         </div>
 
-                        ${(w.keyTakeaways||[]).length > 0 ? `<div style="background: #f8f9fa; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
+                        ${(w.keyTakeaways||[]).length > 0 ? `<div style="background: var(--color-surface-2); padding: 15px; margin-bottom: 15px; border-radius: 5px;">
                             <strong>📚 What You'll Learn:</strong>
                             <ul style="margin: 10px 0 0 20px;">${w.keyTakeaways.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
                         </div>` : ''}
@@ -916,7 +916,7 @@
                             ${w.ctaVariations.map(cta => `<button style="background: var(--pink); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">${esc(cta)}</button>`).join('')}
                         </div>` : ''}
 
-                        ${w.promotionalCopy ? `<div style="background: #fff; border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); padding: 15px; margin-top: 20px; border-radius: 5px;">
+                        ${w.promotionalCopy ? `<div style="background: var(--color-surface); border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); padding: 15px; margin-top: 20px; border-radius: 5px;">
                             <h4 style="margin-top: 0;">📢 Promotional Copy Package</h4>
                             ${w.promotionalCopy.email ? `<div style="margin-bottom: 10px;"><strong>Email Invite:</strong><p style="font-size: 0.9em; color: #555; margin: 5px 0;">${esc(w.promotionalCopy.email)}</p></div>` : ''}
                             ${w.promotionalCopy.linkedin ? `<div style="margin-bottom: 10px;"><strong>LinkedIn Promo:</strong><p style="font-size: 0.9em; color: #555; margin: 5px 0;">${esc(w.promotionalCopy.linkedin)}</p></div>` : ''}
@@ -971,12 +971,12 @@
                             <p class="meta"><strong>CTA:</strong> ${esc(ad.cta)}</p>
 
                             ${ad.personalizationTokens && ad.personalizationTokens.length > 0 ?
-                                `<div style="background: #fff3cd; padding: 8px; margin: 10px 0; border-radius: 3px;">
+                                `<div style="background: var(--color-surface-2); padding: 8px; margin: 10px 0; border-radius: 3px;">
                                     <strong>🔤 Personalization Tokens:</strong> <code>${esc(ad.personalizationTokens.join(', '))}</code>
                                 </div>` : ''}
 
                             ${ad.creativeDirection ?
-                                `<div style="background: #f8f9fa; padding: 10px; margin: 10px 0; border-left: 3px solid var(--pink);">
+                                `<div style="background: var(--color-surface-2); padding: 10px; margin: 10px 0; border-left: 3px solid var(--pink);">
                                     <strong>🎨 Creative Direction:</strong>
                                     <p style="margin: 5px 0; font-size: 0.9em; color: #555;">${esc(ad.creativeDirection)}</p>
                                 </div>` : ''}
@@ -1059,7 +1059,7 @@
                         <li><strong>Always thread Procurement & Sourcing</strong> as the Budget Holder approval layer regardless of motion</li>
                     </ol>
 
-                    <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="background: var(--color-surface); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                         <p style="margin: 0; font-size: 0.95em;"><strong>📢 Ad Builder Next Step:</strong> Drop the generated ad variations into an active LinkedIn campaign targeting your DB audience.</p>
                     </div>
 
