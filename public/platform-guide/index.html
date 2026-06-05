@@ -482,34 +482,34 @@
   <!-- LIST CREATION -->
   <section id="lists">
     <div class="section-label">05 · List Creation</div>
-    <h2>Always start in Global. Then push to US Workspace.</h2>
-    <p class="section-intro">This is the single most common mistake. If you build a list in US Workspace first and try to use it for advertising, it won't connect. The advertising DSP reads from Global. Build there first, every time.</p>
+    <h2>Build everything in US Workspace. Push to Global only for advertising.</h2>
+    <p class="section-intro">US Workspace is the source of truth. Every list — account lists, person lists, all of it — gets built in US Workspace. Nothing gets built directly in Global anymore. The one exception: if an account list needs to be the audience for an advertising campaign, you push a copy up to Global with the <code>[US]</code> prefix, because the ad campaign builder only reads from Global. The master always stays in US Workspace.</p>
 
     <div class="flow-steps">
       <div class="flow-step">
         <div class="flow-num active">1</div>
-        <div class="flow-step-name">Build in Global</div>
-        <div class="flow-step-desc">Create the account list or keyword set in the Global workspace. Name it with the <code>[US]</code> prefix.</div>
+        <div class="flow-step-name">Build in US Workspace</div>
+        <div class="flow-step-desc">Create the account list, person list, or keyword set in US Workspace. This is the master — the source of truth. Everything starts here.</div>
       </div>
       <div class="flow-step">
         <div class="flow-num active">2</div>
-        <div class="flow-step-name">Name it right</div>
-        <div class="flow-step-desc">Format: <code>[US] Tier 1A — Healthcare</code>. This naming convention keeps US assets identifiable in the Global view.</div>
+        <div class="flow-step-name">Advertising? Then copy to Global</div>
+        <div class="flow-step-desc">Only if the list is the audience for an ad campaign, push a copy up to Global. If it's not being advertised against, it stays in US Workspace and doesn't go to Global at all.</div>
       </div>
       <div class="flow-step">
         <div class="flow-num active">3</div>
-        <div class="flow-step-name">Mirror in US Workspace</div>
-        <div class="flow-step-desc">Manually duplicate the same list in US Workspace without the <code>[US]</code> prefix. This is your operational copy for reporting and orchestration.</div>
+        <div class="flow-step-name">Name the copy right</div>
+        <div class="flow-step-desc">Add the <code>[US]</code> prefix to the Global copy. Format: <code>[US] Tier 1A — Healthcare</code>. This keeps US assets identifiable in the Global view for EMEA/APAC.</div>
       </div>
       <div class="flow-step">
         <div class="flow-num active">4</div>
         <div class="flow-step-name">Connect advertising</div>
-        <div class="flow-step-desc">Ad campaigns reference the Global <code>[US]</code> version. Orchestration and reporting reference the US Workspace version.</div>
+        <div class="flow-step-desc">Ad campaigns reference the Global <code>[US]</code> copy, because the ad builder only reads from Global. Orchestration and reporting reference the US Workspace master.</div>
       </div>
     </div>
 
     <div class="callout pink">
-      <strong>No sync exists between US Workspace and Global.</strong> Every update to a keyword set or account list requires a manual update in both places. When you add a new account to <code>Tier 1A — Healthcare</code> in US Workspace, you must also add it to <code>[US] Tier 1A — Healthcare</code> in Global for it to be included in active ad campaigns. Dual-maintenance is permanent.
+      <strong>No sync exists between US Workspace and Global.</strong> Once a list is copied to Global for advertising, the two don't stay in sync. When you update the master in US Workspace — say you add a new account to <code>Tier 1A — Healthcare</code> — you must also update the <code>[US] Tier 1A — Healthcare</code> copy in Global for it to flow into active ad campaigns. This dual-maintenance only applies to lists that are being advertised against. Lists that aren't advertised live in US Workspace only and never need a Global copy.
     </div>
 
     <div class="card-grid card-grid-2" style="margin-top:24px">
@@ -528,7 +528,7 @@
         <div class="card-body">
           <strong>US Workspace:</strong> <code>AI Customer Service — CX Core</code><br><br>
           <strong>Global:</strong> <code>[US] AI Customer Service — CX Core</code><br><br>
-          Keyword sets follow the same dual-maintenance rule. The 42+ sets currently in US Workspace each need a mirrored <code>[US]</code> version in Global to be usable for ad targeting.
+          Keyword sets follow the same rule. They're built and maintained in US Workspace. Only the sets used for ad targeting get a mirrored <code>[US]</code> copy pushed to Global.
         </div>
       </div>
     </div>
