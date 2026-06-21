@@ -5,9 +5,10 @@
     'use strict';
 
     const currentPath = window.location.pathname;
-    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides'));
+    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('competitive-battlecard') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides'));
     const isPersonas = currentPath.includes('personas');
     const isCompetitiveIntel = currentPath.includes('competitive-intel') || currentPath.includes('command-center');
+    const isCompetitiveTakeout = currentPath.includes('competitive-battlecard');
     const isOrchestration = currentPath.includes('orchestration');
     const isPlatformGuide = currentPath.includes('platform-guide');
     const isCampaignMonitoring = currentPath.includes('campaign-monitoring');
@@ -17,7 +18,7 @@
     const isGuides = currentPath.includes('guides');
 
     function getBasePath() {
-        if (isCompetitiveIntel || isPlatformGuide || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides) return '../';
+        if (isCompetitiveIntel || isCompetitiveTakeout || isPlatformGuide || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides) return '../';
         if (isPersonas && !currentPath.endsWith('personas/index.html') && currentPath.split('/').filter(Boolean).length > 2) return '../../';
         if (isPersonas) return '../';
         return './';
@@ -40,6 +41,7 @@
                     <a href="${bp}index.html" class="tp-nav-link ${isRoot ? 'active' : ''}">Content Engine</a>
                     <a href="${bp}prompts-lab/index.html" class="tp-nav-link ${isPromptsLab ? 'active' : ''}">Prompts Lab</a>
                     <a href="${bp}competitive-intel/index.html" class="tp-nav-link ${isCompetitiveIntel ? 'active' : ''}">Competitive Intel</a>
+                    <a href="${bp}competitive-battlecard/index.html" class="tp-nav-link ${isCompetitiveTakeout ? 'active' : ''}">Competitive Takeout</a>
                     <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Cards</a>
                 </div>
                 <button class="tp-theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
