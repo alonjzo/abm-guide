@@ -10,6 +10,8 @@
     const isCompetitiveIntel = currentPath.includes('competitive-intel') || currentPath.includes('command-center');
     const isOrchestration = currentPath.includes('orchestration');
     const isPlatformGuide = currentPath.includes('platform-guide');
+    const isDemandbaseSales = currentPath.includes('demandbase-sales');
+    const isDemandbaseMarketing = currentPath.includes('demandbase-marketing');
     const isCampaignMonitoring = currentPath.includes('campaign-monitoring');
     const isAdvancedReporting = currentPath.includes('advanced-reporting');
     const isPromptsLab = currentPath.includes('prompts-lab');
@@ -17,7 +19,7 @@
     const isGuides = currentPath.includes('guides');
 
     function getBasePath() {
-        if (isCompetitiveIntel || isPlatformGuide || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides) return '../';
+        if (isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides) return '../';
         if (isPersonas && !currentPath.endsWith('personas/index.html') && currentPath.split('/').filter(Boolean).length > 2) return '../../';
         if (isPersonas) return '../';
         return './';
@@ -36,6 +38,8 @@
                 </a>
                 <div class="tp-nav-links">
                     <a href="${bp}platform-guide/index.html" class="tp-nav-link ${(isPlatformGuide || isOrchestration) ? 'active' : ''}">Demandbase US Workspace</a>
+                    <a href="${bp}demandbase-sales/index.html" class="tp-nav-link tp-nav-soon ${isDemandbaseSales ? 'active' : ''}" title="US Demandbase Sales — teaser, full page in build">US Demandbase Sales<span class="tp-soon-badge">Coming Soon</span></a>
+                    <a href="${bp}demandbase-marketing/index.html" class="tp-nav-link ${isDemandbaseMarketing ? 'active' : ''}" title="DB1 Marketing — Demandbase AI Prompt Library">DB1 Marketing</a>
                     <a href="${bp}campaign-monitoring/index.html" class="tp-nav-link ${isCampaignMonitoring ? 'active' : ''}">Campaign Monitoring</a>
                     <a href="${bp}index.html" class="tp-nav-link ${isRoot ? 'active' : ''}">Content Engine</a>
                     <a href="${bp}prompts-lab/index.html" class="tp-nav-link ${isPromptsLab ? 'active' : ''}">Prompts Lab</a>
@@ -107,6 +111,20 @@
             }
             .tp-nav-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
             .tp-nav-link.active { background: rgba(255, 0, 130, 0.15); color: #FF0082; }
+            .tp-nav-soon {
+                display: inline-flex; align-items: center; gap: 7px;
+                color: #C2C7CD;
+                cursor: default;
+            }
+            .tp-nav-soon:hover { background: none; color: #C2C7CD; }
+            .tp-soon-badge {
+                font-size: 0.58rem; font-weight: 700; letter-spacing: 0.5px;
+                text-transform: uppercase;
+                color: #fff;
+                background: #FF0082;
+                border-radius: 10px; padding: 2px 8px;
+                white-space: nowrap;
+            }
             .tp-theme-toggle {
                 background: rgba(255,255,255,0.08);
                 border: 1px solid rgba(194, 199, 205, 0.2);

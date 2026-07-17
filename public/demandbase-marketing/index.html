@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script defer src="/_vercel/insights/script.js"></script>
+<title>DB1 Marketing | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{
+    --slate:#484C6A; --slate-dark:#2e3150; --pastel-slate:#c2c7cd; --pastel-slate-light:#edeaf0;
+    --pink:#ff0082;                /* brand accent — fills/borders/badges */
+    --pink-text:#ff4da6;           /* hardened tint for pink TEXT on dark/slate (fixes shimmer) */
+    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#6b6e85; --line:#e6e8ec;
+    --mono:"SF Mono",Consolas,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  /* HERO */
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:24px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;max-width:20ch;line-height:1.1;margin-bottom:16px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:64ch;line-height:1.6}
+  .hero-meta{font-size:12px;color:rgba(255,255,255,.6);margin-top:18px;letter-spacing:.03em}
+
+  .page{max-width:1100px;margin:0 auto;padding:56px 60px 90px}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
+  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:74ch;margin-bottom:24px;line-height:1.65}
+  .rule{height:1px;background:var(--line);margin:44px 0}
+
+  /* LOOP BAND */
+  .band{background:var(--slate);color:#fff;border-radius:14px;padding:34px 38px;margin-bottom:8px}
+  .band .section-label{color:var(--pastel-slate)}
+  .band .section-label::before{background:var(--pink)}
+  .band h2{color:#fff;margin:10px 0 22px}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .fstep{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:16px}
+  .fstep .fn{font-size:13px;font-weight:800;color:var(--pink-text)}   /* hardened pink text on dark */
+  .fstep h4{font-size:14px;color:#fff;font-weight:600;margin:6px 0 4px}
+  .fstep p{font-size:12px;color:#dfe1ea;line-height:1.45}
+
+  /* GOALS */
+  .goals{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .g{border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:0 12px 12px 0;padding:16px 18px}
+  .g h3{font-size:15px;color:var(--black);font-weight:700;margin-bottom:3px}
+  .g p{font-size:13px;color:var(--body-gray)}
+  .g .who{font-size:11px;color:var(--slate);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:8px}
+
+  /* FLAGSHIP PROMPT */
+  .prompt{background:#2b2e42;color:#eef0f5;font-family:var(--mono);font-size:13px;line-height:1.6;border-radius:10px;padding:18px 20px;white-space:pre-wrap;margin-top:6px}
+  .prompt .v{color:var(--pink-text);font-weight:600}   /* hardened pink text on dark */
+
+  /* RULES */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .r{border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:0 10px 10px 0;padding:14px 16px}
+  .r b{color:var(--black)}
+  .r p{font-size:13px;margin-top:3px;color:var(--body-gray)}
+
+  /* WHATS NEW */
+  .newgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .nf{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fafbfc}
+  .nf .tag{display:inline-block;font-size:10px;font-weight:800;color:#fff;background:var(--pink);border-radius:20px;padding:2px 9px;letter-spacing:.06em}
+  .nf h3{font-size:15px;color:var(--black);font-weight:700;margin:8px 0 4px}
+  .nf p{font-size:13px;color:var(--body-gray)}
+  .nf em{color:var(--slate);font-style:italic}
+
+  /* CHIPS + CALLOUT */
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:12.5px;border:1px solid var(--pastel-slate);background:#f6f7f9;color:var(--slate);border-radius:20px;padding:6px 14px;font-weight:600}
+  .callout{background:#f6f7f9;border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:18px 22px;margin-top:12px;font-size:14px}
+  .callout b{color:var(--black)}
+
+  @media(max-width:900px){.flow,.rules,.goals,.newgrid{grid-template-columns:1fr}.hero,.page{padding-left:24px;padding-right:24px}}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-kicker"><span></span> DB1 Marketing · Integrated Marketing</div>
+      <h1>Demandbase AI, in a page — then every prompt you'll need.</h1>
+      <p class="hero-sub">AI Chat and the new Insights features are live. Ask a question in plain English, get a named, routable list back in about a minute. This page gets you running today — then the full library below has every prompt, organized by topic.</p>
+      <div class="hero-meta">TP · US Workspace (US + Canada) · Owner: Sharath · Demandbase AI Prompt Library</div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- LOOP -->
+    <div class="band">
+      <div class="section-label">The loop — same every time</div>
+      <h2>Ask &rarr; run &rarr; export &rarr; route</h2>
+      <div class="flow">
+        <div class="fstep"><div class="fn">01</div><h4>Ask in plain English</h4><p>Say what you need like you'd tell a teammate. Real sentences, real intent — not keyword soup.</p></div>
+        <div class="fstep"><div class="fn">02</div><h4>Run in Demandbase AI</h4><p>Paste into AI Chat or open the matching Insights surface. It reads our database + buying groups.</p></div>
+        <div class="fstep"><div class="fn">03</div><h4>Export the list</h4><p>Review the answer, export to Excel so it's ready to route.</p></div>
+        <div class="fstep"><div class="fn">04</div><h4>Load into a campaign</h4><p>Marketing Ops scrubs, appends, and matches in Marketo, then loads into a tracked campaign before anyone works it.</p></div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- GOALS -->
+    <div class="section-label">Start with a goal</div>
+    <h2>Seven goals — open the one that fits your week</h2>
+    <p class="section-intro">Each goal mirrors the "start with a goal" menu in AI Chat.</p>
+    <div class="goals">
+      <div class="g"><h3>Identify Target Accounts</h3><p>In-market, good-fit accounts not in pipeline yet.</p><div class="who">BD · ABM</div></div>
+      <div class="g"><h3>Understand Your Buyers</h3><p>Who's in the buying group, who's missing, who's your champion.</p><div class="who">BD · Campaign Owner</div></div>
+      <div class="g"><h3>Drive More Engagement</h3><p>Turn fit + intent into touches on the accounts that are ready.</p><div class="who">Campaign Owner</div></div>
+      <div class="g"><h3>Optimize Campaigns &amp; Programs</h3><p>Prove what earns its spend — and what to cut.</p><div class="who">Campaign Owner · Leadership</div></div>
+      <div class="g"><h3>Accelerate Pipeline</h3><p>The deals that need attention and the plays that move them.</p><div class="who">BD</div></div>
+      <div class="g"><h3>Grow &amp; Retain Customers</h3><p>Protect renewals, surface expansion before it's at risk.</p><div class="who">CSM · ABM</div></div>
+      <div class="g" style="grid-column:1 / -1"><h3>Measure Business Results</h3><p>Show leadership what marketing moved — and the patterns to replicate.</p><div class="who">Leadership</div></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- FLAGSHIP -->
+    <div class="section-label">The flagship play</div>
+    <h2>Start here — run it weekly</h2>
+    <p class="section-intro">Swap the <span style="color:#d1006b;font-weight:700">pink</span> pieces for your vertical, geo, and window.</p>
+    <div class="prompt">Give me a list of people to follow up on from accounts showing engagement and high intent for <span class="v">Contact Center as a Service</span>, in the <span class="v">United States and Canada</span>, over the <span class="v">last 90 days</span>.
+
+For each person return: full name, job title, email, contact information, company, tier, buying group, whether they're a decision maker, in-market status, journey stage, pipeline, and the assigned BD owner.
+
+Rank by intent, highest first.</div>
+
+    <div class="rule"></div>
+
+    <!-- RULES -->
+    <div class="section-label">Five rules that make prompts land</div>
+    <h2>Get these right and the output is clean</h2>
+    <p class="section-intro">Skip them and you get noise.</p>
+    <div class="rules">
+      <div class="r"><b>Spell out every acronym.</b><p>"Contact Center as a Service," not CCaaS; "Technology as a Service," not TAS.</p></div>
+      <div class="r"><b>Talk to it like a person.</b><p>Full sentences, real intent — not a pile of keywords.</p></div>
+      <div class="r"><b>Always bound it.</b><p>Name the timeframe and the geography (US + Canada) or you'll pull the world.</p></div>
+      <div class="r"><b>Ask for the fields you need.</b><p>Spell out the columns every time so lists come back BD-ready.</p></div>
+      <div class="r"><b>Start small, keep it weekly.</b><p>Run 2–3 plays you can manage. Prove them, then add.</p></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- WHATS NEW -->
+    <div class="section-label">What's new to try</div>
+    <h2>Released this month</h2>
+    <p class="section-intro">Each answers a different question.</p>
+    <div class="newgrid">
+      <div class="nf"><span class="tag">NEW</span><h3>Opportunity Insights</h3><p>What's driving or stalling active deals, which touchpoints mattered, what leadership should know. Try: <em>"Which open opportunities need attention now, and why?"</em></p></div>
+      <div class="nf"><span class="tag">NEW</span><h3>Journey Insights</h3><p>Where accounts progress or stall, and the activity mix that moves them. Try: <em>"Diagnose our stalled accounts and what moves accounts to MQA."</em></p></div>
+      <div class="nf"><span class="tag">NEW</span><h3>Buying Group Insights</h3><p>Persona coverage and who's missing from each group. Try: <em>"Show marketing executives at target accounts who haven't engaged in 90 days."</em></p></div>
+      <div class="nf"><span class="tag">NEW</span><h3>AI Chat + goal starters</h3><p>Ask anything, or start from a goal. Try: <em>"Show in-market accounts for Contact Center as a Service in the US and Canada, not in pipeline."</em></p></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- FIELDS -->
+    <div class="section-label">Always ask for these fields</div>
+    <h2>Paste into any prompt so lists come back BD-ready</h2>
+    <div class="chips" style="margin-top:14px">
+      <span class="chip">Full name</span><span class="chip">Job title</span><span class="chip">Email</span><span class="chip">Contact info</span>
+      <span class="chip">Company</span><span class="chip">Tier</span><span class="chip">Buying group</span><span class="chip">Decision maker?</span>
+      <span class="chip">In-market status</span><span class="chip">Journey stage</span><span class="chip">Pipeline</span><span class="chip">BD owner</span>
+    </div>
+    <div class="callout"><b>Two things to watch.</b> Data completeness varies — always sanity-check what comes back and flag gaps to Ops. And a list is only useful once it's in a tracked campaign; never hand a raw pull to a BD before it runs through Marketing Ops.</div>
+
+    <div class="rule"></div>
+
+    <!-- FULL LIBRARY -->
+    <div class="section-label">The full library</div>
+    <h2>Every prompt, organized by topic</h2>
+    <p class="section-intro">Search, then copy any prompt straight into AI Chat. Same library the whole team works from.</p>
+    <div id="prompt-library"></div>
+
+  </div>
+
+  <script src="../assets/js/prompt-library.js"></script>
+  <script>renderPromptLibrary('#prompt-library');</script>
+</body>
+</html>
