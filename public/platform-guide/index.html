@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,6 +88,25 @@
   .tier-table tr:nth-child(even){background:rgba(237,234,240,0.3)} /* Zebra striping */
   .tier-table tr:hover{background:rgba(194,199,205,0.15)} /* Hover state */
   .tier-table tr:last-child td{border-bottom:none}
+  /* Journey stage table */
+  .js-table th:nth-child(1){width:8%}   /* # */
+  .js-table th:nth-child(2){width:22%}  /* Stage */
+  .js-table th:nth-child(3){width:46%}  /* What it means */
+  .js-table th:nth-child(4){width:24%}  /* Who's on it */
+  .js-table td{vertical-align:middle}
+  .js-num{font-family:var(--mono,monospace);font-size:13px;font-weight:700;color:var(--body-gray)}
+  .js-stage{font-weight:700;color:var(--black);font-size:14px}
+  .js-who{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.03em;white-space:nowrap}
+  .who-mktg{background:var(--pastel-slate-light);color:var(--slate)}
+  .who-sdr{background:#e8f0fe;color:#1a56db}
+  .who-bd{background:var(--pink-subtle);color:var(--pink)}
+  .who-sales{background:var(--slate);color:#fff}
+  .who-default{background:transparent;color:var(--body-gray);border:1px dashed var(--pastel-slate)}
+  .js-table tr.js-default{background:rgba(237,234,240,0.45);opacity:.72}
+  .js-table tr.js-default .js-stage{color:var(--body-gray);font-weight:600}
+  .js-table tr.js-default td{font-style:italic}
+  .js-footnote{font-size:12px;color:var(--body-gray);line-height:1.55;margin:-12px 0 24px;padding:0 4px}
+  .js-footnote strong{color:var(--slate)}
   .tier-badge{display:inline-flex;align-items:center;justify-content:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
   .t1a{background:var(--slate-dark);color:var(--white)}
   .t1{background:var(--slate);color:#fff}
@@ -95,7 +114,7 @@
   .t3{background:var(--pastel-slate-light);color:var(--slate-dark)}
 
   /* ── JOURNEY ── */
-  .journey-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:0;position:relative;margin:32px 0}
+  .journey-flow{display:grid;grid-template-columns:repeat(8,1fr);gap:0;position:relative;margin:32px 0}
   .journey-flow::before{content:'';position:absolute;top:22px;left:5%;right:5%;height:2px;background:linear-gradient(90deg,var(--pastel-slate-light),var(--slate),var(--pink),var(--pink));z-index:0}
   .journey-step{text-align:center;position:relative;z-index:1;padding:0 4px}
   .journey-dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:12px;font-weight:700;border:2px solid var(--pastel-slate)}
@@ -196,13 +215,13 @@
   <div class="hero-inner">
     <div class="hero-kicker"><span></span> US Workspace · Operator Guide</div>
     <h1>Demandbase US Workspace</h1>
-    <p class="hero-sub">How the workspace is structured, how accounts move through the buying journey, how signals route to the right team, and the one rule that makes advertising work: start every list in Global.</p>
+    <p class="hero-sub">How the workspace is structured, how accounts move through the buying journey, how signals route to the right team, and the one rule that makes advertising work: build everything in US Workspace, push the [US] copy to Global only for advertising.</p>
     <div class="hero-tags">
-      <span class="hero-tag">5,241 US Accounts</span>
+      <span class="hero-tag">8,193 Accounts Reading</span>
       <span class="hero-tag">7 Journey Stages</span>
-      <span class="hero-tag">Keyword Sets</span>
+      <span class="hero-tag">6 Revenue Tiers</span>
       <span class="hero-tag">3 Buying Groups</span>
-      <span class="hero-tag">Pipeline Predict: SDR 40 · BD 60</span>
+      <span class="hero-tag">Engagement Points: SDR 40 · BD 60</span>
     </div>
   </div>
 </div>
@@ -212,6 +231,7 @@
   <div class="sticky-nav-inner">
     <a class="nav-item" onclick="document.getElementById('architecture').scrollIntoView({behavior:'smooth'});return false" href="#">Architecture</a>
     <a class="nav-item" onclick="document.getElementById('accounts').scrollIntoView({behavior:'smooth'});return false" href="#">Tiers</a>
+    <a class="nav-item" onclick="document.getElementById('segments').scrollIntoView({behavior:'smooth'});return false" href="#">Segments</a>
     <a class="nav-item" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'});return false" href="#">Journey</a>
     <a class="nav-item" onclick="document.getElementById('routing').scrollIntoView({behavior:'smooth'});return false" href="#">Routing</a>
     <a class="nav-item" onclick="document.getElementById('lists').scrollIntoView({behavior:'smooth'});return false" href="#">Lists</a>
@@ -283,7 +303,7 @@
       <div class="card accent">
         <div class="card-label">Layer 2 · Workspace</div>
         <div class="card-title">US · EMEA · APAC</div>
-        <div class="card-body">Each region operates in its own workspace with isolated account lists and reporting data. The US Workspace contains 5,241 tiered accounts. Workspace data does not sync automatically to Global or other regions.</div>
+        <div class="card-body">Each region operates in its own workspace with isolated account lists and reporting data. The US Workspace reads ~8,193 accounts across six Lighthouse tiers. Workspace data does not sync automatically to Global or other regions.</div>
       </div>
       <div class="card accent">
         <div class="card-label">Layer 3 · Assets</div>
@@ -301,46 +321,53 @@
   <section id="accounts">
     <div class="section-label">02 · Account Tiers</div>
     <h2>Account universe & tiering</h2>
-    <p class="section-intro">Every US account is tiered by revenue. Tier drives ABM motion — 1:1 for the largest, 1:Many for scale. Tier also determines which orchestration plays fire and whether BD or SDR handles the routing.</p>
+    <p class="section-intro">Every US account is tiered by the Lighthouse team into six tiers, 1A through 5. Tier drives ABM motion — 1:1 for the largest, 1:Many for scale — and determines which orchestration plays fire and whether BD or SDR handles the routing.</p>
 
     <div class="table-wrap">
       <table class="tier-table">
       <thead>
         <tr>
           <th>Tier</th>
-          <th>Revenue Band</th>
+          <th>Accounts</th>
           <th>ABM Motion</th>
-          <th>Count</th>
           <th>Treatment</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><span class="tier-badge t1a">T1-A</span></td>
-          <td>$50B+</td>
+          <td>115</td>
           <td>1:1 Hyper-Personalized</td>
-          <td>~58 accounts</td>
           <td>Named pursuit. Full buying group coverage required. BD-led with marketing air cover.</td>
         </tr>
         <tr>
           <td><span class="tier-badge t1">T1</span></td>
-          <td>$10B – $49.9B</td>
+          <td>542</td>
           <td>1:1 / 1:Few</td>
-          <td>~425 accounts</td>
           <td>Named account motion. Persona-level targeting. BD-eligible on Pipeline Predict score.</td>
         </tr>
         <tr>
           <td><span class="tier-badge t2">T2</span></td>
-          <td>$400M – $10B</td>
+          <td>1,943</td>
           <td>1:Few / 1:Many</td>
-          <td>~1,782 accounts</td>
           <td>Growth ABM. Campaign-driven. Intent surge triggers SDR routing.</td>
         </tr>
         <tr>
           <td><span class="tier-badge t3">T3</span></td>
-          <td>$100M – $399M</td>
+          <td>3,353</td>
           <td>1:Many Scaled</td>
-          <td>~3,289 accounts</td>
+          <td>Programmatic. Advertising-led. SDR handles any hand-raise signals.</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge t3">T4</span></td>
+          <td>812</td>
+          <td>1:Many Scaled</td>
+          <td>Programmatic. Advertising-led. SDR handles any hand-raise signals.</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge t3">T5</span></td>
+          <td>1,430</td>
+          <td>1:Many Scaled</td>
           <td>Programmatic. Advertising-led. SDR handles any hand-raise signals.</td>
         </tr>
       </tbody>
@@ -348,7 +375,103 @@
     </div>
 
     <div class="callout slate" style="margin-top:24px">
-      <strong>Total US universe:</strong> 5,241 tiered accounts in the US Workspace. Data sourced from D&B Hoovers (primary), ZoomInfo (fallback), and PitchBook for private-company coverage. All tier assignments are validated and maintained by the Lighthouse team.
+      <strong>Six tiers, ~8,195 accounts across the US universe.</strong> Tiering is owned and scored by the Lighthouse team. Counts are live reads as of June 2026 and update daily — the ABX dashboard is the source of truth. Lighthouse is reviewing revenue and tiering scope, so tier membership continues to settle.
+    </div>
+  </section>
+
+  <!-- ACCOUNT SEGMENTS -->
+  <section id="segments">
+    <div class="section-label">02b · Account Segments</div>
+    <h2>The US account view — segments &amp; the columns that surface it</h2>
+    <p class="section-intro">This is the US account view. Demandbase ships generic, global, and all-region versions of most fields — those read the wrong logic for our motion. <strong>Use the US-prefixed and <code>[US Journey]</code> fields, every time.</strong> The four segments below and the columns that follow are all US-scoped — that's what makes the read accurate. Arrange your columns however works for your report; the <em>fields themselves</em> are non-negotiable — always the US version.</p>
+
+    <div class="callout pink">
+      <strong>The one rule for this whole view:</strong> always pick the <strong>US</strong> / <code>[US Journey]</code> field, never the DB default. Segments and columns are both expressions of that single rule. Segments are <strong>view-layer overlays</strong> — they slice the scored population; they are <strong>not</strong> journey stages and <strong>not</strong> trained scores. Keep those three buckets separate.
+    </div>
+
+    <h3 style="margin-top:36px">The four US Account Segments</h3>
+    <p class="section-intro" style="margin-bottom:20px">Four segments slice the US universe on top of the journey and scores — never inside them. Mutually exclusive, account-level, stackable to any cut.</p>
+
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <div class="card-label" style="color:var(--pink)">Segment 1 · US Revenue Tier</div>
+        <div class="card-title">Lighthouse-scored, mutually exclusive</div>
+        <div class="card-body">
+          Tier 1A — $50B+ · Tier 1 — $10B–$49.99B · Tier 2 — $400M–$9.99B · Tier 3 — $300M–$399M · Tier 4 — $100M–$299M · Tier 5 — Sub $99M.
+          <br><span style="color:var(--body-gray);font-style:italic">Logic: 2026 [Tier] Contains US Market.</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--pink)">Segment 2 · US TP Relationship</div>
+        <div class="card-title">Mutually exclusive</div>
+        <div class="card-body">
+          <strong>Net New</strong> — Current Logo = New Logo.<br>
+          <strong>Existing Business – New Logos</strong> — Current Logo = Existing Logo.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--pink)">Segment 3 · US Vertical</div>
+        <div class="card-title">Industry Category Contains [value]</div>
+        <div class="card-body">Healthcare · Insurance · BFS · Government · Retail · Utilities · Comms &amp; Media · Telecom · Travel &amp; Hospitality · Technology · Automotive · GBS · Other.</div>
+      </div>
+      <div class="card" style="border-color:var(--pink)">
+        <div class="card-label" style="color:var(--pink)">Segment 4 · US Addressable Advertising</div>
+        <div class="card-title">Verified, cleared for advertising</div>
+        <div class="card-body">
+          <strong>Addressable</strong> — on a 2026 tier, US Market, eligible for ad targeting.<br>
+          <strong>Excluded</strong> — Sales Opt Out = Excluded.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout amber" style="margin-top:20px">
+      <strong>"Excluded" is deliberate suppression, not an error.</strong> Exclusion is driven by <strong>Sales Opt Out = Excluded</strong> — accounts Sales has flagged to remove from all marketing activities. The Addressable segment feeds ad audiences; it is not a reporting count. <span style="color:var(--body-gray);font-style:italic">(The Sales Opt Out logic is rolling out now and takes effect shortly.)</span>
+    </div>
+
+    <h3 style="margin-top:40px">Edit Columns — the US Journey field roster</h3>
+    <p class="section-intro" style="margin-bottom:20px">All fields are added in any account list under <strong>Edit Columns</strong>. Most reports come pre-loaded; if yours doesn't, add from here. <strong>Use the US versions shown — not the DB defaults.</strong> Organize column order however you like; field selection is the rule, arrangement is yours.</p>
+
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <div class="card-label">Journey · directional read (US Journey)</div>
+        <div class="card-body">
+          • Journey Stage <code>[US Journey]</code><br>
+          • Days in Journey Stage <code>[US Journey]</code><br>
+          • Is MQA Qualified <code>[US Journey]</code><br>
+          • Is Pipeline Qualified <code>[US Journey]</code>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Trained scores · NA-trained (US)</div>
+        <div class="card-body">
+          • <strong>US</strong> Pipeline Predict — near-term propensity<br>
+          • <strong>US</strong> Qualification — ICP fit
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Account Segments · view-layer overlays (US)</div>
+        <div class="card-body">
+          • US Revenue Tier<br>
+          • US TP Relationship<br>
+          • US Vertical<br>
+          • US Addressable Advertising
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label" style="color:var(--pink)">Enrich your person lists into advertising</div>
+        <div class="card-body">
+          What you share back from total campaign diagnostics — the full picture on each account:<br><br>
+          • US Engagement (7 days / 3 months / 1 month) — web clicks<br>
+          • Journey Stage <code>[US Journey]</code> — where the account sits<br>
+          • US Pipeline Predict &amp; US Qualification — the scores<br>
+          • US High Intent Keywords (3 months)<br>
+          • High and Medium Intent (3 months)
+        </div>
+      </div>
+    </div>
+
+    <div class="callout slate" style="margin-top:24px">
+      <strong>One US-scoped, scored universe. Four segment overlays.</strong> Stackable to any cut — Healthcare + Tier 1 + Addressable + Net New is four clicks, no list rebuild. Always the US fields; that's what reads our logic right.
     </div>
   </section>
 
@@ -356,51 +479,120 @@
   <section id="journey">
     <div class="section-label">03 · Journey Stages</div>
     <h2>The 7-stage US buying journey</h2>
-    <p class="section-intro">Every account in the US Workspace tracks through seven stages based on signals — not a rep's gut feel. Marketing owns the top of the funnel. Sales takes over at MQA. The handoff is visible, tracked, and automatic when orchestration plays are live.</p>
+    <p class="section-intro">Every account in the US Workspace moves through six active <code>[US Journey]</code> stages, each defined by a hard signal threshold — tier, intent, engagement score, or opp status. Marketing owns through Marketing Qualified Account; Sales takes over at Opportunity. These are the live definitions as configured in Admin → Journey Stages. (An eighth bucket, "All Other," is Demandbase's required system default — display off, not used for targeting.)</p>
 
     <div class="journey-flow">
       <div class="journey-step">
         <div class="journey-dot jd-grey">—</div>
         <div class="journey-name">All Other</div>
-        <div class="journey-trigger">Not in target universe</div>
+        <div class="journey-trigger">No tier match. Default bucket.</div>
         <span class="journey-owner owner-mktg">Out of scope</span>
       </div>
       <div class="journey-step">
         <div class="journey-dot jd-grey">01</div>
         <div class="journey-name">Target Account</div>
-        <div class="journey-trigger">Added to US account list; meets revenue/tier criteria</div>
+        <div class="journey-trigger">On a 2026 US tier (T1-A, Tier 1–5)</div>
         <span class="journey-owner owner-mktg">Marketing</span>
       </div>
       <div class="journey-step">
         <div class="journey-dot jd-slate">02</div>
-        <div class="journey-name">Aware (Intent)</div>
-        <div class="journey-trigger">1+ keyword set firing; showing research behavior</div>
+        <div class="journey-name">Aware</div>
+        <div class="journey-trigger">Keyword intent firing (High/Med/Low) + recent activity</div>
         <span class="journey-owner owner-mktg">Marketing</span>
       </div>
       <div class="journey-step">
         <div class="journey-dot jd-slate">03</div>
         <div class="journey-name">Engaged</div>
-        <div class="journey-trigger">3+ intent signals OR site visit OR ad engagement</div>
+        <div class="journey-trigger">Engagement ≥10 in past 3 months</div>
         <span class="journey-owner owner-both">Mktg + SDR</span>
       </div>
       <div class="journey-step">
-        <div class="journey-dot jd-dark">04</div>
-        <div class="journey-name">MQA</div>
-        <div class="journey-trigger">Intent surge + engagement + buying group activity</div>
-        <span class="journey-owner owner-sales">BD Handoff</span>
+        <div class="journey-dot jd-dark" style="border-style:dashed">04</div>
+        <div class="journey-name">Marketing Qualified Account<span style="color:var(--pink)">*</span></div>
+        <div class="journey-trigger">Hits the MQ engagement threshold</div>
+        <span class="journey-owner owner-both">MQA Handoff</span>
       </div>
       <div class="journey-step">
         <div class="journey-dot jd-pink">05</div>
-        <div class="journey-name">Opportunity</div>
-        <div class="journey-trigger">SFDC opportunity created; deal in active motion</div>
+        <div class="journey-name">Opportunity (Pipeline)</div>
+        <div class="journey-trigger">Open opp in pipeline — deal in flight</div>
         <span class="journey-owner owner-sales">BD / Sales</span>
       </div>
       <div class="journey-step">
         <div class="journey-dot jd-pink">06</div>
         <div class="journey-name">Customer</div>
-        <div class="journey-trigger">Closed-won; active contract in SFDC</div>
+        <div class="journey-trigger">Opp stage = Win. Active customer.</div>
         <span class="journey-owner owner-sales">Expansion</span>
       </div>
+    </div>
+    <p class="js-footnote"><span style="color:var(--pink)">*</span> <strong>MQA is a directional gate, not a native sequential stage.</strong> It's a Demandbase account-signal read layered onto the journey — the dashed bead — while Target Account, Aware, Engaged, Opportunity, and Customer are the structural stages. The journey reads MQA → Opportunity as one measurable handoff.</p>
+
+    <div class="table-wrap">
+      <table class="tier-table js-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Stage</th>
+            <th>What it means</th>
+            <th>Who's on it</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="js-default">
+            <td><span class="js-num">—</span></td>
+            <td><span class="js-stage">All Other</span></td>
+            <td>System default. Holds every account that doesn't match another stage. Display off — not used for targeting or reporting.</td>
+            <td><span class="js-who who-default">Default bucket</span></td>
+          </tr>
+          <tr>
+            <td><span class="js-num">01</span></td>
+            <td><span class="js-stage">Target Account</span></td>
+            <td>On a 2026 US tier (T1-A, Tier 1–5)</td>
+            <td><span class="js-who who-mktg">Marketing</span></td>
+          </tr>
+          <tr>
+            <td><span class="js-num">02</span></td>
+            <td><span class="js-stage">Aware</span></td>
+            <td>Keyword intent firing (High/Med/Low) + recent activity</td>
+            <td><span class="js-who who-mktg">Marketing</span></td>
+          </tr>
+          <tr>
+            <td><span class="js-num">03</span></td>
+            <td><span class="js-stage">Engaged</span></td>
+            <td>Engagement ≥10 in past 3 months</td>
+            <td><span class="js-who who-sdr">SDR</span></td>
+          </tr>
+          <tr>
+            <td><span class="js-num">04</span></td>
+            <td><span class="js-stage">Marketing Qualified Account</span></td>
+            <td>Hits the MQ engagement threshold</td>
+            <td><span class="js-who who-sdr">SDR → MQL</span></td>
+          </tr>
+          <tr>
+            <td><span class="js-num">05</span></td>
+            <td><span class="js-stage">Opportunity (Pipeline)</span></td>
+            <td>Open opp in pipeline — deal in flight</td>
+            <td><span class="js-who who-sales">BD / Sales</span></td>
+          </tr>
+          <tr>
+            <td><span class="js-num">06</span></td>
+            <td><span class="js-stage">Customer</span></td>
+            <td>Opp stage = Win. Active customer.</td>
+            <td><span class="js-who who-sales">Expansion</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="js-footnote"><strong>Six active stages.</strong> "All Other" is Demandbase's required default bucket for unqualified / non-matching accounts — its display is toggled off and its selector logic can't be edited. It exists structurally but is <strong>not part of the active targeting or reporting model</strong>. Build lists and campaigns against stages 01–06 only.</p>
+
+    <p class="js-footnote" style="margin-top:16px"><strong>We stay on the Demandbase model — no custom stages.</strong> Where Demandbase can't observe an event, we don't build a stage to fake it — Salesforce owns that truth, and DB stays focused on account signal for advertising and targeting. Keeps the four bands (Aware · Engaged · Pipeline · Customer) clean.</p>
+
+    <div class="callout green">
+      <strong>✓ Now live — US Journey is reading.</strong> The journey stages built in <strong>Admin → Journey Stages</strong> are now mapped to the <strong>US Journey</strong> object that campaigns and lists read from. As of June 2026 the US Marketing ABX Dashboard is reading <strong>8,193 accounts</strong>, <strong>3,549 high-intent</strong>, <strong>89,895 intent keywords</strong>, across <strong>Tier 1A–5</strong>. Six active <code>[US Journey]</code> stages drive targeting: Target Account · Aware · Engaged · Marketing Qualified Account · Opportunity (Pipeline) · Customer (plus "All Other," the system default — display off).
+    </div>
+
+    <div class="callout amber">
+      <strong>The translation rule — match US Journey everywhere.</strong> Journey stages do not appear in a list or campaign selector on their own. The stage values translate from the Admin journey definition into <code>[US Journey]</code>, and <strong>every advertising list and campaign must filter on US Journey</strong> — not a separate or legacy journey — or the US Workspace won't read it and the selector returns <code>0 selected values</code>. If that happens: confirm the stages are saved/published (not draft), confirm you're filtering on <code>[US Journey]</code>, confirm US Journey is the default funnel for the workspace, then hard-refresh the selector (it caches per session).
     </div>
 
     <div class="card-grid card-grid-2" style="margin-top:24px">
@@ -424,13 +616,19 @@
   <!-- SDR / BD ROUTING -->
   <section id="routing">
     <div class="section-label">04 · SDR / BD Routing</div>
-    <h2>Pipeline Predict: who gets the account</h2>
-    <p class="section-intro">Every US account is scored by two Pipeline Predict models — CX Motion and Vertical/Transformation. The scores tell you which team acts and with what urgency. The logic is simple: 40+ goes to SDR, 60+ goes directly to BD.</p>
+    <h2>Engagement Points: who gets the account</h2>
+    <p class="section-intro">Every US account carries two propensity reads — Pipeline Predict for likelihood to generate pipeline in the near term, and Qualification for ICP fit. Both train on the full NA account universe. Routing itself runs on Engagement Points, the raw activity signal: 40+ goes to SDR, 60+ goes directly to BD. The scores tell you which accounts matter; Engagement Points tell you which team acts and when. Tiering and segment views (CX, vertical, geo) apply at the reporting layer, not in the model.</p>
+
+    <div class="card" style="background:var(--slate);border-color:var(--slate);margin-bottom:28px;padding:28px">
+      <div style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--pink);padding:4px 12px;border-radius:12px;margin-bottom:12px">The numbers to read from now on</div>
+      <div class="card-title" style="color:var(--white);font-size:19px;margin-bottom:10px">US Pipeline Predict Score &amp; US Qualification Score</div>
+      <div class="card-body" style="color:rgba(255,255,255,0.85)">These are the two scores to read going forward — both trained on the full NA account universe, both reading US logic. <strong style="color:#fff">US Pipeline Predict</strong> tells you who's heating up (near-term propensity to generate pipeline). <strong style="color:#fff">US Qualification</strong> tells you who fits (ICP fit, regardless of journey stage). Read them together: a high-fit account that isn't moving is a nurture; a moving account with weak fit is a fast disqualify. When you build a report or pull a list, these are the score columns that matter.</div>
+    </div>
 
     <div class="routing-grid">
       <div class="routing-card sdr">
         <div class="routing-score">40+</div>
-        <div class="routing-label">CX or Vertical Pipeline Predict Score</div>
+        <div class="routing-label">Engagement Points</div>
         <div class="routing-title">SDR Outreach</div>
         <div class="routing-body">Account is showing enough buying signal to warrant a warm outreach sequence — but not enough for a BD-led pursuit. SDR initiates contact, builds context, and surfaces the right personas before the account escalates.</div>
         <div class="routing-signals">
@@ -443,11 +641,11 @@
       </div>
       <div class="routing-card bd">
         <div class="routing-score" style="color:var(--pink)">60+</div>
-        <div class="routing-label">CX or Vertical Pipeline Predict Score</div>
+        <div class="routing-label">Engagement Points</div>
         <div class="routing-title">BD-Led Pursuit</div>
         <div class="routing-body">Account has crossed the threshold where BD energy is justified. Multiple intent signals, high persona completeness, and strong Pipeline Predict score together indicate an active buying motion — not passive research.</div>
         <div class="routing-signals">
-          <div class="routing-signal">Journey Stage = MQA</div>
+          <div class="routing-signal">Journey Stage = MQA or Opportunity</div>
           <div class="routing-signal">3+ keyword sets active</div>
           <div class="routing-signal">T1-A or T1 account tier</div>
           <div class="routing-signal">High buying group completeness</div>
@@ -457,25 +655,7 @@
     </div>
 
     <div class="callout slate">
-      <strong>Two models, one account.</strong> The same account can score differently on CX Motion vs. Vertical/Transformation. If Honeywell scores 42 on CX and 71 on Vertical, that tells you the deal entry point is transformation — not CX outsourcing. Lead with the higher-scoring motion. Don't default to CX just because it's the flagship pitch.
-    </div>
-
-    <div class="card-grid card-grid-3" style="margin-top:24px">
-      <div class="card">
-        <div class="card-label">Intent Surge > Raw Score</div>
-        <div class="card-title">Velocity matters more than the number</div>
-        <div class="card-body">A T2 account that jumped 20 Pipeline Predict points in 7 days is more actionable than a T1-A sitting at a steady 65. Watch the delta. Surge behavior means the buying window is open right now.</div>
-      </div>
-      <div class="card">
-        <div class="card-label">Missing Personas = Block</div>
-        <div class="card-title">Incomplete buying group caps the score</div>
-        <div class="card-body">If persona completeness is below 100% on a T1-A or T1 account, the Pipeline Predict score is artificially capped. Enrich the missing role through Lighthouse first — then let the model re-score. A 58 can become an 82 after one persona is added.</div>
-      </div>
-      <div class="card">
-        <div class="card-label">High Intent + Missing Personas</div>
-        <div class="card-title">Enrich before you route</div>
-        <div class="card-body">High intent with incomplete buying group coverage means the account is active but you don't have the right contact. Don't route it to BD with a half-built account. Enrich first. Route second. The window is usually open long enough.</div>
-      </div>
+      <strong>MQA and Opportunity are the BD signals in the journey.</strong> Accounts at MQA have cleared the engagement threshold; accounts at Opportunity have a live deal in flight — that's where BD energy is most justified. See <strong>Section 06 · Journey Targeting</strong> for how the stages band into Pipeline for advertising.
     </div>
   </section>
 
@@ -508,10 +688,6 @@
       </div>
     </div>
 
-    <div class="callout pink">
-      <strong>No sync exists between US Workspace and Global.</strong> Once a list is copied to Global for advertising, the two don't stay in sync. When you update the master in US Workspace — say you add a new account to <code>Tier 1A — Healthcare</code> — you must also update the <code>[US] Tier 1A — Healthcare</code> copy in Global for it to flow into active ad campaigns. This dual-maintenance only applies to lists that are being advertised against. Lists that aren't advertised live in US Workspace only and never need a Global copy.
-    </div>
-
     <div class="card-grid card-grid-2" style="margin-top:24px">
       <div class="card">
         <div class="card-label">Account Lists</div>
@@ -542,7 +718,7 @@
   <section id="advertising">
     <div class="section-label">06 · Advertising</div>
     <h2>Person Lists & Known Contacts — The Missing Step Everyone Skips</h2>
-    <p class="section-intro">This is the critical piece that makes advertising actually work. You've built your account lists in Global. Now you need to activate them with person-level targeting. Without person lists, your ads hit accounts but miss decision-makers. This SOP walks you through the exact workflow — word for word.</p>
+    <p class="section-intro">This is the critical piece that makes advertising actually work. You've built your account lists in US Workspace and pushed the [US] copy to Global for advertising. Now you need to activate them with person-level targeting. Without person lists, your ads hit accounts but miss decision-makers. This SOP walks you through the exact workflow — word for word.</p>
 
     <div class="card" style="background: var(--pink-subtle); border-color: var(--pink); margin-bottom: 32px;">
       <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
@@ -589,6 +765,164 @@
         </div>
       </div>
     </div>
+
+    <!-- ════ JOURNEY TARGETING — modular rebuild ════ -->
+    <div style="margin-top:48px;padding-top:40px;border-top:1px solid var(--pastel-slate-light)">
+      <div class="section-label">06b · Journey Targeting</div>
+      <h2>Read the directional signal, pull the people, hand it to Sales</h2>
+      <p class="section-intro">This is the daily motion. Demandbase reads accounts that are in-market; you pull the people, layer the scores, and route it. The blueprint underneath is the reference — but your head lives in the directional read.</p>
+
+      <!-- MODULE 1 · the funnel banding (4 bands) -->
+      <div style="border:1px solid var(--pastel-slate-light);border-radius:12px;box-shadow:var(--shadow-sm);padding:24px;background:var(--white)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--body-gray);margin-bottom:16px">Campaign builder → Step 2 · Journey Targeting · US Journey</div>
+        <div class="card-grid card-grid-4">
+          <div class="card" style="text-align:center;margin:0">
+            <div class="card-label" style="color:var(--slate)">Aware</div>
+            <div class="card-body" style="font-size:13px">Target Account · Aware</div>
+          </div>
+          <div class="card" style="text-align:center;margin:0">
+            <div class="card-label" style="color:var(--slate)">Engaged</div>
+            <div class="card-body" style="font-size:13px">Engaged · <strong>MQA*</strong></div>
+          </div>
+          <div class="card" style="text-align:center;margin:0;border-color:var(--pink)">
+            <div class="card-label" style="color:var(--pink)">Pipeline</div>
+            <div class="card-body" style="font-size:13px">Opportunity</div>
+          </div>
+          <div class="card" style="text-align:center;margin:0">
+            <div class="card-label" style="color:var(--slate)">Customer</div>
+            <div class="card-body" style="font-size:13px">Customer</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--body-gray);margin-top:14px">Assign each journey stage to a funnel band. The band sets the campaign outcome.</div>
+      </div>
+
+      <!-- MODULE 2 · the two gate cards -->
+      <div class="card-grid card-grid-2" style="margin-top:24px">
+        <div class="card">
+          <div class="card-label">Engaged / MQA<span style="color:var(--pink)">*</span></div>
+          <div class="card-title">Marketing-side gate</div>
+          <div class="card-body">MQA bands into Engaged. Marketing still owns it — the account is showing signal, not yet a live deal motion.</div>
+        </div>
+        <div class="card" style="border-color:var(--pink)">
+          <div class="card-label" style="color:var(--pink)">Pipeline</div>
+          <div class="card-title">Sales-side gate</div>
+          <div class="card-body">Opportunity bands into Pipeline — a live deal in flight, BD in motion. Set once in <strong>Advertising Funnel Designations</strong> — it then applies to every campaign automatically.</div>
+        </div>
+      </div>
+      <p class="js-footnote" style="margin-top:12px"><span style="color:var(--pink)">*</span> Directional journey gate, assigned to this funnel band — <strong>not a native advertising stage.</strong> Advertising targets the four bands (Aware · Engaged · Pipeline · Customer); MQA is designated into a band once in <strong>Advertising Funnel Designations</strong>, then applies to every campaign automatically. Accounts are reached through the band.</p>
+
+      <!-- MODULE 3 · THE WORKFLOW (hero) -->
+      <div style="margin-top:40px">
+        <div class="section-label">The workflow</div>
+        <h3 style="font-size:clamp(1.2rem,1.8vw,1.5rem);margin-bottom:18px">From directional signal to Sales hand-off</h3>
+        <div class="card-grid card-grid-3">
+          <div class="card">
+            <div class="card-label" style="color:var(--pink)">Step 1 · Read</div>
+            <div class="card-title">Pull the in-market accounts</div>
+            <div class="card-body">Read the directional gate — <strong>MQA</strong>. These are the accounts DB's algorithms say are in-market, off the engagement threshold. For deal-stage signal, read <strong>Opportunity</strong> — anchored on a live opp in Salesforce, not an account-signal estimate.</div>
+          </div>
+          <div class="card">
+            <div class="card-label" style="color:var(--pink)">Step 2 · Find the people</div>
+            <div class="card-title">Person list + Known Contacts</div>
+            <div class="card-body">Pull the matching person list for those accounts. Now you're at named contacts inside the buying group, not an account domain.</div>
+          </div>
+          <div class="card">
+            <div class="card-label" style="color:var(--pink)">Step 3 · Layer the scores</div>
+            <div class="card-title">US Journey + PP + Qualification</div>
+            <div class="card-body">Add US Journey Stage, US Pipeline Predict, and US Qualification to the view. Three clean reads — far easier than the retired CX/Vertical scores.</div>
+          </div>
+          <div class="card">
+            <div class="card-label" style="color:var(--pink)">Step 4 · Confirm in-market</div>
+            <div class="card-title">The algos agree</div>
+            <div class="card-body">PP and Qualification confirm propensity and fit. The directional read is now backed by two trained scores — this account is live.</div>
+          </div>
+          <div class="card">
+            <div class="card-label" style="color:var(--pink)">Step 5 · Hand to Sales</div>
+            <div class="card-title">Route it</div>
+            <div class="card-body">The package — accounts, people, scores, context — is ready to put in front of Sales. The warm-up is done.</div>
+          </div>
+          <div class="card" style="background:var(--slate);border-color:var(--slate)">
+            <div class="card-label" style="color:var(--pink)">Need a report?</div>
+            <div class="card-title" style="color:var(--white)">Submit an ABX intake</div>
+            <div class="card-body" style="color:rgba(255,255,255,0.85)">For a custom report or pull, file the platform request.
+              <a href="https://form.asana.com/?k=i0gd38d4aQJYSjwcPzeFog&d=8868641480698" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:var(--pink);color:var(--white);padding:9px 16px;border-radius:8px;font-weight:600;font-size:13px">ABM &amp; Marketing Ops Platform Request →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout amber" style="margin-top:24px">
+          <strong>Read a stage for exactly what it is — and isn't.</strong> Journey Stage is an <strong>account-level</strong> read of where a company qualifies <em>right now</em> based on its signals. A stage like MQA means the company's current signals validate it as in-market. It does <strong>not</strong> mean the person in the row is sales-ready, and it does <strong>not</strong> mean the account is in a campaign or has been served ads. Two things the stage is silently <em>not</em> telling you:
+          <div style="margin-top:12px;display:grid;gap:8px">
+            <div>• <strong>Not the person.</strong> The row is a person at a qualifying company — they may or may not be the right contact. Your next step is finding the right people inside the account.</div>
+            <div>• <strong>Not a campaign.</strong> An account can be MQA having never been in an ad campaign, and an account in a live campaign can still read Aware. Stage and campaign membership move on different tracks. If you need campaign reach — who was touched, who was served — that's the <strong>Campaigns Dashboard / Program Impact</strong>, a separate view. Cross-reference the two; the stage list won't tell you on its own.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 4 · BLUEPRINT REFERENCE (4 cards, blueprint language only) -->
+      <div style="margin-top:48px">
+        <div class="section-label">The blueprint — for reference</div>
+        <h3 style="font-size:clamp(1.2rem,1.8vw,1.5rem);margin-bottom:4px">How the official lead funnel reads</h3>
+        <p class="section-intro" style="margin-bottom:20px">The blueprint runs on <strong>leads and contacts</strong> in Salesforce — Suspect → MQL → SQL → SAL → Opportunity. It never uses MQA; that's the directional account read above. This is the truth the directional sits on top of.</p>
+        <div class="card-grid card-grid-4 bp-cards">
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="background:#7b86a8;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px">Suspect</div>
+            <div style="padding:18px 16px">
+              <div class="card-title">Nurturing toward signal</div>
+              <div class="card-body">A potential fit that hasn't shown interest yet. Marketing nurtures it through nurture streams until it shows a signal — it's being worked, not parked.</div>
+            </div>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="background:#6b4e9e;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px">MQL · Marketing Qualified Lead</div>
+            <div style="padding:18px 16px">
+              <div class="card-title">Hits score 40 — SDR trigger</div>
+              <div class="card-body">Shown interest via marketing. At a <strong>score of 40</strong>, the trigger fires: SDR, work it — drive toward 60. <span style="color:var(--body-gray);font-style:italic">Also nurtured locally via nurture streams (operational, not in the blueprint).</span></div>
+            </div>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="background:#3a3f63;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px">SQL · Sales Qualified Lead</div>
+            <div style="padding:18px 16px">
+              <div class="card-title">60+ or RFP — the handoff</div>
+              <div class="card-body">The 40→60 run was the discovery window. At <strong>60+</strong> (or a direct RFP), it's qualified. SDR logs it and hands off to BD.</div>
+            </div>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="background:#2d7a52;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px">SAL · Sales Accepted Lead</div>
+            <div style="padding:18px 16px">
+              <div class="card-title">Meeting held — legit opp</div>
+              <div class="card-body">BD works it and sets the meeting. <strong>The meeting occurs and BD believes there's a legitimate opportunity.</strong> An Opportunity gets logged in SFDC. <span style="color:var(--body-gray);font-weight:600">Demandbase has no visibility into this step — it picks back up at Opportunity.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 5 · THE CROSSWALK (the tie) -->
+      <div style="margin-top:48px">
+        <div class="card-label" style="color:var(--slate)">DIRECTIONAL ↔ BLUEPRINT — reads alongside SFDC, does not replace it</div>
+        <h3 style="margin:6px 0 14px">Where the two ladders tie</h3>
+        <div class="table-wrap">
+          <table class="tier-table js-table">
+            <thead>
+              <tr>
+                <th style="width:34%">Account read · Demandbase (directional)</th>
+                <th style="width:46%">Lead stage · Salesforce (blueprint truth)</th>
+                <th style="width:20%">Read</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="js-stage">Target Account</span></td><td>Verified target account (pre-lead)</td><td><span class="js-who who-default">Directional</span></td></tr>
+              <tr><td><span class="js-stage">Aware</span></td><td>Suspect</td><td><span class="js-who who-default">Directional</span></td></tr>
+              <tr><td><span class="js-stage">Engaged</span></td><td>MQL</td><td><span class="js-who who-default">Directional</span></td></tr>
+              <tr><td><span class="js-stage">MQA</span></td><td>Between MQL and SQL (the 40→60 run)</td><td><span class="js-who who-default">Directional</span></td></tr>
+                            <tr style="background:var(--pink-subtle)"><td><span class="js-stage" style="color:var(--pink)">Opportunity</span> <span style="font-size:10px;font-weight:700;color:var(--pink);letter-spacing:.04em">↑ PIPELINE BAND</span></td><td>Opportunity (open, logged in SFDC)</td><td><span class="js-who who-sales">Anchored</span></td></tr>
+              <tr><td><span class="js-stage">Customer</span></td><td>Won (closed-won)</td><td><span class="js-who who-sales">Anchored</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="js-footnote"><strong>The lead ladder is the truth (people, in Salesforce). The account ladder is the read (accounts, in Demandbase).</strong> <em>Directional</em> rows are the account-signal view; <em>Anchored</em> rows fire on a hard SFDC trigger. <strong>SAL has no account-side row</strong> — Demandbase can't observe sales acceptance. Salesforce owns that step; the account ladder picks back up at Opportunity.</p>
+        <p class="js-footnote" style="margin-top:8px"><strong>Backend-built, logic locked.</strong> The OCRs (Opportunity Contact Roles) that anchor the Opportunity row live in the Contact Role section.</p>
+      </div>
+    </div>
   </section>
 
   <!-- BUYING GROUPS -->
@@ -596,6 +930,27 @@
     <div class="section-label">07 · Buying Groups</div>
     <h2>Who you're targeting inside the account</h2>
     <p class="section-intro">Buying groups define the personas TP pursues within each account. Demandbase targets at the intersection of account list and persona — not account-level only. If your campaign isn't reaching the right people, check persona filters and completeness first.</p>
+
+    <!-- CFO & PROCUREMENT — sits above all groups -->
+    <div class="callout pink" style="margin:0 0 8px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:22px;line-height:1">💰</div>
+      <div>
+        <strong style="display:block;font-size:15px;margin-bottom:6px">CFO &amp; Procurement sit ON TOP of all three buying groups.</strong>
+        They are part of <em>every</em> conversation and <em>every</em> deal — the CFO is the budget approver, Procurement is the budget gatekeeper. They cut across CX Core, LOBs, and Vertical Specialists. <strong>But do not drop them into every ad.</strong> They join the buying group when budget, approval, or contract is in play — not as a default ad audience. The line groups below are who you build the campaign around; CFO/Procurement get layered in at the deal stage.
+      </div>
+    </div>
+
+    <!-- ADVERTISING USE-CASE RULE -->
+    <div class="callout amber" style="margin:0 0 24px">
+      <strong>Advertising rule — match the buying group to the campaign motion. Don't shotgun every persona into one ad.</strong>
+      <div style="margin-top:10px;display:grid;gap:8px;font-size:13.5px">
+        <div><strong>Pure CX motion</strong> (contact center, customer care, CX outsourcing) → <strong>CX Core only.</strong> Don't add LOB or vertical personas — you'll dilute the audience.</div>
+        <div><strong>Vertical-led motion</strong> (e.g. Healthcare RCM, regulated industry) → <strong>Vertical Specialists</strong> (and LOB if budget-led). <em>Skip CX Core</em> — the niche industry buyer gates the decision, not the CX buyer.</div>
+        <div><strong>LOB / transformation motion</strong> (RAS, Collect, TaaS, Trust &amp; Safety) → <strong>LOBs</strong> + the relevant Vertical Specialists. CX Core only if there's a customer-service component.</div>
+        <div><strong>Mixed / multi-motion</strong> → combine the groups the campaign actually touches, in priority order. Add CFO/Procurement only when the ask is budget or approval.</div>
+        <div style="border-top:1px solid rgba(0,0,0,.08);padding-top:8px"><strong>The test:</strong> name the webinar/campaign first. A RAS webinar targets <em>revenue</em> personas (CRO, VP Sales, CFO, CTO for AI) — not CX titles. The campaign name tells you the audience.</div>
+      </div>
+    </div>
 
     <div class="card-grid card-grid-3">
       <div class="card accent-pink">
@@ -660,7 +1015,7 @@
           <li>Vendor consolidation</li>
           <li>BPO contract</li>
           <li>Service provider comparison</li>
-          <li>Teleperformance alternative</li>
+          <li>TP alternative</li>
           <li>Contact center outsourcing vendor</li>
           <li>BPO partner selection</li>
           <li>Managed services procurement</li>
@@ -699,22 +1054,18 @@
       </div>
       <div class="rule-item">
         <div class="rule-num">3</div>
-        <div class="rule-body"><strong>No automatic sync between US Workspace and Global.</strong> Every update in US Workspace requires a manual update to the corresponding <code>[US]</code> asset in Global. This applies to keyword sets, account lists, and person lists. Dual-maintenance is permanent architecture — not a temporary workaround.</div>
-      </div>
-      <div class="rule-item">
-        <div class="rule-num">4</div>
         <div class="rule-body"><strong>Advertising campaigns build at tenant/Global level.</strong> The DSP is not workspace-scoped. If you try to build a campaign referencing a US Workspace-only asset, it won't connect to the ad layer. Always reference the <code>[US]</code> Global version in campaign targeting.</div>
       </div>
       <div class="rule-item">
-        <div class="rule-num">5</div>
+        <div class="rule-num">4</div>
         <div class="rule-body"><strong>Geo-targeting: United States only.</strong> When configuring advertising campaigns, North America defaults to Canada + Mexico + United States. Always deselect Mexico — Mexico is LATAM, not US. Leaving it selected pulls LATAM-owned accounts into US targeting and pollutes data. Set to United States only at the country level, every campaign, every time.</div>
       </div>
       <div class="rule-item">
-        <div class="rule-num">6</div>
+        <div class="rule-num">5</div>
         <div class="rule-body"><strong>SFDC campaign member status = "Selected for Campaign."</strong> Orchestration-written campaign members always use this status. Never use "Responded," "Filled Out Form," or any status that implies an action the contact hasn't taken. Filter logic on each automation excludes existing members from re-triggering.</div>
       </div>
       <div class="rule-item">
-        <div class="rule-num">7</div>
+        <div class="rule-num">6</div>
         <div class="rule-body"><strong>All DB admin and integration requests route through the DB Ops Manager.</strong> Analysts and campaign operators do not have admin access. If a configuration change, integration setup, or Salesforce connector issue is needed, route to the DB Ops Manager — not directly to other admin contacts.</div>
       </div>
     </div>
@@ -746,14 +1097,13 @@
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
     <div>
       <strong>Demandbase US Workspace</strong> · ABM Suite<br>
-      US Region · Teleperformance ABM Program · 2026
+      US Region · TP ABM Program · 2026
     </div>
     <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="padding:8px 20px;background:var(--slate);color:var(--color-bg);border-radius:6px;font-weight:600;font-size:13px;">Back to top</a>
   </div>
 </footer>
 
 <script src="../assets/js/navigation.js"></script>
-<script src="../assets/js/dark-mode.js"></script>
 <script src="/assets/js/back-to-top.js"></script>
 </body>
 </html>
