@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demandbase Workspaces Reference — TP Rules</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --slate:        #484C6A;
+    --slate-dark:   #2e3150;
+    --slate-mid:    #5c6080;
+    --pink:         #FF0082;
+    --white:        #FFFFFF;
+    --dark-gray:    #414141;
+    --pastel-slate: #C2C7CD;
+    --pastel-light: #eef0f3;
+    --bg:           #f5f6f8;
+    --success:      #00AF9B;
+    --warn:         #ff5c00;
+    --danger:       #ef4444;
+    --mono:         'DM Mono', monospace;
+    --sans:         'DM Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--dark-gray); font-size: 14px; line-height: 1.6; }
+
+  .page-header { background: var(--slate); padding: 40px 48px 32px; position: relative; overflow: hidden; }
+  .page-header::before { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:var(--pink); }
+  .header-eyebrow { font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--pink); margin-bottom:10px; }
+  .header-title { font-size:28px; font-weight:300; color:var(--white); letter-spacing:-0.02em; margin-bottom:8px; }
+  .header-title strong { font-weight:600; }
+  .header-sub { font-size:13px; color:var(--pastel-slate); line-height:1.65; }
+  .header-meta { display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+  .meta-pill { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:4px 14px; font-size:11px; color:var(--pastel-slate); font-family:var(--mono); }
+  .meta-pill span { color:var(--white); font-weight:500; }
+
+  .page-body { max-width:1100px; margin:0 auto; padding:44px 36px 80px; }
+  .section-label { font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--pink); margin-bottom:6px; }
+  .section-intro { font-size:13px; color:#777; margin-bottom:24px; line-height:1.7; }
+  .divider { height:1px; background:#e2e4e9; margin:40px 0; }
+
+  /* RULES */
+  .rules-grid { display:grid; gap:12px; margin-bottom:40px; }
+  .rule { background:var(--white); border-radius:10px; border:1px solid #e2e4e9; padding:20px 24px; display:flex; gap:18px; align-items:flex-start; transition:box-shadow 0.2s, border-color 0.2s; position:relative; overflow:hidden; }
+  .rule::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--pink); opacity:0; transition:opacity 0.2s; }
+  .rule:hover { box-shadow:0 6px 24px rgba(72,76,106,0.12); border-color:rgba(255,0,130,0.3); }
+  .rule:hover::before { opacity:1; }
+  .rule-num { background:linear-gradient(135deg, var(--pink), #ff3399); color:var(--white); font-size:16px; font-weight:700; font-family:var(--mono); min-width:42px; height:42px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 12px rgba(255,0,130,0.25); }
+  .rule-text { font-size:14px; color:var(--dark-gray); line-height:1.75; }
+  .rule-text strong { color:var(--slate); font-weight:600; }
+  .rule-text code { font-family:var(--mono); background:var(--pastel-light); border:1px solid var(--pastel-slate); border-radius:4px; padding:2px 8px; font-size:12px; color:var(--slate); }
+
+  /* CALLOUTS */
+  .callout { border-radius:10px; padding:18px 22px; margin-bottom:24px; border-left:4px solid; }
+  .callout-title { font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px; }
+  .callout-text { font-size:13px; line-height:1.7; }
+  .callout.warn { background:rgba(255,92,0,0.06); border-color:var(--warn); color:var(--dark-gray); }
+  .callout.warn .callout-title { color:var(--warn); }
+  .callout.danger { background:rgba(239,68,68,0.08); border-color:var(--danger); color:var(--dark-gray); }
+  .callout.danger .callout-title { color:var(--danger); }
+  .callout.info { background:rgba(72,76,106,0.05); border-color:var(--slate); color:var(--dark-gray); }
+  .callout.info .callout-title { color:var(--slate); }
+
+  /* ARCHITECTURE DIAGRAM */
+  .architecture { background:var(--white); border-radius:10px; border:1px solid #e2e4e9; padding:28px 32px; margin-bottom:32px; }
+  .architecture h3 { font-size:16px; font-weight:600; color:var(--slate); margin-bottom:16px; }
+  .workspace-flow { display:grid; grid-template-columns:1fr auto 1fr; gap:20px; align-items:center; margin:20px 0; }
+  .workspace-box { background:linear-gradient(135deg, #f8f9fc, #eef0f5); border:2px solid var(--slate); border-radius:8px; padding:20px; text-align:center; }
+  .workspace-box.primary { background:linear-gradient(135deg, #fff5f9, #ffe6f0); border-color:var(--pink); }
+  .workspace-title { font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--slate); margin-bottom:8px; }
+  .workspace-box.primary .workspace-title { color:var(--pink); }
+  .workspace-desc { font-size:12px; color:var(--slate-mid); line-height:1.55; }
+  .flow-arrow { font-size:24px; color:var(--slate-mid); }
+
+  /* JOURNEY STAGE SECTION */
+  .workspace-box.success { background:linear-gradient(135deg,#eefcfa,#defaf5); border-color:var(--success); }
+  .workspace-box.success .workspace-title { color:var(--success); }
+  .callout.success { background:rgba(0,175,155,0.07); border-color:var(--success); color:var(--dark-gray); }
+  .callout.success .callout-title { color:var(--success); }
+  .journey-flow { grid-template-columns:1fr auto 1fr auto 1fr; }
+  .stage-row { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 4px; }
+  .stage-chip { font-family:var(--mono); font-size:12px; background:var(--white); border:1px solid var(--pastel-slate); border-radius:20px; padding:5px 14px; color:var(--slate); }
+  .stage-chip.lead { border-color:var(--pink); color:var(--pink); }
+  .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:14px 0 4px; }
+  .metric { background:var(--white); border:1px solid #e2e4e9; border-radius:8px; padding:16px 18px; }
+  .metric-num { font-size:22px; font-weight:600; color:var(--slate); letter-spacing:-0.02em; }
+  .metric-label { font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.06em; margin-top:4px; }
+
+  @media (max-width: 768px) {
+    .workspace-flow { grid-template-columns:1fr; gap:12px; }
+    .journey-flow { grid-template-columns:1fr; }
+    .flow-arrow { transform:rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-eyebrow">Demandbase Platform</div>
+  <h1 class="header-title"><strong>Workspaces Reference</strong> — TP Rules</h1>
+  <p class="header-sub">Comprehensive guide to Demandbase dual-workspace architecture, governance rules, and platform configuration standards for Teleperformance USA.</p>
+  <div class="header-meta">
+    <div class="meta-pill">Tenant: <span>15053</span></div>
+    <div class="meta-pill">Workspaces: <span>US + Global</span></div>
+    <div class="meta-pill">Updated: <span>Jun 2026</span></div>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- CRITICAL CONTEXT -->
+  <div class="callout danger">
+    <div class="callout-title">⚠️ Critical: Why We Have Two Workspaces</div>
+    <div class="callout-text">Third Play operates a <strong>dual-workspace architecture</strong> in Demandbase (Tenant 15053). This was NOT by design — it resulted from the <strong>Fraud Campaign incident</strong> on April 26, 2025. A globally-scoped advertising campaign accidentally targeted 4.8M contacts in Germany and MENA regions, violating data governance rules. The Global Workspace was created to isolate US targeting from international regions. <strong>The dual-workspace setup is a permanent governance control, not a temporary workaround.</strong></div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="architecture">
+    <h3>Dual-Workspace Architecture</h3>
+    <div class="workspace-flow">
+      <div class="workspace-box primary">
+        <div class="workspace-title">US Workspace</div>
+        <div class="workspace-desc">Primary workspace. All lists, personas, buying groups, and journey stages built here first. Source of truth for configuration.</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="workspace-box">
+        <div class="workspace-title">Global Workspace</div>
+        <div class="workspace-desc">Advertising-only workspace. Manually duplicated from US with <code>[US]</code> prefix. No sync exists — both must be maintained independently.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== JOURNEY STAGE ALIGNMENT ===== -->
+  <div class="section-label">Journey Stages</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:4px;letter-spacing:-0.01em;">Journey Stage Alignment — "US Journey" Mapping</h2>
+  <p class="section-intro">Journey stages built in <strong>Admin → Journey Stages</strong> do not appear in campaign and list selectors on their own. The stage values <strong>translate</strong> from the Admin journey definition into the <code>[US Journey]</code> object, and every advertising list must be mapped to <strong>US Journey</strong> for the US Workspace to read them. Until that mapping is in place, the Journey Stage selector returns <code>0 selected values</code>.</p>
+
+  <div class="architecture">
+    <h3>How the Mapping Flows</h3>
+    <div class="workspace-flow journey-flow">
+      <div class="workspace-box">
+        <div class="workspace-title">Admin → Journey Stages</div>
+        <div class="workspace-desc">Source definition. Stages built here are the single source of truth that ties the funnel together.</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="workspace-box primary">
+        <div class="workspace-title">[US Journey] Object</div>
+        <div class="workspace-desc">Stage values translate into the <code>[US&nbsp;Journey]</code> dimension used by selectors.</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="workspace-box success">
+        <div class="workspace-title">Advertising → US Journey</div>
+        <div class="workspace-desc">Each list/campaign maps to <strong>US Journey</strong> so US Workspace reads the stages.</div>
+      </div>
+    </div>
+    <div class="stage-row">
+      <span class="stage-chip">All Other</span>
+      <span class="stage-chip">Target Account</span>
+      <span class="stage-chip lead">Aware</span>
+      <span class="stage-chip">Engaged</span>
+      <span class="stage-chip">Marketing Qualified Account</span>
+      <span class="stage-chip">Sales Qualified Account</span>
+      <span class="stage-chip">Opportunity (Pipeline)</span>
+      <span class="stage-chip">Customer</span>
+    </div>
+    <p style="font-size:12px;color:#888;margin-top:6px;">Live <code>[US Journey]</code> stage values now populating in the Advanced selector.</p>
+  </div>
+
+  <div class="callout success">
+    <div class="callout-title">✓ Confirmed Reading — US Marketing ABX Dashboard</div>
+    <div class="callout-text">With the journey stages mapped to US Journey, the US Workspace is now reading the full account base across the funnel and tier model.</div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-num">8,193</div><div class="metric-label">Total Accounts</div></div>
+      <div class="metric"><div class="metric-num">3,549</div><div class="metric-label">High Intent</div></div>
+      <div class="metric"><div class="metric-num">89,895</div><div class="metric-label">Intent Keywords</div></div>
+      <div class="metric"><div class="metric-num">Tier 1A–5</div><div class="metric-label">Tier Model Reading</div></div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-title">The Translation Rule — Match US Journey Everywhere</div>
+    <div class="callout-text">
+      Once stages live in Admin → Journey Stages, you must map <strong>US Journey</strong> to everything downstream — <strong>or the US Workspace will not read it.</strong><br><br>
+      <strong>• Advertising lists:</strong> set the Journey Stage selector to <code>[US Journey]</code> and select the stage values.<br>
+      <strong>• Campaign setup:</strong> the campaign's journey stage must match the Admin <strong>US Journey</strong> definition, not a separate/legacy journey.<br>
+      <strong>• Consistency:</strong> if any list points to a different journey, its stages won't translate and the selector shows <code>0 selected values</code>.
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-title">Troubleshooting — Selector Shows "0 Selected Values"</div>
+    <div class="callout-text">
+      <strong>1.</strong> Confirm the stages exist and are <strong>saved/published</strong> in Admin → Journey Stages (not draft).<br>
+      <strong>2.</strong> Confirm the list/campaign is filtering on <code>[US Journey]</code> — the journey that carries the Admin stages.<br>
+      <strong>3.</strong> Confirm <strong>US Journey</strong> is the default funnel mapped for the US Workspace.<br>
+      <strong>4.</strong> Hard-refresh the selector (the picklist caches per session). Newly mapped stages populate once accounts are assigned to them.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TP RULES -->
+  <div class="section-label">Non-Negotiable</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:4px;letter-spacing:-0.01em;">7 TP Rules</h2>
+  <p class="section-intro">These rules govern all Demandbase platform operations for Third Play USA. Non-compliance risks data leakage, attribution failures, and advertising errors. These are platform constraints, not best practices — they cannot be bypassed.</p>
+
+  <div class="rules-grid">
+    <div class="rule">
+      <div class="rule-num">1</div>
+      <p class="rule-text"><strong>Every account list and person list lives in both workspaces.</strong> Build it in US, then duplicate it to Global with a <strong>[US]</strong> prefix.</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-num">2</div>
+      <p class="rule-text"><strong>Advertising campaigns only read from Global.</strong> A list in US Workspace alone will not populate an ad audience.</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-num">3</div>
+      <p class="rule-text"><strong>Geo is set to United States explicitly.</strong> "North America" includes Mexico by default.</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-num">4</div>
+      <p class="rule-text"><strong>Every advertising campaign includes a Person List under Known Contacts.</strong></p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-num">5</div>
+      <p class="rule-text"><strong>Person lists are Dynamic, built in Advanced selector mode.</strong></p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-num">6</div>
+      <p class="rule-text"><strong>Keyword management is admin-gated.</strong> All keyword additions route through Sharath.</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-num">7</div>
+      <p class="rule-text"><strong>SFDC is owned by Josh and Remy.</strong> Sharath's lane covers integration sync points only.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WORKFLOW IMPLICATIONS -->
+  <div class="section-label">Operational Impact</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:12px;letter-spacing:-0.01em;">How TP Rules Affect Daily Operations</h2>
+
+  <div class="callout info">
+    <div class="callout-title">List Creation Workflow</div>
+    <div class="callout-text">
+      <strong>Step 1:</strong> Build the list in <strong>US Workspace</strong> (Database → People Lists or Account Lists).<br>
+      <strong>Step 2:</strong> Duplicate to <strong>Global Workspace</strong> using the Duplicate function.<br>
+      <strong>Step 3:</strong> Remove <code>Copy of —</code> prefix and prepend <code>[US]</code> to the list name in Global.<br>
+      <strong>Step 4:</strong> Verify geo filter is set to <strong>United States</strong> (not North America) in both workspaces.<br>
+      <strong>Step 5:</strong> If the list feeds an advertising campaign, ensure it's configured in Global Workspace with Person List attached.
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-title">Common Pitfalls</div>
+    <div class="callout-text">
+      <strong>• Building in Global first:</strong> Violates TP Rule #1. US Workspace is always the source of truth.<br>
+      <strong>• Using "North America" geo filter:</strong> Includes Mexico by default, violating data governance.<br>
+      <strong>• Forgetting Person List in ad campaigns:</strong> Campaign will fail to target known contacts (TP Rule #4).<br>
+      <strong>• Using Static lists instead of Dynamic:</strong> Lists go stale and won't sync from SFDC (TP Rule #5).<br>
+      <strong>• Adding keywords without approval:</strong> All keyword changes must route through Sharath (TP Rule #6).
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GOVERNANCE CONTEXT -->
+  <div class="section-label">Governance</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:12px;letter-spacing:-0.01em;">Ownership & Escalation</h2>
+
+  <div style="background:var(--white);border-radius:10px;border:1px solid #e2e4e9;padding:24px 28px;margin-bottom:24px;">
+    <p style="font-size:13px;line-height:1.75;color:var(--dark-gray);margin-bottom:16px;"><strong>Demandbase Platform Admin:</strong> Sharath Madishetty (sharath.madishetty@tp.com)</p>
+    <p style="font-size:13px;line-height:1.75;color:var(--dark-gray);margin-bottom:16px;"><strong>SFDC Integration & Campaign Attribution:</strong> Josh Alonzo (josh.alonzo@tp.com), Remy Hovsepian</p>
+    <p style="font-size:13px;line-height:1.75;color:var(--dark-gray);margin-bottom:16px;"><strong>Global Demandbase POC:</strong> Irina Podgornaya (Head of Demand Generation, Global)</p>
+    <p style="font-size:13px;line-height:1.75;color:var(--dark-gray);"><strong>Workspace Architecture Change Requests:</strong> Must route through Josh + Sharath with Leslie approval. The dual-workspace architecture is locked due to data governance constraints.</p>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-title">When to Escalate</div>
+    <div class="callout-text">
+      <strong>• Platform configuration questions:</strong> Sharath Madishetty<br>
+      <strong>• SFDC sync issues or campaign attribution failures:</strong> Josh Alonzo or Remy Hovsepian<br>
+      <strong>• Keyword strategy or new keyword set requests:</strong> Sharath (admin-gated per TP Rule #6)<br>
+      <strong>• Data governance violations (e.g., international contact exposure):</strong> Immediate escalation to Josh + Legal<br>
+      <strong>• Workspace architecture changes:</strong> Josh + Sharath with Leslie sign-off required
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REFERENCE LINKS -->
+  <div class="section-label">Additional Resources</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:12px;letter-spacing:-0.01em;">Related Documentation</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;">
+    <a href="../list-pulls/index.html" style="background:var(--white);border-radius:8px;border:1px solid #e2e4e9;padding:18px 22px;text-decoration:none;color:var(--dark-gray);display:block;transition:box-shadow 0.2s,border-color 0.2s;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--pink);margin-bottom:6px;">List Pulls SOP</div>
+      <div style="font-size:13px;line-height:1.6;">Step-by-step workflow for creating person lists in US Workspace and duplicating to Global.</div>
+    </a>
+    <a href="../platform-guide/index.html" style="background:var(--white);border-radius:8px;border:1px solid #e2e4e9;padding:18px 22px;text-decoration:none;color:var(--dark-gray);display:block;transition:box-shadow 0.2s,border-color 0.2s;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--pink);margin-bottom:6px;">Platform Guide</div>
+      <div style="font-size:13px;line-height:1.6;">Comprehensive Demandbase US Workspace documentation and configuration reference.</div>
+    </a>
+  </div>
+
+</div>
+
+<script src="../assets/js/navigation.js"></script>
+</body>
+</html>

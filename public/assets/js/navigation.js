@@ -17,9 +17,12 @@
     const isPromptsLab = currentPath.includes('prompts-lab');
     const isROICalculator = currentPath.includes('roi-calculator');
     const isGuides = currentPath.includes('guides');
+    const isBuyingGroups = currentPath.includes('buying-groups');
+    const isWorkspacesRef = currentPath.includes('workspaces-reference') || currentPath.includes('list-pulls');
+    const isReferenceGroup = isAdvancedReporting || isBuyingGroups || isWorkspacesRef || isROICalculator;
 
     function getBasePath() {
-        if (isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides) return '../';
+        if (isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides || isBuyingGroups || isWorkspacesRef) return '../';
         if (isPersonas && !currentPath.endsWith('personas/index.html') && currentPath.split('/').filter(Boolean).length > 2) return '../../';
         if (isPersonas) return '../';
         return './';
@@ -39,12 +42,23 @@
                 <div class="tp-nav-links">
                     <a href="${bp}platform-guide/index.html" class="tp-nav-link ${(isPlatformGuide || isOrchestration) ? 'active' : ''}">Demandbase US Workspace</a>
                     <a href="${bp}demandbase-sales/index.html" class="tp-nav-link tp-nav-soon ${isDemandbaseSales ? 'active' : ''}" title="US Demandbase Sales — teaser, full page in build">US Demandbase Sales<span class="tp-soon-badge">Coming Soon</span></a>
-                    <a href="${bp}demandbase-marketing/index.html" class="tp-nav-link ${isDemandbaseMarketing ? 'active' : ''}" title="DB1 Marketing — Demandbase AI Prompt Library">DB1 Marketing</a>
+                    <a href="${bp}demandbase-marketing/index.html" class="tp-nav-link ${isDemandbaseMarketing ? 'active' : ''}" title="DB AI — Demandbase AI Prompt Library">DB AI</a>
                     <a href="${bp}campaign-monitoring/index.html" class="tp-nav-link ${isCampaignMonitoring ? 'active' : ''}">Campaign Monitoring</a>
                     <a href="${bp}index.html" class="tp-nav-link ${isRoot ? 'active' : ''}">Content Engine</a>
                     <a href="${bp}prompts-lab/index.html" class="tp-nav-link ${isPromptsLab ? 'active' : ''}">Prompts Lab</a>
                     <a href="${bp}competitive-intel/index.html" class="tp-nav-link ${isCompetitiveIntel ? 'active' : ''}">Competitive Intel</a>
                     <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Cards</a>
+                    <div class="tp-nav-group ${isReferenceGroup ? 'active' : ''}">
+                        <button class="tp-nav-link tp-nav-group-btn" aria-expanded="false" aria-haspopup="true">Reference
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="tp-nav-dropdown">
+                            <a href="${bp}advanced-reporting/index.html" class="tp-nav-drop-link ${isAdvancedReporting ? 'active' : ''}">Advanced Reporting</a>
+                            <a href="${bp}buying-groups/index.html" class="tp-nav-drop-link ${isBuyingGroups ? 'active' : ''}">Buying Groups</a>
+                            <a href="${bp}workspaces-reference/index.html" class="tp-nav-drop-link ${isWorkspacesRef ? 'active' : ''}">Workspaces &amp; List Pulls</a>
+                            <a href="${bp}roi-calculator/index.html" class="tp-nav-drop-link ${isROICalculator ? 'active' : ''}">ROI Calculator</a>
+                        </div>
+                    </div>
                 </div>
                 <button class="tp-theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
                     <svg class="tp-theme-icon-light" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -111,6 +125,35 @@
             }
             .tp-nav-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
             .tp-nav-link.active { background: rgba(255, 0, 130, 0.15); color: #FF0082; }
+            .tp-nav-group { position: relative; }
+            .tp-nav-group-btn {
+                display: inline-flex; align-items: center; gap: 5px;
+                background: none; font-family: inherit; cursor: pointer;
+            }
+            .tp-nav-group.active > .tp-nav-group-btn { background: rgba(255, 0, 130, 0.15); color: #FF0082; }
+            .tp-nav-group-btn svg { transition: transform 0.2s; opacity: 0.6; }
+            .tp-nav-group.open > .tp-nav-group-btn svg { transform: rotate(180deg); }
+            .tp-nav-dropdown {
+                position: absolute; top: calc(100% + 6px); right: 0;
+                min-width: 210px; padding: 6px;
+                background: rgba(42, 45, 66, 0.98);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(194, 199, 205, 0.18);
+                border-radius: 8px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+                display: flex; flex-direction: column; gap: 2px;
+                opacity: 0; visibility: hidden; transform: translateY(-6px);
+                transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+            }
+            .tp-nav-group.open .tp-nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+            .tp-nav-drop-link {
+                padding: 9px 12px; border-radius: 5px;
+                color: #C2C7CD; text-decoration: none;
+                font-size: 0.78rem; font-weight: 500; white-space: nowrap;
+                transition: all 0.15s;
+            }
+            .tp-nav-drop-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
+            .tp-nav-drop-link.active { background: rgba(255, 0, 130, 0.15); color: #FF0082; }
             .tp-nav-soon {
                 display: inline-flex; align-items: center; gap: 7px;
                 color: #C2C7CD;
@@ -162,6 +205,15 @@
                 }
                 .tp-nav-links.open { transform: translateY(0); opacity: 1; pointer-events: all; }
                 .tp-nav-link { padding: 10px 14px; text-align: center; }
+                .tp-nav-group { width: 100%; }
+                .tp-nav-group-btn { width: 100%; justify-content: center; }
+                .tp-nav-dropdown {
+                    position: static; opacity: 1; visibility: visible; transform: none;
+                    min-width: 0; background: none; border: none; box-shadow: none;
+                    display: none; padding: 4px 0 0;
+                }
+                .tp-nav-group.open .tp-nav-dropdown { display: flex; }
+                .tp-nav-drop-link { text-align: center; }
                 .tp-nav-toggle { display: flex; }
                 .tp-nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
                 .tp-nav-toggle.active span:nth-child(2) { opacity: 0; }
@@ -183,8 +235,32 @@
                 toggle.classList.toggle('active');
                 links.classList.toggle('open');
             });
-            document.querySelectorAll('.tp-nav-link').forEach(l => {
+            // Note: exclude the Reference group button — it opens a submenu, it doesn't navigate
+            document.querySelectorAll('.tp-nav-link:not(.tp-nav-group-btn), .tp-nav-drop-link').forEach(l => {
                 l.addEventListener('click', () => { toggle.classList.remove('active'); links.classList.remove('open'); });
+            });
+        }
+
+        // Reference dropdown
+        const navGroup = document.querySelector('.tp-nav-group');
+        if (navGroup) {
+            const groupBtn = navGroup.querySelector('.tp-nav-group-btn');
+            groupBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = navGroup.classList.toggle('open');
+                groupBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+            document.addEventListener('click', (e) => {
+                if (!navGroup.contains(e.target)) {
+                    navGroup.classList.remove('open');
+                    groupBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    navGroup.classList.remove('open');
+                    groupBtn.setAttribute('aria-expanded', 'false');
+                }
             });
         }
 

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demandbase Person List Pull — SOP</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --slate:        #484C6A;
+    --slate-dark:   #2e3150;
+    --slate-mid:    #5c6080;
+    --pink:         #FF0082;
+    --white:        #FFFFFF;
+    --dark-gray:    #414141;
+    --pastel-slate: #C2C7CD;
+    --pastel-light: #eef0f3;
+    --bg:           #f5f6f8;
+    --success:      #00AF9B;
+    --warn:         #ff5c00;
+    --mono:         'DM Mono', monospace;
+    --sans:         'DM Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--dark-gray); font-size: 14px; line-height: 1.6; }
+
+  .page-header { background: var(--slate); padding: 40px 48px 32px; position: relative; overflow: hidden; }
+  .page-header::before { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:var(--pink); }
+  .header-eyebrow { font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--pink); margin-bottom:10px; }
+  .header-title { font-size:28px; font-weight:300; color:var(--white); letter-spacing:-0.02em; margin-bottom:8px; }
+  .header-title strong { font-weight:600; }
+  .header-sub { font-size:13px; color:var(--pastel-slate); }
+  .header-meta { display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+  .meta-pill { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:4px 14px; font-size:11px; color:var(--pastel-slate); font-family:var(--mono); }
+  .meta-pill span { color:var(--white); font-weight:500; }
+
+  .page-body { max-width:960px; margin:0 auto; padding:44px 36px 80px; }
+  .section-label { font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--pink); margin-bottom:6px; }
+  .section-intro { font-size:13px; color:#777; margin-bottom:20px; }
+  .divider { height:1px; background:#e2e4e9; margin:40px 0; }
+
+  /* STEPS */
+  .steps-list { display:flex; flex-direction:column; gap:3px; margin-bottom:40px; }
+  .step { display:flex; background:var(--white); border-radius:8px; overflow:hidden; border:1px solid #e2e4e9; transition:box-shadow 0.18s; }
+  .step:hover { box-shadow:0 4px 18px rgba(72,76,106,0.10); }
+  .step-num { background:var(--slate); color:var(--white); font-size:12px; font-weight:600; font-family:var(--mono); min-width:52px; display:flex; align-items:flex-start; justify-content:center; padding:20px 0 0; letter-spacing:0.06em; }
+  .step-body { padding:18px 22px; flex:1; }
+  .step-title { font-size:14px; font-weight:600; color:var(--slate); margin-bottom:5px; }
+  .step-desc { font-size:13px; color:var(--dark-gray); line-height:1.65; }
+  .step-desc code { font-family:var(--mono); background:var(--pastel-light); border:1px solid var(--pastel-slate); border-radius:4px; padding:1px 6px; font-size:12px; color:var(--slate); }
+
+  /* SELECTOR TABLE */
+  .selector-table { width:100%; border-collapse:separate; border-spacing:0 3px; }
+  .selector-table thead th { font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--slate-mid); padding:6px 16px; text-align:left; }
+  .selector-table tbody tr { background:var(--white); transition:background 0.15s; }
+  .selector-table tbody tr:hover { background:#f0f2f8; }
+  .selector-table tbody tr td { padding:14px 16px; border-top:1px solid #e8eaee; border-bottom:1px solid #e8eaee; vertical-align:top; font-size:13px; line-height:1.55; }
+  .selector-table tbody tr td:first-child { border-left:1px solid #e8eaee; border-radius:6px 0 0 6px; }
+  .selector-table tbody tr td:last-child { border-right:1px solid #e8eaee; border-radius:0 6px 6px 0; }
+  .sel-name { font-family:var(--mono); font-size:12px; font-weight:500; color:var(--slate); }
+  .sel-operator { font-family:var(--mono); font-size:12px; color:var(--slate-mid); background:var(--pastel-light); border:1px solid var(--pastel-slate); border-radius:4px; padding:2px 8px; display:inline-block; white-space:nowrap; }
+  code { font-family:var(--mono); background:var(--pastel-light); border:1px solid var(--pastel-slate); border-radius:4px; padding:1px 6px; font-size:11px; color:var(--slate); }
+
+  .badge { font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:2px 9px; border-radius:10px; display:inline-block; white-space:nowrap; }
+  .badge-required { background:rgba(255,0,130,0.07); color:var(--pink); border:1px solid rgba(255,0,130,0.2); }
+  .badge-critical  { background:rgba(255,92,0,0.07); color:var(--warn); border:1px solid rgba(255,92,0,0.2); }
+  .badge-optional  { background:rgba(72,76,106,0.07); color:var(--slate-mid); border:1px solid rgba(72,76,106,0.15); }
+  .badge-geo       { background:rgba(0,175,155,0.07); color:var(--success); border:1px solid rgba(0,175,155,0.2); }
+
+  /* CALLOUTS */
+  .callout { border-radius:8px; padding:16px 20px; margin-bottom:14px; display:flex; gap:14px; align-items:flex-start; }
+  .callout-icon { font-size:17px; line-height:1; flex-shrink:0; margin-top:1px; }
+  .callout-body { flex:1; }
+  .callout-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
+  .callout-text { font-size:13px; line-height:1.6; }
+  .callout.geo     { background:rgba(0,175,155,0.05); border:1px solid rgba(0,175,155,0.18); }
+  .callout.geo     .callout-label { color:var(--success); }
+  .callout.warn    { background:rgba(255,92,0,0.06); border:1px solid rgba(255,92,0,0.18); }
+  .callout.warn    .callout-label { color:var(--warn); }
+  .callout.info    { background:rgba(72,76,106,0.05); border:1px solid rgba(72,76,106,0.14); }
+  .callout.info    .callout-label { color:var(--slate); }
+  .callout.success { background:rgba(0,175,155,0.06); border:1px solid rgba(0,175,155,0.18); }
+  .callout.success .callout-label { color:var(--success); }
+
+  /* PERSONA GRID */
+  .persona-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; margin-bottom:40px; }
+  .persona-card { background:var(--white); border:1px solid #e2e4e9; border-top:3px solid var(--pink); border-radius:8px; padding:16px; }
+  .persona-card-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--pink); margin-bottom:5px; }
+  .persona-card-title { font-size:13px; font-weight:600; color:var(--slate); margin-bottom:10px; }
+  .persona-tags { display:flex; flex-direction:column; gap:4px; }
+  .persona-tag { font-family:var(--mono); font-size:11px; color:var(--dark-gray); background:var(--pastel-light); border-radius:4px; padding:3px 7px; }
+
+  /* TWO COL */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:40px; }
+  .mini-card { background:var(--white); border:1px solid #e2e4e9; border-radius:8px; padding:18px 20px; }
+  .mini-card-label { font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--pink); margin-bottom:6px; }
+  .mini-card-title { font-size:14px; font-weight:600; color:var(--slate); margin-bottom:8px; }
+  .mini-card-body { font-size:13px; color:var(--dark-gray); line-height:1.65; }
+
+  /* FOOTER */
+  .page-footer { background:var(--slate); border-top:3px solid var(--pink); padding:18px 48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  .footer-text { font-size:11px; color:var(--pastel-slate); font-family:var(--mono); }
+  .footer-text strong { color:var(--white); }
+
+  /* BACK TO TOP BUTTON */
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 48px;
+    height: 48px;
+    background: var(--pink);
+    border: none;
+    border-radius: 50%;
+    color: var(--white);
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(255, 0, 130, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  .back-to-top:hover {
+    background: var(--slate);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(72, 76, 106, 0.4);
+  }
+  .back-to-top:active {
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-eyebrow">ABM Suite · Platform SOP</div>
+  <div class="header-title">Demandbase <strong>Person List Pull</strong></div>
+  <div class="header-sub">Standard operating procedure — contact extraction from named account sets using Advanced selector mode</div>
+  <div class="header-meta">
+    <div class="meta-pill">Workspace: <span>US + Global (dual)</span></div>
+    <div class="meta-pill">List Type: <span>Dynamic</span></div>
+    <div class="meta-pill">Selector Mode: <span>Advanced</span></div>
+    <div class="meta-pill">Tenant: <span>15053</span></div>
+    <div class="meta-pill">Updated: <span>April 2026</span></div>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- STEPS -->
+  <div class="section-label">Process — 5 Steps</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:4px;letter-spacing:-0.01em;">End-to-End Workflow</h2>
+  <p class="section-intro">Follow this sequence every time. Workspace first, selectors second, export third.</p>
+  <div style="background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:white;padding:12px 16px;border-radius:8px;margin:12px 0 20px 0;border-left:4px solid #991b1b;">
+    <strong style="display:block;font-size:14px;margin-bottom:4px;">⚠️ CRITICAL: US Workspace First — ALWAYS</strong>
+    <span style="font-size:13px;opacity:0.95;">Build all lists in <strong>US Workspace</strong>, then duplicate to Global with <code style="background:rgba(255,255,255,0.2);padding:2px 6px;border-radius:3px;font-size:12px;">[US]</code> prefix. Never build in Global first. No sync exists between workspaces — both must be maintained manually.</span>
+  </div>
+
+  <div class="steps-list">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-title">Workspace — Start in US Workspace (Non-Negotiable)</div>
+        <div class="step-desc">Navigate to <code>Database → People Lists</code> inside <strong>US Workspace</strong> — this is the only approved starting point. Build and save your list here first. Once complete, duplicate it to Global Workspace and immediately remove the <code>Copy of —</code> prefix so naming stays clean across both environments. <strong>IMPORTANT:</strong> No sync exists between workspaces — both must be maintained manually. If this list feeds an advertising campaign, the Global version must carry the <code>[US]</code> prefix (TP Rule #2: Advertising campaigns only read from Global).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-title">Create New List — Set Type to Dynamic</div>
+        <div class="step-desc">Select <strong>New Person List</strong> and set the type to <strong>Dynamic</strong>. Dynamic lists auto-refresh as contacts sync from SFDC — correct for any ongoing outreach or campaign motion. Static lists are point-in-time only and go stale quickly.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-title">Switch to Advanced Selector Mode — Stack Filters in Order</div>
+        <div class="step-desc">Click <strong>Advanced</strong> in the selector panel. Apply all Required and Critical filters first — these are non-negotiable on every list. Optional filters sharpen targeting further when you know the tier or buying group scope. See the Selector Reference table below for the full filter set, correct operators, and what each one does.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <div class="step-title">Export and Format for Intake</div>
+        <div class="step-desc">Run the list and export. Format the output to match the intake field requirements before submitting — clean column headers, no extra rows, no raw Demandbase export formatting. This route bypasses the standard campaign build request queue and the SLA attached to it. The intake form is the handoff.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <div class="step-title">Submit Intake Form</div>
+        <div class="step-desc">Submit the intake form with the formatted export attached. If this motion escalates into a sequenced campaign with landing pages or form fills, flag it as a separate request — SFDC program sync and attribution writeback must be wired before launch or those touches will not appear in the pipeline record.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SELECTOR TABLE -->
+  <div class="section-label">Selector Reference</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:4px;letter-spacing:-0.01em;">All Filters — Advanced Mode</h2>
+  <p class="section-intro">Required and Critical filters go on every list without exception. Optional filters refine targeting — apply when the motion calls for it. Filters operate with AND logic by default in Advanced mode.</p>
+
+  <table class="selector-table">
+    <thead>
+      <tr>
+        <th style="width:18%">Field</th>
+        <th style="width:13%">Operator</th>
+        <th style="width:29%">Value</th>
+        <th style="width:12%">Status</th>
+        <th>Why It Matters</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="sel-name">Account Name</div></td>
+        <td><div class="sel-operator">contains</div></td>
+        <td>Named accounts — paste individually or reference a saved Account List</td>
+        <td><span class="badge badge-required">Required</span></td>
+        <td>Scopes the pull to your target account set. Without this you're querying across all 5,800 accounts in the workspace.</td>
+      </tr>
+      <tr>
+        <td><div class="sel-name">Industry Category</div></td>
+        <td><div class="sel-operator">contains</div></td>
+        <td><code>US Market</code> — use Contains, not Equals</td>
+        <td><span class="badge badge-geo">Geo Scope</span></td>
+        <td>This IS the geographic filter. The US Market tag is applied only to US-scoped accounts — it inherently excludes all other regions. No separate Country field is needed. Tiering + US Market handles all geo scoping. Equals will miss partial tag matches; Contains is the correct operator.</td>
+      </tr>
+      <tr>
+        <td><div class="sel-name">Email</div></td>
+        <td><div class="sel-operator">exists</div></td>
+        <td>No value — binary filter</td>
+        <td><span class="badge badge-required">Required</span></td>
+        <td>Non-negotiable. No email on record means no deliverable contact. This single filter removes every dead-weight record before the list builds.</td>
+      </tr>
+      <tr>
+        <td><div class="sel-name">Job Title</div></td>
+        <td><div class="sel-operator">contains</div></td>
+        <td>Persona keyword(s) — see Buying Group reference below. Stack multiple titles using OR logic inside the same filter.</td>
+        <td><span class="badge badge-required">Required</span></td>
+        <td>Without a title filter you pull the entire org chart. A 12-account named list can return 400+ contacts — the vast majority irrelevant to the motion. Title keywords bring that down to the right buying committee.</td>
+      </tr>
+      <tr>
+        <td><div class="sel-name">2026 Tier</div></td>
+        <td><div class="sel-operator">=</div></td>
+        <td><code>Tier 1A</code> / <code>Tier 1</code> / <code>Tier 2</code> / <code>Tier 3</code></td>
+        <td><span class="badge badge-optional">Optional</span></td>
+        <td>Use when routing matters. Tier 1A and Tier 1 route to BD. Tier 2 and Tier 3 route to SDR. Also useful for prioritizing export order before formatting the handoff file.</td>
+      </tr>
+      <tr>
+        <td><div class="sel-name">Person Source</div></td>
+        <td><div class="sel-operator">=</div></td>
+        <td><code>Salesforce</code></td>
+        <td><span class="badge badge-optional">Optional</span></td>
+        <td>Locks the pull to SFDC-synced records only, excluding third-party enrichment contacts. Use when data provenance needs to be confirmed for compliance review or outreach quality control.</td>
+      </tr>
+      <tr>
+        <td><div class="sel-name">Contact Status</div></td>
+        <td><div class="sel-operator">=</div></td>
+        <td><code>Active</code></td>
+        <td><span class="badge badge-optional">Optional</span></td>
+        <td>Removes inactive, churned, or archived contacts from the SFDC sync. Recommended for any outbound email motion where deliverability and sender reputation are actively being managed.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <!-- CALLOUTS -->
+  <div class="callout geo">
+    <div class="callout-icon">🌎</div>
+    <div class="callout-body">
+      <div class="callout-label">Why There Is No Separate Country Filter</div>
+      <div class="callout-text"><code>Industry Category contains "US Market"</code> handles geographic scoping by design. That tag is applied only to US-scoped accounts in the account universe — it excludes all non-US geographies automatically. Adding a separate Country field is redundant and introduces over-filtering risk if SFDC country data is inconsistently populated. Tiering + US Market tag is the complete and correct scoping method.</div>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">📧</div>
+    <div class="callout-body">
+      <div class="callout-label">Why Email Opt-Out Is NOT Part of the Selector Logic</div>
+      <div class="callout-text">Marketo handles opt-out suppression automatically when the list goes through email deployment — it catches unsubscribes before anything sends. Adding <code>Email Opt-Out = False</code> at the Demandbase layer is redundant for email motions and problematic for everything else. The person list is a data asset used for call-down, BD outreach, event invites, and SDR sequences — all valid uses where opted-out contacts are perfectly reachable by phone or other channels. Baking opt-out suppression into the list build quietly removes contacts you'd never know were excluded, and neither would the SDR making the calls.</div>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">🔄</div>
+    <div class="callout-body">
+      <div class="callout-label">Dual Workspace Maintenance — Non-Negotiable</div>
+      <div class="callout-text">No sync exists between US Workspace and Global. Build in US Workspace first, duplicate to Global, remove <code>Copy of —</code> immediately. If the list feeds an ad campaign, the Global version requires the <code>[US]</code> prefix to signal US ownership and prevent EMEA from touching it. Both versions require manual updates whenever the account set or filter criteria changes.</div>
+    </div>
+  </div>
+
+  <div class="callout success">
+    <div class="callout-icon">✅</div>
+    <div class="callout-body">
+      <div class="callout-label">Know Your Motion Type Before You Export</div>
+      <div class="callout-text">A direct send from an exported list works cleanly for a one-touch outreach motion — no additional infrastructure needed. The moment it becomes sequenced with landing pages or form fills, attribution goes dark without Marketo program sync and SFDC campaign member writeback. Flag sequenced motions before the first send, not after.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PERSONA QUICK REF -->
+  <div class="section-label">Buying Group Reference</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:4px;letter-spacing:-0.01em;">Job Title Keywords by Persona</h2>
+  <p class="section-intro">Use these as Job Title "contains" values in Advanced selector mode. Stack multiple keywords with OR logic inside the same filter to capture all relevant titles in one pass.</p>
+
+  <div class="persona-grid">
+    <div class="persona-card">
+      <div class="persona-card-label">Buying Group 1</div>
+      <div class="persona-card-title">CX Core</div>
+      <div class="persona-tags">
+        <span class="persona-tag">Chief Customer Officer</span>
+        <span class="persona-tag">Chief Experience Officer</span>
+        <span class="persona-tag">VP Customer Experience</span>
+        <span class="persona-tag">VP Contact Center</span>
+        <span class="persona-tag">Director Customer Service</span>
+        <span class="persona-tag">Head of CX</span>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-card-label">Buying Group 2</div>
+      <div class="persona-card-title">LOBs — Lines of Business</div>
+      <div class="persona-tags">
+        <span class="persona-tag">Chief Financial Officer</span>
+        <span class="persona-tag">Chief Information Officer</span>
+        <span class="persona-tag">Chief HR Officer</span>
+        <span class="persona-tag">VP Finance</span>
+        <span class="persona-tag">VP Information Technology</span>
+        <span class="persona-tag">VP Operations</span>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-card-label">Buying Group 3</div>
+      <div class="persona-card-title">Vertical Specialists</div>
+      <div class="persona-tags">
+        <span class="persona-tag">Chief Medical Officer</span>
+        <span class="persona-tag">Chief Compliance Officer</span>
+        <span class="persona-tag">Chief Digital Officer</span>
+        <span class="persona-tag">VP Claims Operations</span>
+        <span class="persona-tag">VP Revenue Cycle</span>
+        <span class="persona-tag">Director of Digital</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ROUTING -->
+  <div class="section-label">Routing Reference</div>
+  <h2 style="font-size:18px;font-weight:500;color:var(--slate);margin-bottom:4px;letter-spacing:-0.01em;">What Happens After Export</h2>
+  <p class="section-intro" style="margin-bottom:20px;">The list pull is the beginning. Where the contact goes depends on tier and motion type.</p>
+
+  <div class="callout warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <div class="callout-label">Do Not Filter by MQA Qualified</div>
+      <div class="callout-text">The <code>Is MQA Qualified</code> and <code>Is MQA Qualified — US Journey</code> fields are not routing signals. Both return false on accounts with 60+ US CX Pipeline Predict scores — confirmed live on BFS pulls (Morgan Stanley, Freddie Mac). Route on tier + scoring stack: US CX Pipeline Predict, US Qualification Score, US Vertical CX Score, and engagement (3 Months / 7 Days). Thresholds: 40–59 → SDR, 60+ → BD. If you filter on MQA Qualified, your export will return a fraction of what is actually in-market.</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mini-card-label">Tier 1A + Tier 1</div>
+      <div class="mini-card-title">Route to BD</div>
+      <div class="mini-card-body">High-priority accounts. Export goes to the BD team for direct outreach coordination. Do not put Tier 1A contacts into an SDR sequence — these accounts require a senior-touch motion, not automated cadence.</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-card-label">Tier 2 + Tier 3</div>
+      <div class="mini-card-title">Route to SDR</div>
+      <div class="mini-card-body">Mid and lower-tier accounts go into SDR sequence workflow via intake form. Formatted output must match sequence tool field mapping — confirm column headers before submitting.</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-card-label">One-Touch Send</div>
+      <div class="mini-card-title">Direct Export — No Attribution Wire Needed</div>
+      <div class="mini-card-body">Single direct send with no landing page or form fill — export and send. Attribution is not trackable through this path. That is an accepted and intentional trade-off for speed-to-send.</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-card-label">Sequenced Campaign</div>
+      <div class="mini-card-title">Flag Before Launch</div>
+      <div class="mini-card-body">Any motion with landing pages, form fills, or multi-touch nurture requires Marketo program sync and SFDC campaign member writeback to be wired first. Flag it as a separate request before the first send — not after.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  <div class="footer-text"><strong>Teleperformance US</strong> · ABM Suite · ABX Strategic Intelligence</div>
+  <div class="footer-text">Demandbase Tenant <strong>15053</strong> · US Workspace + Global Dual-Maintenance</div>
+</div>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" aria-label="Back to top" title="Back to top">
+  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+
+<!-- Global Navigation -->
+<script src="../assets/js/navigation.js"></script>
+
+<script>
+(function() {
+  const backToTopBtn = document.querySelector('.back-to-top');
+
+  // Show/hide button based on scroll position
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 200) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  });
+
+  // Smooth scroll to top on click
+  backToTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
