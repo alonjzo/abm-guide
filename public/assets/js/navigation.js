@@ -5,7 +5,7 @@
     'use strict';
 
     const currentPath = window.location.pathname;
-    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides') && !currentPath.includes('tp-services') && !currentPath.includes('campaign-playbook') && !currentPath.includes('best-practices') && !currentPath.includes('start-here') && !currentPath.includes('guides/') && !currentPath.includes('lighthouse') && !currentPath.includes('account-planner'));
+    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides') && !currentPath.includes('tp-services') && !currentPath.includes('campaign-playbook') && !currentPath.includes('best-practices') && !currentPath.includes('start-here') && !currentPath.includes('guides/') && !currentPath.includes('lighthouse') && !currentPath.includes('account-planner') && !currentPath.includes('training'));
     const isPersonas = currentPath.includes('personas');
     const isCompetitiveIntel = currentPath.includes('competitive-intel') || currentPath.includes('command-center');
     const isOrchestration = currentPath.includes('orchestration');
@@ -16,6 +16,7 @@
     const isAdvancedReporting = currentPath.includes('advanced-reporting');
     const isPromptsLab = currentPath.includes('prompts-lab');
     const isROICalculator = currentPath.includes('roi-calculator');
+    const isTraining = currentPath.includes('training');
     const isPlanner = currentPath.includes('account-planner');
     const isGuides = currentPath.includes('guides');
     const isTPServices = currentPath.includes('tp-services');
@@ -83,6 +84,7 @@
 
                     <a href="${bp}competitive-intel/index.html" class="tp-nav-link ${isCompetitiveIntel ? 'active' : ''}">Competitive Intel</a>
                     <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Cards</a>
+                    <a href="${bp}training/index.html" class="tp-nav-link ${isTraining ? 'active' : ''}">Training</a>
 
                     <div class="tp-nav-group ${isReferenceGroup ? 'active' : ''}">
                         <button class="tp-nav-link tp-nav-group-btn" aria-expanded="false" aria-haspopup="true">Budget &amp; Planning
@@ -301,6 +303,7 @@
         'personas':           ['Market', 'Who the buyers are by role and vertical — what they care about and what makes them move. <b>Use before writing to a title.</b>'],
         'advanced-reporting': ['Budget & Planning', 'The numbers layer. <b>Every figure carries its object, window and filter</b> — quote it with the basis attached.'],
         'account-planner':    ['Planning', 'What your budget actually buys. <b>Spend per account predicts lift</b> &mdash; check before you commit, not after.'],
+        'training':           ['Training', 'Standing sessions, role tracks and the material behind them. <b>Owned by Demandbase Operations</b> — if you are guessing at a platform question, raise it.'],
         'roi-calculator':     ['Retired', 'Model the business case. <b>Change the inputs</b> — the defaults are illustrative, not our numbers.'],
         'campaign-playbook':  ['Campaigns', 'How to read a campaign after launch. <b>The account is the unit</b>; people are a weighting inside it.'],
         'read-your-campaign':  ['Guide', 'What the five numbers mean and what our own portfolio does. <b>The account is the unit</b> &mdash; clicks are anonymous by design, not by omission.'],
