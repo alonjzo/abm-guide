@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Planning Calculator | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{
+    --slate:#484C6A; --slate-dark:#2e3150; --pastel-slate:#c2c7cd; --pastel-slate-light:#edeaf0;
+    --pink:#ff0082; --pink-text:#ff4da6;
+    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#6b6e85; --line:#e6e8ec;
+    --mono:"SF Mono",Consolas,Menlo,monospace;
+    --good:#1f7a55; --good-bg:#eaf6f0; --warn:#8a5a00; --warn-bg:#fdf5e6; --stop:#c2005f; --stop-bg:#fdeef5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:24px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.1;margin-bottom:16px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:66ch;line-height:1.6}
+  .hero-meta{font-size:12px;color:rgba(255,255,255,.6);margin-top:18px;letter-spacing:.03em}
+
+  .tabs{background:var(--white);border-bottom:1px solid var(--line);padding:0 60px;display:flex;gap:4px;position:sticky;top:0;z-index:50;overflow-x:auto}
+  .tabs button{background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:inherit;
+    font-size:14px;font-weight:600;color:var(--body-gray);padding:16px 18px;margin-bottom:-1px;white-space:nowrap;transition:.15s}
+  .tabs button:hover{color:var(--black)}
+  .tabs button[aria-selected="true"]{color:var(--slate);border-bottom-color:var(--pink);font-weight:700}
+
+  .view{display:none}.view.on{display:block}
+  .page{max-width:1100px;margin:0 auto;padding:52px 60px 90px}
+  @media(max-width:860px){.page,.hero,.tabs{padding-left:24px;padding-right:24px}}
+
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
+  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px;line-height:1.15}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:74ch;margin-bottom:24px;line-height:1.65}
+  .rule{height:1px;background:var(--line);margin:46px 0}
+
+  .band{background:var(--slate);color:#fff;border-radius:14px;padding:34px 38px}
+  .band .section-label{color:var(--pastel-slate)}
+  .band .section-label::before{background:var(--pink)}
+  .band h2{color:#fff;margin:10px 0 10px}
+  .band>p{color:#dfe1ea;font-size:15px;max-width:72ch}
+  .band b{color:#fff}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+  @media(max-width:900px){.flow{grid-template-columns:repeat(2,1fr)}}
+  .fstep{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:16px}
+  .fstep .fn{font-size:13px;font-weight:800;color:var(--pink-text)}
+  .fstep h4{font-size:14px;color:#fff;font-weight:600;margin:6px 0 4px}
+  .fstep p{font-size:12px;color:#dfe1ea;line-height:1.45}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  .r{border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:0 10px 10px 0;padding:15px 17px}
+  .r b{color:var(--black)}
+  .r p{font-size:13.5px;margin-top:3px;color:var(--body-gray)}
+  .g{border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:0 12px 12px 0;padding:16px 18px}
+  .g h3{font-size:15px;color:var(--black);font-weight:700;margin-bottom:3px}
+  .g p{font-size:13.5px;color:var(--body-gray)}
+  .g .who{font-size:11px;color:var(--slate);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:8px}
+
+  .callout{background:#f6f7f9;border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:18px 22px;font-size:14.5px}
+  .callout b{color:var(--black)}
+  .callout+.callout{margin-top:12px}
+  .callout.warn{background:var(--warn-bg);border-left-color:var(--warn)}
+  .callout.stop{background:var(--stop-bg);border-left-color:var(--stop)}
+  .callout p+p{margin-top:10px}
+
+  .bignum{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.bignum{grid-template-columns:1fr}}
+  .bn{border:1px solid var(--line);border-radius:12px;padding:20px 22px;background:#fafbfc}
+  .bn .v{font-size:34px;font-weight:800;color:var(--slate);letter-spacing:-.03em;line-height:1}
+  .bn .v em{font-style:normal;color:var(--pink)}
+  .bn h4{font-size:13px;font-weight:700;color:var(--black);margin:8px 0 3px}
+  .bn p{font-size:12.5px;color:var(--body-gray);line-height:1.5}
+
+  .tbl-wrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  th,td{padding:13px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  thead th{background:#fafbfc;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);font-weight:800;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfc}
+  td.k{font-weight:700;color:var(--black);white-space:nowrap}
+  .pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
+  .pill.g{background:var(--good-bg);color:var(--good)}
+  .pill.r{background:var(--stop-bg);color:var(--stop)}
+  .pill.a{background:var(--warn-bg);color:var(--warn)}
+
+  .steps{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .step{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);background:#fff}
+  .step:last-child{border-bottom:none}
+  .step:nth-child(even){background:#fafbfc}
+  .step .n{font-size:12px;font-weight:800;color:var(--pink);letter-spacing:.05em;padding-top:2px}
+  .step h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--black)}
+  .step p{margin:0;font-size:13.5px;color:var(--body-gray)}
+  .step code{background:var(--pastel-slate-light);padding:2px 7px;border-radius:4px;font-size:12.5px;color:var(--slate);font-family:var(--mono);font-weight:600}
+  .src{font-size:12px;color:var(--body-gray);margin-top:12px;text-align:right}
+  .src b{color:var(--slate);font-weight:700}
+  .lead-in{font-size:17px;color:var(--black);font-weight:600;max-width:70ch;margin-bottom:18px;line-height:1.55}
+  .pinktext{color:var(--pink);font-weight:700}
+
+  .calc{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+  @media(max-width:900px){.calc{grid-template-columns:1fr}}
+  .panel-in{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 24px;position:sticky;top:74px}
+  @media(max-width:900px){.panel-in{position:static}}
+  .fld{margin-bottom:18px}
+  .fld label{display:block;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+  .fld .hint{font-size:12px;color:var(--body-gray);margin-top:5px;line-height:1.45}
+  .fld input,.fld select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;
+    font-family:inherit;font-size:15px;font-weight:600;color:var(--black);background:#fff}
+  .fld input:focus,.fld select:focus{outline:2px solid var(--pink);outline-offset:1px;border-color:var(--pink)}
+  .out{display:grid;gap:14px}
+  .big{background:var(--slate);color:#fff;border-radius:14px;padding:26px 28px}
+  .big .lab{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--pastel-slate);margin-bottom:8px}
+  .big .v{font-size:46px;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .big .v em{font-style:normal;color:var(--pink-text)}
+  .big .sub{font-size:13.5px;color:#dfe1ea;margin-top:10px;line-height:1.5}
+  .mets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:700px){.mets{grid-template-columns:1fr}}
+  .met{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .met .l{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+  .met .n{font-size:26px;font-weight:800;color:var(--black);letter-spacing:-.02em;line-height:1}
+  .met .d{font-size:12px;color:var(--body-gray);margin-top:5px}
+  .verdict{border-radius:10px;padding:16px 20px;font-size:14.5px;line-height:1.55}
+  .verdict b{font-weight:800}
+  .v-good{background:var(--good-bg);border-left:4px solid var(--good);color:#14543c}
+  .v-warn{background:var(--warn-bg);border-left:4px solid var(--warn);color:#6b4600}
+  .v-bad{background:var(--stop-bg);border-left:4px solid var(--stop);color:#8f0046}
+  .bandtbl td.hit{background:var(--warn-bg);font-weight:800}
+</style></head><body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span></span>Reference &middot; Planning</div>
+    <h1>Account planning calculator</h1>
+    <p class="hero-sub">Before you commit a budget, find out what it actually buys. Enter what you have and how many accounts you want to reach &mdash; this tells you whether the campaign can work.</p>
+    <p class="hero-meta">Built on FY26 US performance &middot; 13,899 accounts targeted, $59,540 spent</p>
+  </div>
+</div>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true"  onclick="sv(0)">Calculator</button>
+  <button role="tab" aria-selected="false" onclick="sv(1)">The Model</button>
+</div>
+
+<div class="view on" id="v0"><div class="page">
+  <div class="calc">
+    <div class="panel-in">
+      <div class="fld">
+        <label for="budget">Budget</label>
+        <input type="number" id="budget" value="3500" min="100" step="100" oninput="calc()">
+        <p class="hint">Floors: 1:1 $5,000 &middot; 1:few $3,500 &middot; 1:many $2,000</p>
+      </div>
+      <div class="fld">
+        <label for="accounts">Accounts targeted</label>
+        <input type="number" id="accounts" value="200" min="1" step="10" oninput="calc()">
+        <p class="hint">The number on your list, not the number you hope to reach.</p>
+      </div>
+      <div class="fld">
+        <label for="months">Flight length (months)</label>
+        <input type="number" id="months" value="3" min="1" max="12" step="1" oninput="calc()">
+        <p class="hint">One quarter is the standard.</p>
+      </div>
+      <div class="fld">
+        <label for="contacts">Contacts per account</label>
+        <input type="number" id="contacts" value="3" min="0" step="1" oninput="calc()">
+        <p class="hint">T2&ndash;T3 average 2.8&ndash;3.3. T4/T5 have none. Set 0 if unknown.</p>
+      </div>
+      <div class="fld">
+        <label for="cpm">CPM</label>
+        <input type="number" id="cpm" value="15.78" min="1" step="0.01" oninput="calc()">
+        <p class="hint">FY26 blended $15.78. US $15.66.</p>
+      </div>
+    </div>
+
+    <div class="out">
+      <div class="big">
+        <div class="lab">Accounts you should expect to move</div>
+        <div class="v" id="o-moved"><em>&mdash;</em></div>
+        <p class="sub" id="o-moved-sub">&nbsp;</p>
+      </div>
+
+      <div class="mets">
+        <div class="met"><div class="l">Spend per account</div><div class="n" id="o-spa">&mdash;</div><div class="d" id="o-spa-d">&nbsp;</div></div>
+        <div class="met"><div class="l">Impressions per account</div><div class="n" id="o-ipa">&mdash;</div><div class="d" id="o-ipa-d">&nbsp;</div></div>
+        <div class="met"><div class="l">Expected lift rate</div><div class="n" id="o-lift">&mdash;</div><div class="d">observed at this depth</div></div>
+      </div>
+
+      <div class="mets">
+        <div class="met"><div class="l">Cost per account moved</div><div class="n" id="o-cpm-moved">&mdash;</div><div class="d">FY26 benchmark $11.14</div></div>
+        <div class="met"><div class="l">Accounts reached</div><div class="n" id="o-reached">&mdash;</div><div class="d">at 70.9% FY26 reach rate</div></div>
+        <div class="met"><div class="l">People available</div><div class="n" id="o-people">&mdash;</div><div class="d" id="o-people-d">LinkedIn needs 300+</div></div>
+      </div>
+
+      <div class="verdict" id="o-verdict">&nbsp;</div>
+
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="tbl-wrap" style="border:none;border-radius:0">
+          <table class="bandtbl">
+            <thead><tr><th>Spend per account</th><th>Impressions</th><th>Lift rate</th><th>Where you land</th></tr></thead>
+            <tbody id="bandrows"></tbody>
+          </table>
+        </div>
+      </div>
+      <p class="src">Lift rates are <b>observed FY26 outcomes</b> by spend band, not modeled assumptions &middot; 9,849 accounts reached</p>
+    </div>
+  </div>
+</div></div>
+
+<div class="view" id="v1"><div class="page">
+  <div class="band">
+    <div class="section-label">Why this works</div>
+    <h2>Spend per account predicts almost everything</h2>
+    <p>Across 9,849 accounts reached in FY26, how much we spent per account tracked lift almost perfectly &mdash; from 7.2% at the bottom to 59.0% at the top. That is an <b>8x spread</b>, and it is the most reliable relationship in our advertising data.</p>
+  </div>
+
+  <div class="rule"></div>
+  <div class="section-label">The observed curve</div>
+  <h2>What each depth actually returned</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Spend per account</th><th>Accounts</th><th>Avg impressions</th><th>Lifted</th><th>Interacted</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Under $1</td><td>4,388</td><td>21</td><td><b>7.2%</b></td><td>11.5%</td></tr>
+      <tr><td class="k">$1&ndash;5</td><td>2,937</td><td>157</td><td>16.9%</td><td>30.8%</td></tr>
+      <tr><td class="k">$5&ndash;15</td><td>1,270</td><td>546</td><td>25.8%</td><td>49.4%</td></tr>
+      <tr><td class="k">$15&ndash;40</td><td>422</td><td>1,428</td><td>36.7%</td><td>69.9%</td></tr>
+      <tr><td class="k">$40&ndash;100</td><td>149</td><td>3,924</td><td>45.0%</td><td>81.2%</td></tr>
+      <tr><td class="k">$100+</td><td>117</td><td>11,470</td><td><b>59.0%</b></td><td>95.7%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout" style="margin-top:18px">
+    <p><b>Read the trade-off honestly.</b> Concentrating raises the lift <i>rate</i> but shrinks the base. Going deeper does not automatically move more accounts &mdash; it moves a higher share of fewer accounts. The calculator shows both numbers so you can pick deliberately instead of by accident.</p>
+  </div>
+
+  <div class="callout w" style="margin-top:14px">
+    <p><b>What this does not tell you.</b> Lift is an engagement signal, not pipeline. A moved account is one showing more activity after the campaign than before &mdash; it is not a lead, an opportunity or revenue. And a moved Tier 2 account is worth more than a moved Tier 5, which a headcount cannot capture.</p>
+  </div>
+
+  <div class="rule"></div>
+  <div class="section-label">Benchmarks</div>
+  <h2>FY26, the year we are measured against</h2>
+  <div class="mets">
+    <div class="met"><div class="l">Cost per account moved</div><div class="n">$11.14</div><div class="d">5,347 of 13,899 lifted</div></div>
+    <div class="met"><div class="l">Reach rate</div><div class="n">70.9%</div><div class="d">9,849 of 13,899 reached</div></div>
+    <div class="met"><div class="l">Lift rate</div><div class="n">38.5%</div><div class="d">16% floor, 30%+ is strong</div></div>
+  </div>
+  <p class="src">Source: <b>Demandbase US Workspace</b>, Sep 1 2025 &ndash; Aug 31 2026, US label, lifetime audience</p>
+</div></div>
+
+<script>
+var BANDS=[{lo:0,hi:1,lift:7.2,lab:'Under $1'},{lo:1,hi:5,lift:16.9,lab:'$1-5'},
+           {lo:5,hi:15,lift:25.8,lab:'$5-15'},{lo:15,hi:40,lift:36.7,lab:'$15-40'},
+           {lo:40,hi:100,lift:45.0,lab:'$40-100'},{lo:100,hi:1e9,lift:59.0,lab:'$100+'}];
+var IMPR=[21,157,546,1428,3924,11470];
+function n(id){return parseFloat(document.getElementById(id).value)||0;}
+function fm(v,d){return v.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});}
+function calc(){
+  var b=n('budget'),a=n('accounts'),mo=n('months'),c=n('contacts'),cpm=n('cpm');
+  if(a<1||cpm<=0){return;}
+  var spa=b/a, impr=(b/cpm*1000)/a, bi=0;
+  for(var i=0;i<BANDS.length;i++){ if(spa>=BANDS[i].lo&&spa<BANDS[i].hi){bi=i;break;} }
+  var lift=BANDS[bi].lift, moved=Math.round(a*lift/100), reached=Math.round(a*0.709);
+  var people=Math.round(a*c), cpMoved=moved>0?b/moved:0;
+  var perWk=impr/(mo*4.33);
+
+  document.getElementById('o-moved').innerHTML='<em>'+fm(moved)+'</em>';
+  document.getElementById('o-moved-sub').textContent=
+    'of '+fm(a)+' targeted, at $'+fm(spa,2)+' per account. Lift is an engagement signal, not pipeline.';
+  document.getElementById('o-spa').textContent='$'+fm(spa,2);
+  document.getElementById('o-spa-d').textContent=BANDS[bi].lab+' band';
+  document.getElementById('o-ipa').textContent=fm(impr);
+  document.getElementById('o-ipa-d').textContent=fm(perWk)+' per week over '+mo+' month'+(mo>1?'s':'');
+  document.getElementById('o-lift').textContent=lift.toFixed(1)+'%';
+  document.getElementById('o-cpm-moved').textContent=moved>0?'$'+fm(cpMoved,2):'--';
+  document.getElementById('o-reached').textContent=fm(reached);
+  document.getElementById('o-people').textContent=c>0?fm(people):'0';
+  document.getElementById('o-people-d').textContent=
+    c===0?'No contacts - account targeting only':(people>=300?'Clears the 300 floor':'Below the 300 floor');
+
+  var v=document.getElementById('o-verdict'),msg='',cls='';
+  if(spa<1){cls='v-bad';msg='<b>This will not work.</b> Under $1 per account buys about 21 impressions across a whole flight. Cut the list or raise the budget &mdash; at this depth only 7.2% of accounts moved in FY26.';}
+  else if(spa<5){cls='v-warn';msg='<b>Thin.</b> You are in the band where 16.9% of accounts moved. It will deliver, but most of the list will barely register the campaign. Consider fewer accounts.';}
+  else if(spa<15){cls='v-warn';msg='<b>Workable, not strong.</b> 25.8% lift at this depth. Fine for broad awareness; too thin if this list needs to produce conversations.';}
+  else if(spa<40){cls='v-good';msg='<b>This is the efficient zone.</b> 36.7% lift, and cost per account moved stays reasonable. Most campaigns should aim here.';}
+  else{cls='v-good';msg='<b>Deep and concentrated.</b> High lift rate, but you are paying a premium per account moved. Justified for named accounts and 1:1 &mdash; expensive for broad plays.';}
+  if(c>0&&people<300){msg+=' <b>And with '+fm(people)+' people, a LinkedIn person audience will not serve</b> &mdash; the floor is 300 matched members.';}
+  if(c===0){msg+=' <b>No contacts on this list</b> &mdash; account-based targeting only, no person audience and no names for Sales.';}
+  v.className='verdict '+cls; v.innerHTML=msg;
+
+  var rows='';
+  for(var j=0;j<BANDS.length;j++){
+    var hit=(j===bi)?' class="hit"':'';
+    rows+='<tr><td'+hit+'>'+BANDS[j].lab+'</td><td'+hit+'>'+fm(IMPR[j])+'</td><td'+hit+'>'+BANDS[j].lift.toFixed(1)+'%</td><td'+hit+'>'+(j===bi?'&#9664; you are here':'')+'</td></tr>';
+  }
+  document.getElementById('bandrows').innerHTML=rows;
+}
+var VIEWS=['v0','v1'];
+function sv(i){
+  document.querySelectorAll('.tabs button').forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false');});
+  VIEWS.forEach(function(id,k){var e=document.getElementById(id); if(e) e.className='view'+(k===i?' on':'');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+calc();
+</script>
+<script src="/assets/js/back-to-top.js"></script>
+</body></html>

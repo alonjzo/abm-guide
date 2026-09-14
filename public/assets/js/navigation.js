@@ -5,7 +5,7 @@
     'use strict';
 
     const currentPath = window.location.pathname;
-    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides') && !currentPath.includes('tp-services') && !currentPath.includes('campaign-playbook') && !currentPath.includes('best-practices') && !currentPath.includes('start-here') && !currentPath.includes('guides/') && !currentPath.includes('lighthouse'));
+    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides') && !currentPath.includes('tp-services') && !currentPath.includes('campaign-playbook') && !currentPath.includes('best-practices') && !currentPath.includes('start-here') && !currentPath.includes('guides/') && !currentPath.includes('lighthouse') && !currentPath.includes('account-planner'));
     const isPersonas = currentPath.includes('personas');
     const isCompetitiveIntel = currentPath.includes('competitive-intel') || currentPath.includes('command-center');
     const isOrchestration = currentPath.includes('orchestration');
@@ -16,6 +16,7 @@
     const isAdvancedReporting = currentPath.includes('advanced-reporting');
     const isPromptsLab = currentPath.includes('prompts-lab');
     const isROICalculator = currentPath.includes('roi-calculator');
+    const isPlanner = currentPath.includes('account-planner');
     const isGuides = currentPath.includes('guides');
     const isTPServices = currentPath.includes('tp-services');
     const isCampaignPlaybook = currentPath.includes('campaign-playbook');
@@ -29,13 +30,13 @@
     const isBuildList = currentPath.includes('build-your-list');
     const isGuideGroup = isRunCampaign || isReadCampaign || isOptimize || isBuildList;
     const isWorkspacesRef = currentPath.includes('workspaces-reference') || currentPath.includes('list-pulls');
-    const isReferenceGroup = isAdvancedReporting || isROICalculator;
+    const isReferenceGroup = isAdvancedReporting || isPlanner;
     const isDemandbaseGroup = isPlatformGuide || isOrchestration || isWorkspacesRef || isBuyingGroups
         || isCampaignMonitoring || isBestPractices || isDemandbaseMarketing || isDemandbaseSales || isGuideGroup;
 
     function getBasePath() {
         if (isGuideGroup) return '../../';
-        if (isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides || isBuyingGroups || isWorkspacesRef || isTPServices || isCampaignPlaybook || isBestPractices || isStartHere || isLighthouse) return '../';
+        if (isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides || isBuyingGroups || isWorkspacesRef || isTPServices || isCampaignPlaybook || isBestPractices || isStartHere || isLighthouse || isPlanner) return '../';
         if (isPersonas && !currentPath.endsWith('personas/index.html') && currentPath.split('/').filter(Boolean).length > 2) return '../../';
         if (isPersonas) return '../';
         return './';
@@ -88,8 +89,8 @@
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg>
                         </button>
                         <div class="tp-nav-dropdown">
+                            <a href="${bp}account-planner/index.html" class="tp-nav-drop-link ${isPlanner ? 'active' : ''}">Account Planning Calculator</a>
                             <a href="${bp}advanced-reporting/index.html" class="tp-nav-drop-link ${isAdvancedReporting ? 'active' : ''}">Advanced Reporting</a>
-                            <a href="${bp}roi-calculator/index.html" class="tp-nav-drop-link ${isROICalculator ? 'active' : ''}">ROI Calculator</a>
                         </div>
                     </div>
                 </div>
@@ -299,6 +300,7 @@
         'competitive-intel':  ['Market', 'Who we run into and how they position. <b>Direct and indirect</b> are separated — indirect are not TP competitors.'],
         'personas':           ['Market', 'Who the buyers are by role and vertical — what they care about and what makes them move. <b>Use before writing to a title.</b>'],
         'advanced-reporting': ['Reference', 'The numbers layer. <b>Every figure carries its object, window and filter</b> — quote it with the basis attached.'],
+        'account-planner':    ['Planning', 'What your budget actually buys. <b>Spend per account predicts lift</b> &mdash; check before you commit, not after.'],
         'roi-calculator':     ['Reference', 'Model the business case. <b>Change the inputs</b> — the defaults are illustrative, not our numbers.'],
         'campaign-playbook':  ['Campaigns', 'How to read a campaign after launch. <b>The account is the unit</b>; people are a weighting inside it.'],
         'run-a-campaign':     ['Guide', 'Build a US Journey campaign in the right order &mdash; Inventory Planner first, then the five builder steps. <b>Reach before build, journey before creative.</b>'],
