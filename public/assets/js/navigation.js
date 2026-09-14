@@ -349,28 +349,34 @@
             });
         }
 
-        // Reference dropdown
-        const navGroup = document.querySelector('.tp-nav-group');
-        if (navGroup) {
-            const groupBtn = navGroup.querySelector('.tp-nav-group-btn');
+        // Nav dropdowns — every group, not just the first one
+        const navGroups = Array.from(document.querySelectorAll('.tp-nav-group'));
+        const closeAllGroups = (except) => {
+            navGroups.forEach(g => {
+                if (g === except) return;
+                g.classList.remove('open');
+                const b = g.querySelector('.tp-nav-group-btn');
+                if (b) b.setAttribute('aria-expanded', 'false');
+            });
+        };
+        navGroups.forEach(group => {
+            const groupBtn = group.querySelector('.tp-nav-group-btn');
+            if (!groupBtn) return;
             groupBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const isOpen = navGroup.classList.toggle('open');
-                groupBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                e.preventDefault();
+                const willOpen = !group.classList.contains('open');
+                closeAllGroups(group);
+                group.classList.toggle('open', willOpen);
+                groupBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
             });
-            document.addEventListener('click', (e) => {
-                if (!navGroup.contains(e.target)) {
-                    navGroup.classList.remove('open');
-                    groupBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    navGroup.classList.remove('open');
-                    groupBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
-        }
+        });
+        document.addEventListener('click', (e) => {
+            if (!navGroups.some(g => g.contains(e.target))) closeAllGroups(null);
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAllGroups(null);
+        });
 
         // Dark/Light mode toggle
 
