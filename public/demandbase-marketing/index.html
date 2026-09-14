@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script defer src="/_vercel/insights/script.js"></script>
-<title>DB1 Marketing | ABM Suite</title>
+<title>DB AI | ABM Suite</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/design-system.css">
 <script src="../assets/js/navigation.js"></script>
@@ -13,7 +13,7 @@
     --slate:#484C6A; --slate-dark:#2e3150; --pastel-slate:#c2c7cd; --pastel-slate-light:#edeaf0;
     --pink:#ff0082;                /* brand accent — fills/borders/badges */
     --pink-text:#ff4da6;           /* hardened tint for pink TEXT on dark/slate (fixes shimmer) */
-    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#6b6e85; --line:#e6e8ec;
+    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#575a70; --line:#e6e8ec;
     --mono:"SF Mono",Consolas,Menlo,monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -30,9 +30,9 @@
   .hero-meta{font-size:12px;color:rgba(255,255,255,.6);margin-top:18px;letter-spacing:.03em}
 
   .page{max-width:1100px;margin:0 auto;padding:56px 60px 90px}
-  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
-  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
-  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px}
+  .section-label{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:14px}
+  .section-label::before{content:'';width:26px;height:3px;background:var(--pink);display:inline-block;border-radius:2px}
+  h2{font-size:clamp(1.85rem,3.1vw,2.6rem);font-weight:800;color:var(--black);letter-spacing:-.028em;line-height:1.1;margin-bottom:10px;text-wrap:balance}
   .section-intro{font-size:15px;color:var(--body-gray);max-width:74ch;margin-bottom:24px;line-height:1.65}
   .rule{height:1px;background:var(--line);margin:44px 0}
 
@@ -78,23 +78,47 @@
   .callout{background:#f6f7f9;border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:18px 22px;margin-top:12px;font-size:14px}
   .callout b{color:var(--black)}
 
-  @media(max-width:900px){.flow,.rules,.goals,.newgrid{grid-template-columns:1fr}.hero,.page{padding-left:24px;padding-right:24px}}
+  /* STICKY SUB-NAV */
+  .subnav{position:sticky;top:56px;z-index:20;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .subnav-inner{max-width:1100px;margin:0 auto;padding:0 60px;display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .subnav a{flex:0 0 auto;font-size:12.5px;font-weight:600;color:var(--slate);text-decoration:none;padding:13px 10px;border-bottom:2px solid transparent;white-space:nowrap;transition:color .12s,border-color .12s}
+  .subnav a:hover{color:var(--black)}
+  .subnav a.active{color:#d1006b;border-bottom-color:var(--pink)}
+  [data-theme="dark"] .subnav{background:rgba(30,28,46,.97);border-bottom-color:#353855}
+  [data-theme="dark"] .subnav a{color:var(--pastel-slate)}
+  [data-theme="dark"] .subnav a:hover{color:#fff}
+  .snap{scroll-margin-top:112px}
+
+  @media(max-width:900px){.flow,.rules,.goals,.newgrid{grid-template-columns:1fr}.hero,.page{padding-left:24px;padding-right:24px}.subnav-inner{padding-left:24px;padding-right:24px}}
 </style>
 </head>
 <body>
   <div class="hero">
     <div class="hero-inner">
-      <div class="hero-kicker"><span></span> DB1 Marketing · Integrated Marketing</div>
+      <div class="hero-kicker"><span></span> DB AI · Integrated Marketing</div>
       <h1>Demandbase AI, in a page — then every prompt you'll need.</h1>
       <p class="hero-sub">AI Chat and the new Insights features are live. Ask a question in plain English, get a named, routable list back in about a minute. This page gets you running today — then the full library below has every prompt, organized by topic.</p>
       <div class="hero-meta">TP · US Workspace (US + Canada) · Owner: Sharath · Demandbase AI Prompt Library</div>
     </div>
   </div>
 
+  <!-- STICKY SUB-NAV -->
+  <nav class="subnav">
+    <div class="subnav-inner">
+      <a href="#loop">The Loop</a>
+      <a href="#goals">Seven Goals</a>
+      <a href="#flagship">Flagship Play</a>
+      <a href="#rules">Five Rules</a>
+      <a href="#whatsnew">What's New</a>
+      <a href="#fields">Fields to Ask</a>
+      <a href="#library">Full Library</a>
+    </div>
+  </nav>
+
   <div class="page">
 
     <!-- LOOP -->
-    <div class="band">
+    <div class="band snap" id="loop">
       <div class="section-label">The loop — same every time</div>
       <h2>Ask &rarr; run &rarr; export &rarr; route</h2>
       <div class="flow">
@@ -108,6 +132,7 @@
     <div class="rule"></div>
 
     <!-- GOALS -->
+    <div class="snap" id="goals"></div>
     <div class="section-label">Start with a goal</div>
     <h2>Seven goals — open the one that fits your week</h2>
     <p class="section-intro">Each goal mirrors the "start with a goal" menu in AI Chat.</p>
@@ -124,6 +149,7 @@
     <div class="rule"></div>
 
     <!-- FLAGSHIP -->
+    <div class="snap" id="flagship"></div>
     <div class="section-label">The flagship play</div>
     <h2>Start here — run it weekly</h2>
     <p class="section-intro">Swap the <span style="color:#d1006b;font-weight:700">pink</span> pieces for your vertical, geo, and window.</p>
@@ -136,6 +162,7 @@ Rank by intent, highest first.</div>
     <div class="rule"></div>
 
     <!-- RULES -->
+    <div class="snap" id="rules"></div>
     <div class="section-label">Five rules that make prompts land</div>
     <h2>Get these right and the output is clean</h2>
     <p class="section-intro">Skip them and you get noise.</p>
@@ -150,6 +177,7 @@ Rank by intent, highest first.</div>
     <div class="rule"></div>
 
     <!-- WHATS NEW -->
+    <div class="snap" id="whatsnew"></div>
     <div class="section-label">What's new to try</div>
     <h2>Released this month</h2>
     <p class="section-intro">Each answers a different question.</p>
@@ -163,6 +191,7 @@ Rank by intent, highest first.</div>
     <div class="rule"></div>
 
     <!-- FIELDS -->
+    <div class="snap" id="fields"></div>
     <div class="section-label">Always ask for these fields</div>
     <h2>Paste into any prompt so lists come back BD-ready</h2>
     <div class="chips" style="margin-top:14px">
@@ -175,6 +204,7 @@ Rank by intent, highest first.</div>
     <div class="rule"></div>
 
     <!-- FULL LIBRARY -->
+    <div class="snap" id="library"></div>
     <div class="section-label">The full library</div>
     <h2>Every prompt, organized by topic</h2>
     <p class="section-intro">Search, then copy any prompt straight into AI Chat. Same library the whole team works from.</p>
@@ -184,5 +214,20 @@ Rank by intent, highest first.</div>
 
   <script src="../assets/js/prompt-library.js"></script>
   <script>renderPromptLibrary('#prompt-library');</script>
+  <script>
+    // scroll-spy: highlight the active sub-nav link
+    (function(){
+      var links = [].slice.call(document.querySelectorAll('.subnav a'));
+      var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+      function onScroll(){
+        var y = window.scrollY + 130;
+        var idx = 0;
+        for (var i=0;i<targets.length;i++){ if(targets[i] && targets[i].offsetTop <= y) idx = i; }
+        links.forEach(function(a,i){ a.classList.toggle('active', i===idx); });
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    })();
+  </script>
 </body>
 </html>

@@ -23,7 +23,7 @@
       --color-accent: #ff0082;
       --radius-sm: .375rem; --radius-md: .5rem; --radius-lg: .75rem; --radius-xl: 1rem; --radius-full: 9999px;
       --shadow-sm: 0 1px 2px rgba(46,49,80,.06); --shadow-md: 0 8px 24px rgba(46,49,80,.08); --shadow-lg: 0 18px 48px rgba(46,49,80,.12);
-      --content: 1160px; --font-display: 'Calibri', 'Segoe UI', Georgia, serif; --font-body: 'Calibri Light', 'Calibri', 'Segoe UI', sans-serif;
+      --content: 1160px; --font-display: 'TP Sans', 'Archivo', 'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif; --font-body: 'TP Sans', 'Noto Sans', 'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif;
     }
     [data-theme="dark"] {
       --color-bg: #1E1C2E; --color-surface: #2a2c40; --color-surface-2: #2e3150; --color-surface-offset: #353855;
@@ -159,7 +159,6 @@
         <a href="#requirements">Requirements</a>
       </nav>
       <div class="actions">
-        <button class="theme-btn" data-theme-toggle aria-label="Switch theme">◐</button>
       </div>
     </div>
   </header>
@@ -423,19 +422,7 @@
     </footer>
   </main>
 
-  <script>
-    (function () {
-      const toggle = document.querySelector('[data-theme-toggle]');
-      const root = document.documentElement;
-      let theme = 'light';
-      root.setAttribute('data-theme', theme);
-      toggle.addEventListener('click', function () {
-        theme = theme === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', theme);
-      });
-    })();
-  </script>
-<script src="../assets/js/navigation.js"></script>
+  <script src="../assets/js/navigation.js"></script>
     <script src="/assets/js/back-to-top.js"></script>
 </body>
 </html>

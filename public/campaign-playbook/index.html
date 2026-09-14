@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script defer src="/_vercel/insights/script.js"></script>
+<title>Campaign Playbook | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{
+    --slate:#484C6A; --slate-dark:#2e3150; --slate-mid:#5f6484;
+    --pastel-slate:#c2c7cd; --pastel-slate-light:#edeaf0;
+    --pink:#ff0082; --pink-text:#ff4da6; --pink-soft:#fff0f7;
+    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#575a70;
+    --line:#e6e8ec; --paper:#fafaf8;
+    --ok:#2d7a52; --ok-bg:#eef7f1;
+    --warn:#8a6100; --warn-bg:#fdf6e6;
+    --stop:#ab2c37; --stop-bg:#fdf0f1;
+    --mono:"SF Mono",Consolas,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  /* ── HERO ── */
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-15%;width:620px;height:620px;background:radial-gradient(circle,rgba(255,255,255,0.035) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1140px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:24px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.1;margin-bottom:16px}
+  .hero-sub{font-size:16px;opacity:.85;max-width:70ch;line-height:1.6}
+  .hero-meta{font-size:12px;color:rgba(255,255,255,.6);margin-top:20px;letter-spacing:.03em}
+
+  /* ── STICKY SUBNAV ── */
+  .subnav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .subnav-inner{max-width:1140px;margin:0 auto;padding:0 60px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+  .subnav-inner::-webkit-scrollbar{display:none}
+  .subnav a{flex:none;font-size:12.5px;font-weight:600;color:var(--body-gray);text-decoration:none;padding:15px 14px;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+  .subnav a:hover{color:var(--slate)}
+  .subnav a.active{color:var(--slate);border-bottom-color:var(--pink)}
+
+  .page{max-width:1140px;margin:0 auto;padding:56px 60px 90px}
+  section{scroll-margin-top:64px}
+  .section-label{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:14px}
+  .section-label::before{content:'';width:26px;height:3px;background:var(--pink);display:inline-block;border-radius:2px}
+  h2{font-size:clamp(1.5rem,2.5vw,2.05rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px;line-height:1.2}
+  h3{font-size:16px;font-weight:700;color:var(--black);margin-bottom:6px}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:76ch;margin-bottom:26px;line-height:1.65}
+  .rule{height:1px;background:var(--line);margin:52px 0}
+  p{margin-bottom:12px}
+  strong{color:var(--black);font-weight:700}
+
+  /* ── THE BIG IDEA BAND ── */
+  .band{background:var(--slate);color:#fff;border-radius:14px;padding:38px 42px;margin:8px 0 4px}
+  .band .section-label{color:var(--pastel-slate)}
+  .band h2{color:#fff;margin:10px 0 14px}
+  .band p{color:#dfe1ea;font-size:15px;max-width:74ch}
+  .band .pull{font-size:19px;font-weight:700;color:#fff;line-height:1.45;max-width:56ch;margin:22px 0 6px;border-left:3px solid var(--pink);padding-left:18px}
+
+  /* ── CARDS ── */
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .c{border:1px solid var(--line);border-radius:12px;padding:20px 22px;background:var(--white)}
+  .c.accent{border-left:3px solid var(--slate);border-radius:0 12px 12px 0}
+  .c h3{margin-bottom:5px}
+  .c p{font-size:13.5px;color:var(--body-gray);margin-bottom:0;line-height:1.6}
+  .c .tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);margin-bottom:8px;display:block}
+
+  /* ── METRIC TABLE ── */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 4px}
+  thead th{background:var(--paper);text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);padding:11px 14px;border-bottom:2px solid var(--line)}
+  tbody td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--body-gray);line-height:1.55}
+  tbody td:first-child{color:var(--black);font-weight:600;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+
+  /* ── CALLOUTS ── */
+  .co{border-radius:10px;padding:17px 20px;margin:18px 0;font-size:14px;line-height:1.6;border-left:3px solid}
+  .co .t{font-weight:700;color:var(--black);display:block;margin-bottom:4px;font-size:13px;letter-spacing:.02em}
+  .co.stop{background:var(--stop-bg);border-left-color:var(--stop)}
+  .co.warn{background:var(--warn-bg);border-left-color:var(--warn)}
+  .co.ok{background:var(--ok-bg);border-left-color:var(--ok)}
+  .co.info{background:var(--pastel-slate-light);border-left-color:var(--slate)}
+  .co p{margin-bottom:8px;color:var(--dark-gray)}
+  .co p:last-child{margin-bottom:0}
+
+  /* ── SOURCE CHIP ── */
+  .src{display:inline-block;font-size:11px;color:var(--slate);text-decoration:none;border-bottom:1px dotted var(--pastel-slate);margin-top:8px}
+  .src:hover{color:var(--pink);border-bottom-color:var(--pink)}
+  .basis{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-right:7px;display:inline-block;vertical-align:1px}
+  .basis.doc{background:var(--ok-bg);color:var(--ok)}
+  .basis.house{background:var(--pastel-slate-light);color:var(--slate)}
+  .basis.none{background:var(--warn-bg);color:var(--warn)}
+
+  /* ── FUNNEL STRIP ── */
+  .funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0 6px}
+  .fs{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:15px 14px;text-align:center;position:relative}
+  .fs .n{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--slate);text-transform:uppercase}
+  .fs .l{font-size:14px;font-weight:700;color:var(--black);margin:5px 0 3px}
+  .fs .d{font-size:11.5px;color:var(--body-gray);line-height:1.45}
+  .fs.hot{background:var(--pink-soft);border-color:#ffc7e2}
+  .fs.hot .n{color:var(--pink)}
+
+  /* ── STEPS ── */
+  .steps{counter-reset:s;margin-top:6px}
+  .step{counter-increment:s;position:relative;padding:0 0 20px 46px;border-left:2px solid var(--line);margin-left:14px}
+  .step:last-child{border-left-color:transparent;padding-bottom:0}
+  .step::before{content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;background:var(--slate);color:#fff;font-size:12.5px;font-weight:700;display:grid;place-items:center}
+  .step h3{margin-bottom:4px}
+  .step p{font-size:13.5px;color:var(--body-gray);margin-bottom:0}
+  .step .path{font-family:var(--mono);font-size:12px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:7px 10px;margin-top:8px;display:inline-block;color:var(--slate-dark)}
+
+  /* ── DO / DON'T ── */
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  .dd .col{border-radius:12px;padding:18px 20px}
+  .dd .yes{background:var(--ok-bg);border:1px solid #cfe6da}
+  .dd .no{background:var(--stop-bg);border:1px solid #f2d4d7}
+  .dd h4{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px}
+  .dd .yes h4{color:var(--ok)} .dd .no h4{color:var(--stop)}
+  .dd ul{list-style:none;font-size:13.5px;line-height:1.6}
+  .dd li{padding-left:16px;position:relative;margin-bottom:8px;color:var(--dark-gray)}
+  .dd li::before{position:absolute;left:0;font-weight:700}
+  .dd .yes li::before{content:'+';color:var(--ok)}
+  .dd .no li::before{content:'\2212';color:var(--stop)}
+  .dd li:last-child{margin-bottom:0}
+
+  /* ── SHARE BLOCK ── */
+  .share{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:30px 34px}
+  .share ol{margin:14px 0 0 0;list-style:none;counter-reset:p}
+  .share li{counter-increment:p;padding-left:34px;position:relative;margin-bottom:14px;font-size:14px;line-height:1.6}
+  .share li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--slate);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+  .share li:last-child{margin-bottom:0}
+
+  footer{border-top:1px solid var(--line);padding:28px 60px;text-align:center;font-size:12px;color:var(--body-gray)}
+
+  @media(max-width:980px){
+    .grid2,.grid3,.grid4,.dd{grid-template-columns:1fr}
+    .funnel{grid-template-columns:repeat(2,1fr)}
+    .hero,.page,.subnav-inner,footer{padding-left:26px;padding-right:26px}
+    .band{padding:28px 24px}
+  }
+  @media print{.subnav{display:none}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span></span>Integrated Marketing · Demandbase Advertising</div>
+    <h1>You launched the campaign. Now read it.</h1>
+    <p class="hero-sub">Setting up a Demandbase campaign is the easy half. This is the other half — what the numbers mean, which ones lie to you, how to structure a campaign so it can be reported on at all, and what to do on Monday when the dashboard says something you did not expect.</p>
+    <p class="hero-meta">Every claim on this page is labeled by basis. Demandbase-documented, TP house standard, or no vendor guidance found.</p>
+  </div>
+</div>
+
+<nav class="subnav">
+  <div class="subnav-inner">
+    <a href="#unit" class="active">The unit is the account</a>
+    <a href="#read">What to read</a>
+    <a href="#lift">Lift, honestly</a>
+    <a href="#build">Build for reporting</a>
+    <a href="#creative">Funnel areas</a>
+    <a href="#who">Who you are talking to</a>
+    <a href="#hygiene">Targeting hygiene</a>
+    <a href="#idle">Idle accounts</a>
+    <a href="#share">Take it to sales</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ══ 1. THE UNIT ══ -->
+  <section id="unit">
+    <div class="band">
+      <div class="section-label">Start here</div>
+      <h2>The account is the unit. People are a weighting inside it.</h2>
+      <p>This is the one thing integrated marketers get wrong, and everything downstream breaks because of it. Your audience is an Account List. Your budget is spent against accounts. Your results are counted in accounts. You cannot target a person who is not at an account on your list, and you cannot report ROI on a person.</p>
+      <p class="pull">Demandbase suppresses person-level reporting when fewer than five known people are identified at an account. A system that measured people as the unit of value would never round them off.</p>
+      <p>It suppresses them because they are a supporting detail, not the ledger.</p>
+    </div>
+
+    <div class="co warn" style="margin-top:22px">
+      <span class="t">Do not overcorrect</span>
+      <p><span class="basis doc">Documented</span>People-Based Advertising is real and it does exist inside Demandbase Advertising. Known Contacts, job level and job function targeting all work. If you tell your team "Demandbase has no person-level capability," they will open the docs and catch you.</p>
+      <p>The accurate line: people-based options do not create a person-level audience. They tell the bidder <strong>which humans inside your targeted accounts to favour</strong>. Same account list, same budget, same account-level scoreboard.</p>
+      <a class="src" href="https://support.demandbase.com/hc/en-us/articles/360050126672-Demandbase-One-Glossary" target="_blank" rel="noopener">Demandbase One Glossary</a>
+    </div>
+
+    <h3 style="margin-top:26px">Where people legitimately show up</h3>
+    <p class="section-intro">Four places surface people. All four are diagnostics inside a reached account — they answer <em>who at this account is in the room</em>, never <em>which person did the ad convert</em>.</p>
+    <div class="grid4">
+      <div class="c"><span class="tag">Campaign detail</span><h3>Known Contacts</h3><p>Bottom of the Campaign Details page. Requires a Person List selected at build time.</p></div>
+      <div class="c"><span class="tag">Campaign detail</span><h3>Buying Groups</h3><p>Only appears if buying-group targeting was selected when the campaign was built.</p></div>
+      <div class="c"><span class="tag">Analytics</span><h3>Buying Group Insights</h3><p>Personas and buying roles engaged at each journey stage.</p></div>
+      <div class="c"><span class="tag">Not deployed</span><h3>DB One Sales</h3><p>The genuinely person-forward product. Contact-level plays. Not live at TP.</p></div>
+    </div>
+
+    <div class="co info">
+      <span class="t">The privacy floor — teach this, it prevents a support ticket</span>
+      <p><span class="basis doc">Documented</span>When a lock icon appears instead of a number, fewer than five people at that account are identified as known people. Demandbase does not report ad activity below that threshold. Nothing is broken.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ══ 2. WHAT TO READ ══ -->
+  <section id="read">
+    <div class="section-label">Focal areas</div>
+    <h2>What to actually look at</h2>
+    <p class="section-intro">Advertising, then Campaigns, then click the campaign name. Seven tabs across the top: Campaigns, Domains, Performance, Trends, Influence, Publishers, Creatives. Scroll to the bottom of the campaign detail for job levels, job functions, Known Contacts and Buying Groups.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>What it actually measures</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td>Accounts Reached</td><td>Targeted accounts that received at least one impression. This is delivery coverage, and it gates the entire Influence funnel below it.</td><td>Campaigns · Domains</td></tr>
+          <tr><td>Lifted Accounts</td><td>Targeted accounts that averaged more page views during the range than in the roughly 30 days before the campaign started.</td><td>Performance</td></tr>
+          <tr><td>New Accounts On Site</td><td>Targeted accounts visiting your site for the first time in the period. The cleanest awareness signal you have.</td><td>Performance</td></tr>
+          <tr><td>Lift %</td><td>Percent increase or decrease from the baseline over a time period.</td><td>Performance</td></tr>
+          <tr><td>Influence KPIs</td><td>Revenue, pipeline, opportunity-to-won and average deal size for reached accounts.</td><td>Influence</td></tr>
+          <tr><td>Spend · Impressions · CTR</td><td>Delivery mechanics per creative and per publisher. Useful for pacing. Not your success metric.</td><td>Publishers · Creatives</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="co stop">
+      <span class="t">CTR and CPC are the wrong yardstick — and that is Demandbase saying it, not us</span>
+      <p><span class="basis doc">Documented</span>From <em>Measuring the Results of an Advertising Campaign</em>: "CTR and CPC are B2C metrics that don't capture the full impact of account-based campaigns." The stated reasoning is that many decision-makers engage later, not at the first click. For ABM, track engagement from target accounts.</p>
+      <p>When a sales leader asks you for CTR, that is the moment to redirect to Lifted Accounts and New Accounts On Site.</p>
+    </div>
+
+    <h3 style="margin-top:28px">The Influence funnel</h3>
+    <p class="section-intro">Five stages. If you have no opportunity data flowing, you get the first three and nothing else — which is exactly why acquisition-only programs cannot answer "did this make money."</p>
+    <div class="funnel">
+      <div class="fs"><div class="n">01</div><div class="l">Reached</div><div class="d">Got an impression</div></div>
+      <div class="fs"><div class="n">02</div><div class="l">Visited</div><div class="d">Came to site</div></div>
+      <div class="fs"><div class="n">03</div><div class="l">Interacted</div><div class="d">Engaged on site</div></div>
+      <div class="fs hot"><div class="n">04</div><div class="l">Opportunity</div><div class="d">Needs opp data</div></div>
+      <div class="fs hot"><div class="n">05</div><div class="l">Closed Won</div><div class="d">Needs opp data</div></div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ══ 3. LIFT ══ -->
+  <section id="lift">
+    <div class="section-label">Read it correctly</div>
+    <h2>Lift, honestly</h2>
+    <p class="section-intro">Lift is the metric most likely to be over-claimed in a leadership deck, so it is worth knowing precisely what it is before you quote it.</p>
+
+    <div class="grid2">
+      <div class="c accent">
+        <span class="tag">How it is built</span>
+        <h3>A pre/post baseline on your own targeted accounts</h3>
+        <p>The baseline measures a daily average of page views for each targeted account, usually across the 30 days before launch. It is dynamic, to account for the cumulative nature of page views during a flight.</p>
+      </div>
+      <div class="c accent" style="border-left-color:var(--warn)">
+        <span class="tag">What it is not</span>
+        <h3>It is not a holdout test</h3>
+        <p>There is no control group, no randomised holdout, no incrementality test in Demandbase Advertising. Anything else running in the period — email, an event, a PR hit, seasonality — lands inside the same number.</p>
+      </div>
+    </div>
+
+    <div class="co warn">
+      <span class="t">Say it this way</span>
+      <p><span class="basis house">TP house standard</span>Lift compares targeted accounts to their own prior behavior. Treat it as a health signal, not as proof of incrementality. If you need true incrementality, you build the holdout yourself by splitting the account list. Demandbase will not do it for you.</p>
+    </div>
+
+    <h3 style="margin-top:26px">Reached versus reachable</h3>
+    <p class="section-intro">These two get conflated constantly, and the distinction pre-empts the most common panic question — "why is my reach only 60 percent?"</p>
+    <div class="grid2">
+      <div class="c"><span class="tag">The ceiling</span><h3>Reachable</h3><p>An account with at least 50 biddable impressions over the past month across the brand-safe publisher list. A company's digital footprint determines this. A small mid-market account can be structurally unreachable before you spend a dollar.</p></div>
+      <div class="c"><span class="tag">The actual</span><h3>Reached</h3><p>Targeted accounts that received at least one impression. What you actually bought.</p></div>
+    </div>
+    <div class="co ok"><p><span class="basis doc">Documented</span>Low reach is often inventory, not campaign failure. Check reachability before you conclude the media is underperforming.</p></div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ══ 4. BUILD FOR REPORTING ══ -->
+  <section id="build">
+    <div class="section-label">The one that costs you</div>
+    <h2>Reporting is a build decision, not a report decision</h2>
+    <p class="section-intro">This is the highest-value thing on the page. If you did not split ad groups by journey stage when you built the campaign, you cannot get stage-level reporting afterwards. No amount of dashboard-fiddling recovers it.</p>
+
+    <div class="co stop">
+      <span class="t">There is no journey-stage filter on the Campaigns Dashboard</span>
+      <p><span class="basis none">No vendor guidance found</span>Stage segmentation is structural. You create it at build time by giving each journey stage its own ad group, then read results on the Creatives tab by Ad Group. A single monolithic ad group is permanently locked out of the stage view.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <h3>Designate your stages</h3>
+        <p>Admin-level, done once. Bottom-funnel stages only — MQA and after. Do not designate top-of-funnel stages.</p>
+        <div class="path">Settings › Journey › Account Journey Builder › gear › Designate Stages</div>
+      </div>
+      <div class="step">
+        <h3>Journey Targeting</h3>
+        <p>Select your funnel areas — Awareness, Acquisition, Acceleration, Customer — and set outcome plus optimization per area. You do not have to select every stage.</p>
+        <div class="path">Campaign Builder › Step 2</div>
+      </div>
+      <div class="step">
+        <h3>One ad group per stage</h3>
+        <p>Each with its own creatives. This is the step that makes stage reporting possible later. Skip it and the door closes.</p>
+        <div class="path">Campaign Builder › Step 3 › Add Ad Groups</div>
+      </div>
+      <div class="step">
+        <h3>Read by ad group</h3>
+        <p>The Creatives tab shows engagement metrics for ad groups or individual creatives.</p>
+        <div class="path">Advertising › Campaigns › [campaign] › Creatives</div>
+      </div>
+    </div>
+
+    <div class="co info">
+      <span class="t">A path correction worth knowing</span>
+      <p>"Advertising, then Targeted, then search your campaign" is not a real navigation path — there is no Targeted node. It is most likely a memory of the <em>Advertising Targeted</em> ad-metric selector, or of the phrase "targeted accounts" on the Performance tab. The real path is <strong>Advertising › Campaigns › click the campaign name</strong>.</p>
+    </div>
+
+    <h3 style="margin-top:26px">Predictive scores</h3>
+    <div class="grid2">
+      <div class="c accent"><span class="tag">Fit</span><h3>Qualification Score</h3><p>Machine learning that quantifies what defines an ideal customer beyond basic firmographics. Scores every CRM account plus roughly 20 million accounts in the Demandbase database. This is a <strong>gate</strong>.</p></div>
+      <div class="c accent" style="border-left-color:var(--pink)"><span class="tag">Timing</span><h3>Pipeline Predict</h3><p>How likely an account is to become a pipeline opportunity in the near future. This is a <strong>sort</strong>.</p></div>
+    </div>
+    <div class="co stop">
+      <span class="t">These are two different models, not double confirmation</span>
+      <p><span class="basis house">TP house standard</span>Qualification is fit. Pipeline Predict is timing. Marketers stack them as "two green lights means extra confidence" — that is wrong. They are orthogonal axes. Qualification gates, Pipeline Predict sorts.</p>
+      <p style="font-size:13px">View them at <strong>Analytics › Dashboard</strong>, select an account list, scroll to Accounts, click the Pipeline Predict tab. Both can be written back to custom Account fields in Salesforce.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+  <!-- ══ 5. FUNNEL AREAS ══ -->
+  <section id="creative">
+    <div class="section-label">The four funnel areas</div>
+    <h2>Acquisition is the hunt. Know where it actually sits.</h2>
+    <p class="section-intro">Demandbase splits the funnel into four areas, and the mapping is configurable at <strong>Settings › Journey › Account Journey Builder › gear › Designate Stages › Advertising Funnel Designations</strong>. The boundary that trips people up: <strong>Acquisition is middle-of-funnel, not top</strong>. Awareness ends at Aware. The dividing line is Engaged.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Area</th><th>Layer</th><th>Default stages</th><th>What is actually in there</th></tr></thead>
+        <tbody>
+          <tr><td>Awareness</td><td>TOFU</td><td>Qualified · Aware</td><td>Accounts showing intent but little to no onsite engagement</td></tr>
+          <tr><td>Acquisition</td><td><strong>MOFU</strong></td><td>Engaged · MQA</td><td>Accounts passing engagement thresholds. <strong>This is the new-logo hunt.</strong></td></tr>
+          <tr><td>Acceleration</td><td>BOFU</td><td>SQL Opp · Pipeline Opp</td><td>Accounts in live deal stages with open opportunities</td></tr>
+          <tr><td>Customer</td><td>Post-sale</td><td>Renewal · Upsell</td><td>Retention and expansion. Not a new-logo area.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="co ok">
+      <span class="t">Single-area campaigns are explicitly permitted</span>
+      <p><span class="basis doc">Documented</span>"You do not have to select every Journey Stage. For example, you can target only top-of-funnel stages." Running acquisition as its own funnel area is supported and normal. If you leave a stage out, accounts in that stage are simply not served.</p>
+    </div>
+
+    <div class="co stop">
+      <span class="t">The documented mistake is the barbell, not focus</span>
+      <p><span class="basis doc">Documented</span>Demandbase names one common failure: "focusing too heavily on either top-funnel (brand awareness) or bottom-funnel (sales outreach)" and losing "high-potential accounts showing real interest but not yet ready for a call."</p>
+      <p>That lost middle <strong>is</strong> Acquisition. The published warning is that teams neglect exactly the area we prioritize — so this is an argument for funding the hunt properly, not against it.</p>
+    </div>
+
+    <div class="co info">
+      <span class="t">The real dependency worth knowing</span>
+      <p><span class="basis house">TP house standard, on documented entry criteria</span>Acquisition draws from accounts already at <strong>Engaged or MQA</strong> — states that upstream activity produces. If nothing is filling that pool, the acquisition audience thins over time. Run awareness to <em>feed</em> acquisition, not instead of it.</p>
+    </div>
+
+    <h3 style="margin-top:30px">Entry criteria and spend, by area</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Area</th><th>Who gets in</th><th>People layer</th><th>Spend / account</th></tr></thead>
+        <tbody>
+          <tr><td>Awareness</td><td>Aware stage — high intent in the last 30 days. Layer the intent keyword set.</td><td>Standard</td><td>$35–50 · 1,500–2,500 impressions</td></tr>
+          <tr><td>Acquisition</td><td>Engaged or MQA. Engagement score 10+ over 3 months, or Pipeline Predict 85%+.</td><td><strong>Suppress</strong> known contacts</td><td>$35–60 · 2,500–3,000 impressions</td></tr>
+          <tr><td>Acceleration</td><td>Open opportunity, right stage. Exclude accounts with lost opps.</td><td><strong>Restrict</strong> to known contacts</td><td>$60–75 · 3,000–4,000 impressions</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--body-gray);margin-top:10px">Spend bands are Demandbase's published per-account figures. Floor across every area: a bare minimum of 1,000 impressions per account per month — that is the test for whether an area is funded at all or just decorative. <strong>Demandbase publishes no percentage split across areas and no healthy-mix benchmark.</strong> Any ratio you see is ours, not theirs.</p>
+
+    <div class="co stop">
+      <span class="t">The people layer inverts — this is the one nobody works out alone</span>
+      <p><span class="basis doc">Documented</span><strong>Acquisition suppresses your known-contact list.</strong> The goal is net-new contacts, so spending against people you already have is waste.</p>
+      <p><strong>Acceleration restricts to known contacts</strong> using the Email Exists filter. The goal is moving a live deal, so you want the people already in the room.</p>
+      <p>Same platform, opposite logic, because the goals are opposite. Get this backwards and you burn acquisition budget on your own database.</p>
+    </div>
+
+    <h3 style="margin-top:30px">Acceleration — where the weight goes</h3>
+    <p class="section-intro">Campaigns designed to help open opportunities move to won revenue. Accounts already in conversation with sales that still need consistent, high-value touches to overcome doubt or delay. Highest spend band of the three, and the shortest distance to revenue.</p>
+
+    <div class="grid4">
+      <div class="c accent"><span class="tag">Entry 1</span><h3>Stage</h3><p>SQL Opportunity or Pipeline Opportunity.</p></div>
+      <div class="c accent"><span class="tag">Entry 2</span><h3>Open opps only</h3><p>Opportunity Selector, tied to open opportunities relevant to the campaign.</p></div>
+      <div class="c accent"><span class="tag">Entry 3</span><h3>Exclude lost</h3><p>Filter out accounts carrying lost opportunities.</p></div>
+      <div class="c accent"><span class="tag">Entry 4</span><h3>Known contacts</h3><p>Email Exists filter. Known people only.</p></div>
+    </div>
+
+    <div class="co warn">
+      <span class="t">Do not add a score gate to acceleration</span>
+      <p><span class="basis none">No vendor guidance found</span>It is tempting to require high Pipeline Predict, high intent and Qualified before an account enters acceleration. The playbook contains none of those thresholds — entry is opportunity-state driven, not score driven.</p>
+      <p>Pipeline Predict 85%+ is an <strong>Acquisition</strong> threshold. An account with a live open opportunity has already outrun the prediction. Gating on it shrinks your highest-value audience for no documented reason.</p>
+    </div>
+    <p style="font-size:13.5px;color:var(--body-gray)">Measure it on opportunity progression, pipeline velocity, visits to high-value pages, time on site, and SQL-to-won conversion.</p>
+
+    <h3 style="margin-top:30px">Top of funnel, with intent behind it</h3>
+    <div class="co ok">
+      <span class="t">Intent is not an overlay — it is the stage definition</span>
+      <p><span class="basis doc">Documented</span>The Aware stage <em>is</em> "accounts showing high levels of intent in the last 30 days." Intent is baked in, not bolted on. Then the intent keyword set does something most people miss: it "prioritis[es] showing ads to the people in the account who are the source of the intent signals."</p>
+      <p>So intent does not just pick the account — it steers delivery to the specific humans generating the signal. Blind top-of-funnel has no such argument. Never silo TOFU unless there is intent underneath it.</p>
+    </div>
+    <div class="co info"><p>One honest caveat: Demandbase recommends blending fit, intent and timing, scoring intent by frequency, volume, recency and diversity. Intent-informed, not intent-gated on a single binary switch.</p></div>
+
+    <h3 style="margin-top:30px">Build it as one campaign</h3>
+    <p class="section-intro">One campaign, one budget, an ad group per funnel area, bid priority set by funnel depth. Budget then follows accounts as they progress rather than sitting trapped in a silo.</p>
+    <div class="co stop">
+      <span class="t">One-way door at publish</span>
+      <p>You cannot swap the Journey Funnel after a campaign is published. You can still change which stages sit in each funnel area. Confirm you have selected <strong>[US Journey]</strong> before you publish, not Global.</p>
+    </div>
+
+    <div class="dd" style="margin-top:24px">
+      <div class="col yes">
+        <h4>Creative practice that holds up</h4>
+        <ul>
+          <li>Refresh creatives every four to five weeks</li>
+          <li>One ad group per funnel area, own creative pool</li>
+          <li>Build familiarity first, then specificity — industry-level message before company-name personalisation</li>
+          <li>Judge creative on account engagement, not CTR</li>
+        </ul>
+      </div>
+      <div class="col no">
+        <h4>What the platform will not do for you</h4>
+        <ul>
+          <li>Weight rotation by performance — creatives inside a type rotate evenly, full stop</li>
+          <li>Sequence creative A then B inside an ad group. Sequencing is structural: accounts move stages, so they move creative pools</li>
+          <li>Report accounts lifted per individual creative</li>
+          <li>Accept After Effects or video for personalised ads</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="co warn">
+      <span class="t">The schedule-killer nobody plans for</span>
+      <p>Personalised banner previews take <strong>three to five business days</strong> to turn around. Personalisation allows one font and one style, with a 30-character minimum placeholder. HTTPS required. No fourth-party pixels — Rubicon, Marketo, BlueKai, Xaxis.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ══ 6. WHO ══ -->
+  <section id="who">
+    <div class="section-label">Domain expertise first</div>
+    <h2>Who you are actually talking to</h2>
+    <p class="section-intro">Integrated marketers lead with <strong>verticals</strong>. That is the domain expertise you are hired for, and it is where the message lives. There are separate buying groups for CX, for lines of service, and for vertical specialists — read the right one before you write a word of copy.</p>
+
+    <div class="grid3">
+      <div class="c accent"><span class="tag">Buying group</span><h3>CX</h3><p>The customer experience committee. Different language, different proof points.</p></div>
+      <div class="c accent"><span class="tag">Buying group</span><h3>Lines of service</h3><p>How our service lines map into the account. Complex, and worth the time to learn properly.</p></div>
+      <div class="c accent"><span class="tag">Buying group</span><h3>Vertical specialists</h3><p>Where domain expertise lands. Banking sounds nothing like Retail.</p></div>
+    </div>
+
+    <div class="co stop" style="margin-top:20px">
+      <span class="t">Mid-market and enterprise never share a campaign</span>
+      <p><span class="basis house">TP house standard — Leslie's rule, and the mechanics back it</span>Demandbase's per-account budget guidance is explicitly tiered by account tier and by ACV. A campaign has one budget pool spread across its account list. Mixing enterprise and mid-market forces a single per-account spend level onto two populations Demandbase says should be funded differently — you either overspend on mid-market or starve enterprise.</p>
+      <p>Add reachability: reach depends on digital footprint, so a mixed list systematically over-delivers to large accounts and under-delivers to small ones. Your blended reach percentage becomes meaningless. Separate them. Different messaging, different campaigns.</p>
+    </div>
+
+    <h3 style="margin-top:26px">Buying Group Insights — and what to do with it</h3>
+    <p class="section-intro">Found at <strong>Analytics › Insights › Buying Group Insights</strong>. It shows which personas and buying roles are engaged at each stage, so you can find where to focus and avoid inefficient outreach.</p>
+
+    <div class="grid3">
+      <div class="c"><span class="tag">Diagnosis 1</span><h3>Reached, but group not populated</h3><p>Ads are landing but the buying group is thin. That is a contact-acquisition problem, not a media problem. Do not spend more.</p></div>
+      <div class="c"><span class="tag">Diagnosis 2</span><h3>Populated, but flat</h3><p>The group is there and not engaging. That is a creative and message problem. Change the creative or spend.</p></div>
+      <div class="c"><span class="tag">Diagnosis 3</span><h3>Wrong roles engaging</h3><p>Practitioners only, no economic buyers. Adjust job level and job function prioritization in Campaign Builder Step 1.</p></div>
+    </div>
+
+    <div class="co stop">
+      <span class="t">Persona Completeness is not buying-group coverage</span>
+      <p><span class="basis house">TP standard — this one has already cost time</span>Persona Completeness is the percentage of configured personas represented in <strong>one</strong> buying group by known people in first-party data. It is a title match. It is not evidence of participation, and it is scoped to a single buying group.</p>
+      <p>At TP, all 10,000 scored accounts run on <strong>[US] LOBs</strong> only, and the mean is <strong>1.03 engaged people per account</strong>. Present it as a gap to close, never as coverage achieved. If a completeness number reaches a leadership deck framed as coverage, expect to spend a week walking it back.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ══ 7. HYGIENE ══ -->
+  <section id="hygiene">
+    <div class="section-label">Targeting hygiene</div>
+    <h2>The rules that save you later</h2>
+
+    <div class="grid2">
+      <div class="c accent">
+        <span class="tag">Known contacts</span>
+        <h3>Always include them</h3>
+        <p>Campaign Builder Step 1, "Contacts you already know." Requires a Person List with at least 100 records carrying unique email addresses. The bidder then prioritises impressions to matched known people even without an intent signal, and it unlocks the Known Contacts reporting tab.</p>
+      </div>
+      <div class="c accent" style="border-left-color:var(--pink)">
+        <span class="tag">Non-obvious, high value</span>
+        <h3>One Person List per campaign</h3>
+        <p>The Person List cannot be changed or removed after a campaign is published — but you can change that list's selector criteria any time. A dedicated list per campaign lets you adjust criteria without collateral damage to every other campaign bound to the same list.</p>
+      </div>
+    </div>
+
+    <div class="co warn">
+      <span class="t">Locked at publish</span>
+      <p>Ad format, account list, intent keywords and known-contact list are all frozen once a campaign is published. The list <em>binding</em> is frozen; the list <em>contents</em> are not. That is the whole reason for one list per campaign.</p>
+    </div>
+
+    <h3 style="margin-top:26px">Formats and inventory</h3>
+    <div class="grid4">
+      <div class="c"><span class="tag">Supported</span><h3>Display</h3><p>The workhorse.</p></div>
+      <div class="c"><span class="tag">Supported</span><h3>Native</h3><p>Matches publisher look and feel. Needs advertiser name, title, body, URL, CTA label.</p></div>
+      <div class="c"><span class="tag">Supported</span><h3>Web video</h3><p>Skippable.</p></div>
+      <div class="c"><span class="tag">Supported</span><h3>CTV</h3><p>Hulu, Tubi, Pluto TV and 175+ publishers. Cannot be skipped.</p></div>
+    </div>
+
+    <div class="co stop">
+      <span class="t">YouTube is not Demandbase inventory</span>
+      <p><span class="basis none">No vendor guidance found</span>There is no mention of YouTube targeting support in the Demandbase Advertising documentation. Do not promise it.</p>
+      <p>What does exist is <strong>reporting aggregation</strong> — third-party multi-channel campaigns pull spend, impression and click metrics from Demandbase, LinkedIn and Google Ads into one view. That is reporting, not targeting. The two get conflated constantly.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ══ 8. IDLE ══ -->
+  <section id="idle">
+    <div class="section-label">Activation</div>
+    <h2>Accounts sitting at nothing</h2>
+    <p class="section-intro">We have a large population of target accounts touching neither Aware nor Engaged, including roughly seven thousand mid-market accounts from the Lighthouse migration. They are not going to activate themselves. But run the diagnosis before you run the media.</p>
+
+    <div class="steps">
+      <div class="step">
+        <h3>Check reachability first</h3>
+        <p>Some of that idle set may be structurally unreachable — under 50 biddable impressions a month. Spending against them produces nothing at all.</p>
+      </div>
+      <div class="step">
+        <h3>Check the tag before blaming the media</h3>
+        <p>Engaged requires site visits, and site visits require the Demandbase tag firing. We have a documented landing-page to Salesforce chain break and a Marketo naked-landing-page gap. Accounts can look idle because measurement is broken, not because they are cold.</p>
+      </div>
+      <div class="step">
+        <h3>Then build the awareness campaign</h3>
+        <p>Awareness funnel area, Grow Intent and Awareness outcome. Reach optimization maximizes coverage across the entire list; Clicks is the default.</p>
+        <div class="path">Campaign Builder › Step 2 › Awareness</div>
+      </div>
+      <div class="step">
+        <h3>Judge it on the right metrics</h3>
+        <p>Lifted Accounts and New Accounts On Site. Not CTR.</p>
+      </div>
+    </div>
+
+    <div class="co info">
+      <span class="t">Segment before you launch</span>
+      <p>Demandbase recommends targeting accounts by tier, industry, region or size when creating account lists. Split by vertical and by segment, then build. Look at the line of service, ask what the vertical actually buys, and talk to the BDs in their sales meetings — you are the one who will be delivering these results back to them.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ══ 9. SHARE ══ -->
+  <section id="share">
+    <div class="section-label">Take it to the room</div>
+    <h2>What you pull, what you share</h2>
+    <div class="share">
+      <p style="font-size:14.5px;color:var(--dark-gray)">Walking into a sales meeting with a campaign readout. This is the pull list and the order to say it in.</p>
+      <ol>
+        <li><strong>Coverage.</strong> Accounts reached against accounts targeted — and name the reachable ceiling so nobody reads a gap as failure.</li>
+        <li><strong>Movement.</strong> Lifted Accounts and New Accounts On Site. Framed as a health signal, not as incrementality.</li>
+        <li><strong>Influence.</strong> Revenue, pipeline, opportunity-to-won and average deal size for reached accounts. If opportunity data is not flowing, say so rather than showing an empty funnel.</li>
+        <li><strong>Who is in the room.</strong> Buying Group Insights by persona and buying role. Where the group is thin, that is a contact gap and it is a named ask, not a complaint.</li>
+        <li><strong>Creative read.</strong> Which ad group is carrying the campaign, by stage. This only exists if you split ad groups at build time.</li>
+        <li><strong>The next move.</strong> One recommendation with the budget or creative change attached. Never present a gap without the fix beside it.</li>
+      </ol>
+    </div>
+
+    <div class="co ok" style="margin-top:20px">
+      <span class="t">When you get stuck</span>
+      <p>Go to the Demandbase ops manager. He will guide you, point you at the right surface and tell you what the platform will and will not do. He will not build it for you — and that is the right arrangement, because the person who builds the campaign is the person who has to read it.</p>
+    </div>
+
+    <div class="co info">
+      <span class="t">Before you quote a figure externally</span>
+      <p>Demandbase support articles block automated retrieval, so the documented claims here were assembled from indexed article content rather than fetched pages. Every one carries its source link. Open the article and confirm the exact wording before a number goes into a client-facing or leadership deck.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>Teleperformance · ABX Strategic Intelligence · FY26</footer>
+
+<script>
+  const links=[...document.querySelectorAll('.subnav a')];
+  const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function spy(){
+    let cur=secs[0];
+    for(const s of secs){ if(window.scrollY>=s.offsetTop-120) cur=s; }
+    links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur.id));
+  }
+  window.addEventListener('scroll',spy,{passive:true}); spy();
+  links.forEach(a=>a.addEventListener('click',e=>{
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

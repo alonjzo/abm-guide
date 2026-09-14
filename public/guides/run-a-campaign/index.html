@@ -1,0 +1,826 @@
+<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="../../assets/js/navigation.js"></script>
+<title>Run a US Journey Campaign | ABM Suite</title>
+<style>
+/* Locked to the TP light treatment: white ground, Dark Slate type.
+   No dark-mode variant by design — this page renders light in every viewer theme. */
+:root{color-scheme:light !important}
+html{background:#ffffff}
+
+:root{
+  --slate:#4B4C6A;          /* TP Dark Slate — primary */
+  --slate-2:#5d6486;        /* TP Slate */
+  --pink:#ff0082;           /* TP Pink — controlled accent */
+  --violet:#e2dfe8;         /* TP Pastel Violet */
+  --pastel-slate:#c2c7cd;   /* TP Pastel Slate */
+  --turquoise:#00AF9B;      /* TP Turquoise */
+  --muted-violet:#706398;   /* TP Muted Violet */
+
+  --bg:#ffffff;
+  --surface:#f7f6f9;
+  --surface-2:#e2dfe8;
+  --ink:#1a1a1a;
+  --ink-2:#4B4C6A;
+  --ink-3:#55565f;
+  --rule:#c2c7cd;
+  --rule-soft:#e6e6e5;
+  --accent:#ff0082;
+  --good:#00AF9B;
+  --panel:#4B4C6A;
+  --panel-ink:#ffffff;
+  --panel-ink-2:#c7cade;
+
+  --trim:linear-gradient(90deg,#4B4C6A 0%,#ff0082 35%,#ff0082 100%);
+  --sans:"TP Sans","Archivo","Segoe UI",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --maxw:1080px;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:16px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px}
+
+/* ---------- masthead ---------- */
+.mast{background:var(--slate);color:#fff;padding-block:56px 44px}
+.mast .wrap{display:flex;flex-direction:column;gap:14px}
+.eyebrow{
+  font-size:10.5px;letter-spacing:2.2px;text-transform:uppercase;
+  font-weight:500;color:var(--panel-ink-2);margin:0;
+}
+.mast h1{
+  font-size:clamp(30px,5vw,46px);font-weight:200;line-height:1.08;
+  margin:0;text-wrap:balance;letter-spacing:-.01em;
+}
+.mast h1 em{font-style:normal;color:var(--pink);font-weight:300}
+.mast p.lede{
+  margin:0;max-width:62ch;font-size:17px;font-weight:400;color:#eef0f6;
+}
+.mast .meta{
+  display:flex;flex-wrap:wrap;gap:8px 22px;font-size:11.5px;
+  color:var(--panel-ink-2);letter-spacing:.4px;margin-top:6px;
+}
+.trim{height:8px;background:var(--trim)}
+
+/* ---------- the one rule ---------- */
+.onerule{background:var(--surface-2);padding-block:26px}
+.onerule .wrap{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.onerule .k{
+  font-size:10.5px;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+  color:var(--slate);white-space:nowrap;padding-top:5px;
+}
+
+.onerule p{margin:0;max-width:66ch;font-size:16.5px;color:var(--ink)}
+
+/* ---------- step layout ---------- */
+main{padding-block:8px 64px}
+.step{
+  display:grid;grid-template-columns:78px 1fr;gap:0 26px;
+  padding-block:38px;border-top:1px solid var(--rule-soft);
+}
+.step:first-of-type{border-top:none}
+.num{
+  font-family:var(--mono);font-size:13px;font-weight:400;color:var(--slate-2);
+  letter-spacing:.5px;padding-top:9px;
+}
+.num b{display:block;font-size:34px;font-weight:200;color:var(--slate);line-height:1;letter-spacing:-.02em}
+
+.body{min-width:0}
+h2{
+  font-size:26px;font-weight:600;line-height:1.22;margin:0 0 6px;
+  color:var(--ink-2);text-wrap:balance;letter-spacing:-.005em;
+}
+h3{
+  font-size:12px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--ink-3);margin:26px 0 10px;
+}
+p{margin:0 0 14px;max-width:68ch}
+ul{margin:0 0 14px;padding-left:20px;max-width:68ch}
+li{margin-bottom:7px}
+li::marker{color:var(--slate-2)}
+strong{font-weight:600}
+.kicker{font-size:15.5px;color:var(--ink-3);margin-bottom:16px;max-width:66ch}
+code{font-family:var(--mono);font-size:.86em;background:var(--surface);padding:1px 5px;border-radius:3px;color:var(--ink-2)}
+
+/* ---------- callouts ---------- */
+.src{
+  font-size:12.5px;line-height:1.6;color:var(--ink-3);margin:10px 0 18px;
+  padding-left:12px;border-left:2px solid var(--rule);max-width:72ch;
+}
+.src b{font-weight:600;color:var(--ink-2)}
+.flag{
+  background:var(--surface);border-left:3px solid var(--pink);
+  padding:14px 18px;margin:18px 0;max-width:72ch;
+}
+.flag .t{font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;font-weight:600;color:var(--pink);margin-bottom:5px}
+.flag p{margin:0;font-size:15px}
+.do{
+  background:var(--surface);border-left:3px solid var(--good);
+  padding:14px 18px;margin:18px 0;max-width:72ch;
+}
+.do .t{font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;font-weight:600;color:var(--good);margin-bottom:5px}
+.do p{margin:0;font-size:15px}
+.do p + p{margin-top:8px}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:0 0 6px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th{
+  text-align:left;font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;
+  font-weight:600;color:var(--ink-3);padding:0 14px 8px 0;vertical-align:bottom;
+  border-bottom:1px solid var(--rule);
+}
+td{padding:11px 14px 11px 0;border-bottom:1px solid var(--rule-soft);vertical-align:top;line-height:1.5}
+td:last-child,th:last-child{padding-right:0}
+tbody tr:last-child td{border-bottom:none}
+.t-name{font-weight:500;color:var(--ink-2);white-space:nowrap}
+.t-code{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);white-space:nowrap}
+.num-c{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+th.num-c{text-align:right}
+
+/* ---------- buying group cards ---------- */
+.bgs{display:grid;gap:14px;margin:4px 0 8px}
+.bg{border:1px solid var(--rule-soft);background:var(--surface);padding:18px 20px}
+.bg h4{
+  margin:0 0 3px;font-size:17px;font-weight:500;color:var(--ink-2);
+  font-family:var(--mono);letter-spacing:-.01em;
+}
+.bg .use{font-size:13.5px;color:var(--ink-3);margin:0 0 14px}
+.bg dl{margin:0;display:grid;gap:10px}
+.bg dt{font-weight:500;font-size:14px;color:var(--ink);font-family:var(--mono);font-size:13px}
+.bg dd{margin:2px 0 0;font-size:14.5px;color:var(--ink-3);line-height:1.5}
+
+/* ---------- funnel chart ---------- */
+.panel{background:var(--panel);color:var(--panel-ink);padding:26px 24px 22px;margin:20px 0 8px}
+.panel h4{margin:0 0 2px;font-size:16px;font-weight:400;color:#fff}
+.panel .sub{margin:0 0 20px;font-size:12px;color:var(--panel-ink-2);letter-spacing:.3px}
+.fn{display:grid;gap:12px}
+.fnrow{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center}
+.fnlab{font-size:12px;color:var(--panel-ink-2);letter-spacing:.4px;text-align:right}
+.fnbar{position:relative;height:26px;background:rgba(255,255,255,.09)}
+.fnfill{height:100%;background:#0087FF}
+.fnfill.a{background:#7d86b5}
+.fnfill.b{background:#5f8fd6}
+.fnfill.c{background:#0087FF}
+.fnfill.d{background:var(--pink)}
+.fnval{
+  position:absolute;top:0;left:10px;height:26px;display:flex;align-items:center;
+  font-size:12.5px;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:.3px;
+  text-shadow:0 1px 2px rgba(0,0,0,.35);
+}
+.panel .foot{margin:18px 0 0;font-size:11.5px;color:var(--panel-ink-2);line-height:1.55}
+
+/* ---------- matrix ---------- */
+.mx{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:4px 0 8px}
+.mxc{border:1px solid var(--rule-soft);padding:16px 16px 14px;background:var(--bg)}
+.mxc .st{font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;font-weight:600;color:var(--slate-2);margin-bottom:8px}
+.mxc .ct{font-size:15px;font-weight:500;color:var(--ink-2);margin-bottom:4px}
+.mxc p{font-size:13.5px;color:var(--ink-3);margin:0}
+.mxc .cnt{font-family:var(--mono);font-size:12px;color:var(--pink);margin-top:10px;letter-spacing:.3px}
+
+/* ---------- checklist ---------- */
+.chk{list-style:none;padding:0;margin:4px 0 8px;max-width:72ch}
+.chk li{
+  padding:10px 0 10px 30px;border-bottom:1px solid var(--rule-soft);
+  position:relative;margin:0;font-size:15px;
+}
+.chk li:last-child{border-bottom:none}
+.chk li::before{
+  content:"";position:absolute;left:2px;top:17px;width:11px;height:11px;
+  border:1.5px solid var(--slate-2);
+}
+.chk li b{font-weight:600;color:var(--ink-2)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--rule);padding-block:24px 40px;margin-top:10px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between;align-items:baseline}
+footer p{font-size:11.5px;color:var(--ink-3);margin:0;max-width:70ch}
+
+@media (max-width:720px){
+  .step{grid-template-columns:1fr;gap:0}
+  .num{padding-top:0;margin-bottom:10px;display:flex;align-items:baseline;gap:10px}
+  .num b{display:inline;font-size:26px}
+  .mx{grid-template-columns:1fr}
+  .fnrow{grid-template-columns:74px 1fr;gap:10px}
+  .fnlab{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+a{color:var(--accent)}
+a:focus-visible,li:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">TP USA · ABM Operating Standard · Demandbase Tenant 15053</p>
+    <h1>Build a US Journey campaign <em>in the right order</em></h1>
+    <p class="lede">The order is the method. Reach before build, journey before creative, creative before budget. Skip a step and you find out eight weeks later when the spend is gone and the funnel never moved.</p>
+    <div class="meta">
+      <span>Audience: ABM, Integrated Marketing, Vertical Leads</span>
+      <span>Format: Display · Native · Video · CTV</span>
+      <span>Reviewed September 2026</span>
+    </div>
+  </div>
+</header>
+<div class="trim"></div>
+
+<section class="onerule">
+  <div class="wrap">
+    <span class="k">Non-negotiable</span>
+    <p>Every US campaign runs on <strong>US Journey</strong> and <strong>US-prefixed assets</strong>. The Demandbase default journey reads global, all-region logic, and journey selection cannot be undone after publish — pick the wrong one and you rebuild the campaign from scratch.</p>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <!-- STEP 0 -->
+  <section class="step">
+    <div class="num">Step<b>00</b></div>
+    <div class="body">
+      <h2>Inventory Planner — before you open the builder</h2>
+      <p class="kicker">Advertising → Inventory Planner. This is a forecast tool, not a setup step. You are answering one question: <em>is there enough inventory to make this campaign worth running?</em></p>
+
+      <p>Feed it the same inputs you are about to use in the builder — flight dates, account list, CPM tier, geo, ad type, and <strong>every ad size you intend to upload</strong> — then hit <em>Calculate available inventory</em>. It returns potential reach, available impressions, and maximum supportable budget, plus a CSV.</p>
+
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Forecast a Campaign with the Inventory Planner</em> — the stated purpose is to "prevent setting up campaigns that underdeliver due to a lack of impressions, avoiding unmet goals and dissatisfaction."</p>
+
+      <h3>What the number has to clear</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Estimated reach</th><th>Read</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td class="t-code">90–100%</td><td>Ideal zone — maximum reach, no waste</td><td>Proceed</td></tr>
+            <tr><td class="t-code">80–90%</td><td>Healthy audience, room to optimize</td><td>Proceed; widen sizes</td></tr>
+            <tr><td class="t-code">&lt; 80%</td><td>Under-targeted — frequency will spike on too few accounts</td><td>Add creative sizes, loosen job level, widen the list</td></tr>
+            <tr><td class="t-code">&lt; 70% at wk 2</td><td>Live campaign is starving</td><td>Expand audience or reduce filters</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — Demandbase VIP training framework (Dec 2025), reach benchmark bands; corroborated in the Apr 30 2026 session with Kate Varvedo on the Enterprise BFS campaign.</p>
+
+      <div class="flag">
+        <div class="t">The reach killer nobody expects</div>
+        <p>The Enterprise BFS campaign launched 14 Mar 2026 against 47 accounts and reached only 25 — <strong>53%</strong>. Engagement was strong (51% account lift, above benchmark), but half the list never saw an ad. Diagnosis: <strong>one creative size uploaded instead of five</strong>. One size only fits one placement shape, so most of the available inventory was ineligible. Size count is a reach lever, not a design preference.</p>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — "db – kate general training," 30 Apr 2026: "Low reach likely due to using only 1 creative size instead of 5 – additional sizes should improve reach by fitting different ad placements."</p>
+
+      <h3>Supported display sizes — upload five or more</h3>
+      <p><code>300×250</code> · <code>728×90</code> · <code>160×600</code> · <code>300×600</code> · <code>970×250</code> · <code>320×50</code> · <code>300×50</code></p>
+      <p>These are the only seven. Nothing outside this list can be uploaded — the question is only which of the seven you build. If you enable In-App inventory in Step 1, note that in-app placements accept <code>300×250</code> and <code>320×50</code> <em>only</em>, so those two have to be inside your set whatever its size. Files must be the exact pixel dimension (no 2× retina uploads), JPEG/PNG/GIF, or a ZIP under 500 KB per size for animated HTML with a maximum 15-second animation.</p>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Non-Personalized Ad Specifications</em> and <em>Campaign Builder Step 1: Campaign Basics</em>.</p>
+    </div>
+  </section>
+
+  <!-- STEP 1 -->
+  <section class="step">
+    <div class="num">Step<b>01</b></div>
+    <div class="body">
+      <h2>Campaign Basics — who, where, and which humans</h2>
+      <p class="kicker">Six of the fields on this screen lock the moment you publish. Get them wrong and the fix is a new campaign, not an edit.</p>
+
+      <h3>Naming and hygiene</h3>
+      <ul>
+        <li><strong>Name it after the Salesforce campaign code.</strong> Attribution is a string match — start with the SFDC code, then the campaign, or the results have nowhere to land.</li>
+        <li><strong><code>[US]</code> prefix on everything.</strong> Advertising runs out of the Global workspace, where every region's assets sit side by side. The prefix is what stops a January-style cross-region overwrite.</li>
+        <li><strong>Labels:</strong> vertical, LOB, funnel stage. That is how you filter reporting later without exporting.</li>
+        <li><strong>Watchers:</strong> the EVP and the vertical owner. They get the weekly performance mail automatically — that is free executive visibility.</li>
+        <li><strong>Flight:</strong> one quarter is the standard. Only the <em>end</em> date can be changed after publish.</li>
+      </ul>
+
+      <h3>Ad format — in plain English</h3>
+      <p class="kicker">Picked once per campaign. It decides what you have to produce, where the ad physically shows up, whether In-App is available, and in one case what you are allowed to optimize for. Here is what each one actually is.</p>
+
+      <div class="bgs">
+        <div class="bg">
+          <h4>Display &nbsp;·&nbsp; in use</h4>
+          <p class="use"><strong>What it is:</strong> a banner. A rectangle or strip sitting around the edges of a web page — top, side, or between paragraphs. The workhorse of the internet.</p>
+          <dl>
+            <dt>Where it shows up</dt>
+            <dd>Business and trade publisher sites, and — if you tick In-App — inside mobile and desktop apps.</dd>
+            <dt>What you have to make</dt>
+            <dd>Static images at seven fixed sizes. A designer can turn one concept into all seven in an afternoon. No copywriting beyond a headline on the image itself.</dd>
+            <dt>Use it when</dt>
+            <dd>Almost always. It is the default because it is cheap, it scales, and it builds the frequency that moves accounts from Target Account into Aware. Every campaign should have a Display layer unless there is a reason not to.</dd>
+          </dl>
+        </div>
+
+        <div class="bg">
+          <h4>Native &nbsp;·&nbsp; in use</h4>
+          <p class="use"><strong>What it is:</strong> an ad dressed as content. A headline, a thumbnail and a source line, sitting in the page's own recommendation feed — the "you might also like" row under an article.</p>
+          <dl>
+            <dt>Where it shows up</dt>
+            <dd>Inside publisher content feeds, styled to match the surrounding page. Web only — In-App does not apply.</dd>
+            <dt>What you have to make</dt>
+            <dd>One image at 1200×627, a 128×128 logo, and tight copy: headline 25 characters, body 90, CTA 15. The copy is the hard part — 25 characters is about four words.</dd>
+            <dt>Use it when</dt>
+            <dd>The click you want is "I want to read that," not "I want to buy that." Reports, guides, benchmark data, thought leadership. It earns attention that a banner cannot, and it is the right vehicle for a gated asset.</dd>
+          </dl>
+        </div>
+
+        <div class="bg">
+          <h4>Video &nbsp;·&nbsp; not yet</h4>
+          <p class="use"><strong>What it is:</strong> a video that plays in a player — either before someone's chosen video starts (pre-roll) or auto-playing inside an article body (outstream).</p>
+          <dl>
+            <dt>Where it shows up</dt>
+            <dd>Publisher video inventory. <strong>Whether that includes YouTube is the open question</strong> — see the note below. Web only.</dd>
+            <dt>What you have to make</dt>
+            <dd>A finished video: MP4 or a VAST tag, 30 seconds maximum with 15–30 recommended, 16:9 or 4:3, under 200 MB. This is a production job, not a design job.</dd>
+            <dt>Use it when</dt>
+            <dd>The story genuinely needs motion — a demo, a customer telling it in their own words, something a banner physically cannot say. Not as a general-purpose upgrade to Display.</dd>
+          </dl>
+        </div>
+
+        <div class="bg">
+          <h4>CTV &nbsp;·&nbsp; not yet</h4>
+          <p class="use"><strong>What it is:</strong> Connected TV. A spot on a streaming app running on an actual television — the ad break inside a streaming service on the living-room screen.</p>
+          <dl>
+            <dt>Where it shows up</dt>
+            <dd>Streaming apps on TV devices. Web only in the sense that In-App does not apply.</dd>
+            <dt>What you have to make</dt>
+            <dd>VAST 2.0+ or MP4, <strong>exactly</strong> 15 or 30 seconds — not 14, not 32 — at 1280×720 or 1920×1080, 15–30 Mbps CBR, 48 kHz audio. The strictest spec of the four.</dd>
+            <dt>Use it when</dt>
+            <dd>Presence is the point. There is no click on a TV screen, so <strong>CTV cannot be optimized for clicks at all</strong> — it changes what the Step 2 outcome table can do. Reserve it for named-account programs where "we saw your ad" carries weight in the room.</dd>
+          </dl>
+        </div>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Non-Personalized Ad Specifications</em> (all four creative specs, quoted) and <em>Campaign Builder Step 1</em> (In-App is Display-only; CTV restricts Clicks optimization). Usage: live Advertising dashboard, Tenant 15053 — 11 Display and 3 Native campaigns active 11 Aug – 11 Sep 2026, no Video, no CTV.</p>
+
+      <div class="flag">
+        <div class="t">Open question before anyone plans a video buy</div>
+        <p>The current help-center spec for Video describes MP4 and <strong>VAST tags</strong> at standard web dimensions, which reads as open-web publisher inventory. Demandbase's own announcement of B2B video advertising, however, names <strong>YouTube</strong> as the platform. Those two do not reconcile from public documentation, and it matters — a YouTube buy and an open-exchange video buy are different media plans with different costs.</p>
+        <p><strong>Confirm with Maria before scoping anything.</strong> Separately, there is a second and definitely-available route to YouTube: our Google integration is connected with Orchestration and Campaign Reporting enabled, and an Orchestration Audience with a Google destination already exists. Pushing a Demandbase audience into Google Ads and running YouTube there is a smaller step than standing up a Demandbase video buy.</p>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Non-Personalized Ad Specifications</em> (VAST/MP4 web video specs); Demandbase press release, <em>Demandbase Introduces Video Advertising for B2B</em> (names YouTube); TP internal — US Workspace audit, Section 12: Google connected, 2 accounts, Orchestration and Campaign Reporting enabled.</p>
+
+      <div class="do">
+        <div class="t">Should we add a format? Not yet — and here is the order</div>
+        <p><strong>First, fix fill on the format we already run.</strong> Reached is 71% portfolio-wide. Adding a new format before solving that is spending new money on a problem we have not fixed — and the fix is free: more sizes.</p>
+        <p><strong>Second, settle Display versus Native properly.</strong> The three Native campaigns averaged roughly <strong>0.10% CTR</strong> against roughly <strong>0.05%</strong> across the eleven Display campaigns, and the best performer in the portfolio is Native at 0.209%. But two of those three sit mid-pack and three campaigns is not a finding. Run it as a controlled test — same list, same message, same flight — and let it decide where the next dollar goes.</p>
+        <p><strong>Then look at video</strong>, once the inventory question is answered and we have assets on spec. The honest read on CTV: it is a brand-presence format with no click path, so it will not show up in the funnel metrics leadership currently reads. That is a positioning conversation with Leslie before it is a media buy.</p>
+      </div>
+
+      <h3>Environment — Web and In-App</h3>
+      <p>Two checkboxes, and only one of them is a decision. <strong>Web is always on and cannot be turned off</strong> — "Serves ads on websites. This option is always included." <strong>In-App</strong> is the optional one: "Serves ads in mobile, tablet, and desktop apps," and it is "included at no additional cost."</p>
+
+      <div class="tw">
+        <table>
+          <thead><tr><th>Environment</th><th>Inventory</th><th>Identity</th><th>Creative accepted</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Web</td><td>Websites. Always included.</td><td>Demandbase account graph — IP and cookie resolution to the company</td><td>All formats and all seven display sizes; native, video, CTV</td></tr>
+            <tr><td class="t-name">In-App</td><td>Mobile, tablet and desktop apps. Opt-in, no extra cost.</td><td><strong>Mobile Advertising IDs (MAIDs)</strong> matched to B2B accounts and professional profiles — a different graph, not the web one</td><td><strong>Display only</strong>, and only <code>300×250</code> and <code>320×50</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Campaign Builder Step 1: Campaign Basics</em> — Environment field, quoted above verbatim.</p>
+
+      <div class="flag">
+        <div class="t">The trap — a fill failure, not a targeting failure</div>
+        <p>These are not new sizes. <code>300×250</code> and <code>320×50</code> are already two of the seven display sizes; In-App simply accepts <em>only</em> those two. So the requirement is not "add two more," it is "your set must contain these two." Build five sizes that happen to be 728×90, 160×600, 300×600, 970×250 and 300×50 and you have full web coverage and <strong>zero</strong> in-app coverage, with the box ticked.</p>
+        <p>Nothing errors, because nothing is wrong. Valid creative, valid targeting, valid budget — there is simply no dimension match, so every in-app request comes back with nothing to serve and the impressions quietly route to web. Your reach number lands exactly where it would have with In-App switched off. Same shape as the Enterprise BFS campaign: the accounts were reachable, the creative was not servable.</p>
+      </div>
+
+      <div class="do">
+        <div class="t">When to turn it on</div>
+        <p><strong>On</strong> for awareness and any campaign that came out of the Inventory Planner short on reach — it is free incremental supply and it is the cheapest lever you have. <strong>Consider off</strong> for a 1:1 named-account play where placement quality is part of the message: MAID-matched app inventory can put an executive impression inside a consumer app, which counts as reach but carries less weight than a trade-press placement. That second call is a judgment on our side, not a platform rule — the platform is neutral on it.</p>
+      </div>
+
+      <h3>Geo — where teams get burned</h3>
+      <div class="flag">
+        <div class="t">Never click the North America preset</div>
+        <p>The regional preset includes <strong>Mexico</strong>, which belongs to LATAM. Open the region node and tick <strong>United States of America</strong> and <strong>Canada</strong> individually, leaving Mexico unchecked. The parent checkbox should sit in the half-filled state, not solid. Solid means you just bought LATAM impressions on a US budget.</p>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — US Workspace platform rules, and the 15 Apr 2026 lists walkthrough: "Set regional targeting to North America (exclude Mexico as it belongs to Latin America)."</p>
+
+      <h3>Buying groups — the plain-English version</h3>
+      <p>A buying group is not a list of people. It is a set of <em>personas</em> — role families — that Demandbase resolves into real humans at your target accounts. You supply the companies; the buying group tells the platform which chairs to aim at inside them. You may attach more than one, and the US tenant has exactly three live.</p>
+
+      <div class="bgs">
+        <div class="bg">
+          <h4>[US] CX Core</h4>
+          <p class="use">Use for: contact center, customer care, CX operations, CCaaS, service delivery. Three personas.</p>
+          <dl>
+            <dt>Contact Center &amp; Ops Buying Group Leaders</dt>
+            <dd>The people who own the floor and the service numbers — care, support, service delivery and operations leadership. This is the persona that recognizes the problem.</dd>
+            <dt>Finance &amp; Executive Leadership</dt>
+            <dd>The people who fund it. Finance and the executive suite. This persona does not feel the pain; it approves the money.</dd>
+            <dt>Procurement &amp; Sourcing Leaders</dt>
+            <dd>The people who paper it. Procurement, sourcing and vendor management. Late in the cycle, but they can stop a deal cold.</dd>
+          </dl>
+        </div>
+
+        <div class="bg">
+          <h4>[US] LOBs</h4>
+          <p class="use">Use for: line-of-business plays — TAS/Technology, RaaS/Revenue, F&amp;A, Collections, Data &amp; AI, Trust &amp; Safety. Six personas.</p>
+          <dl>
+            <dt>Revenue-Sales Buying Group Leaders</dt>
+            <dd>Revenue and sales leadership — the buyer for a RaaS or revenue-generation motion.</dd>
+            <dt>Technology Buying Group Leaders</dt>
+            <dd>The technology function — the buyer for TAS, cloud contact center and digital transformation plays.</dd>
+            <dt>Data Services &amp; AI Leaders</dt>
+            <dd>Data, analytics and AI leadership — the buyer for data services and AI-led offers.</dd>
+            <dt>F&amp;A &amp; Collections Operations Leaders</dt>
+            <dd>Finance and accounting operations and collections — the buyer for F&amp;A BPO and collection services.</dd>
+            <dt>Finance &amp; Executive Leadership</dt>
+            <dd>Same funding persona as CX Core. It appears in every group because someone always has to sign.</dd>
+            <dt>Procurement &amp; Sourcing Leaders</dt>
+            <dd>Same gatekeeper persona as CX Core.</dd>
+          </dl>
+        </div>
+
+        <div class="bg">
+          <h4>[US] Vertical Specialists</h4>
+          <p class="use">Use for: industry-led plays where the message is written in the vertical's language. Thirteen personas.</p>
+          <dl>
+            <dt>Industry personas (11)</dt>
+            <dd>BFS · Insurance · Healthcare · Retail · Government · Travel &amp; Hospitality · Media, Entertainment &amp; Comms · CMT/Telecom · Automotive · Technology (SaaS) · Utilities. Each one resolves to the operating leadership inside that industry.</dd>
+            <dt>Finance &amp; Executive Leadership</dt>
+            <dd>The funder, again.</dd>
+            <dt>Procurement &amp; Sourcing Leaders</dt>
+            <dd>The gatekeeper, again.</dd>
+          </dl>
+        </div>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — Demandbase US Workspace audit, Section 6: six active buying groups tenant-wide, three US. Persona names as configured. <b>Before quoting exact job titles to a stakeholder, open Settings → Buying Groups and read the title strings inside the persona</b> — the names below are the role families each persona resolves; the literal title lists live in the platform.</p>
+
+      <div class="do">
+        <div class="t">How to pick</div>
+        <p><strong>CX motion</strong> → CX Core alone. <strong>Solution or LOB motion</strong> (TAS, F&amp;A, Data, RaaS) → LOBs, plus Vertical Specialists if the creative is industry-specific. <strong>Vertical campaign</strong> (Enterprise BFS, Healthcare Payer) → Vertical Specialists <em>and</em> the LOB or CX group that matches the offer. A vertical list with only a horizontal buying group attached is targeting half the committee.</p>
+        <p>Awareness campaigns take all the relevant groups. Bottom-funnel campaigns narrow to the persona that actually signs.</p>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — 15 Apr 2026 lists walkthrough: "For CX motion: use CX buying groups. For vertical/digital transformation/AI/Fab solutions: use vertical specialist and LOB buying groups." Demandbase One caps buying group selection per campaign — confirm the current cap in-platform before stacking more than three.</p>
+
+      <h3>Contacts you already know</h3>
+      <p>Optional person list. Leave it empty on a one-to-many campaign — Demandbase will find the people at your accounts on its own. Attach it only on a true 1:1 or 1:few play where you have named the committee. And <strong>check whose list it is</strong>: a named-account contact list left over from a previous build is the single most common copy-paste error in the builder, and it cannot be swapped after publish.</p>
+
+      <h3>Job level / function</h3>
+      <p>Two modes: <strong>Prioritize</strong> (bid more on these people) or <strong>Exclude</strong>, up to five combinations. Prioritize is the default posture. Standard awareness stack: C-Level, Senior Executive, Vice President, Director — Manager excluded at the top of funnel. Then maturate as the account moves: Director-heavy in Aware, VP/SVP/EVP in Engaged and Pipeline.</p>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Campaign Builder Step 1</em> (five combination maximum); TP internal — 4 Mar 2026 campaign build with Swati Srivastava (title ladder and maturation strategy).</p>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step">
+    <div class="num">Step<b>02</b></div>
+    <div class="body">
+      <h2>Journey Targeting — how the US Journey actually works</h2>
+      <p class="kicker">Marked OPTIONAL in the interface. Treat it as mandatory. This screen is where a flat ad buy becomes an account-based program.</p>
+
+      <p>The US Journey holds <strong>seven stages</strong>: All Other, Target Account, Aware, Engaged, SQA, MQA, Opportunity, Customer. The builder shows them as chips in <em>Available Journey Stages</em> with a live account count on each. You drag those chips into four funnel buckets — <strong>Aware, Engaged, Pipeline, Customer</strong> — and each bucket gets its own campaign outcome, its own optimization target, and its own ad groups.</p>
+
+      <p>That is the whole mechanism: the funnel bucket is the unit of strategy, the journey stage is the unit of population, and the ad group is the unit of message. One campaign, several conversations, running at once.</p>
+
+      <div class="do">
+        <div class="t">Select all three working funnels, not just one</div>
+        <p>Accounts move. When engagement points push an account from Aware to Engaged, Demandbase automatically shifts it into the Engaged funnel and starts serving that funnel's creative — <em>but only if you built that funnel</em>. An Aware-only campaign watches accounts progress and then has nothing to say to them.</p>
+        <p>Aware-only is correct for one case: net-new market entry with zero existing engagement.</p>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — 4 Mar 2026 campaign build: "For future campaigns: Select all three journey stages to enable automatic optimization… Awareness stage accounts moved to appropriate journey stages based on engagement points automatically."</p>
+
+      <h3>Outcome × optimization, by funnel</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Funnel</th><th>Campaign outcome</th><th>Optimize for</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Aware</td><td>Grow intent and awareness</td><td>Clicks</td><td>Spends more on <em>lower</em>-intent accounts to build familiarity. This is the one that creates new demand.</td></tr>
+            <tr><td class="t-name">Engaged</td><td>Drive website engagement</td><td>Clicks</td><td>Prioritizes accounts already showing intent and pushes them to a CTA.</td></tr>
+            <tr><td class="t-name">Pipeline</td><td>Drive website engagement</td><td>Visits</td><td>Depth over volume — these accounts need to read the case study, not click a banner.</td></tr>
+            <tr><td class="t-name">Customer</td><td>Only if leadership has asked for it</td><td>Visits</td><td>Customers sit in the Excluded side of US Addressable Advertising by design. Including them is a decision, not a default.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase outcome definitions per the VIP training guide — "Grow intent and awareness tells Demandbase to spend more on lower-intent accounts to build familiarity"; "Drive website engagement prioritizes people already showing stronger intent." TP US Addressable Advertising segment: Excluded = open opportunity or existing client.</p>
+
+      <div class="flag">
+        <div class="t">Check the account counts on the chips before you build</div>
+        <p>A funnel bucket holding <strong>0 accounts</strong> will accept ad groups, consume your build time, pass validation, and then never serve a single impression. If Engaged reads 0, either leave that funnel empty or fix the upstream engagement threshold first. Counts move daily — SQA re-evaluates by 6 AM PST — so never publish a fixed count to a stakeholder.</p>
+      </div>
+
+      <h3>What the US Journey looks like at rest</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Stage</th><th class="num-c">Accounts</th><th class="num-c">Share</th><th class="num-c">Velocity</th><th>Read</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Target Account</td><td class="num-c">2,182</td><td class="num-c">37.8%</td><td class="num-c">6 days</td><td>The cold pool. Advertising's job.</td></tr>
+            <tr><td class="t-name">Aware</td><td class="num-c">2,424</td><td class="num-c">42.0%</td><td class="num-c">4 days</td><td>Largest stage. 82% convert onward.</td></tr>
+            <tr><td class="t-name">Engaged</td><td class="num-c">283</td><td class="num-c">4.9%</td><td class="num-c">5 days</td><td>The narrow point. Where mid-funnel creative earns its keep.</td></tr>
+            <tr><td class="t-name">MQA</td><td class="num-c">36</td><td class="num-c">0.6%</td><td class="num-c">1 day</td><td>Hand-raisers. These go to BD, not to more ads.</td></tr>
+            <tr><td class="t-name">Opportunity</td><td class="num-c">254</td><td class="num-c">4.4%</td><td class="num-c">0 days</td><td>Live deals. Acceleration creative only.</td></tr>
+            <tr><td class="t-name">Customer</td><td class="num-c">597</td><td class="num-c">10.3%</td><td class="num-c">0 days</td><td>Suppressed unless directed otherwise.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — Demandbase US Workspace audit, Section 7. 2026 US Tiers 1A–3, 5,776 accounts, window 21 Dec 2025 – 21 Mar 2026. Directional, not current — pull live counts before any executive read.</p>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step">
+    <div class="num">Step<b>03</b></div>
+    <div class="body">
+      <h2>Ad Groups — two sets per funnel, four creatives each</h2>
+      <p class="kicker">This is the step the team keeps getting wrong, and it is the step that decides whether the campaign compounds or plateaus.</p>
+
+      <div class="flag">
+        <div class="t">The failure mode</div>
+        <p>Build one set of five creatives and drop the same set into every funnel. It passes validation. It looks finished. It then does three things: it says the same thing to a cold account and a live opportunity, it makes creative performance unreadable because every stage reports identical assets, and it burns frequency on accounts that already converted past that message. You bought an account-based platform and ran a flat banner buy through it.</p>
+      </div>
+
+      <h3>The standard: 2 × 4 per funnel</h3>
+      <p>Every funnel you built in Step 2 gets <strong>two ad groups</strong> — one Targeting, one Retargeting — with <strong>four creatives in each</strong>. Three working funnels means six ad groups and roughly <strong>24 creatives</strong>, sized across the five-plus display dimensions from Step 0.</p>
+
+      <div class="mx">
+        <div class="mxc">
+          <div class="st">Aware</div>
+          <div class="ct">Targeting · 4</div>
+          <p>Category and problem framing. Market pressure, industry data, the pain in their language. No product.</p>
+          <div class="cnt">+ Retargeting · 4</div>
+          <p>Same theme, second exposure — the proof point or stat that follows the first ad.</p>
+        </div>
+        <div class="mxc">
+          <div class="st">Engaged</div>
+          <div class="ct">Targeting · 4</div>
+          <p>Solution overview, technical guide, case study. Soft gate. This is where the offer appears.</p>
+          <div class="cnt">+ Retargeting · 4</div>
+          <p>For people who visited but didn't convert — the objection-handler or the second asset.</p>
+        </div>
+        <div class="mxc">
+          <div class="st">Pipeline</div>
+          <div class="ct">Targeting · 4</div>
+          <p>Demo, discovery, ROI, implementation proof. Named-account specificity where the deal warrants it.</p>
+          <div class="cnt">+ Retargeting · 4</div>
+          <p>Close-the-gap creative for the committee members who are already on your site.</p>
+        </div>
+      </div>
+
+      <h3>How retargeting actually works here</h3>
+      <p>Retargeting in Demandbase is not a separate campaign. It is a <strong>targeting type set on the ad group</strong>, with three options:</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Targeting type</th><th>Who sees it</th><th>Use it for</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">All</td><td>Anyone matching Standard <em>or</em> retargeting definitions</td><td>The default. Fine for a single-ad-group campaign, useless for optimization.</td></tr>
+            <tr><td class="t-name">Standard</td><td>First-time site visitors only</td><td>Your Targeting set. Net-new exposure.</td></tr>
+            <tr><td class="t-name">User retargeting</td><td>Only people who previously hit the site and carry the retargeting pixel</td><td>Your Retargeting set. Second touch on a known warm person.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Campaign Builder Step 3: Add Ad Groups</em> — "Standard: shows creatives only to first-time website visitors"; "User retargeting: displays creatives exclusively to previous website visitors with a retargeting pixel"; multiple creatives within a type "rotate evenly."</p>
+
+      <h3>So why does "All" exist at all?</h3>
+      <p>Fair question — Standard and User retargeting are mutually exclusive and between them they cover everybody, so <code>All</code> looks redundant. It is the union of the other two, and it exists for three reasons that are worth knowing before you dismiss it.</p>
+      <ul>
+        <li><strong>It is the only default that cannot starve.</strong> If the platform defaulted to Standard, every campaign built by someone who never touched the field would silently never reach a returning visitor. If it defaulted to User retargeting, a brand-new campaign would have nobody to serve at all. <code>All</code> is the safe default precisely because it makes no assumption — which is also why it is the wrong choice once you know what you are doing.</li>
+        <li><strong>It is correct for a single-ad-group campaign.</strong> One creative set, one message, no intention of reading the two cohorts separately — then splitting the audience buys you nothing and <code>All</code> is the right pick. It also satisfies the platform rule below on its own.</li>
+        <li><strong>It absorbs the cold-start ramp.</strong> On day one the retargeting pool is empty — nobody has visited yet from this campaign. A User retargeting ad group ramps only as the Standard set drives traffic. On a short flight that pool may never get large enough to read.</li>
+      </ul>
+
+      <div class="do">
+        <div class="t">The decision rule</div>
+        <p>The cost of <code>All</code> is not delivery — it delivers fine. The cost is <strong>measurement</strong>: one blended CTR instead of two readable ones, and no way to tell whether a message works cold or only on someone who already knows you.</p>
+        <p>So: <strong>split into Standard + User retargeting on a quarter-long flight</strong>, which is our standard and gives the retargeting pool time to build into something worth reading. <strong>Use <code>All</code> on a short burst</strong> — a four-to-six week event push, a single-message test — where the pool will never mature and the split would just produce two thin numbers. That call is ours, not a platform rule.</p>
+      </div>
+
+      <div class="flag">
+        <div class="t">Before you trust the Retargeting half, check the pixel</div>
+        <p>User retargeting only matches people carrying the retargeting pixel, so its audience is capped by site-tag coverage, not by your budget. If a Retargeting ad group under-delivers, check tag coverage before you blame the creative — the pool may simply be small. Current signal is good: the live flight shows 1,276 accounts visited and 306 new accounts on site, so site-side tracking is returning data.</p>
+      </div>
+
+      <div class="flag">
+        <div class="t">Hard platform rule</div>
+        <p><strong>At least one ad group in the campaign must use Standard or All.</strong> A campaign built entirely on User retargeting has no way to acquire a first visitor, so there is nobody to retarget and delivery stalls. Targeting feeds Retargeting — that is the dependency, and it is why the two sets ship together.</p>
+      </div>
+
+      <div class="do">
+        <div class="t">Why this is "retargeting for optimization"</div>
+        <p>Creatives inside an ad group rotate <em>evenly</em>. The platform does not pick a winner for you across mixed audiences — it picks within a defined one. Splitting Standard from User retargeting gives you two clean cohorts running the same four-creative rotation, so the click-through read is real: which message works on a cold account versus which message works on someone who already came to the site. That is the A/B you can actually act on. One blended ad group averages the two into a number that tells you nothing.</p>
+        <p>Then you optimize: rename creatives so they are identifiable in reporting, track CTR by asset, retire the bottom performers, and rotate the set.</p>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>The Creative Library</em> — ad groups exist to manage "different shapes and sizes of a creative theme and perform A/B testing by running different groups simultaneously." TP internal, 4 Mar 2026: "Track click-through rates by creative asset to identify top performers. Rename creative assets for easier identification."</p>
+
+      <h3>Rotation cadence</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Account priority</th><th>Refresh creative</th><th>Frequency cap</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Standard</td><td>Every 3–6 months</td><td>3 impressions / user / day</td></tr>
+            <tr><td class="t-name">High-priority</td><td>Every 4–5 weeks</td><td>5–10 impressions / user / day</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Best Practices for Budgeting an Advertising Campaign</em>. TP internal standard is a foundational set plus a retargeting set, roughly 12 images, rotating at ~6 weeks (Aug 2026).</p>
+    </div>
+  </section>
+
+  <!-- STEP 3.5 CREATIVE LIBRARY -->
+  <section class="step">
+    <div class="num">Ref<b>CL</b></div>
+    <div class="body">
+      <h2>Creative Library — build before, patch in flight</h2>
+      <p class="kicker">Advertising → Creative Library. The answer to "do I load creative before launch or after?" is <strong>before</strong>, and the reason is mechanical, not stylistic.</p>
+
+      <div class="tw">
+        <table>
+          <thead><tr><th>Action on a live campaign</th><th>What happens</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Add a creative into an existing ad group</td><td>Safe. Campaign keeps running.</td></tr>
+            <tr><td class="t-name">Archive one creative</td><td>Safe. Pauses that creative only; the rest keeps serving.</td></tr>
+            <tr><td class="t-name">Bulk-update the landing page on an ad group</td><td>Safe. Applies to every creative in that group at once.</td></tr>
+            <tr><td class="t-name">Move a creative between ad groups</td><td><strong>Pauses the campaign.</strong> You must go back into Campaign Builder and re-select the ad group to restart it.</td></tr>
+            <tr><td class="t-name">Move an ungrouped creative into an ad group</td><td><strong>Removes it from the campaigns it was attached to.</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Understanding the Creative Library, Ad Groups, and Ungrouped Creatives</em>.</p>
+
+      <div class="do">
+        <div class="t">The operating rule</div>
+        <p>Build and name the ad groups in the Creative Library <em>before</em> you reach Step 3, then attach them. In flight, refresh by <strong>adding new creatives into the existing ad group and archiving the tired ones</strong> — never by moving assets between groups. If a creative needs to live in two ad groups, duplicate it under a unique name rather than moving it.</p>
+        <p>And do not stop a campaign that has momentum to make a creative change. If the change genuinely requires a different structure, let the current flight finish and build the next one properly.</p>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center (duplication guidance); TP internal — 30 Apr 2026 Kate Varvedo session, recommendation not to stop campaigns with good momentum.</p>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="step">
+    <div class="num">Step<b>04</b></div>
+    <div class="body">
+      <h2>Media Planning — bid the funnel, not the flat line</h2>
+      <p class="kicker">Budget is allocated against a PO, and the campaign total must be at or under the unallocated amount on the selected ad plan.</p>
+
+      <h3>Bid priority ladder</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Funnel</th><th>Bid</th><th>Impressions / account / month</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Aware</td><td>Bid standard</td><td class="num-c">1,500 – 2,500</td></tr>
+            <tr><td class="t-name">Engaged</td><td>Bid more</td><td class="num-c">2,500 – 3,000</td></tr>
+            <tr><td class="t-name">Pipeline</td><td>Bid most</td><td class="num-c">3,000 – 4,000</td></tr>
+            <tr><td class="t-name">Customer / expansion</td><td>Bid most</td><td class="num-c">3,000 – 4,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Campaign Builder Step 4: Media Planning</em> (three bid options aligned to journey stages) and <em>Best Practices for Budgeting</em> (impression bands). Per-account budget guidance: $800–$1,000 per high-priority account; nearer $2,000 for broad geographies.</p>
+
+      <h3>TP budget floors by campaign type</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Type</th><th class="num-c">Starting budget</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">One-to-one</td><td class="num-c">$5,000</td><td>Named account, named committee</td></tr>
+            <tr><td class="t-name">One-to-few</td><td class="num-c">$3,500</td><td>Cluster or sub-vertical</td></tr>
+            <tr><td class="t-name">One-to-many</td><td class="num-c">$2,000</td><td>Vertical or LOB awareness, 3 months</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — 15 Apr 2026 lists walkthrough. Enterprise and mid-market must run as <em>separate</em> campaigns; allocate more to enterprise when running both. Reference point: $1,000 ≈ 80,000 impressions, $1,500 ≈ 120,000 (4 Mar 2026 build).</p>
+
+      <h3>Campaign Checker</h3>
+      <p>Before you publish, the checker restates estimated reach, projected and maximum spend, and estimated impressions. Compare it against what the Inventory Planner told you in Step 0. If it disagrees materially, something changed between plan and build — usually sizes or job-level filters — and you fix it here, not after launch.</p>
+      <p><strong>Save Draft is the correct exit</strong> if anything is unresolved. Backing out loses the build. And note: once published, <em>ad plan selection cannot be modified</em>.</p>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Campaign Builder Step 4: Media Planning</em>.</p>
+    </div>
+  </section>
+
+  <!-- STEP 5 -->
+  <section class="step">
+    <div class="num">Step<b>05</b></div>
+    <div class="body">
+      <h2>Review and Publish — and what locks behind you</h2>
+
+      <div class="tw">
+        <table>
+          <thead><tr><th>Field</th><th>After publish</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Account list</td><td><strong>Locked.</strong> You can edit records inside the list (24h to process) but you cannot swap the list.</td></tr>
+            <tr><td class="t-name">Intent keyword set</td><td><strong>Locked.</strong> Edit keywords inside the set; cannot swap the set.</td></tr>
+            <tr><td class="t-name">People list</td><td><strong>Locked.</strong> Same rule.</td></tr>
+            <tr><td class="t-name">Journey</td><td><strong>Locked.</strong> Wrong journey = rebuild the campaign.</td></tr>
+            <tr><td class="t-name">Ad plan selection</td><td><strong>Locked.</strong></td></tr>
+            <tr><td class="t-name">Start date</td><td><strong>Locked.</strong> End date can move.</td></tr>
+            <tr><td class="t-name">Ad groups / creatives</td><td>Editable — add or remove creatives.</td></tr>
+            <tr><td class="t-name">Budget</td><td>Editable up or down, but never below what has already delivered.</td></tr>
+            <tr><td class="t-name">Journey targeting stages</td><td>Editable within the existing funnel structure (up to 24h to process).</td></tr>
+            <tr><td class="t-name">Buying groups · job level · outcome · watchers</td><td>Editable.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Help Center, <em>Edit and Manage Campaigns</em> and <em>Campaign Builder Step 1</em>.</p>
+
+      <h3>Pre-flight checklist</h3>
+      <ul class="chk">
+        <li><b>Inventory Planner run</b> and reach cleared 80%, ideally 90%+</li>
+        <li><b>SFDC campaign code</b> exists and the campaign name matches it</li>
+        <li><b>[US] prefix</b> on the campaign, account list, person list and keyword set</li>
+        <li><b>Geo:</b> United States and Canada ticked individually; Mexico unchecked</li>
+        <li><b>Journey = US Journey</b> — confirmed on screen, not assumed</li>
+        <li><b>Buying groups</b> match the motion, and the person list belongs to <em>this</em> campaign</li>
+        <li><b>No funnel bucket holding 0 accounts</b> has ad groups attached</li>
+        <li><b>Two ad groups per funnel</b> — one Standard, one User retargeting — four creatives each</li>
+        <li><b>Five or more display sizes</b> uploaded; 300×250 and 320×50 present if In-App is on</li>
+        <li><b>Landing pages live</b>, carrying the Demandbase pixel, the Marketo Munchkin and a unique UTM tied to a smart campaign</li>
+        <li><b>Bid ladder set</b> — standard / more / most across Aware, Engaged, Pipeline</li>
+        <li><b>Watchers added</b> — vertical owner and EVP</li>
+      </ul>
+      <p class="src"><b>Note:</b> the UTM item is gated on the Umbraco → Marketo hidden-field wiring. Until that is live, click-through attribution will not reconcile end to end — plan the campaign anyway, but do not promise the attribution.</p>
+    </div>
+  </section>
+
+  <!-- BENCHMARKS -->
+  <section class="step">
+    <div class="num">Ref<b>BM</b></div>
+    <div class="body">
+      <h2>What good looks like on our own numbers</h2>
+      <p class="kicker">Fourteen active TP campaigns, 11 Aug – 11 Sep 2026, lifetime audience. This is the bar the next campaign is measured against.</p>
+
+      <div class="panel">
+        <h4>Account funnel across all active campaigns</h4>
+        <p class="sub">4,003 accounts targeted · $9,411 spend · 607,706 impressions · 20% lifted</p>
+        <div class="fn">
+          <div class="fnrow">
+            <div class="fnlab">Targeted</div>
+            <div class="fnbar"><div class="fnfill a" style="width:100%"></div><div class="fnval">4,003 · 100%</div></div>
+          </div>
+          <div class="fnrow">
+            <div class="fnlab">Reached</div>
+            <div class="fnbar"><div class="fnfill b" style="width:71%"></div><div class="fnval">2,850 · 71%</div></div>
+          </div>
+          <div class="fnrow">
+            <div class="fnlab">Visited</div>
+            <div class="fnbar"><div class="fnfill c" style="width:32%"></div><div class="fnval">1,276 · 32%</div></div>
+          </div>
+          <div class="fnrow">
+            <div class="fnlab">Interacted</div>
+            <div class="fnbar"><div class="fnfill c" style="width:20%"></div><div class="fnval">792 · 20%</div></div>
+          </div>
+          <div class="fnrow">
+            <div class="fnlab">Clicked</div>
+            <div class="fnbar"><div class="fnfill d" style="width:6%"></div><div class="fnval">252 · 6%</div></div>
+          </div>
+        </div>
+        <p class="foot">Reached at 71% is the number to attack — every point of it is creative-size coverage and audience width, both set in Step 0. Interacted counts accounts with 3+ unique interactions in the last 30 days against the prior 30-day baseline; it does not sit inside Visited, which is why it is not a strict descent.</p>
+      </div>
+      <p class="src"><b>Source:</b> Demandbase Advertising dashboard, Tenant 15053, active campaigns, window 11 Aug – 11 Sep 2026. Metric definitions per the 30 Apr 2026 session.</p>
+
+      <h3>Reading the metrics without over-claiming</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Metric</th><th>What it means</th><th>Benchmark</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Lifted</td><td>Accounts interacting more after campaign start than in the 30 days before</td><td>16% is a starting point; 30%+ is strong. Our best live campaign is at 51%.</td></tr>
+            <tr><td class="t-name">Reached</td><td>Accounts that received impressions</td><td>Target 80–90%+. We are at 71% portfolio-wide.</td></tr>
+            <tr><td class="t-name">CTR</td><td>Clicks ÷ impressions</td><td>Live range 0.02%–0.21%. Below 0.10% after three weeks → refresh creative.</td></tr>
+            <tr><td class="t-name">Clicks vs. visits</td><td>They will not reconcile</td><td>Normal. Cookie consent rates and direct traffic break the line. Do not report it as a discrepancy.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — Kate Varvedo sessions, 4 Mar and 30 Apr 2026; live campaign table, Sep 2026.</p>
+
+      <div class="flag">
+        <div class="t">Known limits — say these out loud before someone asks</div>
+        <p>Ad clicks are permanently anonymous at the person level under GDPR. The only way to name a human is a form fill. Contact lists cannot be added to a running campaign. And intent keyword volume across the tenant is running over the 2M/week platform cap, so some accounts are missing intent signal — that suppresses dynamic list membership and can dampen ad performance. Kate has this escalated to engineering.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHEN TO PIVOT -->
+  <section class="step">
+    <div class="num">Ref<b>PV</b></div>
+    <div class="body">
+      <h2>When to change something</h2>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Signal</th><th>Window</th><th>Move</th></tr></thead>
+          <tbody>
+            <tr><td class="t-name">Reach below 70%</td><td>2 weeks</td><td>Add creative sizes; widen job level; expand the list</td></tr>
+            <tr><td class="t-name">CTR below 0.10%</td><td>3 weeks</td><td>Add new creatives into the existing ad group; archive the weakest</td></tr>
+            <tr><td class="t-name">No journey progression</td><td>30 days</td><td>Re-check keyword-to-message alignment; the intent set may be wrong</td></tr>
+            <tr><td class="t-name">Engagement declining</td><td>Month 2</td><td>Stop early. Do not ride a dead flight to the end date.</td></tr>
+            <tr><td class="t-name">Account idle in Opportunity</td><td>Check days-idle</td><td>Break it out into a 1:1 acceleration campaign</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src"><b>Source:</b> TP internal — VIP training pivot thresholds (Dec 2025); 4 Mar 2026 build session.</p>
+
+      <h3>Monitoring cadence</h3>
+      <p>Weeks 1–2 daily, for delivery faults rather than performance. Weeks 3–4 twice weekly, for the first real signal. Month 2 onward weekly, with a monthly deep dive. Weekly watcher mail covers the exec layer automatically.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>TP USA · Performance Marketing. Applies to Demandbase Tenant 15053, US Workspace and Global Workspace. Internal use.</p>
+    <p>Sources cited inline. Platform behavior verified against Demandbase Help Center, September 2026.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/back-to-top.js"></script>
+</body></html>

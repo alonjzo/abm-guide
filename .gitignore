@@ -5,3 +5,14 @@ node_modules/
 *.log
 .DS_Store
 .env*.local
+
+# local backups — never ship
+*.bak
+*.pre*
+*.v1boring
+*.prematrix
+*.prefont
+*.pretrim
+*.prestages
+*.preserif
+*.prenav

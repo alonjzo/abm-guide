@@ -58,9 +58,9 @@
   /* ── LAYOUT ── */
   .page{max-width:1100px;margin:0 auto;padding:0 60px 80px}
   section{padding:56px 0 0}
-  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
-  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
-  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px}
+  .section-label{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:14px}
+  .section-label::before{content:'';width:26px;height:3px;background:var(--pink);display:inline-block;border-radius:2px}
+  h2{font-size:clamp(1.85rem,3.1vw,2.6rem);font-weight:800;color:var(--black);letter-spacing:-.028em;line-height:1.1;margin-bottom:10px;text-wrap:balance}
   .section-intro{font-size:15px;color:var(--body-gray);max-width:68ch;margin-bottom:32px;line-height:1.65}
   h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:8px}
 
@@ -477,8 +477,68 @@
 
   <!-- JOURNEY STAGES -->
   <section id="journey">
+
+    <div class="section-label">02c · Pulling Coverage</div>
+    <h2>Pull account coverage in under a minute</h2>
+    <p style="font-size:15px;color:var(--body-gray);max-width:74ch;margin-bottom:20px">The four filters across the top of the
+    US Workspace dashboard answer most coverage questions without building a single list. This is the fastest path from
+    &ldquo;how many accounts do we have in X&rdquo; to a number you can quote.</p>
+
+    <div class="callout pink">
+      <strong>Check the workspace selector first.</strong> Top-left reads <strong>US Workspace</strong> or <strong>Global Workspace</strong>.
+      Everything below is scoped to that choice, and Global will return numbers that are not ours. If a count looks wildly wrong,
+      this is the first thing to check.
+    </div>
+
+    <div class="table-wrap" style="margin-top:20px">
+      <table class="tier-table">
+        <thead><tr><th>Filter</th><th>What it does</th><th>Use it when</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Saved Filters</strong></td>
+            <td>Loads a filter combination someone already built and saved.</td>
+            <td>Always check here first. If the pull is one we run regularly, it already exists &mdash; do not rebuild it.</td>
+          </tr>
+          <tr>
+            <td><strong>Industry Category</strong></td>
+            <td>Filters to a vertical &mdash; BFSI, Healthcare, Retail, Tech and so on.</td>
+            <td>&ldquo;How much coverage do we have in Healthcare?&rdquo; This plus the tier filter answers it.</td>
+          </tr>
+          <tr>
+            <td><strong>US Revenue Tier (Segment)</strong></td>
+            <td>Filters to the tier bands &mdash; T1-A through Tier 5, plus the Tier 6 parking lot.</td>
+            <td>Sizing a lane. T2+T3 is Mid-Market, T4+T5 is the Small Market / TaaS lane. <strong>Exclude Tier 6.</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Journey Stage [US Journey]</strong></td>
+            <td>Filters to where accounts sit in the funnel &mdash; Target Account through Customer.</td>
+            <td>&ldquo;Who is actually in market?&rdquo; Pick <strong>MQA</strong> for a working list, not Engaged.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout slate" style="margin-top:20px">
+      <strong>The combination that answers most questions.</strong> Industry Category + US Revenue Tier gives you coverage.
+      Add Journey Stage and you get coverage <em>that is actually moving</em>. Example: Healthcare + T2/T3 + MQA tells you how many
+      mid-market healthcare accounts are worth a call this week &mdash; a number you can hand to a sales leader without caveats.
+    </div>
+
+    <div class="callout amber" style="margin-top:16px">
+      <strong>Two numbers people misquote.</strong> The dashboard&rsquo;s <strong>Total Accounts</strong> reads everything in the workspace
+      including Tier 6 &mdash; it is not the working universe. The real target universe is <strong>10,155</strong> across T2&ndash;T5,
+      or 10,855 including enterprise. And <strong>Existing Accounts vs No Net New</strong> on the dashboard is a CRM-presence read,
+      not a New Logo read &mdash; New Logo versus Existing Logo is a separate field, and the split is 9,923 to 232.
+    </div>
+
+    <div class="callout green" style="margin-top:16px">
+      <strong>Quick Cards do the common pulls for you.</strong> Top Qualified Accounts, Top Pipeline Predict Accounts,
+      <strong>Top Qualified Accounts not in your CRM</strong>, and Accounts with high intent (last 30 days) are one click each.
+      That third one is the whitespace play &mdash; in-market accounts we have no CRM record for.
+    </div>
+
     <div class="section-label">03 · Journey Stages</div>
-    <h2>The 7-stage US buying journey</h2>
+    <h2>The six-stage US buying journey</h2>
     <p class="section-intro">Every account in the US Workspace moves through six active <code>[US Journey]</code> stages, each defined by a hard signal threshold — tier, intent, engagement score, or opp status. Marketing owns through Marketing Qualified Account; Sales takes over at Opportunity. These are the live definitions as configured in Admin → Journey Stages. (An eighth bucket, "All Other," is Demandbase's required system default — display off, not used for targeting.)</p>
 
     <div class="journey-flow">
@@ -534,7 +594,7 @@
             <th>#</th>
             <th>Stage</th>
             <th>What it means</th>
-            <th>Who's on it</th>
+            <th>Accounts</th><th>Who's on it</th>
           </tr>
         </thead>
         <tbody>
@@ -542,42 +602,49 @@
             <td><span class="js-num">—</span></td>
             <td><span class="js-stage">All Other</span></td>
             <td>System default. Holds every account that doesn't match another stage. Display off — not used for targeting or reporting.</td>
+            <td>733,482</td>
             <td><span class="js-who who-default">Default bucket</span></td>
           </tr>
           <tr>
             <td><span class="js-num">01</span></td>
             <td><span class="js-stage">Target Account</span></td>
             <td>On a 2026 US tier (T1-A, Tier 1–5)</td>
+            <td><b>92</b></td>
             <td><span class="js-who who-mktg">Marketing</span></td>
           </tr>
           <tr>
             <td><span class="js-num">02</span></td>
             <td><span class="js-stage">Aware</span></td>
-            <td>Keyword intent firing (High/Med/Low) + recent activity</td>
+            <td>Keyword intent firing (High/Med/Low) + activity in last 90 days</td>
+            <td><b>349</b></td>
             <td><span class="js-who who-mktg">Marketing</span></td>
           </tr>
           <tr>
             <td><span class="js-num">03</span></td>
             <td><span class="js-stage">Engaged</span></td>
             <td>Engagement ≥10 in past 3 months</td>
+            <td><b>8,946</b></td>
             <td><span class="js-who who-sdr">SDR</span></td>
           </tr>
           <tr>
             <td><span class="js-num">04</span></td>
             <td><span class="js-stage">Marketing Qualified Account</span></td>
-            <td>Hits the MQ engagement threshold</td>
+            <td>Engagement ≥40 in last 3 months (or High/Med intent), with ≥1 engaged known person. SDR works 40–59.</td>
+            <td><b>205</b></td>
             <td><span class="js-who who-sdr">SDR → MQL</span></td>
           </tr>
           <tr>
             <td><span class="js-num">05</span></td>
             <td><span class="js-stage">Opportunity (Pipeline)</span></td>
-            <td>Open opp in pipeline — deal in flight</td>
+            <td>Open, active opportunity — a live deal the team is working</td>
+            <td><b>314</b></td>
             <td><span class="js-who who-sales">BD / Sales</span></td>
           </tr>
           <tr>
             <td><span class="js-num">06</span></td>
             <td><span class="js-stage">Customer</span></td>
             <td>Opp stage = Win. Active customer.</td>
+            <td><b>1,066</b></td>
             <td><span class="js-who who-sales">Expansion</span></td>
           </tr>
         </tbody>
@@ -585,10 +652,38 @@
     </div>
     <p class="js-footnote"><strong>Six active stages.</strong> "All Other" is Demandbase's required default bucket for unqualified / non-matching accounts — its display is toggled off and its selector logic can't be edited. It exists structurally but is <strong>not part of the active targeting or reporting model</strong>. Build lists and campaigns against stages 01–06 only.</p>
 
+
+    <div class="callout slate" style="margin-top:24px">
+      <strong>How to read the counts.</strong> An account sits in <strong>exactly one stage</strong>, and evaluation runs
+      <strong>bottom-up</strong> — Customer is tested first, Target Account last, and the highest stage an account qualifies for wins.
+      That is why Engaged holds 8,946 while MQA holds 205: an account that clears the MQA bar is counted as MQA, never as Engaged.
+      The stages are a funnel, not a set of overlapping filters, so the numbers never sum to the universe.
+    </div>
+
+    <div class="callout amber" style="margin-top:16px">
+      <strong>Engaged is the big pool, and that is by design.</strong> Engagement ≥10 over three months is a low bar — it is the
+      &ldquo;showing signal&rdquo; tier, not a working list. <strong>MQA is the working list.</strong> If someone asks for &ldquo;the engaged
+      accounts&rdquo; expecting a callable set, they want MQA (205), not Engaged (8,946). Handing over 8,946 accounts is handing over noise.
+    </div>
+
+    <div class="callout pink" style="margin-top:16px">
+      <strong>Changes take up to 48 hours to show.</strong> Journey stage is a <strong>stored field</strong> refreshed by a nightly batch —
+      queued before 6:00 pm PST, reflected by 6:00 am PST the next day. Engagement Points are pre-aggregated daily on top of that, so a real
+      threshold crossing can take ~48h to appear as a stage flip. There is <strong>no dark window</strong> — the old value keeps serving
+      reports, lists and ad targeting until the batch overwrites it. Preview counts in the builder are directional, not final.
+    </div>
+
+    <div class="callout green" style="margin-top:16px">
+      <strong>Two designation maps, and they are not the same.</strong> The <strong>Advertising Funnel</strong> drives Journey Targeting in
+      Campaign Builder: Aware = [Target Account, Aware] · Engaged = [Engaged] · <strong>Pipeline = [MQA, Opportunity]</strong> · Customer = [Customer].
+      The <strong>Stage Designations</strong> map drives Pipeline Predict and Journey Analytics: MQA = [MQA] · <strong>Pipeline = [Opportunity] only</strong> · Customer = [Customer].
+      Same word, two scopes. <strong>If Pipeline Predict ever looks thin, check here first</strong> — it is counting Opportunity alone.
+    </div>
+
     <p class="js-footnote" style="margin-top:16px"><strong>We stay on the Demandbase model — no custom stages.</strong> Where Demandbase can't observe an event, we don't build a stage to fake it — Salesforce owns that truth, and DB stays focused on account signal for advertising and targeting. Keeps the four bands (Aware · Engaged · Pipeline · Customer) clean.</p>
 
     <div class="callout green">
-      <strong>✓ Now live — US Journey is reading.</strong> The journey stages built in <strong>Admin → Journey Stages</strong> are now mapped to the <strong>US Journey</strong> object that campaigns and lists read from. As of June 2026 the US Marketing ABX Dashboard is reading <strong>8,193 accounts</strong>, <strong>3,549 high-intent</strong>, <strong>89,895 intent keywords</strong>, across <strong>Tier 1A–5</strong>. Six active <code>[US Journey]</code> stages drive targeting: Target Account · Aware · Engaged · Marketing Qualified Account · Opportunity (Pipeline) · Customer (plus "All Other," the system default — display off).
+      <strong>✓ Now live — US Journey is reading.</strong> The journey stages built in <strong>Admin → Journey Stages</strong> are now mapped to the <strong>US Journey</strong> object that campaigns and lists read from. As of <strong>12 September 2026</strong> the US Workspace dashboard reads <strong>10,972 total accounts</strong>, <strong>8,504 high-intent</strong>, <strong>196,436 intent keywords</strong> and <strong>205 MQA</strong>, across <strong>Tier 1A–5</strong>. Six active <code>[US Journey]</code> stages drive targeting: Target Account · Aware · Engaged · Marketing Qualified Account · Opportunity (Pipeline) · Customer (plus "All Other," the system default — display off).
     </div>
 
     <div class="callout amber">

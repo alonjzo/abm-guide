@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -234,7 +234,7 @@
             const humanAgentsReq = Math.ceil(humanHours / 160); // 160 hrs/mo
 
             // Digital
-            const digitalFteEq = 5; // Fixed assumption based on wireframe logic for simple modelling
+            const digitalFteEq = 5; // Fixed assumption based on wireframe logic for simple modeling
             const efficiencyMultiplier = (humanCostMonth / digitalFteCost).toFixed(1);
             const roi = (((humanCostMonth - digitalFteCost) / digitalFteCost) * 100).toFixed(0);
             const breakEven = Math.ceil(digitalFteCost / (((aht/60)*agentCost)));
@@ -427,6 +427,5 @@
     </script>
     <script src="../assets/js/navigation.js"></script>
     <script src="/assets/js/back-to-top.js"></script>
-<script src="../assets/js/dark-mode.js"></script>
 </body>
 </html>

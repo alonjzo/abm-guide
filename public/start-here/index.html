@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Here | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{
+    --slate:#484C6A; --slate-dark:#2e3150; --pastel-slate:#c2c7cd; --pastel-slate-light:#edeaf0;
+    --pink:#ff0082; --pink-text:#ff4da6;
+    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#575a70; --line:#e6e8ec;
+    --mono:"SF Mono",Consolas,Menlo,monospace;
+    --good:#1f7a55; --good-bg:#eaf6f0; --warn:#8a5a00; --warn-bg:#fdf5e6; --stop:#c2005f; --stop-bg:#fdeef5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:24px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.1;margin-bottom:16px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:66ch;line-height:1.6}
+  .hero-meta{font-size:12px;color:rgba(255,255,255,.6);margin-top:18px;letter-spacing:.03em}
+
+  .tabs{background:var(--white);border-bottom:1px solid var(--line);padding:0 60px;display:flex;gap:4px;position:sticky;top:0;z-index:50;overflow-x:auto}
+  .tabs button{background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:inherit;
+    font-size:14px;font-weight:600;color:var(--body-gray);padding:16px 18px;margin-bottom:-1px;white-space:nowrap;transition:.15s}
+  .tabs button:hover{color:var(--black)}
+  .tabs button[aria-selected="true"]{color:var(--slate);border-bottom-color:var(--pink);font-weight:700}
+
+  .view{display:none}.view.on{display:block}
+  .page{max-width:1100px;margin:0 auto;padding:52px 60px 90px}
+  @media(max-width:860px){.page,.hero,.tabs{padding-left:24px;padding-right:24px}}
+
+  .section-label{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:14px}
+  .section-label::before{content:'';width:26px;height:3px;background:var(--pink);display:inline-block;border-radius:2px}
+  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px;line-height:1.15}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:74ch;margin-bottom:24px;line-height:1.65}
+  .rule{height:1px;background:var(--line);margin:46px 0}
+
+  .band{background:var(--slate);color:#fff;border-radius:14px;padding:34px 38px}
+  .band .section-label{color:var(--pastel-slate)}
+  .band .section-label::before{background:var(--pink)}
+  .band h2{color:#fff;margin:10px 0 10px}
+  .band>p{color:#dfe1ea;font-size:15px;max-width:72ch}
+  .band b{color:#fff}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+  @media(max-width:900px){.flow{grid-template-columns:repeat(2,1fr)}}
+  .fstep{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:16px}
+  .fstep .fn{font-size:13px;font-weight:800;color:var(--pink-text)}
+  .fstep h4{font-size:14px;color:#fff;font-weight:600;margin:6px 0 4px}
+  .fstep p{font-size:12px;color:#dfe1ea;line-height:1.45}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  .r{border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:0 10px 10px 0;padding:15px 17px}
+  .r b{color:var(--black)}
+  .r p{font-size:13.5px;margin-top:3px;color:var(--body-gray)}
+  .g{border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:0 12px 12px 0;padding:16px 18px}
+  .g h3{font-size:15px;color:var(--black);font-weight:700;margin-bottom:3px}
+  .g p{font-size:13.5px;color:var(--body-gray)}
+  .g .who{font-size:11px;color:var(--slate);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:8px}
+
+  .callout{background:#f6f7f9;border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:18px 22px;font-size:14.5px}
+  .callout b{color:var(--black)}
+  .callout+.callout{margin-top:12px}
+  .callout.warn{background:var(--warn-bg);border-left-color:var(--warn)}
+  .callout.stop{background:var(--stop-bg);border-left-color:var(--stop)}
+  .callout p+p{margin-top:10px}
+
+  .bignum{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.bignum{grid-template-columns:1fr}}
+  .bn{border:1px solid var(--line);border-radius:12px;padding:20px 22px;background:#fafbfc}
+  .bn .v{font-size:34px;font-weight:800;color:var(--slate);letter-spacing:-.03em;line-height:1}
+  .bn .v em{font-style:normal;color:var(--pink)}
+  .bn h4{font-size:13px;font-weight:700;color:var(--black);margin:8px 0 3px}
+  .bn p{font-size:12.5px;color:var(--body-gray);line-height:1.5}
+
+  .tbl-wrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  th,td{padding:13px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  thead th{background:#fafbfc;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);font-weight:800;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfc}
+  td.k{font-weight:700;color:var(--black);white-space:nowrap}
+  .pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
+  .pill.g{background:var(--good-bg);color:var(--good)}
+  .pill.r{background:var(--stop-bg);color:var(--stop)}
+  .pill.a{background:var(--warn-bg);color:var(--warn)}
+
+  .steps{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .step{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);background:#fff}
+  .step:last-child{border-bottom:none}
+  .step:nth-child(even){background:#fafbfc}
+  .step .n{font-size:12px;font-weight:800;color:var(--pink);letter-spacing:.05em;padding-top:2px}
+  .step h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--black)}
+  .step p{margin:0;font-size:13.5px;color:var(--body-gray)}
+  .step code{background:var(--pastel-slate-light);padding:2px 7px;border-radius:4px;font-size:12.5px;color:var(--slate);font-family:var(--mono);font-weight:600}
+  .src{font-size:12px;color:var(--body-gray);margin-top:12px;text-align:right}
+  .src b{color:var(--slate);font-weight:700}
+  .lead-in{font-size:17px;color:var(--black);font-weight:600;max-width:70ch;margin-bottom:18px;line-height:1.55}
+  .pinktext{color:var(--pink);font-weight:700}
+</style><style>
+  .ed-h1{font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,46px);line-height:1.04;letter-spacing:-.022em;margin:0;color:var(--black)}
+  .ed-h1 em{font-style:normal;color:var(--pink)}
+  .faq{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .faq details{border-bottom:1px solid var(--line);background:#fff}
+  .faq details:last-child{border-bottom:none}
+  .faq summary{padding:16px 20px;cursor:pointer;font-weight:700;color:var(--black);font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:'+';color:var(--pink);font-weight:800;font-size:19px;flex-shrink:0}
+  .faq details[open] summary::after{content:'\2013'}
+  .faq summary:hover{background:#fafbfc}
+  .faq .a{padding:0 20px 18px;font-size:14px;color:var(--body-gray);line-height:1.65}
+  .faq .a b{color:var(--black)}
+  .tour{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tstop{display:grid;grid-template-columns:190px 1fr;gap:20px;padding:20px 22px;border-bottom:1px solid var(--line);background:#fff}
+  .tstop:last-child{border-bottom:none}
+  .tstop:nth-child(even){background:#fafbfc}
+  @media(max-width:760px){.tstop{grid-template-columns:1fr;gap:6px}}
+  .tstop .nm{font-weight:800;color:var(--black);font-size:14.5px}
+  .tstop .nm span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);font-weight:600;margin-top:4px}
+  .tstop .ds{font-size:13.5px;color:var(--body-gray)}
+  .tstop .ds b{color:var(--black)}
+  .tstop .ds .use{display:block;margin-top:6px;font-size:12.5px;color:var(--slate);font-weight:700}
+
+  /* ---- the two halves: pulsing entry points ---- */
+  .halves{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+  @media(max-width:860px){.halves{grid-template-columns:1fr}}
+  .half{position:relative;display:block;text-decoration:none;border-radius:14px;padding:26px 28px 24px;
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    transition:transform .22s ease, background .22s ease, border-color .22s ease;overflow:hidden}
+  .half:hover{transform:translateY(-3px);background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.34)}
+  .half .hlbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+    font-weight:700;color:var(--pink-text);display:block;margin-bottom:9px}
+  .half h3{font-size:21px;font-weight:700;color:#fff;margin:0 0 7px;letter-spacing:-.015em}
+  .half p{font-size:13.5px;color:#dfe1ea;line-height:1.55;margin:0 0 16px}
+  .half .go{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#fff;
+    background:var(--pink);border-radius:22px;padding:8px 16px;transition:gap .18s ease}
+  .half:hover .go{gap:13px}
+  .half .go::after{content:'\2192';font-weight:800}
+  /* the pulse — a soft ring that breathes so the eye lands on them */
+  .half::before{content:'';position:absolute;inset:-1px;border-radius:14px;border:2px solid var(--pink);
+    opacity:0;animation:halfpulse 2.9s ease-in-out infinite;pointer-events:none}
+  .half:nth-child(2)::before{animation-delay:1.45s}
+  .half:hover::before{animation:none;opacity:.55}
+  @keyframes halfpulse{0%{opacity:0;transform:scale(1)}45%{opacity:.42;transform:scale(1.006)}100%{opacity:0;transform:scale(1.012)}}
+  @media (prefers-reduced-motion: reduce){.half::before{animation:none}.half{transition:none}}
+
+  .tstop .go2{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;font-weight:700;
+    color:var(--slate);background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 13px;
+    text-decoration:none;transition:all .16s ease}
+  .tstop .go2::after{content:'\2192';font-weight:800;transition:transform .16s ease}
+  .tstop .go2:hover{background:var(--pink);border-color:var(--pink);color:#fff}
+  .tstop .go2:hover::after{transform:translateX(3px)}
+  .g .go2{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:12px;font-weight:700;
+    color:var(--slate);background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 13px;
+    text-decoration:none;transition:all .16s ease}
+  .g .go2::after{content:'\2192';font-weight:800;transition:transform .16s ease}
+  .g .go2:hover{background:var(--pink);border-color:var(--pink);color:#fff}
+  .g .go2:hover::after{transform:translateX(3px)}
+</style></head><body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span></span>Start Here</div>
+    <h1 class="ed-h1" style="color:#fff;margin-bottom:16px">What this site is, <em style="color:#ff4da6">and where to go first</em></h1>
+    <p class="hero-sub">The ABM Suite is where our Demandbase logic, our account universe, and our service taxonomy actually live. This page is the walkthrough &mdash; what each tab is for, and which one you need today.</p>
+    <p class="hero-meta">Internal enablement &middot; ABM, Events, and anyone new to the stack</p>
+  </div>
+</div>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true"  onclick="sv(0)">The Tour</button>
+  <button role="tab" aria-selected="false" onclick="sv(1)">Where Do I Go?</button>
+  <button role="tab" aria-selected="false" onclick="sv(2)">FAQ</button>
+</div>
+
+<div class="view on" id="v0"><div class="page">
+  <div class="band">
+    <div class="section-label">The short version</div>
+    <h2>Two halves &mdash; what we sell, and how we GTM</h2>
+    <p>Everything on this site supports one of these two. Pick the half you need.</p>
+    <div class="halves">
+      <a class="half" href="../tp-services/index.html">
+        <span class="hlbl">Half one &middot; what we sell</span>
+        <h3>TP Services and TP.ai</h3>
+        <p>Every service, who buys it, how it is delivered, and what it is actually called. The matrix, the three families, the naming collisions.</p>
+        <span class="go">Take me to the page</span>
+      </a>
+      <a class="half" href="../best-practices/index.html">
+        <span class="hlbl">Half two &middot; how we GTM</span>
+        <h3>Demandbase and the plays</h3>
+        <p>Our account universe, the buying groups, and how to run a campaign end to end without repeating mistakes we already paid for.</p>
+        <span class="go">Take me to the page</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Every tab, one line each</div>
+  <h2>The walkthrough</h2>
+  <p class="section-intro">Read this once and you will not need a demo.</p>
+
+  <div class="tour">
+    <div class="tstop"><div class="nm">TP Services and TP.ai<span>What we sell</span></div><div class="ds">Four views of the service taxonomy &mdash; the matrix of every offering, how the three families fit together, the A&ndash;Z with naming collisions, and the specialized brands and delivery models. <b>Mirrors tp.com/services</b>, because that is what the client sees.<span class="use">Use when: writing copy, briefing an agency, or onboarding anyone new.</span><a class="go2" href="../tp-services/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Demandbase &rsaquo; US Workspace<span>Platform</span></div><div class="ds">How our workspace is actually built &mdash; the account universe and tiering, the seven-stage buying journey, engagement points, and person lists. <b>The architecture, not the theory.</b><span class="use">Use when: you need to know how our instance is wired.</span><a class="go2" href="../platform-guide/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Demandbase &rsaquo; Workspaces &amp; List Pulls<span>Platform</span></div><div class="ds">Where lists come from, which workspace owns what, and the rule that everything gets built in US and only pushes to Global for advertising.<span class="use">Use when: pulling a list or wondering why a segment is missing.</span><a class="go2" href="../workspaces-reference/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Demandbase &rsaquo; Buying Groups<span>Platform</span></div><div class="ds">The personas inside an account &mdash; CX Leaders, LOB Leaders, Vertical Specialists, plus Procurement and Finance. <b>This is the targeting layer</b>, and the reason a wide seniority filter burns budget.<span class="use">Use when: defining who a campaign should reach.</span><a class="go2" href="../buying-groups/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Demandbase &rsaquo; Campaign Monitoring<span>Campaigns</span></div><div class="ds">Reading a campaign once it is live &mdash; what to look at, what to ignore, and how to tell lift from noise.<span class="use">Use when: a campaign is running and someone asks how it is doing.</span><a class="go2" href="../campaign-monitoring/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Demandbase &rsaquo; ABM Best Practices<span>Campaigns</span></div><div class="ds">The plays. Pushing an audience to LinkedIn end to end, who to target and why density decides it, and the six things that break. <b>Includes the mistakes we already paid for.</b><span class="use">Use when: launching anything on LinkedIn.</span><a class="go2" href="../best-practices/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Demandbase &rsaquo; DB AI Prompt Library<span>AI</span></div><div class="ds">Prompts that work against our data, the seven goals, and the five rules that keep output clean. Ask in plain English, export, route.<span class="use">Use when: you want a list and do not want to build a segment by hand.</span><a class="go2" href="../demandbase-marketing/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Competitive Intel<span>Market</span></div><div class="ds">The competitive landscape &mdash; direct competitors, indirect ones, and the global players in adjacent lanes.<span class="use">Use when: positioning against someone specific.</span><a class="go2" href="../competitive-intel/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Persona Cards<span>Market</span></div><div class="ds">Who the buyers are by role and vertical &mdash; what they care about, what they are measured on, what makes them move.<span class="use">Use when: writing to a specific title.</span><a class="go2" href="../personas/index.html">Take me there</a></div></div>
+    <div class="tstop"><div class="nm">Reference<span>Deeper</span></div><div class="ds">Advanced reporting and the ROI calculator. The numbers layer for when someone asks you to prove it.<span class="use">Use when: building a business case.</span><a class="go2" href="../advanced-reporting/index.html">Take me there</a></div></div>
+  </div>
+</div></div>
+
+<div class="view" id="v1"><div class="page">
+  <div class="section-label">Straight to it</div>
+  <h2>Tell me what you are doing and I will tell you where to go</h2>
+  <p class="section-intro">The nine things people actually come here for.</p>
+
+  <div class="grid2">
+    <div class="g"><h3>I am brand new to TP</h3><p>Start at <b>TP Services and TP.ai</b>, the matrix view. Understand that we sell services <i>into</i> industries &mdash; industries are not the offering. That single idea gets you most of the way.</p><div class="who">Start here</div><a class="go2" href="../tp-services/index.html">Take me there</a></div>
+    <div class="g"><h3>I am launching a LinkedIn campaign</h3><p><b>ABM Best Practices</b>, the push play. The audience gets built in Demandbase and pushed &mdash; never built natively in LinkedIn.</p><div class="who">Best Practices</div><a class="go2" href="../best-practices/index.html">Take me there</a></div>
+    <div class="g"><h3>I need a list of people to work</h3><p><b>DB AI Prompt Library</b>. Ask in plain English, export, hand to Marketing Ops to load into a tracked campaign.</p><div class="who">DB AI</div><a class="go2" href="../demandbase-marketing/index.html">Take me there</a></div>
+    <div class="g"><h3>I do not know which accounts to go after</h3><p><b>US Workspace</b> for the universe and tiering, then <b>Buying Groups</b> for who inside them.</p><div class="who">Platform</div><a class="go2" href="../platform-guide/index.html">Take me there</a></div>
+    <div class="g"><h3>My campaign is not producing leads</h3><p><b>ABM Best Practices</b>, the troubleshooting tab. Six causes, and several look identical from the outside.</p><div class="who">Best Practices</div><a class="go2" href="../best-practices/index.html">Take me there</a></div>
+    <div class="g"><h3>I am writing copy and need the right name</h3><p><b>Services A&ndash;Z</b>. It carries the naming collisions &mdash; the places where two things sound the same and are not.</p><div class="who">TP Services</div><a class="go2" href="../tp-services/index.html">Take me there</a></div>
+    <div class="g"><h3>I am running an event and need a target list</h3><p><b>Workspaces &amp; List Pulls</b> for the list, <b>Buying Groups</b> for the personas, then <b>Best Practices</b> if it is going to paid.</p><div class="who">Events</div><a class="go2" href="../workspaces-reference/index.html">Take me there</a></div>
+    <div class="g"><h3>Someone asked me to prove ROI</h3><p><b>Reference</b> &mdash; advanced reporting and the ROI calculator.</p><div class="who">Reference</div><a class="go2" href="../advanced-reporting/index.html">Take me there</a></div>
+    <div class="g"><h3>I am up against a competitor</h3><p><b>Competitive Intel</b> for the landscape, <b>Persona Cards</b> for who you are writing to.</p><div class="who">Market</div><a class="go2" href="../competitive-intel/index.html">Take me there</a></div>
+  </div>
+</div></div>
+
+<div class="view" id="v2"><div class="page">
+  <div class="section-label">Questions people actually ask</div>
+  <h2>FAQ</h2>
+  <p class="section-intro">If you were about to send a message asking one of these, the answer is here.</p>
+
+  <div class="faq">
+    <details><summary>Is this for clients?</summary><div class="a">No. <b>Internal enablement only.</b> It carries our account counts, our buying group logic, and our naming problems. None of that is client-facing.</div></details>
+    <details><summary>Why does the same service show up under three different names?</summary><div class="a">Because we sell the same capability at different altitudes &mdash; as a product you demo, a service you contract, and an advisory engagement. That is a deliberate commercial choice, not duplication. The <b>Services A&ndash;Z</b> tab lists every collision.</div></details>
+    <details><summary>Can I build a LinkedIn audience myself?</summary><div class="a">Building the <i>audience</i> in Demandbase is admin-gated &mdash; ask Josh or Sharath. You point your ad set at it once it exists. And always push from Demandbase; <b>never build the audience natively in LinkedIn</b>.</div></details>
+    <details><summary>Why did my campaign get clicks from people who make no sense?</summary><div class="a">Almost always a wide seniority filter. LinkedIn's Owner, Founder and Partner buckets pull in independent consultants who are in none of our buying groups. Confine the ad set to the pushed matched list and let the buying groups target. Full write-up in <b>Best Practices</b>.</div></details>
+    <details><summary>Why are my conversions showing zero?</summary><div class="a">Known tracking gap, not an audience failure. The LinkedIn Insight Tag is missing from the 2026 Marketo landing pages but firing on the thank-you page. Impressions, clicks and CTR are accurate &mdash; conversions are not. Flag it before you launch.</div></details>
+    <details><summary>What is our actual account universe?</summary><div class="a"><b>10,155</b> across T2 to T5, or 10,855 including enterprise. The 11,600 figure sometimes quoted includes Tier 6, a parking lot of 776 accounts.</div></details>
+    <details><summary>What is TaaS, exactly?</summary><div class="a">Technology Services. We <b>build and run the estate</b> the rest of it depends on &mdash; CCaaS, CaaS, Security-as-a-Service on Genesys, ServiceNow, Microsoft, Sprinklr. It is not advisory, and it is not a TP.ai product.</div></details>
+    <details><summary>How current is any of this?</summary><div class="a">Service taxonomy mirrors tp.com/services. Account and contact counts were pulled live from Salesforce on <b>11 September 2026</b>. Platform mechanics are verified against Demandbase and LinkedIn documentation. Anything time-sensitive carries its own source line.</div></details>
+    <details><summary>Something here is wrong. Who do I tell?</summary><div class="a">Josh. Corrections are wanted &mdash; the point is that this becomes the place people trust instead of asking around.</div></details>
+  </div>
+</div></div>
+
+<script>
+var VIEWS=['v0','v1','v2'];
+function sv(i){
+  document.querySelectorAll('.tabs button').forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false');});
+  VIEWS.forEach(function(id,k){var e=document.getElementById(id); if(e) e.className='view'+(k===i?' on':'');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+<script src="/assets/js/back-to-top.js"></script>
+</body></html>

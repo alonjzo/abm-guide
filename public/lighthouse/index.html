@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lighthouse | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{
+    --slate:#484C6A; --slate-dark:#2e3150; --pastel-slate:#c2c7cd; --pastel-slate-light:#edeaf0;
+    --pink:#ff0082; --pink-text:#ff4da6;
+    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#6b6e85; --line:#e6e8ec;
+    --mono:"SF Mono",Consolas,Menlo,monospace;
+    --good:#1f7a55; --good-bg:#eaf6f0; --warn:#8a5a00; --warn-bg:#fdf5e6; --stop:#c2005f; --stop-bg:#fdeef5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:24px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.1;margin-bottom:16px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:66ch;line-height:1.6}
+  .hero-meta{font-size:12px;color:rgba(255,255,255,.6);margin-top:18px;letter-spacing:.03em}
+
+  .tabs{background:var(--white);border-bottom:1px solid var(--line);padding:0 60px;display:flex;gap:4px;position:sticky;top:0;z-index:50;overflow-x:auto}
+  .tabs button{background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:inherit;
+    font-size:14px;font-weight:600;color:var(--body-gray);padding:16px 18px;margin-bottom:-1px;white-space:nowrap;transition:.15s}
+  .tabs button:hover{color:var(--black)}
+  .tabs button[aria-selected="true"]{color:var(--slate);border-bottom-color:var(--pink);font-weight:700}
+
+  .view{display:none}.view.on{display:block}
+  .page{max-width:1100px;margin:0 auto;padding:52px 60px 90px}
+  @media(max-width:860px){.page,.hero,.tabs{padding-left:24px;padding-right:24px}}
+
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
+  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px;line-height:1.15}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:74ch;margin-bottom:24px;line-height:1.65}
+  .rule{height:1px;background:var(--line);margin:46px 0}
+
+  .band{background:var(--slate);color:#fff;border-radius:14px;padding:34px 38px}
+  .band .section-label{color:var(--pastel-slate)}
+  .band .section-label::before{background:var(--pink)}
+  .band h2{color:#fff;margin:10px 0 10px}
+  .band>p{color:#dfe1ea;font-size:15px;max-width:72ch}
+  .band b{color:#fff}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+  @media(max-width:900px){.flow{grid-template-columns:repeat(2,1fr)}}
+  .fstep{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:16px}
+  .fstep .fn{font-size:13px;font-weight:800;color:var(--pink-text)}
+  .fstep h4{font-size:14px;color:#fff;font-weight:600;margin:6px 0 4px}
+  .fstep p{font-size:12px;color:#dfe1ea;line-height:1.45}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  .r{border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:0 10px 10px 0;padding:15px 17px}
+  .r b{color:var(--black)}
+  .r p{font-size:13.5px;margin-top:3px;color:var(--body-gray)}
+  .g{border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:0 12px 12px 0;padding:16px 18px}
+  .g h3{font-size:15px;color:var(--black);font-weight:700;margin-bottom:3px}
+  .g p{font-size:13.5px;color:var(--body-gray)}
+  .g .who{font-size:11px;color:var(--slate);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:8px}
+
+  .callout{background:#f6f7f9;border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:18px 22px;font-size:14.5px}
+  .callout b{color:var(--black)}
+  .callout+.callout{margin-top:12px}
+  .callout.warn{background:var(--warn-bg);border-left-color:var(--warn)}
+  .callout.stop{background:var(--stop-bg);border-left-color:var(--stop)}
+  .callout p+p{margin-top:10px}
+
+  .bignum{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.bignum{grid-template-columns:1fr}}
+  .bn{border:1px solid var(--line);border-radius:12px;padding:20px 22px;background:#fafbfc}
+  .bn .v{font-size:34px;font-weight:800;color:var(--slate);letter-spacing:-.03em;line-height:1}
+  .bn .v em{font-style:normal;color:var(--pink)}
+  .bn h4{font-size:13px;font-weight:700;color:var(--black);margin:8px 0 3px}
+  .bn p{font-size:12.5px;color:var(--body-gray);line-height:1.5}
+
+  .tbl-wrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  th,td{padding:13px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  thead th{background:#fafbfc;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);font-weight:800;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfc}
+  td.k{font-weight:700;color:var(--black);white-space:nowrap}
+  .pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
+  .pill.g{background:var(--good-bg);color:var(--good)}
+  .pill.r{background:var(--stop-bg);color:var(--stop)}
+  .pill.a{background:var(--warn-bg);color:var(--warn)}
+
+  .steps{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .step{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);background:#fff}
+  .step:last-child{border-bottom:none}
+  .step:nth-child(even){background:#fafbfc}
+  .step .n{font-size:12px;font-weight:800;color:var(--pink);letter-spacing:.05em;padding-top:2px}
+  .step h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--black)}
+  .step p{margin:0;font-size:13.5px;color:var(--body-gray)}
+  .step code{background:var(--pastel-slate-light);padding:2px 7px;border-radius:4px;font-size:12.5px;color:var(--slate);font-family:var(--mono);font-weight:600}
+  .src{font-size:12px;color:var(--body-gray);margin-top:12px;text-align:right}
+  .src b{color:var(--slate);font-weight:700}
+  .lead-in{font-size:17px;color:var(--black);font-weight:600;max-width:70ch;margin-bottom:18px;line-height:1.55}
+  .pinktext{color:var(--pink);font-weight:700}
+
+  .lh{--beam:#E8701A;--char:#2E2E38;}
+  .lh-hero{background:var(--char);color:#fff;padding:74px 60px 58px;position:relative;overflow:hidden}
+  .lh-hero::before{content:'';position:absolute;top:-30%;right:-8%;width:520px;height:520px;
+    background:radial-gradient(circle,rgba(232,112,26,.16) 0%,transparent 68%);border-radius:50%;pointer-events:none}
+  .lh-hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .lh-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(232,112,26,.16);
+    border:1px solid rgba(232,112,26,.4);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:800;
+    letter-spacing:.1em;text-transform:uppercase;color:#F0A46B;margin-bottom:22px}
+  .lh-kicker span{width:6px;height:6px;background:var(--beam);border-radius:50%}
+  .lh-hero h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800;letter-spacing:-.04em;line-height:.95;margin:0 0 14px}
+  .lh-hero h1 em{font-style:normal;color:var(--beam)}
+  .lh-hero .sub{font-size:17px;opacity:.84;max-width:62ch;line-height:1.6;margin:0}
+  .lh-hero .meta{font-size:12px;color:rgba(255,255,255,.55);margin-top:20px}
+  .beam{height:6px;background:linear-gradient(90deg,var(--beam) 0%,rgba(232,112,26,.15) 70%,transparent 100%)}
+  .cap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.cap{grid-template-columns:1fr}}
+  .capc{border:1px solid var(--line);border-top:4px solid var(--beam);border-radius:10px;padding:18px 20px;background:#fff}
+  .capc h4{margin:0 0 5px;font-size:16px;font-weight:800;color:var(--black)}
+  .capc p{margin:0;font-size:13.5px;color:var(--body-gray);line-height:1.5}
+  .chain{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ch{display:grid;grid-template-columns:34px 1fr 200px;gap:16px;padding:15px 20px;border-bottom:1px solid var(--line);align-items:center;background:#fff}
+  .ch:last-child{border-bottom:none}
+  .ch:nth-child(even){background:#fafbfc}
+  @media(max-width:820px){.ch{grid-template-columns:34px 1fr;gap:8px}.ch .who{grid-column:2}}
+  .ch .n{font-size:12px;font-weight:800;color:var(--beam)}
+  .ch .what{font-size:14.5px;color:var(--black);font-weight:600}
+  .ch .what span{display:block;font-weight:400;font-size:13px;color:var(--body-gray);margin-top:2px}
+  .ch .who{font-size:11.5px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.06em}
+  .notlist{border-left:3px solid var(--stop);background:var(--stop-bg);border-radius:0 10px 10px 0;padding:16px 20px}
+  .notlist p{margin:0 0 7px;font-size:14.5px}
+  .notlist p:last-child{margin-bottom:0}
+</style></head><body>
+
+<div class="lh lh-hero">
+  <div class="lh-hero-inner">
+    <div class="lh-kicker"><span></span>Account intelligence &middot; US target universe</div>
+    <h1>LIGHT<em>HOUSE</em></h1>
+    <p class="sub">From raw account lists to governed, tiered, campaign-ready intelligence. This is the project behind the target-account universe you build every campaign on.</p>
+    <p class="meta">Internal enablement &middot; last updated September 2026</p>
+  </div>
+</div>
+<div class="lh beam"></div>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true"  onclick="sv(0)">What It Is</button>
+  <button role="tab" aria-selected="false" onclick="sv(1)">How It Works</button>
+  <button role="tab" aria-selected="false" onclick="sv(2)">How To Use It</button>
+</div>
+
+<!-- 0 -->
+<div class="view on" id="v0"><div class="page">
+  <div class="section-label">In one paragraph</div>
+  <h2>What Lighthouse actually is</h2>
+  <p class="lead-in">Lighthouse is TP&rsquo;s approved account-research partner for the US target-account universe. They research, qualify, tier and enrich accounts and the people inside them &mdash; using ZoomInfo, D&amp;B and Demandbase &mdash; and the approved output lands in Salesforce, then flows to Demandbase for targeting.</p>
+  <p style="font-size:15.5px;color:var(--body-gray);max-width:72ch">The headline program has been building and maintaining roughly <b style="color:var(--black)">7,000 US mid-market accounts</b>, alongside selected enterprise, government, competitor-takeout, PE/VC and event requests. When you pick accounts for a campaign, you are picking from what Lighthouse built.</p>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Six things they do</div>
+  <h2>The capabilities</h2>
+  <div class="cap">
+    <div class="capc"><h4>Account research</h4><p>Verifies company identity, firmographics and business fit. Is this a real target, or a name on a list?</p></div>
+    <div class="capc"><h4>Tiering</h4><p>Applies the approved priority framework. Tier is a strategic priority, not a campaign stage.</p></div>
+    <div class="capc"><h4>Deduplication</h4><p>Checks submissions against the universe that already exists, so we stop researching the same accounts twice.</p></div>
+    <div class="capc"><h4>Buyer-group research</h4><p>Identifies the executives, decision-makers and influencers associated with a potential buying decision.</p></div>
+    <div class="capc"><h4>LOB mapping</h4><p>Connects accounts and personas to the right TP service motion, so campaigns target the correct offer.</p></div>
+    <div class="capc"><h4>Campaign readiness</h4><p>Prepares governed output for Salesforce and Demandbase &mdash; reconciled, mapped and activatable.</p></div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Boundaries</div>
+  <h2>What Lighthouse is not</h2>
+  <div class="notlist">
+    <p><b>Not an unlimited list-building service.</b> Requests go through intake and prioritization.</p>
+    <p><b>Not the owner of campaign strategy, Marketo execution, or Demandbase campaign config.</b> They supply the intelligence; we run the campaigns.</p>
+    <p><b>Not the final owner of Salesforce data governance.</b> Salesforce is the system of record; Sales Ops and Marketing Ops own reconciliation.</p>
+    <p><b>Not a reason to bypass Salesforce.</b> A spreadsheet is a working file, never the source of truth.</p>
+  </div>
+
+  <div class="callout stop" style="margin-top:18px">
+    <h3 style="margin:0 0 8px;font-size:17px;font-weight:800">One word to be careful with</h3>
+    <p><b>&ldquo;KDM&rdquo; means two different things depending on who is saying it.</b> Sales uses it for a specific role on a live deal. Lighthouse uses it for researched key persona titles &mdash; the people we think matter at an account.</p>
+    <p>Same word, very different lists, and they will not match. If someone asks you for KDMs, ask which one they mean.</p>
+  </div>
+</div></div>
+
+<!-- 1 -->
+<div class="view" id="v1"><div class="page">
+  <div class="section-label">The flow</div>
+  <h2>How work moves through Lighthouse</h2>
+  <p class="section-intro">Eight steps, and the owner changes at almost every one. Most problems come from skipping step two.</p>
+
+  <div class="chain">
+    <div class="ch"><div class="n">01</div><div class="what">Business priority or campaign request<span>Somebody needs accounts for something</span></div><div class="who">ABM / Sales lead</div></div>
+    <div class="ch"><div class="n">02</div><div class="what">Check the universe that already exists<span>The step people skip, and the reason we get duplicate submissions</span></div><div class="who">Requester</div></div>
+    <div class="ch"><div class="n">03</div><div class="what">Submit approved intake with account and campaign context<span>Incomplete intake is the most common delay</span></div><div class="who">Requester</div></div>
+    <div class="ch"><div class="n">04</div><div class="what">Research, validate, tier and enrich<span>The actual Lighthouse work</span></div><div class="who">Lighthouse</div></div>
+    <div class="ch"><div class="n">05</div><div class="what">QA and reconciliation<span>Dedupe, normalize, map to our fields</span></div><div class="who">Marketing Ops</div></div>
+    <div class="ch"><div class="n">06</div><div class="what">Salesforce becomes the system of record<span>Not the spreadsheet. Ever.</span></div><div class="who">Sales Ops</div></div>
+    <div class="ch"><div class="n">07</div><div class="what">Demandbase receives the approved audience<span>Now it is targetable</span></div><div class="who">ABM platform</div></div>
+    <div class="ch"><div class="n">08</div><div class="what">Campaign activation, SDR action, reporting<span>Where it finally does something</span></div><div class="who">Integrated / SDR</div></div>
+  </div>
+
+  <div class="callout" style="margin-top:20px">
+    <p><b>Tier means priority, not progress.</b> An account in Tier 1 is strategically important. It says nothing about where that account sits in the buying journey &mdash; that is Journey Stage, and they are different fields answering different questions.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Scoring</div>
+  <h2>How an account earns its tier</h2>
+  <p class="section-intro">Every account is scored on the same five things, then lands in a tier. The tier is what tells you how hard to go after it.</p>
+
+  <div class="cap">
+    <div class="capc"><h4>Size</h4><p>Revenue, and whether the business is big enough to support the kind of engagement we sell. This carries the most weight.</p></div>
+    <div class="capc"><h4>Growth</h4><p>Is the company expanding, investing, or changing in a way that creates demand for what we do?</p></div>
+    <div class="capc"><h4>Scale</h4><p>Employee count and operating footprint. A proxy for how much work there is to outsource.</p></div>
+    <div class="capc"><h4>Outsourcing propensity</h4><p>Do they outsource <b>now</b> &mdash; not just that they did once. This is the one people underweight.</p></div>
+    <div class="capc"><h4>TP relationship</h4><p>Whether we already work with them, have won before, or have never engaged at all.</p></div>
+    <div class="capc" style="border-top-color:var(--slate)"><h4>Then: a tier</h4><p>The score maps to Tier 1A, 1, 2 or 3. Higher tier, more investment, tighter motion.</p></div>
+  </div>
+
+  <div class="callout w" style="margin-top:20px">
+    <p><b>Big company does not mean good target.</b> Revenue and headcount can make an account look better than it is when they have no real appetite to outsource. That is why propensity carries real weight &mdash; and why a BD who knows the account can challenge a score.</p>
+    <p>A challenge needs evidence and a decision gets logged. The model stays consistent; field knowledge makes it accurate.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Public sector</div>
+  <h2>Government runs on a different model</h2>
+  <p class="section-intro">Same tiers, same output, completely different inputs. You do not need to know the mechanics &mdash; you need to know it exists and why.</p>
+
+  <div class="grid2">
+    <div class="r"><b>Revenue is not the measure.</b><p>An agency has a budget, not revenue. What matters is the program spend and contract value we could actually win &mdash; not the size of the whole department.</p></div>
+    <div class="r"><b>Timing runs on procurement, not quarters.</b><p>Work comes up for bid on a schedule. Contract renewals, RFPs and funding cycles decide when an agency is reachable, not how much they like us.</p></div>
+    <div class="r"><b>Winning can require a partner.</b><p>Some contracts are reserved or need a vehicle we do not hold. That can mean teaming or subcontracting rather than bidding direct. It is a route question, not a bad account.</p></div>
+    <div class="r"><b>Structure is layered.</b><p>A state, then a department, then a program. &ldquo;State of Washington&rdquo; is not an account you can target &mdash; the agency underneath it is.</p></div>
+  </div>
+
+  <div class="callout s" style="margin-top:18px">
+    <p><b>Both models live in the same US master tiering list.</b> Commercial and government accounts sit side by side with the same tier labels, so you do not need to track two systems. The scoring behind them is just different.</p>
+    <p>If you are working public sector, talk to Josh &mdash; that model was built with TP Government and there is context that does not fit on a page.</p>
+  </div>
+</div></div>
+
+<!-- 2 -->
+<div class="view" id="v2"><div class="page">
+  <div class="band">
+    <div class="section-label">Before you submit anything</div>
+    <h2>Check the universe first</h2>
+    <p>Most rejected and delayed requests are accounts we already hold. The universe is <b>10,972 addressable US accounts</b> &mdash; look there before asking for research on names that are probably already tiered.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Intake</div>
+  <h2>A request is ready when it has all of this</h2>
+  <ul class="chk" style="list-style:none;padding:0">
+    <li><b>Business owner</b> &mdash; a name, not a team</li>
+    <li><b>Campaign or business objective</b> &mdash; what this is for</li>
+    <li><b>Requested account universe</b> &mdash; and confirmation you checked the existing one</li>
+    <li><b>Vertical and LOB</b> &mdash; which service motion</li>
+    <li><b>Geography and target tiers</b></li>
+    <li><b>Requested buyer groups or personas</b></li>
+    <li><b>Required delivery date</b> &mdash; a real one</li>
+    <li><b>Salesforce campaign or activation destination</b>, where applicable</li>
+  </ul>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Routing</div>
+  <h2>Where your request actually goes</h2>
+  <p class="section-intro">Half of what gets sent to Lighthouse is not a Lighthouse request.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>What you need</th><th>Who owns it</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Net-new account research or tiering</td><td><span class="pill g">Lighthouse</span> intake</td></tr>
+      <tr><td class="k">Existing approved account, need the audience live</td><td>ABM / Demandbase Ops</td></tr>
+      <tr><td class="k">Contact enrichment on an approved account</td><td>Data Ops or Lighthouse, depending on scope</td></tr>
+      <tr><td class="k">Duplicate, merge, field mapping, Salesforce exception</td><td>Marketing Ops / Sales Ops</td></tr>
+      <tr><td class="k">Marketo campaign build</td><td>Marketo Ops</td></tr>
+      <tr><td class="k">Strategy, message, creative, offer</td><td>Integrated Marketing / Content</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Where it stands</div>
+  <h2>Current state &mdash; September 2026</h2>
+  <div class="grid2">
+    <div class="g"><h3>Done</h3><p>The ~7,000-account mid-market objective has been reached. Tier 1, Tier 1A and Tier 2 are reconciled. Delivered accounts and their buyer groups are live in Salesforce.</p><div class="who">Complete</div></div>
+    <div class="g"><h3>In progress</h3><p>Tier 3 reconciliation. Government accounts. LOB tagging cleanup. Duplicate review. Ongoing intake and turnaround standards.</p><div class="who">Open</div></div>
+  </div>
+  <div class="callout w" style="margin-top:16px">
+    <p><b>Salesforce is the source of truth.</b> Working spreadsheets move around and go stale &mdash; if you are building a campaign, pull from Salesforce or Demandbase, not from a file someone emailed you.</p>
+  </div>
+
+  
+  <p class="src">Status as documented September 2026 &middot; confirm with Marketing Ops before quoting externally</p>
+</div></div>
+
+<script>
+var VIEWS=['v0','v1','v2'];
+function sv(i){
+  document.querySelectorAll('.tabs button').forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false');});
+  VIEWS.forEach(function(id,k){var e=document.getElementById(id); if(e) e.className='view'+(k===i?' on':'');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+<script src="/assets/js/back-to-top.js"></script>
+</body></html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your Account List | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../../assets/js/navigation.js"></script>
+<style>
+  :root{
+    --slate:#484C6A; --slate-dark:#2e3150; --pastel-slate:#c2c7cd; --pastel-slate-light:#edeaf0;
+    --pink:#ff0082; --pink-text:#ff4da6;
+    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#6b6e85; --line:#e6e8ec;
+    --mono:"SF Mono",Consolas,Menlo,monospace;
+    --good:#1f7a55; --good-bg:#eaf6f0; --warn:#8a5a00; --warn-bg:#fdf5e6; --stop:#c2005f; --stop-bg:#fdeef5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:24px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.1;margin-bottom:16px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:66ch;line-height:1.6}
+  .hero-meta{font-size:12px;color:rgba(255,255,255,.6);margin-top:18px;letter-spacing:.03em}
+
+  .tabs{background:var(--white);border-bottom:1px solid var(--line);padding:0 60px;display:flex;gap:4px;position:sticky;top:0;z-index:50;overflow-x:auto}
+  .tabs button{background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:inherit;
+    font-size:14px;font-weight:600;color:var(--body-gray);padding:16px 18px;margin-bottom:-1px;white-space:nowrap;transition:.15s}
+  .tabs button:hover{color:var(--black)}
+  .tabs button[aria-selected="true"]{color:var(--slate);border-bottom-color:var(--pink);font-weight:700}
+
+  .view{display:none}.view.on{display:block}
+  .page{max-width:1100px;margin:0 auto;padding:52px 60px 90px}
+  @media(max-width:860px){.page,.hero,.tabs{padding-left:24px;padding-right:24px}}
+
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
+  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px;line-height:1.15}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:74ch;margin-bottom:24px;line-height:1.65}
+  .rule{height:1px;background:var(--line);margin:46px 0}
+
+  .band{background:var(--slate);color:#fff;border-radius:14px;padding:34px 38px}
+  .band .section-label{color:var(--pastel-slate)}
+  .band .section-label::before{background:var(--pink)}
+  .band h2{color:#fff;margin:10px 0 10px}
+  .band>p{color:#dfe1ea;font-size:15px;max-width:72ch}
+  .band b{color:#fff}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+  @media(max-width:900px){.flow{grid-template-columns:repeat(2,1fr)}}
+  .fstep{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:16px}
+  .fstep .fn{font-size:13px;font-weight:800;color:var(--pink-text)}
+  .fstep h4{font-size:14px;color:#fff;font-weight:600;margin:6px 0 4px}
+  .fstep p{font-size:12px;color:#dfe1ea;line-height:1.45}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  .r{border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:0 10px 10px 0;padding:15px 17px}
+  .r b{color:var(--black)}
+  .r p{font-size:13.5px;margin-top:3px;color:var(--body-gray)}
+  .g{border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:0 12px 12px 0;padding:16px 18px}
+  .g h3{font-size:15px;color:var(--black);font-weight:700;margin-bottom:3px}
+  .g p{font-size:13.5px;color:var(--body-gray)}
+  .g .who{font-size:11px;color:var(--slate);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:8px}
+
+  .callout{background:#f6f7f9;border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:18px 22px;font-size:14.5px}
+  .callout b{color:var(--black)}
+  .callout+.callout{margin-top:12px}
+  .callout.warn{background:var(--warn-bg);border-left-color:var(--warn)}
+  .callout.stop{background:var(--stop-bg);border-left-color:var(--stop)}
+  .callout p+p{margin-top:10px}
+
+  .bignum{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.bignum{grid-template-columns:1fr}}
+  .bn{border:1px solid var(--line);border-radius:12px;padding:20px 22px;background:#fafbfc}
+  .bn .v{font-size:34px;font-weight:800;color:var(--slate);letter-spacing:-.03em;line-height:1}
+  .bn .v em{font-style:normal;color:var(--pink)}
+  .bn h4{font-size:13px;font-weight:700;color:var(--black);margin:8px 0 3px}
+  .bn p{font-size:12.5px;color:var(--body-gray);line-height:1.5}
+
+  .tbl-wrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  th,td{padding:13px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  thead th{background:#fafbfc;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);font-weight:800;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfc}
+  td.k{font-weight:700;color:var(--black);white-space:nowrap}
+  .pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
+  .pill.g{background:var(--good-bg);color:var(--good)}
+  .pill.r{background:var(--stop-bg);color:var(--stop)}
+  .pill.a{background:var(--warn-bg);color:var(--warn)}
+
+  .steps{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .step{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);background:#fff}
+  .step:last-child{border-bottom:none}
+  .step:nth-child(even){background:#fafbfc}
+  .step .n{font-size:12px;font-weight:800;color:var(--pink);letter-spacing:.05em;padding-top:2px}
+  .step h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--black)}
+  .step p{margin:0;font-size:13.5px;color:var(--body-gray)}
+  .step code{background:var(--pastel-slate-light);padding:2px 7px;border-radius:4px;font-size:12.5px;color:var(--slate);font-family:var(--mono);font-weight:600}
+  .src{font-size:12px;color:var(--body-gray);margin-top:12px;text-align:right}
+  .src b{color:var(--slate);font-weight:700}
+  .lead-in{font-size:17px;color:var(--black);font-weight:600;max-width:70ch;margin-bottom:18px;line-height:1.55}
+  .pinktext{color:var(--pink);font-weight:700}
+</style></head><body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span></span>Guide &middot; Build your account list</div>
+    <h1>The list is the campaign</h1>
+    <p class="hero-sub">Everything downstream &mdash; reach, frequency, whether a person audience is even possible &mdash; is decided the moment you pick the accounts. Get this wrong and no amount of creative fixes it.</p>
+    <p class="hero-meta">Counts pulled live from the US Workspace and KDM list, September 2026</p>
+  </div>
+</div>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true"  onclick="sv(0)">The Universe</button>
+  <button role="tab" aria-selected="false" onclick="sv(1)">Narrowing It</button>
+  <button role="tab" aria-selected="false" onclick="sv(2)">Person Coverage</button>
+</div>
+
+<!-- 0 -->
+<div class="view on" id="v0"><div class="page">
+  <div class="band">
+    <div class="section-label">Start here</div>
+    <h2>10,972 accounts, and only some of them are usable</h2>
+    <p>That is the full US addressable universe &mdash; every account we are allowed to advertise to. It is not a target list. The work is deciding which slice of it you can actually serve, and that depends on tier, intent and whether we hold any people there.</p>
+    <div class="flow">
+      <div class="fstep"><div class="fn">01</div><h4>Pick the tier band</h4><p>Sets the revenue profile and, more importantly, how many contacts exist per account.</p></div>
+      <div class="fstep"><div class="fn">02</div><h4>Pick the vertical</h4><p>Industry Category. Healthcare is the largest at 1,833 accounts.</p></div>
+      <div class="fstep"><div class="fn">03</div><h4>Filter to signal</h4><p>High or medium intent in the last 3 months. 75% of the universe qualifies, so this is a weak filter on its own.</p></div>
+      <div class="fstep"><div class="fn">04</div><h4>Check person coverage</h4><p>The step everyone skips, and the one that decides whether LinkedIn is even an option.</p></div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">The tiers</div>
+  <h2>Where the accounts are</h2>
+  <p class="section-intro">T2 and T3 hold more than half the universe. T6 is a parking lot and does not belong in a target list.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Tier</th><th>Revenue band</th><th>Accounts</th><th>Use it for</th></tr></thead>
+    <tbody>
+      <tr><td class="k">T1A</td><td>$50B+</td><td>118</td><td>1:1 only. Named accounts, named committees.</td></tr>
+      <tr><td class="k">T1</td><td>$10B&ndash;$49.99B</td><td>699</td><td>Already covered by named BD owners. Advertising competes with motion in flight.</td></tr>
+      <tr><td class="k">T2</td><td>$400M&ndash;$9.99B</td><td>2,541</td><td>Mid-market. The densest contact coverage we have.</td></tr>
+      <tr><td class="k">T3</td><td>$300M&ndash;$399M</td><td>3,488</td><td>Mid-market. Largest single tier.</td></tr>
+      <tr><td class="k">T4</td><td>$100M&ndash;$299M</td><td>1,274</td><td>Small market. <b>No person coverage.</b></td></tr>
+      <tr><td class="k">T5</td><td>Sub $99M</td><td>2,852</td><td>Small market. <b>No person coverage.</b></td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Source: <b>US Workspace account list, NA All Tiers 2026</b> &middot; 100% Addressable - Active &middot; 96.7% Net New</p>
+
+  <div class="rule"></div>
+
+  <div class="section-label">The verticals</div>
+  <h2>Industry by tier &mdash; and how many carry people</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Industry</th><th>T1A</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>Total</th><th>With KDMs</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Healthcare</td><td>11</td><td>56</td><td>379</td><td>602</td><td>215</td><td>570</td><td><b>1,833</b></td><td>537</td></tr>
+      <tr><td class="k">Retail / e-Commerce</td><td>7</td><td>77</td><td>303</td><td>530</td><td>184</td><td>312</td><td><b>1,413</b></td><td>397</td></tr>
+      <tr><td class="k">BFS</td><td>10</td><td>53</td><td>342</td><td>326</td><td>189</td><td>394</td><td><b>1,314</b></td><td>374</td></tr>
+      <tr><td class="k">Technology</td><td>5</td><td>49</td><td>238</td><td>356</td><td>213</td><td>356</td><td><b>1,217</b></td><td>343</td></tr>
+      <tr><td class="k">Business Services</td><td>2</td><td>8</td><td>114</td><td>204</td><td>69</td><td>212</td><td>609</td><td>81</td></tr>
+      <tr><td class="k">Travel &amp; Hospitality</td><td>4</td><td>41</td><td>156</td><td>117</td><td>65</td><td>199</td><td>582</td><td>139</td></tr>
+      <tr><td class="k">Utilities</td><td>3</td><td>48</td><td>137</td><td>262</td><td>38</td><td>91</td><td>579</td><td>220</td></tr>
+      <tr><td class="k">FMCG</td><td>2</td><td>57</td><td>137</td><td>190</td><td>52</td><td>75</td><td>513</td><td>94</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src"><b>Industry Category is Demandbase&rsquo;s taxonomy, not ours.</b> It does not map cleanly to our LOB families &mdash; BFS here spans what we call BFSI, and &ldquo;Other&rdquo; holds 1,046 accounts. Translate before reporting it upward.</p>
+</div></div>
+
+<!-- 1 -->
+<div class="view" id="v1"><div class="page">
+  <div class="section-label">The stack</div>
+  <h2>Watch a list collapse</h2>
+  <p class="lead-in">Every filter you add removes accounts. Most people stop after tier and vertical and never see how few are actually workable.</p>
+
+  <div class="bignum">
+    <div class="bn"><div class="v">10,972</div><h4>Addressable universe</h4><p>Everything we can advertise to.</p></div>
+    <div class="bn"><div class="v">10,155</div><h4>T2&ndash;T5</h4><p>Enterprise out, T6 parking lot out.</p></div>
+    <div class="bn"><div class="v"><em>2,450</em></div><h4>With any people</h4><p>Only 24% survive. This is the cliff.</p></div>
+  </div>
+
+  <div class="callout stop" style="margin-top:20px">
+    <p><b>Read that middle step again.</b> Of the 10,155 accounts in T2 through T5, only <b>2,450</b> have a single known contact. Filter further to high or medium intent and you are at <b>2,173 accounts with 6,661 people behind them.</b></p>
+    <p>The list you thought was 10,000 is 2,173.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Worked example</div>
+  <h2>Healthcare, T2 through T5</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Filter</th><th>Accounts</th><th>What happened</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Healthcare, all tiers</td><td>1,833</td><td>Largest vertical in the universe</td></tr>
+      <tr><td class="k">T2&ndash;T5 only</td><td>1,766</td><td>67 enterprise accounts removed</td></tr>
+      <tr><td class="k">With KDMs</td><td><b>492</b></td><td>72% of the list has no people at all</td></tr>
+      <tr><td class="k">+ high/medium intent</td><td><b>432</b></td><td>The workable list</td></tr>
+      <tr><td class="k">People available</td><td><b>1,370</b></td><td>3.2 per account &mdash; <span class="pill g">clears the 300 floor</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Pulled live from the US Workspace and KDM lists, September 2026</p>
+
+  <div class="callout" style="margin-top:16px">
+    <p><b>1,370 people clears LinkedIn&rsquo;s 300-match minimum comfortably.</b> But run the same exercise on a vertical with thinner coverage &mdash; Business Services has 81 accounts with KDMs out of 609 &mdash; and you will not clear it. Do this arithmetic before you promise anyone a campaign.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Filters worth knowing</div>
+  <h2>Which ones actually narrow</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Filter</th><th>Qualifies</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="k">High/medium intent, 3mo</td><td>8,255 (75%)</td><td><span class="pill a">Weak</span> Three quarters of the universe passes. Not a targeting filter on its own.</td></tr>
+      <tr><td class="k">Named high-intent keywords</td><td>3,413 (31%)</td><td><span class="pill g">Strong</span> Tells you <i>what</i> they are researching, not just that they are active.</td></tr>
+      <tr><td class="k">Pipeline Predict: Highly Likely</td><td>2,939 (27%)</td><td><span class="pill g">Strong</span> Predictive, 100% populated, and almost nobody uses it as a targeting input.</td></tr>
+      <tr><td class="k">Journey Stage: Engaged</td><td>8,946 (82%)</td><td><span class="pill a">Weak</span> Almost everyone is already here. Use MQA (205) if you want a working list.</td></tr>
+      <tr><td class="k">Qualification: Highly Likely</td><td>77 (0.7%)</td><td><span class="pill r">Check first</span> Same count as accounts with a CRM Lead Owner &mdash; likely keying off ownership, not fit.</td></tr>
+    </tbody>
+  </table></div>
+</div></div>
+
+<!-- 2 -->
+<div class="view" id="v2"><div class="page">
+  <div class="band">
+    <div class="section-label">The part that stops builds</div>
+    <h2>Only a quarter of our accounts have people</h2>
+    <p><b>8,213 of 10,972 accounts carry zero known contacts.</b> You can target them with account-based advertising. You cannot build a person audience, you cannot push contacts to LinkedIn, and you cannot hand a rep a name.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">By tier</div>
+  <h2>Where the people actually are</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Tier</th><th>Accounts</th><th>With people</th><th>Coverage</th><th>People</th><th>Per account</th></tr></thead>
+    <tbody>
+      <tr><td class="k">T1A</td><td>118</td><td>45</td><td>38.1%</td><td>319</td><td>7.1</td></tr>
+      <tr><td class="k">T1</td><td>699</td><td>264</td><td>37.8%</td><td>2,266</td><td><b>8.6</b></td></tr>
+      <tr><td class="k">T2</td><td>2,541</td><td>995</td><td>39.2%</td><td>3,270</td><td>3.3</td></tr>
+      <tr><td class="k">T3</td><td>3,488</td><td>1,456</td><td>41.7%</td><td>4,091</td><td>2.8</td></tr>
+      <tr><td class="k">T4</td><td>1,274</td><td><b>0</b></td><td><b>0.0%</b></td><td><b>0</b></td><td>&mdash;</td></tr>
+      <tr><td class="k">T5</td><td>2,852</td><td><b>0</b></td><td><b>0.0%</b></td><td><b>0</b></td><td>&mdash;</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout stop" style="margin-top:18px">
+    <p><b>T4 and T5 have no KDMs. None.</b> That is 4,126 accounts &mdash; the entire small-market and TaaS lane &mdash; with zero person coverage. For those tiers the LinkedIn 300-member floor is not the constraint. There is nothing to push.</p>
+    <p>Run account-based targeting there, and treat the person layer as a build task for Sharath, not a selection you can make in the builder.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Who the people are</div>
+  <h2>The title mix, and why it needs a look</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Title band</th><th>People</th><th>Share</th></tr></thead>
+    <tbody>
+      <tr><td class="k">CEO / President</td><td>4,726</td><td><b>47.5%</b></td></tr>
+      <tr><td class="k">Director</td><td>1,816</td><td>18.3%</td></tr>
+      <tr><td class="k">CFO</td><td>798</td><td>8.0%</td></tr>
+      <tr><td class="k">Other C-Level</td><td>792</td><td>8.0%</td></tr>
+      <tr><td class="k">CIO / CTO</td><td>534</td><td>5.4%</td></tr>
+      <tr><td class="k">VP</td><td>504</td><td>5.1%</td></tr>
+      <tr><td class="k">COO</td><td>462</td><td>4.6%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout w" style="margin-top:16px">
+    <p><b>Nearly half the list is CEO or President.</b> For CX outsourcing and contact-center transformation that is rarely the entry point &mdash; the buying group is CX Leaders, LOB Leaders, Vertical Specialists, plus Procurement and Finance.</p>
+    <p>Two readings and the data cannot separate them: either the list was built with a seniority filter that over-weighted C-level, or mid-market genuinely lists a lot of Presidents and Owners. T2 and T3 are 74% of the people, which points at the second. Worth confirming before anyone maps these to buying groups &mdash; it is the same failure that let LinkedIn&rsquo;s Owner and Founder buckets pull in independent consultants.</p>
+  </div>
+
+  <div class="callout s" style="margin-top:16px">
+    <p><b>The file itself is clean.</b> 9,946 people, 100% with email, 99.5% with title, 100% with domain. This is not a data-quality problem. It is a coverage problem &mdash; 75% of accounts simply are not in it.</p>
+  </div>
+  <p class="src">Source: <b>KDM - NA All Tiers 2026</b> &middot; 9,946 people across 2,759 accounts &middot; 98.2% Lead, 1.8% Contact</p>
+</div></div>
+
+<script>
+var VIEWS=['v0','v1','v2'];
+function sv(i){
+  document.querySelectorAll('.tabs button').forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false');});
+  VIEWS.forEach(function(id,k){var e=document.getElementById(id); if(e) e.className='view'+(k===i?' on':'');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+<script src="/assets/js/back-to-top.js"></script>
+</body></html>

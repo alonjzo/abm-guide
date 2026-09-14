@@ -55,8 +55,8 @@
   --content: 1160px;
 
   /* Fonts */
-  --font-display: 'Calibri', 'Segoe UI', Georgia, serif;
-  --font-body: 'Calibri Light', 'Calibri', 'Segoe UI', sans-serif;
+  --font-display: 'TP Sans', 'Archivo', 'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'TP Sans', 'Noto Sans', 'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* Dark Mode - Navy to Purple */
