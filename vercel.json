@@ -1,9 +1,22 @@
 {
   "functions": {
-    "api/generate.js": { "maxDuration": 60 },
-    "api/prompt.js": { "maxDuration": 60 },
-    "api/battlecard.js": { "maxDuration": 60 }
+    "api/generate.js": {
+      "maxDuration": 60
+    },
+    "api/prompt.js": {
+      "maxDuration": 60
+    },
+    "api/battlecard.js": {
+      "maxDuration": 60
+    }
   },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/start-here",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/).*)",
