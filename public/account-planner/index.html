@@ -142,17 +142,104 @@
   <div class="hero-inner">
     <div class="hero-kicker"><span></span>Reference &middot; Planning</div>
     <h1>Account planning calculator</h1>
-    <p class="hero-sub">Before you commit a budget, find out what it actually buys. Enter what you have and how many accounts you want to reach &mdash; this tells you whether the campaign can work.</p>
+    <p class="hero-sub">What to budget for 1:1, 1:Few and 1:Many &mdash; per quarter and per year &mdash; built on what our own spend actually returned in FY26.</p>
     <p class="hero-meta">Built on FY26 US performance &middot; 13,899 accounts targeted, $59,540 spent</p>
   </div>
 </div>
 
 <div class="tabs" role="tablist">
-  <button role="tab" aria-selected="true"  onclick="sv(0)">Calculator</button>
-  <button role="tab" aria-selected="false" onclick="sv(1)">The Model</button>
+  <button role="tab" aria-selected="true"  onclick="sv(0)">Plan a Quarter</button>
+  <button role="tab" aria-selected="false" onclick="sv(1)">Check a Budget</button>
+  <button role="tab" aria-selected="false" onclick="sv(2)">Benchmarks</button>
 </div>
 
-<div class="view on" id="v0"><div class="page">
+<div class="view on" id="vp"><div class="page">
+
+  <div class="band">
+    <div class="section-label">Start here</div>
+    <h2>Set the motion, get the budget</h2>
+    <p>Pick how many accounts each motion covers. The calculator sets spend per account at the depth that actually performs, then gives you the quarterly and annual number to take into planning.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="calc">
+    <div class="panel-in">
+      <div class="fld">
+        <label for="p11">1:1 &mdash; named accounts</label>
+        <input type="number" id="p11" value="25" min="0" step="5" oninput="plan()">
+        <p class="hint">Named account, named committee. Executive sponsorship.</p>
+      </div>
+      <div class="fld">
+        <label for="pfew">1:Few &mdash; clusters</label>
+        <input type="number" id="pfew" value="150" min="0" step="25" oninput="plan()">
+        <p class="hint">Sub-vertical or account cluster sharing one story.</p>
+      </div>
+      <div class="fld">
+        <label for="pmany">1:Many &mdash; vertical or LOB</label>
+        <input type="number" id="pmany" value="500" min="0" step="100" oninput="plan()">
+        <p class="hint">Broad awareness across a vertical or service line. <b>Runs on a half-year flight</b> at $7,500 &mdash; these need time to bake.</p>
+      </div>
+      <div class="fld">
+        <label for="pmanybudget">1:Many budget per half</label>
+        <input type="number" id="pmanybudget" value="7500" min="0" step="500" oninput="plan()">
+        <p class="hint">Six months, twice a year. Holds the efficient band up to about 500 accounts.</p>
+      </div>
+      <div class="fld">
+        <label for="depth">Depth</label>
+        <select id="depth" onchange="plan()">
+          <option value="eff" selected>Efficient &mdash; best cost per account moved</option>
+          <option value="deep">Deep &mdash; higher lift, higher cost</option>
+          <option value="lean">Lean &mdash; stretch the budget</option>
+        </select>
+        <p class="hint">Efficient targets the $15&ndash;40 band, where FY26 returned 36.7% lift at the best cost per account moved.</p>
+      </div>
+    </div>
+
+    <div class="out">
+      <div class="big">
+        <div class="lab">Annual budget</div>
+        <div class="v" id="p-qtr"><em>&mdash;</em></div>
+        <p class="sub" id="p-yr">&nbsp;</p>
+      </div>
+
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Motion</th><th>Cadence</th><th>Accounts</th><th>$/account</th><th>Per flight</th><th>Per year</th><th>Expected to move</th></tr></thead>
+        <tbody id="p-rows"></tbody>
+        <tfoot><tr style="border-top:2px solid var(--slate)"><td class="k"><b>Total</b></td><td></td><td id="p-t-acct"></td><td></td><td></td><td id="p-t-yr"></td><td id="p-t-moved"></td></tr></tfoot>
+      </table></div>
+      <p class="src">Spend per account is set at the depth band that produced the stated lift in FY26 &middot; CPM $15.78</p>
+
+      <div class="verdict v-good" id="p-verdict">&nbsp;</div>
+
+      <div class="mets">
+        <div class="met"><div class="l">Blended cost per account moved</div><div class="n" id="p-cpm">&mdash;</div><div class="d">FY26 actual was $11.14</div></div>
+        <div class="met"><div class="l">Accounts covered</div><div class="n" id="p-cov">&mdash;</div><div class="d">of 10,155 in T2&ndash;T5</div></div>
+        <div class="met"><div class="l">Share of universe</div><div class="n" id="p-share">&mdash;</div><div class="d">how much of the book you touch</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">Sanity check</div>
+  <h2>Our current floors, and what they actually buy</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Motion</th><th>Floor</th><th>At this many accounts</th><th>$/account</th><th>Lands in</th></tr></thead>
+    <tbody>
+      <tr><td class="k">1:1</td><td>$5,000</td><td>10</td><td>$500.00</td><td><span class="pill g">59.0% band</span> comfortable</td></tr>
+      <tr><td class="k">1:Few</td><td>$3,500</td><td>75</td><td>$46.67</td><td><span class="pill g">45.0% band</span> comfortable</td></tr>
+      <tr><td class="k">1:Many</td><td>$2,000 <span style="color:var(--body-gray)">(old, quarterly)</span></td><td>500</td><td>$4.00</td><td><span class="pill r">16.9% band</span> below where it works</td></tr>
+      <tr><td class="k">1:Many</td><td><b>$7,500 per half</b></td><td>500</td><td><b>$15.00</b></td><td><span class="pill g">36.7% band</span> and six months to bake</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout stop" style="margin-top:14px">
+    <p><b>The old 1:Many floor was set too low for the account counts people actually run.</b> $2,000 across 500 accounts is $4 each &mdash; the band where only 16.9% of accounts moved in FY26. It clears the minimum on paper and underdelivers in practice.</p>
+    <p><b>The fix is $7,500 over six months.</b> Same 500 accounts at $15 each, which holds the 36.7% band, and the longer flight gives the audience time to mature. On HRO the identical creative ran 0.025% for its first 35 days and 0.042% for the next 28 &mdash; a 1.67x improvement with nothing changed except time. A quarter barely clears the ramp.</p>
+  </div>
+</div></div>
+
+<div class="view" id="v0"><div class="page">
   <div class="calc">
     <div class="panel-in">
       <div class="fld">
@@ -216,7 +303,7 @@
   </div>
 </div></div>
 
-<div class="view" id="v1"><div class="page">
+<div class="view" id="v2"><div class="page">
   <div class="band">
     <div class="section-label">Why this works</div>
     <h2>Spend per account predicts almost everything</h2>
@@ -304,12 +391,55 @@ function calc(){
   }
   document.getElementById('bandrows').innerHTML=rows;
 }
-var VIEWS=['v0','v1'];
+var VIEWS=['vp','v0','v2'];
 function sv(i){
   document.querySelectorAll('.tabs button').forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false');});
   VIEWS.forEach(function(id,k){var e=document.getElementById(id); if(e) e.className='view'+(k===i?' on':'');});
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+var DEPTH={eff:{'1:1':150,'1:Few':35},deep:{'1:1':200,'1:Few':50},lean:{'1:1':100,'1:Few':20}};
+function liftFor(spa){return spa<1?7.2:spa<5?16.9:spa<15?25.8:spa<40?36.7:spa<100?45.0:59.0;}
+function plan(){
+  var d=DEPTH[document.getElementById('depth').value];
+  var n11=n('p11'), nfew=n('pfew'), nmany=n('pmany'), bmany=n('pmanybudget');
+  var rows='', yr=0, ta=0, tm=0;
+
+  // quarterly motions
+  [['1:1',n11,d['1:1']],['1:Few',nfew,d['1:Few']]].forEach(function(r){
+    var k=r[0],acc=r[1],spa=r[2];
+    if(acc<=0) return;
+    var q=acc*spa, lf=liftFor(spa), mv=Math.round(acc*lf/100);
+    yr+=q*4; ta+=acc; tm+=mv*4;
+    rows+='<tr><td class="k">'+k+'</td><td>Quarterly</td><td>'+fm(acc)+'</td><td>$'+fm(spa)+'</td><td><b>$'+fm(q)+'</b></td><td>$'+fm(q*4)+'</td><td>'+fm(mv)+' <span style="color:var(--body-gray)">('+lf.toFixed(1)+'%)</span></td></tr>';
+  });
+
+  // 1:Many — half-year
+  if(nmany>0 && bmany>0){
+    var spaM=bmany/nmany, lfM=liftFor(spaM), mvM=Math.round(nmany*lfM/100);
+    yr+=bmany*2; ta+=nmany; tm+=mvM*2;
+    rows+='<tr><td class="k">1:Many</td><td><b>Half-year</b></td><td>'+fm(nmany)+'</td><td>$'+fm(spaM,2)+'</td><td><b>$'+fm(bmany)+'</b></td><td>$'+fm(bmany*2)+'</td><td>'+fm(mvM)+' <span style="color:var(--body-gray)">('+lfM.toFixed(1)+'%)</span></td></tr>';
+  }
+
+  document.getElementById('p-rows').innerHTML=rows||'<tr><td colspan="7" style="color:var(--body-gray)">Enter account counts to build a plan.</td></tr>';
+  document.getElementById('p-qtr').innerHTML='<em>$'+fm(yr)+'</em>';
+  document.getElementById('p-yr').textContent='Across '+fm(ta)+' accounts. 1:1 and 1:Few run quarterly; 1:Many runs twice a year on six-month flights. Expect roughly '+fm(tm)+' account moves over the year.';
+  document.getElementById('p-t-acct').innerHTML='<b>'+fm(ta)+'</b>';
+  document.getElementById('p-t-yr').innerHTML='<b>$'+fm(yr)+'</b>';
+  document.getElementById('p-t-moved').innerHTML='<b>'+fm(tm)+'</b>';
+  document.getElementById('p-cpm').textContent=tm>0?'$'+fm(yr/tm,2):'--';
+  document.getElementById('p-cov').textContent=fm(ta);
+  document.getElementById('p-share').textContent=(ta/10155*100).toFixed(1)+'%';
+
+  var v=document.getElementById('p-verdict'),m='';
+  var spaM2=nmany>0?bmany/nmany:0;
+  if(yr===0){m='Enter account counts to build a plan.';v.className='verdict v-warn';}
+  else if(spaM2>0 && spaM2<5){m='<b>1:Many is spread too thin.</b> $'+fm(spaM2,2)+' per account over six months lands in the band where only 16.9% of accounts moved. Cut the list or raise the budget &mdash; around $15 per account holds the efficient band.';v.className='verdict v-bad';}
+  else if(yr/tm>40){m='<b>Expensive per outcome.</b> $'+fm(yr/tm,2)+' per account moved against an FY26 blended actual of $11.14. That is the price of concentration &mdash; defensible for named accounts, hard to justify across a broad program.';v.className='verdict v-warn';}
+  else{m='<b>This plan is fundable and defensible.</b> $'+fm(yr/tm,2)+' per account moved, covering '+(ta/10155*100).toFixed(1)+'% of the T2&ndash;T5 universe. Every rate here is an observed FY26 outcome, not a projection.';v.className='verdict v-good';}
+  v.innerHTML=m;
+}
+plan();
 calc();
 </script>
 <script src="/assets/js/back-to-top.js"></script>

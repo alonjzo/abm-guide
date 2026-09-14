@@ -72,8 +72,8 @@
                             <a href="${bp}best-practices/index.html" class="tp-nav-drop-link ${isBestPractices ? 'active' : ''}">ABM Best Practices</a>
                             <span class="tp-nav-drop-label">Guides &mdash; step by step</span>
                             <a href="${bp}guides/run-a-campaign/index.html" class="tp-nav-drop-link ${isRunCampaign ? 'active' : ''}">Run a US Journey campaign</a>
-                            <a href="${bp}guides/read-your-campaign/index.html" class="tp-nav-drop-link tp-nav-soon ${isReadCampaign ? 'active' : ''}">Read your campaign<span class="tp-soon-badge">Soon</span></a>
-                            <a href="${bp}guides/optimize-mid-flight/index.html" class="tp-nav-drop-link tp-nav-soon ${isOptimize ? 'active' : ''}">Optimize mid-flight<span class="tp-soon-badge">Soon</span></a>
+                            <a href="${bp}guides/read-your-campaign/index.html" class="tp-nav-drop-link ${isReadCampaign ? 'active' : ''}">Read your campaign</a>
+                            <a href="${bp}guides/optimize-mid-flight/index.html" class="tp-nav-drop-link ${isOptimize ? 'active' : ''}">Optimize mid-flight</a>
                             <a href="${bp}guides/build-your-list/index.html" class="tp-nav-drop-link ${isBuildList ? 'active' : ''}">Build your account list</a>
                             <span class="tp-nav-drop-label">AI</span>
                             <a href="${bp}demandbase-marketing/index.html" class="tp-nav-drop-link ${isDemandbaseMarketing ? 'active' : ''}">DB AI Prompt Library</a>
@@ -85,7 +85,7 @@
                     <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Cards</a>
 
                     <div class="tp-nav-group ${isReferenceGroup ? 'active' : ''}">
-                        <button class="tp-nav-link tp-nav-group-btn" aria-expanded="false" aria-haspopup="true">Reference
+                        <button class="tp-nav-link tp-nav-group-btn" aria-expanded="false" aria-haspopup="true">Budget &amp; Planning
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg>
                         </button>
                         <div class="tp-nav-dropdown">
@@ -303,6 +303,8 @@
         'account-planner':    ['Planning', 'What your budget actually buys. <b>Spend per account predicts lift</b> &mdash; check before you commit, not after.'],
         'roi-calculator':     ['Reference', 'Model the business case. <b>Change the inputs</b> — the defaults are illustrative, not our numbers.'],
         'campaign-playbook':  ['Campaigns', 'How to read a campaign after launch. <b>The account is the unit</b>; people are a weighting inside it.'],
+        'read-your-campaign':  ['Guide', 'What the five numbers mean and what our own portfolio does. <b>The account is the unit</b> &mdash; clicks are anonymous by design, not by omission.'],
+        'optimize-mid-flight': ['Guide', 'Signal, window, move &mdash; one change at a time. <b>Wait the window before you touch it</b>; most mid-flight damage is week-one noise.'],
         'run-a-campaign':     ['Guide', 'Build a US Journey campaign in the right order &mdash; Inventory Planner first, then the five builder steps. <b>Reach before build, journey before creative.</b>'],
         'build-your-list':    ['Guide', 'Who to target, and whether we hold any people there. <b>Only 24% of T2&ndash;T5 accounts have a known contact</b> &mdash; check before you promise a person audience.'],
         'lighthouse':         ['Account intelligence', 'Where the target-account universe comes from &mdash; research, tiering, buyer groups. <b>Check the universe before requesting anything new.</b>'],

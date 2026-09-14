@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimize Mid-Flight | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../../assets/js/navigation.js"></script>
+<style>
+  :root{
+    --slate:#484C6A; --slate-dark:#2e3150; --pastel-slate:#c2c7cd; --pastel-slate-light:#edeaf0;
+    --pink:#ff0082; --pink-text:#ff4da6;
+    --white:#ffffff; --black:#1a1a1a; --dark-gray:#414141; --body-gray:#6b6e85; --line:#e6e8ec;
+    --mono:"SF Mono",Consolas,Menlo,monospace;
+    --good:#1f7a55; --good-bg:#eaf6f0; --warn:#8a5a00; --warn-bg:#fdf5e6; --stop:#c2005f; --stop-bg:#fdeef5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.03) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:24px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.1;margin-bottom:16px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:66ch;line-height:1.6}
+  .hero-meta{font-size:12px;color:rgba(255,255,255,.6);margin-top:18px;letter-spacing:.03em}
+
+  .tabs{background:var(--white);border-bottom:1px solid var(--line);padding:0 60px;display:flex;gap:4px;position:sticky;top:0;z-index:50;overflow-x:auto}
+  .tabs button{background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:inherit;
+    font-size:14px;font-weight:600;color:var(--body-gray);padding:16px 18px;margin-bottom:-1px;white-space:nowrap;transition:.15s}
+  .tabs button:hover{color:var(--black)}
+  .tabs button[aria-selected="true"]{color:var(--slate);border-bottom-color:var(--pink);font-weight:700}
+
+  .view{display:none}.view.on{display:block}
+  .page{max-width:1100px;margin:0 auto;padding:52px 60px 90px}
+  @media(max-width:860px){.page,.hero,.tabs{padding-left:24px;padding-right:24px}}
+
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .section-label::before{content:'';width:18px;height:2px;background:var(--pink);display:inline-block}
+  h2{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:var(--black);letter-spacing:-.02em;margin-bottom:8px;line-height:1.15}
+  .section-intro{font-size:15px;color:var(--body-gray);max-width:74ch;margin-bottom:24px;line-height:1.65}
+  .rule{height:1px;background:var(--line);margin:46px 0}
+
+  .band{background:var(--slate);color:#fff;border-radius:14px;padding:34px 38px}
+  .band .section-label{color:var(--pastel-slate)}
+  .band .section-label::before{background:var(--pink)}
+  .band h2{color:#fff;margin:10px 0 10px}
+  .band>p{color:#dfe1ea;font-size:15px;max-width:72ch}
+  .band b{color:#fff}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+  @media(max-width:900px){.flow{grid-template-columns:repeat(2,1fr)}}
+  .fstep{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:16px}
+  .fstep .fn{font-size:13px;font-weight:800;color:var(--pink-text)}
+  .fstep h4{font-size:14px;color:#fff;font-weight:600;margin:6px 0 4px}
+  .fstep p{font-size:12px;color:#dfe1ea;line-height:1.45}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  .r{border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:0 10px 10px 0;padding:15px 17px}
+  .r b{color:var(--black)}
+  .r p{font-size:13.5px;margin-top:3px;color:var(--body-gray)}
+  .g{border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:0 12px 12px 0;padding:16px 18px}
+  .g h3{font-size:15px;color:var(--black);font-weight:700;margin-bottom:3px}
+  .g p{font-size:13.5px;color:var(--body-gray)}
+  .g .who{font-size:11px;color:var(--slate);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:8px}
+
+  .callout{background:#f6f7f9;border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:18px 22px;font-size:14.5px}
+  .callout b{color:var(--black)}
+  .callout+.callout{margin-top:12px}
+  .callout.warn{background:var(--warn-bg);border-left-color:var(--warn)}
+  .callout.stop{background:var(--stop-bg);border-left-color:var(--stop)}
+  .callout p+p{margin-top:10px}
+
+  .bignum{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.bignum{grid-template-columns:1fr}}
+  .bn{border:1px solid var(--line);border-radius:12px;padding:20px 22px;background:#fafbfc}
+  .bn .v{font-size:34px;font-weight:800;color:var(--slate);letter-spacing:-.03em;line-height:1}
+  .bn .v em{font-style:normal;color:var(--pink)}
+  .bn h4{font-size:13px;font-weight:700;color:var(--black);margin:8px 0 3px}
+  .bn p{font-size:12.5px;color:var(--body-gray);line-height:1.5}
+
+  .tbl-wrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  th,td{padding:13px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  thead th{background:#fafbfc;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);font-weight:800;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfc}
+  td.k{font-weight:700;color:var(--black);white-space:nowrap}
+  .pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
+  .pill.g{background:var(--good-bg);color:var(--good)}
+  .pill.r{background:var(--stop-bg);color:var(--stop)}
+  .pill.a{background:var(--warn-bg);color:var(--warn)}
+
+  .steps{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .step{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);background:#fff}
+  .step:last-child{border-bottom:none}
+  .step:nth-child(even){background:#fafbfc}
+  .step .n{font-size:12px;font-weight:800;color:var(--pink);letter-spacing:.05em;padding-top:2px}
+  .step h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--black)}
+  .step p{margin:0;font-size:13.5px;color:var(--body-gray)}
+  .step code{background:var(--pastel-slate-light);padding:2px 7px;border-radius:4px;font-size:12.5px;color:var(--slate);font-family:var(--mono);font-weight:600}
+  .src{font-size:12px;color:var(--body-gray);margin-top:12px;text-align:right}
+  .src b{color:var(--slate);font-weight:700}
+  .lead-in{font-size:17px;color:var(--black);font-weight:600;max-width:70ch;margin-bottom:18px;line-height:1.55}
+  .pinktext{color:var(--pink);font-weight:700}
+</style></head><body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span></span>Guide &middot; Optimize mid-flight</div>
+    <h1>Wait the window. Then make one change.</h1>
+    <p class="hero-sub">Most mid-flight damage is done in week one, reacting to noise. Every signal below has a window attached &mdash; the time it takes before the number means anything. Read the window before you touch the campaign.</p>
+    <p class="hero-meta">Pivot thresholds from VIP training, Dec 2025; build session 4 Mar 2026</p>
+  </div>
+</div>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true"  onclick="sv(0)">Signal &rarr; Move</button>
+  <button role="tab" aria-selected="false" onclick="sv(1)">Monitoring Cadence</button>
+  <button role="tab" aria-selected="false" onclick="sv(2)">What You Cannot Change</button>
+</div>
+
+<!-- 0 -->
+<div class="view on" id="v0"><div class="page">
+  <div class="band">
+    <div class="section-label">The rule</div>
+    <h2>No change before its window closes</h2>
+    <p>A campaign in week one is not underperforming &mdash; it is warming up. Delivery faults are worth catching immediately; performance is not readable yet. Each signal below fires only after its window, and each has <b>one</b> move attached. Change one thing, then wait the window again.</p>
+    <div class="flow">
+      <div class="fstep"><div class="fn">01</div><h4>Identify the signal</h4><p>Which number missed, not which number looks low.</p></div>
+      <div class="fstep"><div class="fn">02</div><h4>Check the window</h4><p>Has enough time passed for it to mean anything?</p></div>
+      <div class="fstep"><div class="fn">03</div><h4>Make one move</h4><p>One variable. Two changes and you learn nothing.</p></div>
+      <div class="fstep"><div class="fn">04</div><h4>Re-wait</h4><p>The window resets. Resist the second change.</p></div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="section-label">The table</div>
+  <h2>When to change something</h2>
+  <p class="section-intro">Five signals, five windows, five moves. If a number is off but its window has not closed, the correct action is to do nothing and note the date.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Signal</th><th>Window</th><th>Move</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Reach below 70%</td><td><span class="pill a">2 weeks</span></td><td>Add creative sizes; widen job level; expand the list</td></tr>
+        <tr><td class="k">CTR below 0.10%</td><td><span class="pill a">3 weeks</span></td><td>Add new creatives into the existing ad group; archive the weakest</td></tr>
+        <tr><td class="k">No journey progression</td><td><span class="pill a">30 days</span></td><td>Re-check keyword-to-message alignment &mdash; the intent set may be wrong</td></tr>
+        <tr><td class="k">Engagement declining</td><td><span class="pill r">Month 2</span></td><td><b>Stop early.</b> Do not ride a dead flight to the end date.</td></tr>
+        <tr><td class="k">Account idle in Opportunity</td><td>Check days-idle</td><td>Break it out into a 1:1 acceleration campaign</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="src"><b>Source:</b> TP internal &mdash; VIP training pivot thresholds (Dec 2025); 4 Mar 2026 build session.</p>
+
+  <div class="callout" style="margin-top:22px">
+    <p><b>Add, do not swap.</b> When CTR is soft, new creatives go <i>into</i> the existing ad group and the weakest get archived. Tearing down an ad group restarts its learning and throws away the delivery history you have paid for.</p>
+  </div>
+
+  <div class="callout warn" style="margin-top:12px">
+    <p><b>Stopping early is a real move, not a failure.</b> A flight with declining engagement in month two will not recover by running to its end date &mdash; it will spend the rest of the budget proving the point. Pull it and redeploy.</p>
+  </div>
+</div></div>
+
+<!-- 1 -->
+<div class="view" id="v1"><div class="page">
+  <div class="section-label">Cadence</div>
+  <h2>How often to look, and what you are looking for</h2>
+  <p class="section-intro">What you check changes as the flight matures. Early on you are checking that it is <b>delivering</b>. Only later are you checking that it is <b>working</b>. Confusing the two is what produces week-one panic.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="n">WK 1&ndash;2</div>
+      <div><h4>Daily &mdash; delivery faults, not performance</h4><p>Is it serving? Are creatives approved? Is spend pacing? Performance numbers in this window are noise &mdash; do not read them as signal and do not change anything based on them.</p></div>
+    </div>
+    <div class="step">
+      <div class="n">WK 3&ndash;4</div>
+      <div><h4>Twice weekly &mdash; first real signal</h4><p>Reach is now readable. The 2-week reach threshold and the 3-week CTR threshold both land here. This is the first window where a change is justified.</p></div>
+    </div>
+    <div class="step">
+      <div class="n">MO 2+</div>
+      <div><h4>Weekly, with a monthly deep dive</h4><p>Journey progression and engagement trend become readable. This is where the stop-early decision gets made if engagement is heading down.</p></div>
+    </div>
+    <div class="step">
+      <div class="n">AUTO</div>
+      <div><h4>Weekly watcher mail covers the exec layer</h4><p>Leadership visibility is already handled. You do not need to build a separate status update for it &mdash; check the watcher output before writing anything by hand.</p></div>
+    </div>
+  </div>
+  <p class="src"><b>Source:</b> TP internal &mdash; monitoring cadence, 4 Mar 2026 build session.</p>
+</div></div>
+
+<!-- 2 -->
+<div class="view" id="v2"><div class="page">
+  <div class="section-label">Locked at launch</div>
+  <h2>What you cannot change once it is running</h2>
+  <p class="section-intro">Some levers close the moment you publish. Knowing which ones means you spend the build step on the things that cannot be fixed later &mdash; and stop hunting for a mid-flight fix that does not exist.</p>
+
+  <div class="grid2">
+    <div class="g">
+      <h3>The contact list</h3>
+      <p>Contact lists cannot be added to a running campaign. If person coverage was thin at build, it stays thin for the whole flight. This is the single most common "can we just add..." request and the answer is no.</p>
+      <div class="who">Fix at &mdash; build your account list</div>
+    </div>
+    <div class="g">
+      <h3>Creative size coverage</h3>
+      <p>Reach is largely decided by how many display sizes you uploaded. Five or more is the standard. You can add sizes mid-flight, but the reach you lost in weeks one and two does not come back.</p>
+      <div class="who">Fix at &mdash; Step 0, Inventory Planner</div>
+    </div>
+    <div class="g">
+      <h3>Geo and environment</h3>
+      <p>Set at Campaign Basics. Geo in particular is where teams get burned &mdash; verify it before publish, because a mis-scoped geo reads as a performance problem for weeks before anyone finds the real cause.</p>
+      <div class="who">Fix at &mdash; Campaign Basics</div>
+    </div>
+    <div class="g">
+      <h3>Intent signal availability</h3>
+      <p>Not yours to fix at all. Tenant keyword volume is over the 2M/week platform cap, so some accounts are missing intent signal &mdash; suppressing dynamic list membership and dampening performance. Escalated to engineering by Kate.</p>
+      <div class="who">Platform constraint &mdash; note it, do not chase it</div>
+    </div>
+  </div>
+
+  <div class="callout stop" style="margin-top:22px">
+    <p><b>Before you conclude a campaign is underperforming,</b> rule out the locked levers. A flight at 60% reach with four creative sizes and a mis-scoped geo is not a creative problem, and no amount of mid-flight optimization will rescue it. That is a rebuild at the next flight, not a fix at this one.</p>
+  </div>
+
+  <div class="rule"></div>
+  <div class="callout">
+    <p><b>Back up a step:</b> <a href="/guides/read-your-campaign/index.html" class="pinktext">Read your campaign</a> covers what each number means and our portfolio benchmarks. <a href="/guides/run-a-campaign/index.html" class="pinktext">Run a US Journey campaign</a> covers the build order that prevents most of this.</p>
+  </div>
+</div></div>
+
+<script>
+var VIEWS=['v0','v1','v2'];
+function sv(i){
+  document.querySelectorAll('.tabs button').forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false');});
+  VIEWS.forEach(function(id,k){var e=document.getElementById(id); if(e) e.className='view'+(k===i?' on':'');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+<script src="/assets/js/back-to-top.js"></script>
+</body></html>
