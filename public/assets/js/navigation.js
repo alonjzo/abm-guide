@@ -5,7 +5,7 @@
     'use strict';
 
     const currentPath = window.location.pathname;
-    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides') && !currentPath.includes('tp-services') && !currentPath.includes('campaign-playbook') && !currentPath.includes('best-practices') && !currentPath.includes('start-here') && !currentPath.includes('guides/') && !currentPath.includes('lighthouse') && !currentPath.includes('account-planner') && !currentPath.includes('training'));
+    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides') && !currentPath.includes('tp-services') && !currentPath.includes('campaign-playbook') && !currentPath.includes('best-practices') && !currentPath.includes('start-here') && !currentPath.includes('guides/') && !currentPath.includes('lighthouse') && !currentPath.includes('account-planner') && !currentPath.includes('training') && !currentPath.includes('global-dashboard'));
     const isPersonas = currentPath.includes('personas');
     const isCompetitiveIntel = currentPath.includes('competitive-intel') || currentPath.includes('command-center');
     const isOrchestration = currentPath.includes('orchestration');
@@ -13,6 +13,7 @@
     const isDemandbaseSales = currentPath.includes('demandbase-sales');
     const isDemandbaseMarketing = currentPath.includes('demandbase-marketing');
     const isCampaignMonitoring = currentPath.includes('campaign-monitoring');
+    const isGlobalDashboard = currentPath.includes('global-dashboard');
     const isAdvancedReporting = currentPath.includes('advanced-reporting');
     const isPromptsLab = currentPath.includes('prompts-lab');
     const isROICalculator = currentPath.includes('roi-calculator');
@@ -37,7 +38,7 @@
 
     function getBasePath() {
         if (isGuideGroup) return '../../';
-        if (isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides || isBuyingGroups || isWorkspacesRef || isTPServices || isCampaignPlaybook || isBestPractices || isStartHere || isLighthouse || isPlanner) return '../';
+        if (isGlobalDashboard || isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides || isBuyingGroups || isWorkspacesRef || isTPServices || isCampaignPlaybook || isBestPractices || isStartHere || isLighthouse || isPlanner) return '../';
         if (isPersonas && !currentPath.endsWith('personas/index.html') && currentPath.split('/').filter(Boolean).length > 2) return '../../';
         if (isPersonas) return '../';
         return './';
@@ -84,6 +85,7 @@
 
                     <a href="${bp}competitive-intel/index.html" class="tp-nav-link ${isCompetitiveIntel ? 'active' : ''}">Competitive Intel</a>
                     <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Cards</a>
+                    <a href="${bp}global-dashboard/index.html" class="tp-nav-link ${isGlobalDashboard ? 'active' : ''}" title="Read the Global Dashboard and request reporting help">Global Dashboard</a>
                     <a href="${bp}training/index.html" class="tp-nav-link ${isTraining ? 'active' : ''}">Training</a>
 
                     <div class="tp-nav-group ${isReferenceGroup ? 'active' : ''}">
@@ -262,7 +264,7 @@
             }
             .tp-nav-toggle span { width: 20px; height: 2px; background: #C2C7CD; border-radius: 1px; transition: all 0.3s; }
             body { padding-top: 56px !important; }
-            @media (max-width: 768px) {
+            @media (max-width: 1320px) {
                 .tp-access-badge { display: none; }
                 .tp-nav-links {
                     position: absolute; top: 56px; left: 0; right: 0;
@@ -301,6 +303,7 @@
         'demandbase-marketing':['AI', 'Prompts that work against our data. <b>Ask in plain English</b>, export the list, route it to a tracked campaign.'],
         'competitive-intel':  ['Market', 'Who we run into and how they position. <b>Direct and indirect</b> are separated — indirect are not TP competitors.'],
         'personas':           ['Market', 'Who the buyers are by role and vertical — what they care about and what makes them move. <b>Use before writing to a title.</b>'],
+        'global-dashboard':   ['Reporting', 'Find your market, understand the results, and <b>send reporting requests to Ana</b> through one form.'],
         'advanced-reporting': ['Budget & Planning', 'The numbers layer. <b>Every figure carries its object, window and filter</b> — quote it with the basis attached.'],
         'account-planner':    ['Planning', 'What your budget actually buys. <b>Spend per account predicts lift</b> &mdash; check before you commit, not after.'],
         'training':           ['Training', 'Standing sessions, role tracks and the material behind them. <b>Owned by Demandbase Operations</b> — if you are guessing at a platform question, raise it.'],
