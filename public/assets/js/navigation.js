@@ -13,6 +13,7 @@
     const isDemandbaseSales = currentPath.includes('demandbase-sales');
     const isDemandbaseMarketing = currentPath.includes('demandbase-marketing');
     const isPromptBook = currentPath.includes('prompt-book');
+    const isBlueprint = currentPath.includes('blueprint');
     const isCampaignMonitoring = currentPath.includes('campaign-monitoring');
     const isGlobalDashboard = currentPath.includes('global-dashboard');
     const isAdvancedReporting = currentPath.includes('advanced-reporting');
@@ -61,6 +62,7 @@
                     <a href="${bp}tp-services/index.html" class="tp-nav-link ${isTPServices ? 'active' : ''}" title="What TP sells and what we call it">TP Services and TP.ai</a>
                     <a href="${bp}lighthouse/index.html" class="tp-nav-link ${isLighthouse ? 'active' : ''}" title="Account intelligence and the US target-account universe">Lighthouse</a>
                     <a href="${bp}prompt-book/index.html" class="tp-nav-link ${isPromptBook ? 'active' : ''}" title="70 ready-to-use Claude prompts for Content, ABX and Events">Claude Prompt Book</a>
+                    <a href="${bp}blueprint/index.html" class="tp-nav-link ${isBlueprint ? 'active' : ''}" title="TP Growth Marketing Blueprint V10 — reading edition">Blueprint</a>
 
                     <div class="tp-nav-group ${isDemandbaseGroup ? 'active' : ''}">
                         <button class="tp-nav-link tp-nav-group-btn" aria-expanded="false" aria-haspopup="true">Demandbase
