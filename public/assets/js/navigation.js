@@ -60,6 +60,7 @@
                     <a href="${bp}start-here/index.html" class="tp-nav-link ${isStartHere ? 'active' : ''}" title="What this site is and where to go first">Start Here</a>
                     <a href="${bp}tp-services/index.html" class="tp-nav-link ${isTPServices ? 'active' : ''}" title="What TP sells and what we call it">TP Services and TP.ai</a>
                     <a href="${bp}lighthouse/index.html" class="tp-nav-link ${isLighthouse ? 'active' : ''}" title="Account intelligence and the US target-account universe">Lighthouse</a>
+                    <a href="${bp}prompt-book/index.html" class="tp-nav-link ${isPromptBook ? 'active' : ''}" title="70 ready-to-use Claude prompts for Content, ABX and Events">Prompt Book</a>
 
                     <div class="tp-nav-group ${isDemandbaseGroup ? 'active' : ''}">
                         <button class="tp-nav-link tp-nav-group-btn" aria-expanded="false" aria-haspopup="true">Demandbase
@@ -80,7 +81,6 @@
                             <a href="${bp}guides/build-your-list/index.html" class="tp-nav-drop-link ${isBuildList ? 'active' : ''}">Build your account list</a>
                             <span class="tp-nav-drop-label">AI</span>
                             <a href="${bp}demandbase-marketing/index.html" class="tp-nav-drop-link ${isDemandbaseMarketing ? 'active' : ''}">DB AI Prompt Library</a>
-                            <a href="${bp}prompt-book/index.html" class="tp-nav-drop-link ${isPromptBook ? 'active' : ''}">Claude Prompt Book</a>
                             <a href="${bp}demandbase-sales/index.html" class="tp-nav-drop-link tp-nav-soon ${isDemandbaseSales ? 'active' : ''}">DB Sales<span class="tp-soon-badge">Soon</span></a>
                         </div>
                     </div>
