@@ -12,6 +12,7 @@
     const isPlatformGuide = currentPath.includes('platform-guide');
     const isDemandbaseSales = currentPath.includes('demandbase-sales');
     const isDemandbaseMarketing = currentPath.includes('demandbase-marketing');
+    const isPromptBook = currentPath.includes('prompt-book');
     const isCampaignMonitoring = currentPath.includes('campaign-monitoring');
     const isGlobalDashboard = currentPath.includes('global-dashboard');
     const isAdvancedReporting = currentPath.includes('advanced-reporting');
@@ -79,6 +80,7 @@
                             <a href="${bp}guides/build-your-list/index.html" class="tp-nav-drop-link ${isBuildList ? 'active' : ''}">Build your account list</a>
                             <span class="tp-nav-drop-label">AI</span>
                             <a href="${bp}demandbase-marketing/index.html" class="tp-nav-drop-link ${isDemandbaseMarketing ? 'active' : ''}">DB AI Prompt Library</a>
+                            <a href="${bp}prompt-book/index.html" class="tp-nav-drop-link ${isPromptBook ? 'active' : ''}">Claude Prompt Book</a>
                             <a href="${bp}demandbase-sales/index.html" class="tp-nav-drop-link tp-nav-soon ${isDemandbaseSales ? 'active' : ''}">DB Sales<span class="tp-soon-badge">Soon</span></a>
                         </div>
                     </div>
