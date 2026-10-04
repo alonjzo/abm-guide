@@ -78,6 +78,14 @@ body{
 }
 
 .onerule p{margin:0;max-width:66ch;font-size:16.5px;color:var(--ink)}
+.label-rule{background:#fff;border-top:1px solid var(--pastel-slate);
+  border-bottom:3px solid var(--pink);padding-block:30px}
+.label-rule .wrap{align-items:flex-start}
+.label-rule .rtext{flex:1;min-width:280px}
+.label-rule .k{background:var(--pink);color:#fff;border-color:var(--pink)}
+.label-rule p{font-size:17px}
+.label-rule p.sub{margin-top:12px;font-size:14.5px;color:var(--slate-2);max-width:72ch}
+@media (max-width:760px){.label-rule .wrap{flex-direction:column}}
 
 /* ---------- step layout ---------- */
 main{padding-block:8px 64px}
@@ -234,6 +242,21 @@ a:focus-visible,li:focus-visible{outline:2px solid var(--accent);outline-offset:
   <div class="wrap">
     <span class="k">Non-negotiable</span>
     <p>Every US campaign runs on <strong>US Journey</strong> and <strong>US-prefixed assets</strong>. The Demandbase default journey reads global, all-region logic, and journey selection cannot be undone after publish — pick the wrong one and you rebuild the campaign from scratch.</p>
+  </div>
+</section>
+
+<section class="onerule label-rule">
+  <div class="wrap">
+    <span class="k">Non-negotiable</span>
+    <div class="rtext">
+      <p>Set <strong>Campaign Label = US</strong> on every campaign, at build time. Our MROI and ad-touched
+      reporting filters on this label — <strong>a campaign without it is invisible to reporting.</strong> It
+      still spends, still delivers, still reaches accounts, and none of it shows up when we report advertising
+      performance. We cannot credit what we cannot see.</p>
+      <p class="sub">The label marks <strong>the market the campaign targets</strong>, not who built it. Building
+      from outside the US against US-market accounts? Still <strong>US</strong>. The label is editable
+      mid-flight and does not affect delivery or targeting — if something live is missing it, add it now.</p>
+    </div>
   </div>
 </section>
 
