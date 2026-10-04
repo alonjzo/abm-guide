@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script defer src="/_vercel/insights/script.js"></script>
+<title>Journey Stages | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{
+    --tp-navy-slate:#484C6A; --tp-pink:#ff0082; --tp-slate:#848dad; --tp-slate-blue:#848dad;
+    --fg:#1a1a1a; --fg-muted:#6b6e85; --fg-subtle:#9598a8;
+    --bg:#ffffff; --bg-alt:#fafaf8; --bg-muted:#f5f4f1;
+    --border:#e6e6e5; --border-strong:#d4d2ca; --divider:#edece9;
+    --neutral-0:#fff; --neutral-75:#f5f4f1; --neutral-100:#ece9e7;
+    --warning:#b86200; --warning-bg:#fff8e1; --info:#3047b0; --info-bg:#e7f3ff;
+    --r-sm:6px; --r-md:10px; --r-pill:999px;
+    --shadow-1:0 1px 2px rgba(0,0,0,.05); --shadow-2:0 4px 14px rgba(0,0,0,.09);
+    --font-body:'Noto Sans',system-ui,sans-serif; --font-mono:ui-monospace,Menlo,Consolas,monospace;
+    --fw-bold:700;
+  }
+  body{font-family:var(--font-body);color:var(--fg);background:var(--bg-alt);margin:0;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px 72px;}
+  .hero{padding:40px 0 24px;}
+
+  
+  
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px 72px;}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  .hero{padding:44px 0 26px;}
+  .hero .eyebrow{font-size:11px;font-weight:var(--fw-bold);letter-spacing:.13em;text-transform:uppercase;color:var(--tp-slate-blue);}
+  .hero h1{font-size:38px;font-weight:700;color:var(--tp-navy-slate);letter-spacing:-.02em;line-height:1.07;margin-top:10px;}
+  .hero .lead{font-size:15.5px;color:var(--fg-muted);line-height:1.58;margin-top:13px;max-width:74ch;}
+
+  .sec{margin-top:40px;}
+  .sec-h{display:flex;align-items:baseline;gap:11px;margin-bottom:15px;}
+  .sec-h .n{font-size:12px;font-weight:var(--fw-bold);color:var(--tp-pink);}
+  .sec-h h2{font-size:20px;font-weight:600;color:var(--fg);letter-spacing:-.01em;}
+  .sec-h .sub{font-size:12.5px;color:var(--fg-muted);margin-left:auto;}
+
+  /* ladder */
+  .ladder{background:var(--neutral-0);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-1);}
+  .rung{display:grid;grid-template-columns:46px 190px 1fr;gap:0;border-bottom:1px solid var(--divider);align-items:start;}
+  .rung:last-child{border-bottom:0;}
+  .rung .ord{padding:15px 0 15px 20px;font-size:12px;font-weight:700;color:var(--tp-slate);}
+  .rung .nm{padding:15px 14px 15px 0;font-size:14.5px;font-weight:600;color:var(--tp-navy-slate);}
+  .rung .ds{padding:15px 22px 15px 0;font-size:13px;color:var(--fg-muted);line-height:1.5;}
+  .rung.key{background:#f7f8fb;}
+  .rung.key .nm{color:var(--tp-navy-slate);font-weight:700;}
+  .rung.off .nm,.rung.off .ds,.rung.off .ord{color:var(--fg-subtle);}
+  .pill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:var(--r-pill);margin-left:7px;vertical-align:middle;}
+  .pill.act{background:#e7eaf3;color:var(--tp-navy-slate);}
+  .pill.ret{background:var(--neutral-100);color:var(--fg-subtle);}
+
+  /* two-col compare */
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .cbox{background:var(--neutral-0);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-1);}
+  .cbox .ch{padding:16px 22px;border-bottom:1px solid var(--divider);}
+  .cbox.a .ch{background:var(--bg-muted);}
+  .cbox.b .ch{background:var(--tp-navy-slate);}
+  .cbox .ch .t{font-size:16px;font-weight:700;}
+  .cbox.a .ch .t{color:var(--tp-navy-slate);}
+  .cbox.b .ch .t{color:#fff;}
+  .cbox .ch .s{font-size:12px;margin-top:3px;}
+  .cbox.a .ch .s{color:var(--fg-muted);}
+  .cbox.b .ch .s{color:#c3c7da;}
+  .cbox .cb{padding:18px 22px 20px;}
+  .cl{display:flex;gap:10px;margin-bottom:11px;font-size:13px;color:var(--fg-muted);line-height:1.5;}
+  .cl:last-child{margin-bottom:0;}
+  .cl .b{color:var(--tp-slate);font-weight:700;flex:none;}
+  .cl b{color:var(--fg);font-weight:600;}
+  .cbox.b .cb{background:var(--tp-navy-slate);}
+  .cbox.b .cl{color:#d7dae6;}
+  .cbox.b .cl b{color:#fff;}
+  .cbox.b .cl .b{color:#9aa3c4;}
+
+  .bridge{background:var(--tp-navy-slate);border-radius:var(--r-md);padding:20px 26px;margin-top:16px;}
+  .bridge .t{font-size:16px;font-weight:300;color:#fff;line-height:1.5;}
+  .bridge .t b{font-weight:700;}
+  .bridge .t .pk{color:#ff7ab8;font-weight:700;}
+
+  table{width:100%;border-collapse:collapse;background:var(--neutral-0);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;}
+  th{background:var(--bg-muted);font-size:10px;font-weight:var(--fw-bold);letter-spacing:.09em;text-transform:uppercase;color:var(--tp-slate-blue);text-align:left;padding:11px 16px;border-bottom:1px solid var(--border);}
+  td{font-size:13px;color:var(--fg-muted);padding:12px 16px;border-bottom:1px solid var(--divider);line-height:1.45;vertical-align:top;}
+  tr:last-child td{border-bottom:0;}
+  td b{color:var(--fg);font-weight:600;}
+  td.q{color:var(--fg);font-weight:600;width:30%;}
+
+  .co{display:flex;gap:14px;border-radius:var(--r-md);padding:17px 22px;border:1px solid;}
+  .co.warn{background:var(--warning-bg);border-color:#efe0c6;}
+  .co.info{background:var(--info-bg);border-color:#cfe4fa;}
+  .co .ic{font-size:15px;font-weight:700;line-height:1.3;flex:none;}
+  .co.warn .ic{color:var(--warning);}
+  .co.info .ic{color:var(--info);}
+  .co .tx{font-size:13.5px;line-height:1.55;color:var(--fg);}
+  .co .tx .hd{display:block;font-weight:700;margin-bottom:4px;font-size:14px;}
+  .co+.co{margin-top:12px;}
+
+  .path{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .pc{background:var(--neutral-0);border:1px solid var(--border);border-left:3px solid var(--tp-navy-slate);border-radius:var(--r-sm);padding:16px 20px;}
+  .pc .k{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--tp-slate-blue);}
+  .pc .h{font-size:14px;font-weight:600;color:var(--fg);margin-top:5px;}
+  .pc .v{font-size:12.5px;color:var(--fg-muted);line-height:1.5;margin-top:5px;}
+  .pc .v code{font-family:var(--font-mono);font-size:11.5px;background:var(--neutral-75);padding:1px 5px;border-radius:3px;color:var(--tp-navy-slate);}
+
+  .ex{background:var(--neutral-0);border:1px solid var(--border);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-1);}
+  .ex .exh{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tp-slate-blue);margin-bottom:10px;}
+  .ex .exl{font-size:13.5px;color:var(--fg-muted);line-height:1.6;}
+  .ex .exl b{color:var(--fg);font-weight:600;}
+  .ex .exl .tag{display:inline-block;font-size:11px;background:#e7eaf3;color:var(--tp-navy-slate);padding:2px 8px;border-radius:var(--r-pill);font-weight:600;}
+
+  /* featured handoff */
+  .hoff{background:var(--neutral-0);border:1px solid var(--border-strong);border-radius:var(--r-md);
+        overflow:hidden;box-shadow:var(--shadow-2);}
+  .hoff-top{background:var(--tp-navy-slate);padding:20px 26px;display:flex;align-items:center;gap:14px;}
+  .hoff-top .hn{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+        color:#ff7ab8;}
+  .hoff-top .ht{font-size:19px;font-weight:700;color:#fff;margin-top:3px;letter-spacing:-.01em;}
+  .hoff-top .hs{font-size:12.5px;color:#c3c7da;margin-top:4px;line-height:1.45;}
+  .hoff-body{padding:4px 0 0;}
+  .hrow{display:grid;grid-template-columns:150px 1fr;gap:0;border-bottom:1px solid var(--divider);}
+  .hrow:last-child{border-bottom:0;}
+  .hrow .hcat{padding:16px 16px 16px 26px;font-size:12px;font-weight:700;color:var(--tp-navy-slate);
+        line-height:1.35;border-right:1px solid var(--divider);background:var(--bg-muted);}
+  .hrow .hcat span{display:block;font-size:10px;font-weight:600;color:var(--tp-slate);
+        text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
+  .hcell{padding:15px 26px;}
+  .hline{font-size:13px;color:var(--fg-muted);line-height:1.6;}
+  .hline+.hline{margin-top:5px;}
+  .hline .lbl{display:inline-block;width:62px;font-size:10px;font-weight:700;letter-spacing:.07em;
+        text-transform:uppercase;color:var(--tp-slate);vertical-align:top;}
+  .hline b{color:var(--fg);font-weight:600;}
+  .hline .url{font-family:var(--font-mono);font-size:11.5px;background:var(--neutral-75);
+        padding:1px 6px;border-radius:3px;color:var(--tp-navy-slate);}
+  .stg{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;background:#e7eaf3;
+        color:var(--tp-navy-slate);padding:2px 8px;border-radius:var(--r-pill);}
+  .hoff-foot{background:var(--bg-muted);padding:16px 26px;border-top:1px solid var(--border);
+        font-size:13px;color:var(--fg-muted);line-height:1.55;}
+  .hoff-foot b{color:var(--fg);font-weight:600;}
+  @media (max-width:880px){ .hrow{grid-template-columns:1fr;} .hrow .hcat{border-right:0;
+        border-bottom:1px solid var(--divider);} }
+
+  .foot{margin-top:50px;padding-top:20px;border-top:1px solid var(--border);font-size:11.5px;color:var(--fg-subtle);line-height:1.6;}
+
+  @media (max-width:880px){
+    .cmp,.path{grid-template-columns:1fr;}
+    .rung{grid-template-columns:36px 1fr;}
+    .rung .ds{grid-column:2;padding-top:0;}
+    .hero h1{font-size:30px;}
+  }
+  @media print{body{background:#fff;}.hdr{position:static;}.sec{page-break-inside:avoid;}}
+
+  /* FAQ */
+  .blurb{background:var(--tp-navy-slate);border-radius:var(--r-md);padding:24px 30px;box-shadow:var(--shadow-2);}
+  .blurb .bl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ff7ab8;}
+  .blurb .bt{font-size:17px;font-weight:300;color:#fff;line-height:1.6;margin-top:10px;}
+  .blurb .bt b{font-weight:700;}
+  .faq{background:var(--neutral-0);border:1px solid var(--border);border-radius:var(--r-md);
+       overflow:hidden;box-shadow:var(--shadow-1);margin-top:16px;}
+  .fq{border-bottom:1px solid var(--divider);padding:17px 24px;}
+  .fq:last-child{border-bottom:0;}
+  .fq .q{font-size:14px;font-weight:600;color:var(--tp-navy-slate);line-height:1.45;}
+  .fq .a{font-size:13.5px;color:var(--fg-muted);line-height:1.6;margin-top:7px;}
+  .fq .a b{color:var(--fg);font-weight:600;}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Team Guide</div>
+    <h1>US Journey stages — how they work<br>and what to do with them</h1>
+    <p class="lead">Every account in the US Workspace sits in exactly one journey stage. This is what
+    each stage means, how an account moves, and how it relates to what you build in campaigns.</p>
+  </div>
+
+  <div class="co info" style="margin-top:18px;">
+    <div class="ic">i</div>
+    <div class="tx"><b>Journey membership updates after a nightly evaluation</b>, so changes to stage
+    definitions show up the next day &mdash; which is why we make them over a weekend. Selector preview
+    counts can also differ from final stage counts, because an account may qualify for a later stage.</div>
+  </div>
+
+  <!-- 1. THE LADDER -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">01</span><h2>The eight stages, in order</h2>
+      <span class="sub">an account sits in exactly one</span></div>
+    <div class="ladder">
+      <div class="rung"><div class="ord">1</div><div class="nm">All Other</div>
+        <div class="ds">Doesn't match any other stage. The default, unqualified bucket.</div></div>
+      <div class="rung"><div class="ord">2</div><div class="nm">Target Account</div>
+        <div class="ds">On a 2026 US Market target tier (T1-A or Tier 1–5). In our universe, nothing more.</div></div>
+      <div class="rung"><div class="ord">3</div><div class="nm">Aware</div>
+        <div class="ds">Showing Demandbase keyword intent (High, Medium or Low) with activity in the
+        last 90 days, on a US Market target tier. <b>Research signal — not engagement with us.</b></div></div>
+      <div class="rung key"><div class="ord">4</div><div class="nm">Engaged <span class="pill act">Key</span></div>
+        <div class="ds">On a US Market target tier with <b>≥20 cumulative engagement points</b> in the past
+        3 months, excluding Demandbase Keyword Intent, Geo Keyword Intent and Trending Intent.
+        No known-person minimum.</div></div>
+      <div class="rung key"><div class="ord">5</div><div class="nm">MQA <span class="pill act">Key</span></div>
+        <div class="ds">Same tier requirement, <b>≥40 cumulative engagement points</b> in the past 3 months
+        <b>and ≥1 Engaged Known Person</b>. Same three intent exclusions.
+        <b>Intent alone does not qualify an account.</b></div></div>
+      <div class="rung off"><div class="ord">6</div><div class="nm">SQA <span class="pill ret">Retired</span></div>
+        <div class="ds">Not in use. Retired intentionally — no accounts route here.</div></div>
+      <div class="rung"><div class="ord">7</div><div class="nm">Opportunity</div>
+        <div class="ds">Has an open, active opportunity in the pipeline — a live deal the team is working.</div></div>
+      <div class="rung"><div class="ord">8</div><div class="nm">Customer</div>
+        <div class="ds">An account we've won. Active customer.</div></div>
+    </div>
+  </div>
+
+  <!-- 2. PRECEDENCE -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">02</span><h2>One account, one stage — the highest it qualifies for</h2></div>
+    <div class="co warn">
+      <div class="ic">!</div>
+      <div class="tx"><span class="hd">This is the thing people get wrong</span>
+      An account does not appear in two stages. It lands in the <b>highest</b> stage it qualifies for.
+      So a <b>Customer</b> that is engaging heavily shows as Customer — <b>not</b> MQA, even though it
+      clears every MQA condition. Same for an account with an open Opportunity.<br><br>
+      If you are looking for an account in MQA and can't find it, <b>check whether it's already further
+      up the ladder.</b> That is almost always the answer.</div>
+    </div>
+  </div>
+
+  <!-- 3. TWO SYSTEMS -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">03</span><h2>Campaigns and the journey are two different systems</h2>
+      <span class="sub">this is the most common confusion</span></div>
+    <div class="cmp">
+      <div class="cbox a">
+        <div class="ch"><div class="t">What you set in a campaign</div>
+          <div class="s">Decides who sees your ads</div></div>
+        <div class="cb">
+          <div class="cl"><span class="b">→</span><div><b>Intent keywords</b> — required field. Aims
+          delivery at accounts researching those topics.</div></div>
+          <div class="cl"><span class="b">→</span><div><b>Contacts you already know</b> — tells Demandbase
+          to bid harder on named people.</div></div>
+          <div class="cl"><span class="b">→</span><div><b>Account lists, buying groups, job levels</b> —
+          all targeting inputs.</div></div>
+        </div>
+      </div>
+      <div class="cbox b">
+        <div class="ch"><div class="t">What the journey reads</div>
+          <div class="s">Decides who qualifies</div></div>
+        <div class="cb">
+          <div class="cl"><span class="b">&rarr;</span><div><b>Engagement points</b>
+          from recorded activity &mdash; visits, clicks, opens, form fills, event attendance.</div></div>
+          <div class="cl"><span class="b">&rarr;</span><div><b>Intent is excluded</b>
+          from the point math on both Engaged and MQA. All three types.</div></div>
+          <div class="cl"><span class="b">&rarr;</span><div><b>Engaged Known People</b>
+          &mdash; people with point-bearing activity in the last 90 days.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="bridge">
+      <div class="t">Your campaign <b>can</b> move an account up the journey —<br>
+      just not through intent. <span class="pk">Through the recorded behavior it drives.</span></div>
+    </div>
+    <div style="margin-top:14px;" class="co info">
+      <div class="ic">i</div>
+      <div class="tx">Adding someone to <b>"Contacts you already know"</b> does not make them an Engaged
+      Known Person. That field is a bidding instruction. The person becomes "engaged" only when they
+      <b>do</b> something that carries engagement points.</div>
+    </div>
+  </div>
+
+  <!-- 4. WHAT AN SDR GETS -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">04</span><h2>What you can hand to Sales</h2>
+      <span class="sub">account-level vs person-level</span></div>
+    <div class="path" style="margin-bottom:16px;">
+      <div class="pc">
+        <div class="k">Account level — available</div>
+        <div class="h">Intent keywords</div>
+        <div class="v">What the company is researching. Visible on the account, in the ABX dashboard,
+        and in list exports as <b>High Intent Keywords</b> and <b>Competitive Intent Keywords</b>.</div>
+      </div>
+      <div class="pc" style="border-left-color:var(--tp-pink)">
+        <div class="k">Person level — not available</div>
+        <div class="h">Who did the researching</div>
+        <div class="v">Intent is an account-level signal. It cannot tell you <i>which person</i>
+        researched a topic. Don't promise Sales that it can.</div>
+      </div>
+    </div>
+    <div class="hoff">
+      <div class="hoff-top">
+        <div>
+          <div class="hn">The deliverable</div>
+          <div class="ht">What a good handoff looks like</div>
+          <div class="hs">Account line = what the company cares about. Person line = who to call and what they did.<br>
+          One without the other is half a talk track.</div>
+        </div>
+      </div>
+      <div class="hoff-body">
+
+        <div class="hrow">
+          <div class="hcat">Technology<span>Consulting</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>Deloitte LLP</b> &nbsp;<span class="stg">MQA</span>
+              &nbsp;Researching <b>Workforce Optimization</b>, <b>Claims Adjudication</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>Jane Smith, VP Operations</b> &mdash; visited
+              <span class="url">/services/consulting/technology-services/</span> twice last week, opened the Cyber email</div>
+          </div>
+        </div>
+
+        <div class="hrow">
+          <div class="hcat">Trust &amp; Safety<span>CX Services</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>Github</b> &nbsp;<span class="stg">MQA</span>
+              &nbsp;Researching <b>Business Process Outsourcing</b>, <b>Workforce Optimization</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>Marcus Reed, Director of Platform Integrity</b> &mdash; visited
+              <span class="url">/services/cx-services/trust-and-safety/</span>, downloaded the content-moderation white paper</div>
+          </div>
+        </div>
+
+        <div class="hrow">
+          <div class="hcat">Revenue-as-a-Service<span>CX Services</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>United Rentals, Inc.</b> &nbsp;<span class="stg">Engaged</span>
+              &nbsp;Researching <b>Omnichannel Customer Experience</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>Alicia Nunez, VP Inside Sales</b> &mdash; visited
+              <span class="url">/services/cx-services/revenue-as-a-service/</span>, attended the RaaS webinar</div>
+          </div>
+        </div>
+
+        <div class="hrow">
+          <div class="hcat">Collections<span>BFS Vertical</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>Cboe Global Markets Inc</b> &nbsp;<span class="stg">MQA</span>
+              &nbsp;Researching <b>Contact Center As A Service</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>David Hollis, Head of Credit Operations</b> &mdash; came in through
+              <b>Banking &amp; Financial Services</b> &mdash; <span class="url">/industries/banking-and-financial-services/</span>,
+              then <span class="url">/services/cx-services/collection-services/</span></div>
+          </div>
+        </div>
+
+        <div class="hrow">
+          <div class="hcat">Healthcare<span>Vertical + Service</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>United Parcel Service of America Inc</b> &nbsp;<span class="stg">MQA</span>
+              &nbsp;Researching <b>Population Health Management</b>, <b>Omnichannel Customer Experience</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>Renee Carver, Director of Benefits Operations</b> &mdash; browsing the
+              <b>Healthcare vertical</b> &mdash; <span class="url">/industries/healthcare/</span> then
+              <span class="url">/services/specialized/healthcare-support/</span></div>
+          </div>
+        </div>
+
+        <div class="hrow">
+          <div class="hcat">Customer Service<span>CX Services</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>IBM Corporation</b> &nbsp;<span class="stg">MQA</span>
+              &nbsp;Researching <b>Contact Center As A Service</b>, <b>Workforce Optimization</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>Tom Girard, Global CX Lead</b> &mdash; visited
+              <span class="url">/services/cx-services/customer-service/</span>, filled out the contact form</div>
+          </div>
+        </div>
+
+        <div class="hrow">
+          <div class="hcat">Retail &amp; E-Commerce<span>Vertical</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>Strada</b> &nbsp;<span class="stg">Engaged</span>
+              &nbsp;Researching <b>Business Process Outsourcing</b>, <b>E-Commerce Platforms</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>Priya Raman, Shared Services Manager</b> &mdash; sitting on the
+              <b>Retail vertical page</b> &mdash; <span class="url">/industries/retail-and-e-commerce/</span>, three visits in ten days</div>
+          </div>
+        </div>
+
+        <div class="hrow">
+          <div class="hcat">Insurance<span>Vertical</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>Oracle Corporation</b> &nbsp;<span class="stg">Engaged</span>
+              &nbsp;Researching <b>Contact Center As A Service</b>, <b>Workforce Optimization</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>Lena Ortiz, Claims Transformation Lead</b> &mdash; only
+              activity is the <b>Insurance vertical page</b> &mdash; <span class="url">/industries/insurance/</span>,
+              four visits, no service page yet</div>
+          </div>
+        </div>
+
+        <div class="hrow">
+          <div class="hcat">AI Solutions<span>TP.ai</span></div>
+          <div class="hcell">
+            <div class="hline"><span class="lbl">Account</span> <b>Amazon Web Services</b> &nbsp;<span class="stg">MQA</span>
+              &nbsp;Researching <b>Contact Center As A Service</b>, <b>Workforce Optimization</b></div>
+            <div class="hline"><span class="lbl">Person</span> <b>Kevin Osei, Director of Support Automation</b> &mdash; visited
+              <span class="url">/services/ai-solutions/tpai-assist/</span>, clicked through from a LinkedIn ad</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="hoff-foot">
+        <b>Read it as two layers.</b> The intent keywords are account-level &mdash; they tell you what the
+        company is researching, not which person did it. The page visits, opens and form fills are
+        person-level &mdash; that is the named human, and that is what the rep opens with.
+        <b>People illustrative; accounts and intent keywords are live examples.</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. WHERE TO SEE IT -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">05</span><h2>Where to look</h2></div>
+    <div class="path">
+      <div class="pc">
+        <div class="k">The dashboard</div>
+        <div class="h">US Marketing ABX Dashboard</div>
+        <div class="v">Use the <code>Journey Stage [US Journey]</code> filter in the header. Combine with
+        Industry Category and US Revenue Tier to slice it.</div>
+      </div>
+      <div class="pc">
+        <div class="k">The account list</div>
+        <div class="h">Journey Builder → stage → Accounts</div>
+        <div class="v"><code>Account Journey Builder → US Journey → [stage] → Accounts</code>.
+        This is the actual membership, exportable.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. THREE NUMBERS -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">06</span><h2>Three places show a count. They mean different things.</h2>
+      <span class="sub">don't reconcile them</span></div>
+    <table>
+      <thead><tr><th>Where you see it</th><th>What it actually counts</th></tr></thead>
+      <tbody>
+        <tr><td class="q">Selector badge<br><span style="font-weight:400;font-size:12px;color:var(--fg-subtle)">Journey Builder, next to Queue</span></td>
+          <td>Accounts that meet <b>this stage's rules</b> — before precedence is applied. The
+          "how many qualify" number. Recalculated daily.</td></tr>
+        <tr><td class="q">Dashboard stage tile<br><span style="font-weight:400;font-size:12px;color:var(--fg-subtle)">ABX Dashboard headline</span></td>
+          <td>Accounts that <b>entered</b> the stage during the selected date range. A <b>flow</b>
+          metric, not a headcount. Forward transitions only, counted once.</td></tr>
+        <tr><td class="q">Salesforce<br><span style="font-weight:400;font-size:12px;color:var(--fg-subtle)">Demandbase Journey Stage field</span></td>
+          <td>A trailing mirror, up to ~24h behind — and it is fed by the <b>Global</b> journey,
+          not the US Journey. <b>Do not use it for US reporting.</b></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;" class="co warn">
+      <div class="ic">!</div>
+      <div class="tx">A stage count and an "entered this quarter" count will never match, and that's
+      correct — they answer different questions. If you need "how many accounts are in this stage
+      right now," use the <b>Accounts tab</b>.</div>
+    </div>
+  </div>
+
+  <!-- 7. WHAT CHANGED -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">07</span><h2>What changed in October 2026</h2></div>
+    <table>
+      <thead><tr><th>Stage</th><th>What was wrong</th><th>What it does now</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="q" style="width:14%">Engaged</td>
+          <td style="width:43%">Tested whether any <b>single</b> activity was worth 20+ points, so
+          accounts with lots of small touches never qualified. Intent was not excluded at all, and the
+          tier grouping was broken.</td>
+          <td>Sums engagement points across the past 3 months, excludes all three intent types, and
+          applies one clean US tier group.</td>
+        </tr>
+        <tr>
+          <td class="q">MQA</td>
+          <td>Carried a <b>high/medium intent shortcut</b>, and engagement points were counted
+          per-activity rather than summed.</td>
+          <td>Requires ≥40 summed points <b>and</b> a named engaged person. Intent no longer qualifies
+          anything on its own.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;" class="co info">
+      <div class="ic">i</div>
+      <div class="tx"><span class="hd">If you see MQA "down" sharply, read it carefully</span>
+      The dashboard recomputes history against the <b>current</b> definition. Accounts that entered MQA
+      under the old intent shortcut are no longer counted as having entered. <b>It is a definitional
+      restatement, not a drop in demand.</b> Which specific accounts changed stages is still being
+      verified.</div>
+    </div>
+  </div>
+
+
+  <!-- 08. FAQ -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">08</span><h2>FAQ</h2>
+      <span class="sub">what it means, and the questions that follow</span></div>
+
+    <div class="blurb">
+      <div class="bl">What it means</div>
+      <div class="bt">We&rsquo;ve updated the US Journey so <b>Engaged</b> means at least 20 engagement
+      points over three months, and <b>MQA</b> means at least 40 plus one engaged known person.
+      Intent still helps us find and target interested accounts &mdash; it just no longer qualifies
+      them as Engaged or MQA on its own.</div>
+    </div>
+
+
+    <div style="background:var(--bg-muted);border-left:3px solid var(--tp-pink);border-radius:var(--r-sm);
+         padding:16px 22px;margin-top:14px;font-size:15px;color:var(--fg);line-height:1.55;">
+      <b>The line that explains the whole change:</b><br>
+      Researching a topic shows interest in <i>the subject</i>. Engaging with TP shows interest in <i>us</i>.
+    </div>
+
+    <div class="faq">
+      <div class="fq">
+        <div class="q">Does this mean intent is no longer working to push accounts into our ads?</div>
+        <div class="a">No. Intent still targets and optimizes ads &mdash; <b>keep adding relevant intent
+        keywords to campaigns.</b> We only changed how accounts <i>qualify</i> as Engaged or MQA:
+        they now need engagement beyond intent signals.</div>
+      </div>
+      <div class="fq">
+        <div class="q">So do we still need intent keywords on our campaigns?</div>
+        <div class="a"><b>Yes &mdash; it&rsquo;s a required field and it should be.</b> Intent helps
+        optimize delivery alongside your account audience and people-targeting settings. Nothing about
+        that changed.</div>
+      </div>
+      <div class="fq">
+        <div class="q">By adding our intent keywords, are we still targeting those accounts?
+        And why does engagement matter most?</div>
+        <div class="a">Yes &mdash; <b>your account list sets who we target</b>, and intent keywords help
+        Demandbase prioritize relevant people within those accounts. Engagement matters more for
+        earning Engaged or MQA status because <b>researching a topic shows interest in the subject;
+        engaging with TP shows interest in us.</b></div>
+      </div>
+      <div class="fq">
+        <div class="q">Why did the MQA number drop?</div>
+        <div class="a">We removed the intent shortcut and changed how engagement points are counted.
+        MQA now requires <b>&ge;40 cumulative non-intent engagement points plus &ge;1 engaged known
+        person</b>. We&rsquo;re still checking which accounts changed stages.</div>
+      </div>
+      <div class="fq">
+        <div class="q">Can my campaign still move an account into Engaged or MQA?</div>
+        <div class="a">Yes. <b>Recorded campaign interactions can contribute engagement points under
+        our scoring rules.</b> Intent got them targeted; their recorded behavior is what can move them
+        forward &mdash; a single click or visit doesn&rsquo;t guarantee qualification on its own.</div>
+      </div>
+      <div class="fq">
+        <div class="q">I can&rsquo;t find an account in MQA. Where is it?</div>
+        <div class="a">Check whether it&rsquo;s already <b>Opportunity</b> or <b>Customer</b>. An account
+        sits in one stage only &mdash; the highest it qualifies for.</div>
+      </div>
+      <div class="fq">
+        <div class="q">Can I tell Sales which person was researching a topic?</div>
+        <div class="a">No. <b>Intent is account-level</b> &mdash; it tells you the company is researching
+        something, never who. Pair it with the named person&rsquo;s actual behavior (page visits,
+        opens, form fills), which you do have.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    US Journey stages are evaluated nightly in the Demandbase US Workspace. Stage definitions and
+    membership change only through the Account Journey Builder. Questions on stage logic or
+    membership — ABX Strategic Intelligence.<br><br>
+    Teleperformance · ABX Strategic Intelligence · FY26
+  </div>
+
+</div>
+</body>
+</html>

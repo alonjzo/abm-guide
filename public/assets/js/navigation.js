@@ -10,6 +10,7 @@
     const isCompetitiveIntel = currentPath.includes('competitive-intel') || currentPath.includes('command-center');
     const isOrchestration = currentPath.includes('orchestration');
     const isPlatformGuide = currentPath.includes('platform-guide');
+    const isJourneyStages = currentPath.includes('journey-stages');
     const isDemandbaseSales = currentPath.includes('demandbase-sales');
     const isDemandbaseMarketing = currentPath.includes('demandbase-marketing');
     const isPromptBook = currentPath.includes('prompt-book');
@@ -36,7 +37,7 @@
     const isWorkspacesRef = currentPath.includes('workspaces-reference') || currentPath.includes('list-pulls');
     const isReferenceGroup = isAdvancedReporting || isPlanner;
     const isDemandbaseGroup = isPlatformGuide || isOrchestration || isWorkspacesRef || isBuyingGroups
-        || isCampaignMonitoring || isBestPractices || isDemandbaseMarketing || isDemandbaseSales || isGuideGroup;
+        || isCampaignMonitoring || isBestPractices || isDemandbaseMarketing || isDemandbaseSales || isJourneyStages || isGuideGroup;
 
     function getBasePath() {
         if (isGuideGroup) return '../../';
@@ -71,6 +72,7 @@
                         <div class="tp-nav-dropdown">
                             <span class="tp-nav-drop-label">Platform</span>
                             <a href="${bp}platform-guide/index.html" class="tp-nav-drop-link ${(isPlatformGuide || isOrchestration) ? 'active' : ''}">US Workspace</a>
+                            <a href="${bp}journey-stages/index.html" class="tp-nav-drop-link ${isJourneyStages ? 'active' : ''}">Journey Stages</a>
                             <a href="${bp}workspaces-reference/index.html" class="tp-nav-drop-link ${isWorkspacesRef ? 'active' : ''}">Workspaces &amp; List Pulls</a>
                             <a href="${bp}buying-groups/index.html" class="tp-nav-drop-link ${isBuyingGroups ? 'active' : ''}">Buying Groups</a>
                             <span class="tp-nav-drop-label">Campaigns</span>
@@ -300,6 +302,7 @@
         'tp-services':        ['What we sell', 'Every TP service, who buys it, and what it is actually called. <b>Start with the Services Matrix</b> — one grid, every offering.'],
         'best-practices':     ['The plays', 'How to run Demandbase and LinkedIn without repeating mistakes we already paid for. <b>Start Here tab</b> if it is your first time.'],
         'platform-guide':     ['Platform', 'How our Demandbase US Workspace is actually built — universe, tiering, journey stages. <b>The architecture, not the theory.</b>'],
+        'journey-stages':     ['Platform', 'What Engaged and MQA actually mean, and how an account moves. <b>Intent targets, engagement qualifies</b> — the two are different systems.'],
         'orchestration':      ['Platform', 'What Orchestration can do for an ABM manager, scenario by scenario. <b>Read the scenarios, then the manager flow.</b>'],
         'workspaces-reference':['Platform', 'Where lists come from and which workspace owns what. <b>Build in US, push to Global only for advertising.</b>'],
         'buying-groups':      ['Targeting', 'The personas inside an account. <b>This is the targeting layer</b> — align titles here, never to LinkedIn seniority buckets.'],
