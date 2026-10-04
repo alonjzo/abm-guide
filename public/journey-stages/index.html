@@ -162,6 +162,57 @@
   }
   @media print{body{background:#fff;}.hdr{position:static;}.sec{page-break-inside:avoid;}}
 
+  /* url library */
+  .urls{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .ucol{background:var(--neutral-0);border:1px solid var(--border);border-radius:var(--r-md);
+        padding:6px 0 10px;box-shadow:var(--shadow-1);}
+  .uh{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--tp-slate-blue);padding:14px 20px 7px;}
+  .ucol .uh:first-child{padding-top:16px;}
+  .ur{display:grid;grid-template-columns:150px 1fr;gap:10px;padding:5px 20px;align-items:baseline;}
+  .ur.wide{grid-template-columns:150px 1fr;}
+  .ur:hover{background:var(--bg-muted);}
+  .un{font-size:12.5px;color:var(--fg-muted);line-height:1.4;}
+  .u{font-family:var(--font-mono);font-size:11.5px;color:var(--tp-navy-slate);
+     background:var(--neutral-75);padding:2px 7px;border-radius:3px;
+     word-break:break-all;line-height:1.5;display:inline-block;}
+  .udis{font-size:11.5px;color:var(--fg-subtle);line-height:1.5;margin-top:12px;font-style:italic;}
+  .udis b{font-style:normal;color:var(--fg-muted);font-weight:600;}
+  @media (max-width:880px){ .urls{grid-template-columns:1fr;} .ur,.ur.wide{grid-template-columns:1fr;gap:2px;} }
+
+  /* screenshot */
+  .shot{margin:18px 0 0;padding:0;}
+  .shot img{display:block;width:100%;max-width:660px;height:auto;border:1px solid var(--border-strong);
+       border-radius:var(--r-md);box-shadow:var(--shadow-1);background:var(--neutral-0);}
+  .shot figcaption{font-size:12.5px;color:var(--fg-muted);line-height:1.55;margin-top:9px;max-width:660px;}
+  .shot figcaption b{color:var(--fg);font-weight:600;}
+
+  /* funnel */
+  .fnl{background:var(--neutral-0);border:1px solid var(--border-strong);border-radius:var(--r-md);
+       overflow:hidden;box-shadow:var(--shadow-2);}
+  .fnl-head{background:var(--tp-navy-slate);padding:18px 26px;}
+  .fnl-nm{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.01em;}
+  .fnl-mt{font-size:12px;color:#c3c7da;margin-top:4px;}
+  .fnl-body{padding:20px 26px 22px;}
+  .fr{display:grid;grid-template-columns:96px 1fr 104px;align-items:center;gap:14px;margin-bottom:11px;}
+  .fr:last-child{margin-bottom:0;}
+  .fl{font-size:12.5px;font-weight:600;color:var(--fg-muted);}
+  .fr.hot .fl{color:var(--tp-navy-slate);}
+  .fbw{background:var(--neutral-100);border-radius:var(--r-pill);height:14px;overflow:hidden;}
+  .fb{height:100%;background:var(--tp-slate);border-radius:var(--r-pill);min-width:3px;}
+  .fb.pk{background:var(--tp-pink);}
+  .fv{font-size:13.5px;font-weight:700;color:var(--fg);text-align:right;}
+  .fv span{font-size:11.5px;font-weight:500;color:var(--fg-subtle);margin-left:5px;}
+  .fsplit{text-align:center;margin:15px 0 14px;position:relative;}
+  .fsplit:before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;
+       background:repeating-linear-gradient(90deg,var(--border-strong) 0 5px,transparent 5px 10px);}
+  .fsplit span{position:relative;background:var(--neutral-0);padding:0 14px;font-size:11px;
+       font-weight:700;letter-spacing:.04em;color:var(--tp-pink);text-transform:uppercase;}
+  .fnl-foot{background:var(--bg-muted);border-top:1px solid var(--border);padding:16px 26px;
+       font-size:13.5px;color:var(--fg-muted);line-height:1.6;}
+  .fnl-foot b{color:var(--fg);font-weight:600;}
+  @media (max-width:880px){ .fr{grid-template-columns:76px 1fr 84px;gap:9px;} }
+
   /* FAQ */
   .blurb{background:var(--tp-navy-slate);border-radius:var(--r-md);padding:24px 30px;box-shadow:var(--shadow-2);}
   .blurb .bl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ff7ab8;}
@@ -411,9 +462,158 @@
     </div>
   </div>
 
+  <!-- 4b. THE FUNNEL -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">05</span><h2>Where the ad stops and the journey starts</h2>
+      <span class="sub">a real flight, real numbers</span></div>
+
+    <div class="fnl">
+      <div class="fnl-head">
+        <div>
+          <div class="fnl-nm">2026.8 [US] TP Cyber Defense 2.1 (TaaS)</div>
+          <div class="fnl-mt">Oct 2 &ndash; Nov 30 2026 &middot; $174.98 spend &middot; 11,357 impressions</div>
+        </div>
+      </div>
+
+      <div class="fnl-body">
+        <div class="fr"><div class="fl">Targeted</div><div class="fbw"><div class="fb" style="width:100%"></div></div>
+          <div class="fv">425 <span>100%</span></div></div>
+        <div class="fr"><div class="fl">Reached</div><div class="fbw"><div class="fb" style="width:93%"></div></div>
+          <div class="fv">399 <span>93%</span></div></div>
+
+        <div class="fsplit"><span>&darr; the ad&rsquo;s job ends here &mdash; the journey&rsquo;s begins &darr;</span></div>
+
+        <div class="fr hot"><div class="fl">Visited</div><div class="fbw"><div class="fb pk" style="width:8.7%"></div></div>
+          <div class="fv">37 <span>8%</span></div></div>
+        <div class="fr hot"><div class="fl">Clicked</div><div class="fbw"><div class="fb pk" style="width:1.9%"></div></div>
+          <div class="fv">8 <span>1%</span></div></div>
+        <div class="fr hot"><div class="fl">Interacted</div><div class="fbw"><div class="fb pk" style="width:1.2%"></div></div>
+          <div class="fv">5 <span>1%</span></div></div>
+      </div>
+
+      <div class="fnl-foot">
+        <b>399 accounts saw the ad. 37 came to the site.</b> Only those 37 did anything that can earn
+        engagement points &mdash; the other 362 are reach, not qualification. This is
+        &ldquo;intent targets, engagement qualifies&rdquo; as an actual funnel.
+        <br><br>
+        <span style="color:var(--fg-subtle)">Note: this campaign&rsquo;s <b>Journey</b> field reads
+        &ldquo;&mdash;&rdquo;, so it isn&rsquo;t using journey-stage targeting. Nothing on this flight
+        changes when the stage definitions re-evaluate.</span>
+      </div>
+    </div>
+
+    <div class="sec-h" style="margin-top:30px;"><span class="n">&nbsp;</span><h2 style="font-size:17px;">So where do I see the pages they visited?</h2></div>
+    <table>
+      <thead><tr><th>The question</th><th>Where to go</th></tr></thead>
+      <tbody>
+        <tr><td class="q">Where does our ad send people?</td>
+          <td>Campaign &rarr; <b>Creatives</b> &rarr; Landing Page URL. <b>Keep the UTMs intact</b> so
+          campaign traffic stays distinguishable.</td></tr>
+        <tr><td class="q">Which TP pages did accounts actually visit?</td>
+          <td><b>Analytics &rarr; Site Analytics &rarr; Pages</b>. Lists the URLs viewed, and exports.</td></tr>
+        <tr><td class="q">Show campaign reporting for just these pages</td>
+          <td>Campaign &rarr; <b>More &rarr; Inclusion/Exclusion</b>. Turn on Inclusion Pages, pick an
+          operator like Contains, enter the path. Use Exclusion to drop careers pages out of the view.</td></tr>
+      </tbody>
+    </table>
+    <figure class="shot">
+      <img src="assets/inclusion-exclusion-modal.png"
+           alt="Demandbase Inclusion/Exclusion dialog on a campaign's Performance tab, showing Inclusion Pages and Exclusion Pages toggles with page selectors">
+      <figcaption><b>Campaign &rarr; More &rarr; Inclusion/Exclusion.</b> Turn on <b>Inclusion Pages</b>
+      and enter a path to see reporting for only those pages. Use <b>Exclusion Pages</b> to drop
+      careers or other irrelevant pages out of the view.</figcaption>
+    </figure>
+
+    <div style="margin-top:12px;" class="co warn">
+      <div class="ic">!</div>
+      <div class="tx">Two different numbers: the <b>Visited</b> row above is campaign-attributed.
+      <b>Site Analytics</b> shows any visit from accounts on the list &mdash; whether your ad caused it
+      or not. Don&rsquo;t quote one as the other.</div>
+    </div>
+  </div>
+
+  <!-- 5b. URL LIBRARY -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">06</span><h2>tp.com URL library</h2>
+      <span class="sub">grab and go &mdash; for Inclusion filters and landing pages</span></div>
+
+    <div class="co info" style="margin-bottom:16px;">
+      <div class="ic">i</div>
+      <div class="tx"><b>You don&rsquo;t need every page.</b> Start with your campaign&rsquo;s landing-page
+      URL, then add the service or vertical pages you want to measure. A <b>Contains</b> filter on a
+      shared path covers everything beneath it &mdash; <span class="u">/services/cx-services/</span>
+      catches all five CX service pages in one entry. <b>This only filters the reporting view</b> &mdash;
+      it does not change ad delivery or journey qualification.</div>
+    </div>
+
+    <div class="urls">
+      <div class="ucol">
+        <div class="uh">Services &mdash; AI Solutions</div>
+        <div class="ur"><span class="un">TP.ai Connect</span><span class="u">/services/ai-solutions/tpai-connect/</span></div>
+        <div class="ur"><span class="un">TP.ai Assist</span><span class="u">/services/ai-solutions/tpai-assist/</span></div>
+        <div class="ur"><span class="un">TP.ai Growth</span><span class="u">/services/ai-solutions/tpai-growth/</span></div>
+        <div class="ur"><span class="un">TP.ai Collect</span><span class="u">/services/ai-solutions/tpai-collect/</span></div>
+        <div class="ur"><span class="un">TP.ai Dataservices</span><span class="u">/services/ai-solutions/dataservices/</span></div>
+
+        <div class="uh">Services &mdash; End-to-End CX</div>
+        <div class="ur"><span class="un">Customer service</span><span class="u">/services/cx-services/customer-service/</span></div>
+        <div class="ur"><span class="un">Revenue-as-a-service</span><span class="u">/services/cx-services/revenue-as-a-service/</span></div>
+        <div class="ur"><span class="un">Trust and safety</span><span class="u">/services/cx-services/trust-and-safety/</span></div>
+        <div class="ur"><span class="un">Collection services</span><span class="u">/services/cx-services/collection-services/</span></div>
+        <div class="ur"><span class="un">Back-office support</span><span class="u">/services/cx-services/back-office-support/</span></div>
+
+        <div class="uh">Services &mdash; Consulting</div>
+        <div class="ur"><span class="un">Advanced analytics</span><span class="u">/services/consulting/advanced-analytics/</span></div>
+        <div class="ur"><span class="un">Business transformation</span><span class="u">/services/consulting/business-transformation/</span></div>
+        <div class="ur"><span class="un">Technology services</span><span class="u">/services/consulting/technology-services/</span></div>
+
+        <div class="uh">Services &mdash; Specialized</div>
+        <div class="ur"><span class="un">Healthcare support</span><span class="u">/services/specialized/healthcare-support/</span></div>
+        <div class="ur"><span class="un">Interpretation</span><span class="u">/services/specialized/interpretation-and-translation/</span></div>
+        <div class="ur"><span class="un">RPO</span><span class="u">/services/specialized/recruitment-process-outsourcing/</span></div>
+        <div class="ur"><span class="un">Visa and consular</span><span class="u">/services/specialized/visa-and-consular-services/</span></div>
+
+        <div class="uh">Delivery models</div>
+        <div class="ur"><span class="un">Multilingual hubs</span><span class="u">/services/cx-services/multilingual-hubs/</span></div>
+        <div class="ur"><span class="un">Smartshoring</span><span class="u">/services/cx-services/smartshoring/</span></div>
+        <div class="ur"><span class="un">Work-from-home</span><span class="u">/services/cx-services/work-from-home-solution/</span></div>
+      </div>
+
+      <div class="ucol">
+        <div class="uh">Industries &mdash; verticals</div>
+        <div class="ur"><span class="un">Automotive</span><span class="u">/industries/automotive/</span></div>
+        <div class="ur"><span class="un">Banking &amp; financial services</span><span class="u">/industries/banking-and-financial-services/</span></div>
+        <div class="ur"><span class="un">Communications</span><span class="u">/industries/communications/</span></div>
+        <div class="ur"><span class="un">Energy and utilities</span><span class="u">/industries/energy-and-utilities/</span></div>
+        <div class="ur"><span class="un">Gaming</span><span class="u">/industries/gaming/</span></div>
+        <div class="ur"><span class="un">Government</span><span class="u">/industries/government/</span></div>
+        <div class="ur"><span class="un">Healthcare</span><span class="u">/industries/healthcare/</span></div>
+        <div class="ur"><span class="un">Insurance</span><span class="u">/industries/insurance/</span></div>
+        <div class="ur"><span class="un">Media</span><span class="u">/industries/media/</span></div>
+        <div class="ur"><span class="un">Retail and e-commerce</span><span class="u">/industries/retail-and-e-commerce/</span></div>
+        <div class="ur"><span class="un">Technology</span><span class="u">/industries/technology/</span></div>
+        <div class="ur"><span class="un">Travel, hospitality, cargo</span><span class="u">/industries/travel-hospitality-and-cargo/</span></div>
+
+        <div class="uh">Catch-all paths &mdash; use with Contains</div>
+        <div class="ur wide"><span class="un">All AI Solutions</span><span class="u">/services/ai-solutions/</span></div>
+        <div class="ur wide"><span class="un">All CX Services</span><span class="u">/services/cx-services/</span></div>
+        <div class="ur wide"><span class="un">All Consulting</span><span class="u">/services/consulting/</span></div>
+        <div class="ur wide"><span class="un">All Specialized</span><span class="u">/services/specialized/</span></div>
+        <div class="ur wide"><span class="un">Any service page</span><span class="u">/services/</span></div>
+        <div class="ur wide"><span class="un">Any vertical page</span><span class="u">/industries/</span></div>
+
+        <div class="uh">Worth excluding</div>
+        <div class="ur wide"><span class="un">Careers</span><span class="u">/careers/</span></div>
+        <div class="ur wide"><span class="un">Investors</span><span class="u">/careers/job-opportunities/</span></div>
+      </div>
+    </div>
+    <div class="udis">Paths shown without the <span class="u">tp.com/en-us</span> prefix. Add the full URL
+    if your filter needs it, or use <b>Contains</b> on the path alone.</div>
+  </div>
+
   <!-- 5. WHERE TO SEE IT -->
   <div class="sec">
-    <div class="sec-h"><span class="n">05</span><h2>Where to look</h2></div>
+    <div class="sec-h"><span class="n">07</span><h2>Where to look</h2></div>
     <div class="path">
       <div class="pc">
         <div class="k">The dashboard</div>
@@ -432,7 +632,7 @@
 
   <!-- 6. THREE NUMBERS -->
   <div class="sec">
-    <div class="sec-h"><span class="n">06</span><h2>Three places show a count. They mean different things.</h2>
+    <div class="sec-h"><span class="n">08</span><h2>Three places show a count. They mean different things.</h2>
       <span class="sub">don't reconcile them</span></div>
     <table>
       <thead><tr><th>Where you see it</th><th>What it actually counts</th></tr></thead>
@@ -458,7 +658,7 @@
 
   <!-- 7. WHAT CHANGED -->
   <div class="sec">
-    <div class="sec-h"><span class="n">07</span><h2>What changed in October 2026</h2></div>
+    <div class="sec-h"><span class="n">09</span><h2>What changed in October 2026</h2></div>
     <table>
       <thead><tr><th>Stage</th><th>What was wrong</th><th>What it does now</th></tr></thead>
       <tbody>
@@ -492,10 +692,16 @@
 
   <!-- 08. FAQ -->
   <div class="sec">
-    <div class="sec-h"><span class="n">08</span><h2>FAQ</h2>
+    <div class="sec-h"><span class="n">10</span><h2>FAQ</h2>
       <span class="sub">what it means, and the questions that follow</span></div>
 
     <div class="blurb">
+      <div class="bl">Why this matters</div>
+      <div class="bt" style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.18);">
+      Someone googling <b>&ldquo;Call Center Hybrid AI&rdquo;</b> (intent) isn&rsquo;t the same as someone
+      looking at our <b>tp.com services and vertical pages</b>. Engaged and MQA now solve for this by
+      using <b>engagement points as the gate</b>. In advertising, adding intent keywords keeps this
+      laser-focused on your ads and accounts &mdash; <b>that&rsquo;s how we&rsquo;re optimizing.</b></div>
       <div class="bl">What it means</div>
       <div class="bt">We&rsquo;ve updated the US Journey so <b>Engaged</b> means at least 20 engagement
       points over three months, and <b>MQA</b> means at least 40 plus one engaged known person.
