@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campaign Hierarchy | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+:root{--navy:#4a4c6a;--slate:#848dac;--pink:#ed1e81;--teal:#00a99d;--ink:#1f2030;--muted:#676767;--line:#e6e6e5;--soft:#f5f4f1;--white:#fff}
+body{margin:0;background:var(--white);color:var(--ink);font:16px/1.6 "Noto Sans",system-ui,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:32px 16px 72px}
+h1{font-size:34px;line-height:1.2;color:var(--navy);margin:8px 0 6px;font-weight:800}
+.lead{font-size:19px;color:var(--ink);margin:0 0 28px;max-width:760px}
+h2{font-size:22px;color:var(--navy);margin:40px 0 12px;font-weight:800}
+.kicker{font-size:13px;font-weight:700;color:var(--pink);letter-spacing:.04em}
+/* diagram */
+.tree{display:flex;flex-direction:column;align-items:center;gap:0;margin:8px 0 8px}
+.node{border-radius:16px;padding:16px 22px;text-align:center;width:min(560px,100%);box-sizing:border-box}
+.node b{display:block;font-size:20px}
+.node span{font-size:14.5px}
+.top{background:var(--navy);color:#fff}
+.mid{background:var(--white);border:3px solid var(--pink);color:var(--ink)}
+.mid b{color:var(--pink)}
+.kids{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:min(760px,100%)}
+.kid{background:var(--soft);border:2px solid var(--slate);border-radius:14px;padding:12px 8px;text-align:center;font-weight:700;color:var(--navy);font-size:15px}
+.arrow{width:3px;height:28px;background:var(--slate);position:relative}
+.arrow:after{content:"";position:absolute;left:-6px;bottom:-2px;border:7.5px solid transparent;border-top:9px solid var(--slate)}
+.label{font-size:12.5px;color:var(--muted);margin:6px 0 2px;text-align:center}
+/* example */
+pre.ex{background:var(--soft);border-radius:14px;padding:16px 18px;font-size:14px;line-height:1.75;overflow:auto;border-left:5px solid var(--teal);margin:0}
+pre.ex .s{color:var(--navy);font-weight:700}.ex .p{color:var(--pink);font-weight:700}.ex .n{color:var(--muted)}
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{border:2px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff}
+.card h3{margin:0 0 6px;font-size:17px;color:var(--navy)}
+.card p{margin:0;font-size:15.5px}
+.card.pk{border-color:var(--pink)}.card.tl{border-color:var(--teal)}.card.sl{border-color:var(--slate)}.card.nv{border-color:var(--navy)}
+ol.rules{padding-left:0;list-style:none;counter-reset:r;margin:0}
+ol.rules li{counter-increment:r;display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid var(--line);padding:14px 0;font-size:16.5px}
+ol.rules li:before{content:counter(r);flex:0 0 36px;height:36px;border-radius:50%;background:var(--pink);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.name{background:var(--navy);color:#fff;border-radius:14px;padding:16px 18px;font-size:17px;font-weight:700}
+.name small{display:block;font-weight:400;font-size:14px;opacity:.85;margin-top:4px}
+.foot{margin-top:40px;padding:18px;border-radius:14px;background:var(--soft);font-size:15.5px}
+a{color:#0087ff}
+@media (max-width:700px){.kids{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}h1{font-size:28px}}
+</style></head><body><div class="wrap">
+
+<div class="kicker">ABM Suite · Campaign setup</div>
+<h1>Campaign hierarchy, made simple</h1>
+<p class="lead">One <b>Strategy</b> on top. The thing <b>leading the work</b> is the parent. Everything that <b>supports it</b> is a child. That's it.</p>
+
+<div class="tree">
+  <div class="node top"><b>Strategy</b><span>One per vertical, line of business or flagship. Already built. Don't create new ones.</span></div>
+  <div class="arrow"></div>
+  <div class="node mid"><b>Parent: what leads the work</b><span>The event, the webinar, the trade show, the ad program</span></div>
+  <div class="arrow"></div>
+  <div class="kids"><div class="kid">Emails</div><div class="kid">Landing pages</div><div class="kid">Ads</div><div class="kid">SDR follow-up</div></div>
+  <div class="label">Children: everything that supports the parent</div>
+</div>
+
+<h2>A real one, built right</h2>
+<pre class="ex"><span class="s">2026.9 TP USA - Strategy - F&amp;A</span>                                   <span class="n">Strategy</span>
+└─ <span class="p">2026.9 TP USA - TP Virtual Event - F&amp;A Webinar Nov 10</span>        <span class="n">parent: the webinar leads</span>
+   ├─ 2026.9 TP USA - Email - F&amp;A Webinar Invite #1
+   ├─ 2026.10 TP USA - Email - F&amp;A Webinar Invite #1A
+   ├─ 2026.10 TP USA - Email - F&amp;A Webinar #2
+   ├─ 2026.11 TP USA - Email - F&amp;A Webinar #3 and #4
+   └─ 2026.10 TP USA - Advertisement - Nov. 10 F&amp;A Webinar (LinkedIn)</pre>
+
+<h2>Who's the parent?</h2>
+<div class="grid">
+  <div class="card pk"><h3>Physical event or trade show</h3><p>Always the parent. Emails, ads, landing pages and SDR follow-up go under it.</p></div>
+  <div class="card tl"><h3>Webinar for an event</h3><p>It's a child of that event, not a parent of its own.</p></div>
+  <div class="card sl"><h3>Ad program that leads</h3><p>The ad program is the parent. Its emails and SDR follow-up are children.</p></div>
+  <div class="card nv"><h3>CEO-led roundtables</h3><p>They sit under Strategy · Thought Leadership.</p></div>
+</div>
+
+<h2>Five rules</h2>
+<ol class="rules">
+  <li><span><b>Nobody creates a new Strategy.</b> Pick one from the list. Missing? Ask NA Performance Marketing.</span></li>
+  <li><span><b>Name, type and place must agree.</b> A campaign named Strategy is typed Strategy. A webinar or an ad carries its own type.</span></li>
+  <li><span><b>One campaign per activity.</b> An email sent for SDRs is two campaigns: the email, and the SDR follow-up.</span></li>
+  <li><span><b>Don't create what you won't use.</b> Empty campaigns show up as zeros in every report. Tests and cancelled work get marked Aborted.</span></li>
+  <li><span><b>Set the status after every event.</b> Who registered, who attended, who met. No status, no credit.</span></li>
+</ol>
+
+<h2>Naming</h2>
+<div class="name">2026.9 TP USA - Campaign Type - Campaign Detail<small>Month from the start date (2026.9, not 2026.09) · type matches the Salesforce Type field · no vertical in the detail, the Strategy carries it</small></div>
+
+<div class="foot">New campaigns get a regular review. If something doesn't line up, NA Performance Marketing will reach out and the owner fixes it. Full detail lives in the <a href="/blueprint/">Blueprint</a>, Marketing campaigns section.</div>
+</div></body></html>
