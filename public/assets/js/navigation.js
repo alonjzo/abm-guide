@@ -52,7 +52,7 @@
     const navHTML = `
         <nav class="tp-global-nav">
             <div class="tp-nav-inner">
-                <a href="${bp}index.html" class="tp-nav-brand">
+                <a href="${bp}start-here/index.html" class="tp-nav-brand">
                     <svg class="tp-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
                     </svg>
