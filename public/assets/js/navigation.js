@@ -62,7 +62,7 @@
                     <a href="${bp}start-here/index.html" class="tp-nav-link ${isStartHere ? 'active' : ''}" title="What this site is and where to go first">Start Here</a>
                     <a href="${bp}tp-services/index.html" class="tp-nav-link ${isTPServices ? 'active' : ''}" title="What TP sells and what we call it">TP Services and TP.ai</a>
                     <a href="${bp}lighthouse/index.html" class="tp-nav-link ${isLighthouse ? 'active' : ''}" title="Account intelligence and the US target-account universe">Lighthouse</a>
-                    <a href="${bp}prompt-book/index.html" class="tp-nav-link ${isPromptBook ? 'active' : ''}" title="70 ready-to-use Claude prompts for Content, ABX and Events">Claude Prompt Book</a>
+                    <a href="${bp}prompt-book/index.html" class="tp-nav-link ${isPromptBook ? 'active' : ''}" title="70 ready-to-use prompts for Content, ABX and Events">Prompt Book</a>
                     <a href="${bp}blueprint/index.html" class="tp-nav-link ${isBlueprint ? 'active' : ''}" title="TP Growth Marketing Blueprint V10 — reading edition">Blueprint</a>
 
                     <div class="tp-nav-group ${isDemandbaseGroup ? 'active' : ''}">
@@ -105,7 +105,6 @@
                     </div>
                 </div>
 
-                <div class="tp-access-badge">Powered by Gemini</div>
                 <button class="tp-nav-toggle" aria-label="Menu">
                     <span></span><span></span><span></span>
                 </button>
