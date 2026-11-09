@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script defer src="/_vercel/insights/script.js"></script>
+<title>BD Playbook | Demandbase One for Sales | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{--slate:#484C6A;--slate-dark:#2e3150;--pastel-slate:#c2c7cd;--pastel-slate-light:#edeaf0;--pink:#ff0082;--white:#ffffff;--black:#1a1a1a;--dark-gray:#414141;--body-gray:#6b6e85;--shadow-sm:0 1px 3px rgba(0,0,0,0.06)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 56px;position:relative;overflow:hidden}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:22px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.12;margin-bottom:14px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:64ch;line-height:1.6}
+  .jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .jump a{font-size:13px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:4px 12px;text-decoration:none}
+  .jump a:hover{background:rgba(255,255,255,.1)}
+  .page{max-width:1100px;margin:0 auto;padding:40px 60px 90px}
+  .section{margin-top:52px;scroll-margin-top:110px}
+  .section-label{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--pink);margin-bottom:10px}
+  .section-label::before{content:'';width:26px;height:3px;background:var(--pink);display:inline-block;border-radius:2px}
+  h2{font-size:clamp(1.6rem,2.6vw,2.2rem);font-weight:800;color:var(--black);letter-spacing:-.02em;line-height:1.15;margin-bottom:10px}
+  h3{font-size:17px;color:var(--black);margin:24px 0 6px;font-weight:700}
+  p{margin-bottom:10px}
+  .intro{color:var(--body-gray);max-width:72ch;margin-bottom:20px}
+  .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .card{border:1px solid var(--pastel-slate-light);border-radius:12px;padding:18px;box-shadow:var(--shadow-sm);background:#fff}
+  .card b{display:block;color:var(--black);margin-bottom:4px;font-size:15px}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--pink);color:#fff;font-size:13px;font-weight:700;margin-bottom:8px}
+  .tbl{overflow-x:auto;margin:8px 0 16px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{background:var(--slate-dark);color:#fff;text-align:left;padding:10px 12px;font-weight:600}
+  td{border-bottom:1px solid var(--pastel-slate-light);padding:10px 12px;vertical-align:top}
+  td:first-child{font-weight:600;color:var(--black)}
+  ol.clean,ul.clean{padding-left:20px;margin:6px 0 14px}
+  ol.clean li,ul.clean li{margin-bottom:6px}
+  .prompt{position:relative;background:var(--pastel-slate-light);border-left:3px solid var(--slate);border-radius:10px;padding:14px 92px 14px 16px;margin:10px 0 6px}
+  .prompt .when{font-size:12.5px;font-weight:700;color:var(--slate);display:block;margin-bottom:4px}
+  .prompt .ptext{font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.55;color:var(--black)}
+  .prompt .copy{position:absolute;top:12px;right:12px;background:var(--slate);color:#fff;border:0;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+  .prompt .copy:hover{background:var(--slate-dark)}
+  .good{font-size:13.5px;color:var(--body-gray);margin:0 0 14px}
+  .callout{border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.6;margin:14px 0}
+  .callout.slate{background:var(--pastel-slate-light);border-left:3px solid var(--slate)}
+  .callout.pink{background:#ffe6f2;border-left:3px solid var(--pink)}
+  .next{margin-top:48px;border:2px solid var(--slate);border-radius:12px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .next .t{font-size:17px;font-weight:700;color:var(--black);margin-bottom:4px}
+  .next .s{font-size:14px;color:var(--body-gray);max-width:60ch}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--slate);color:#fff;padding:12px 22px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+  .btn:hover{background:var(--slate-dark)}
+  @media(max-width:900px){.grid3{grid-template-columns:1fr}.hero,.page{padding-left:24px;padding-right:24px}.prompt{padding:44px 16px 14px}}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-kicker"><span></span> Demandbase One for Sales · BD playbook</div>
+      <h1>Find who's in market. Know who to call. Get marketing behind it.</h1>
+      <p class="hero-sub">The working guide for Business Developers in the Demandbase One for Sales pilot: how to get in, how to read the dashboard, the prompts that work, and how to turn what you find into a campaign.</p>
+      <div class="jump">
+        <a href="#get-in">Get in</a><a href="#monday">Your Monday</a><a href="#builder">Build a preset</a><a href="#ai-rules">AI Chat rules</a><a href="#prompts">Prompts</a><a href="#signals">Signals</a><a href="#rules">Rules of the road</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="section" id="get-in" style="margin-top:8px">
+      <div class="section-label">Get in</div>
+      <h2>Three steps before anything else</h2>
+      <div class="grid3">
+        <div class="card"><div class="num">1</div><b>Use Chrome</b>Island can hang on Demandbase. Chrome as a guest works. Your Demandbase password is your own, not your TP login.</div>
+        <div class="card"><div class="num">2</div><b>Open Demandbase One for Sales, then AI Chat</b>It's in the left panel. If it's missing, log out and back in. Still missing? Tell NA Performance Marketing. It's a profile fix on our side.</div>
+        <div class="card"><div class="num">3</div><b>Widen the date range to 90 days</b>The default is one week, which is why the dashboard opens on zeros for a quiet territory.</div>
+      </div>
+      <h3>Three doors into the same data</h3>
+      <div class="tbl"><table>
+        <tr><th>Door</th><th>What it is</th><th>Use it when</th></tr>
+        <tr><td>Inside Salesforce</td><td>The Demandbase panel on Account, Lead, Contact and Opportunity pages.</td><td>You're already on an account you own. Zero new habits.</td></tr>
+        <tr><td>The Sales dashboard</td><td>Presets, Builder, AI Chat and your lists.</td><td>You're prospecting or planning the week.</td></tr>
+        <tr><td>Chrome extension</td><td>The account card pops up on a company website or LinkedIn profile.</td><td>You're researching live on a page.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section" id="monday">
+      <div class="section-label">Your Monday</div>
+      <h2>Your Monday in four clicks</h2>
+      <ol class="clean">
+        <li><b>List picker:</b> set it to your territory list.</li>
+        <li><b>I sell:</b> pick the buying group for your line of business. The people list reshapes to that committee.</li>
+        <li><b>No sales touches (14d):</b> turn it on, so two people don't call the same person in the same week.</li>
+        <li><b>Preset:</b> "Act on people that are highly engaged," then sort by engagement points.</li>
+      </ol>
+      <h3>How to read the grid</h3>
+      <ul class="clean">
+        <li><b>Marketing engagement points:</b> 60 is hot, 40 is warm. Sort by this column.</li>
+        <li><b>Top activity:</b> the one thing that scored them. That's your opening line.</li>
+        <li><b>Buying group / role:</b> where they sit on the committee for the group you picked. Blank means you haven't picked one.</li>
+        <li><b>The read:</b> high points plus a tp.com visit plus a buying-group role is a call today. High points from a campaign response means they opened our email, so it's softer.</li>
+      </ul>
+      <div class="callout slate"><b>The "top priority actions" banner</b> is the SDR queue and isn't filtered to your own accounts. Work from your list, your saved preset, or AI Chat with your name in the prompt.</div>
+    </div>
+
+    <div class="section" id="builder">
+      <div class="section-label">Builder</div>
+      <h2>Build your own preset, click by click</h2>
+      <ol class="clean">
+        <li>Click <b>Builder</b> at the top of the preset panel and choose <b>People</b> (a call sheet) or <b>Accounts</b> (a territory view).</li>
+        <li>Make <b>country is United States</b> the first condition. The platform is shared with other regions.</li>
+        <li>Add your accounts (owner is you, or your list), then the signal (engagement points over 40, or intent High on your line-of-business keyword set), then exclusions (no open opportunity, not a client).</li>
+        <li>Watch the count. Under 50 is a call list. Over 300 means add a condition. Zero means a condition is wrong, usually a keyword set name.</li>
+        <li>Name it so you can find it in a meeting, for example "AB Healthcare Hot People Nov," and save. It's one click every morning after that.</li>
+      </ol>
+    </div>
+
+    <div class="section" id="ai-rules">
+      <div class="section-label">AI Chat</div>
+      <h2>Three rules that make the answers right</h2>
+      <div class="grid3">
+        <div class="card"><div class="num">1</div><b>Say who you are</b>AI Chat doesn't know who "me" is. Start every prompt with your full name.</div>
+        <div class="card"><div class="num">2</div><b>Say where</b>Add "US accounts and North America contacts only." Without it you'll see people from LATAM and Asia Pacific.</div>
+        <div class="card"><div class="num">3</div><b>Stay in one thread</b>Follow-ups build on what it already knows. Your threads are saved on the left for 28 days.</div>
+      </div>
+    </div>
+
+    <div class="section" id="prompts">
+      <div class="section-label">Prompts</div>
+      <h2>Your week in prompts</h2>
+      <p class="intro">Copy, paste into AI Chat, fill in the braces. Run them in order through the week.</p>
+
+      <div class="prompt"><span class="when">Monday: frame the week</span><div class="ptext">I'm {your full name}, a Business Developer. From my US accounts only, identify my priority accounts most likely to convert to an opportunity. Rank by marketing engagement points (last 30 days) and Pipeline Predict score, and show journey stage, engagement points and top intent topic for each.</div></div>
+      <p class="good">Good looks like: a ranked table, 10 to 30 rows, four columns of signal.</p>
+
+      <div class="prompt"><span class="when">Monday: fresh and warm</span><div class="ptext">I'm {your full name}. From my US accounts only, show accounts at MQA or earlier with the highest Pipeline Predict score and recent engagement. Flag any with fewer than 2 sales touches. Those are my fresh accounts this week.</div></div>
+      <p class="good">Good looks like: a short list with a fresh flag. The flagged rows are your week.</p>
+
+      <div class="prompt"><span class="when">Before every call</span><div class="ptext">For {company}, what topics and services is the account most engaged with, why is it surfacing (journey stage, engagement trend, intent topics, high-value pages), and what are the 3 things I should know before I reach out? US contacts only.</div></div>
+      <p class="good">Good looks like: three things you can say out loud. If it can't name a topic, the account is quiet.</p>
+
+      <div class="prompt"><span class="when">Check the intent behind it</span><div class="ptext">For {company}, are the account or its decision makers showing intent around {CX, customer service, contact center}? Show the topics and the dates.</div></div>
+      <p class="good">Good looks like: topics with dates. Trending means it's happening now.</p>
+
+      <div class="prompt"><span class="when">Who to call</span><div class="ptext">At {company}, find the most engaged US-based people and the most engaged persona, then flag the buying-group personas where we have no engagement. Rank the top 3 people to reach, with a reason for each.</div></div>
+      <p class="good">Good looks like: three names or roles with a reason each, plus the gap an SDR can fill.</p>
+
+      <div class="prompt"><span class="when">First touch</span><div class="ptext">Research {contact}'s priorities from recent company news, then draft a short email tying those priorities to the topics their company is researching. Observation, problem, solution, ask, 1 to 2 sentences each, no section labels, non-salesy, under 120 words.</div></div>
+      <p class="good">Good looks like: four short parts and one ask. Edit it so it sounds like you, and never say we saw their web activity.</p>
+
+      <div class="prompt"><span class="when">Midweek: your open deals</span><div class="ptext">I'm {your full name}. Show my open opportunities on US accounts in Pipeline or SQL stage. For each: days in stage, Pipeline Predict trend, buying-group contacts engaged in the last 14 days, and any competitive intent. Flag the ones losing engagement and recommend the next best action.</div></div>
+      <p class="good">Good looks like: your deals with a flag column. Competitive intent on an open deal is a call today.</p>
+
+      <div class="prompt"><span class="when">Monthly: grow your clients</span><div class="ptext">I'm {your full name}. For my closed-won US accounts, show the whitespace: services they're researching but don't buy from TP yet, and the contacts already engaged on them.</div></div>
+      <p class="good">Good looks like: account, service gap, engaged contact. Ready for the account plan.</p>
+
+      <div class="prompt"><span class="when">Friday: decide next week</span><div class="ptext">I'm {your full name}. Give me my week: priority untouched US accounts, open opportunities that need attention, and the single most important next action for each.</div></div>
+      <p class="good">Good looks like: one action per account. If it gives you more than one, ask it to pick.</p>
+    </div>
+
+    <div class="section" id="signals">
+      <div class="section-label">Signals</div>
+      <h2>What the signals mean</h2>
+      <div class="tbl"><table>
+        <tr><th>Signal</th><th>What it tells you</th></tr>
+        <tr><td>Pipeline Predict</td><td>How likely the account is to open an opportunity soon. A high score means it's in market.</td></tr>
+        <tr><td>Trending intent</td><td>Research on a topic that's rising right now, with the dates it happened.</td></tr>
+        <tr><td>Journey stage</td><td>Where the account sits in the funnel, from aware through engaged, MQA and opportunity.</td></tr>
+        <tr><td>Engagement points</td><td>How much the account's people have engaged with TP: site visits, campaign responses, events.</td></tr>
+        <tr><td>AI account summary</td><td>On any account page. Top intent at a glance. Copy it into AI Chat to go deeper.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section" id="rules">
+      <div class="section-label">Rules of the road</div>
+      <h2>Rules of the road</h2>
+      <ul class="clean">
+        <li><b>Credits:</b> every prompt spends AI credits from the pilot pool, and every follow-up counts as a new prompt. Send one well-built prompt, not five quick ones. Viewing account pages and summaries is free.</li>
+        <li><b>Check five rows</b> against the account page before you build a call list from an answer.</li>
+        <li><b>Never tell a prospect we saw their web activity.</b> Lead with their priorities and the topic.</li>
+        <li><b>Log every touch in Salesforce.</b> The no-sales-touch filter only counts what's logged.</li>
+        <li><b>Something broken?</b> Send a screenshot to NA Performance Marketing the day you see it.</li>
+      </ul>
+    </div>
+
+    <div class="next">
+      <div>
+        <div class="t">Ready to put marketing behind an account?</div>
+        <div class="s">Turn what you found into a campaign request your ABM manager can plan from: 1:1, 1:few, 1:many or deal acceleration.</div>
+      </div>
+      <a class="btn" href="../demandbase-sales-abm-campaign/index.html">Build a campaign with your ABM manager</a>
+    </div>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('.prompt').forEach(function (p) {
+      var b = document.createElement('button');
+      b.className = 'copy'; b.type = 'button'; b.textContent = 'Copy';
+      b.addEventListener('click', function () {
+        var t = p.querySelector('.ptext').innerText;
+        navigator.clipboard.writeText(t).then(function () {
+          b.textContent = 'Copied';
+          setTimeout(function () { b.textContent = 'Copy'; }, 1500);
+        }).catch(function () {});
+      });
+      p.appendChild(b);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script defer src="/_vercel/insights/script.js"></script>
+<title>SDR Playbook | Demandbase One for Sales | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{--slate:#484C6A;--slate-dark:#2e3150;--pastel-slate:#c2c7cd;--pastel-slate-light:#edeaf0;--pink:#ff0082;--white:#ffffff;--black:#1a1a1a;--dark-gray:#414141;--body-gray:#6b6e85;--shadow-sm:0 1px 3px rgba(0,0,0,0.06)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 56px;position:relative;overflow:hidden}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:22px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.12;margin-bottom:14px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:64ch;line-height:1.6}
+  .jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .jump a{font-size:13px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:4px 12px;text-decoration:none}
+  .jump a:hover{background:rgba(255,255,255,.1)}
+  .page{max-width:1100px;margin:0 auto;padding:40px 60px 90px}
+  .section{margin-top:52px;scroll-margin-top:110px}
+  .section-label{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--pink);margin-bottom:10px}
+  .section-label::before{content:'';width:26px;height:3px;background:var(--pink);display:inline-block;border-radius:2px}
+  h2{font-size:clamp(1.6rem,2.6vw,2.2rem);font-weight:800;color:var(--black);letter-spacing:-.02em;line-height:1.15;margin-bottom:10px}
+  h3{font-size:17px;color:var(--black);margin:24px 0 6px;font-weight:700}
+  p{margin-bottom:10px}
+  .intro{color:var(--body-gray);max-width:72ch;margin-bottom:20px}
+  .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .card{border:1px solid var(--pastel-slate-light);border-radius:12px;padding:18px;box-shadow:var(--shadow-sm);background:#fff}
+  .card b{display:block;color:var(--black);margin-bottom:4px;font-size:15px}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--pink);color:#fff;font-size:13px;font-weight:700;margin-bottom:8px}
+  .tbl{overflow-x:auto;margin:8px 0 16px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{background:var(--slate-dark);color:#fff;text-align:left;padding:10px 12px;font-weight:600}
+  td{border-bottom:1px solid var(--pastel-slate-light);padding:10px 12px;vertical-align:top}
+  td:first-child{font-weight:600;color:var(--black)}
+  ol.clean,ul.clean{padding-left:20px;margin:6px 0 14px}
+  ol.clean li,ul.clean li{margin-bottom:6px}
+  .prompt{position:relative;background:var(--pastel-slate-light);border-left:3px solid var(--slate);border-radius:10px;padding:14px 92px 14px 16px;margin:10px 0 6px}
+  .prompt .when{font-size:12.5px;font-weight:700;color:var(--slate);display:block;margin-bottom:4px}
+  .prompt .ptext{font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.55;color:var(--black)}
+  .prompt .copy{position:absolute;top:12px;right:12px;background:var(--slate);color:#fff;border:0;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+  .prompt .copy:hover{background:var(--slate-dark)}
+  .good{font-size:13.5px;color:var(--body-gray);margin:0 0 14px}
+  .callout{border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.6;margin:14px 0}
+  .callout.slate{background:var(--pastel-slate-light);border-left:3px solid var(--slate)}
+  .callout.pink{background:#ffe6f2;border-left:3px solid var(--pink)}
+  .next{margin-top:48px;border:2px solid var(--slate);border-radius:12px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .next .t{font-size:17px;font-weight:700;color:var(--black);margin-bottom:4px}
+  .next .s{font-size:14px;color:var(--body-gray);max-width:60ch}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--slate);color:#fff;padding:12px 22px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+  .btn:hover{background:var(--slate-dark)}
+  @media(max-width:900px){.grid3{grid-template-columns:1fr}.hero,.page{padding-left:24px;padding-right:24px}.prompt{padding:44px 16px 14px}}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-kicker"><span></span> Demandbase One for Sales · SDR playbook</div>
+      <h1>Turn engaged accounts into meetings.</h1>
+      <p class="hero-sub">For Enterprise and Mid-Market SDRs: what to work each day, who to reach, the 10-day sequence, and when to hand off to the Business Developer.</p>
+      <div class="jump">
+        <a href="#start">Daily start</a><a href="#motion">The motion</a><a href="#lanes">Two lanes</a><a href="#rhythm">Rhythm</a><a href="#sequence">10-day sequence</a><a href="#handoff">Handoff</a><a href="#prompts">Prompts</a><a href="#rules">Rules</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="section" id="start" style="margin-top:8px">
+      <div class="section-label">Daily start</div>
+      <h2>The accounts at the top are today's work</h2>
+      <div class="grid3">
+        <div class="card"><div class="num">1</div><b>Open your lane's list</b>Demandbase One for Sales, then All Lists, then your Enterprise SDR or MM SDR Engaged list.</div>
+        <div class="card"><div class="num">2</div><b>Set the window</b>Date range to the last 3 months, and turn on No sales touches (14d).</div>
+        <div class="card"><div class="num">3</div><b>Sort by engagement</b>Work top to bottom. Check the priority actions queue too; it's your morning list and viewing it is free.</div>
+      </div>
+      <div class="callout slate">Use Chrome. Island can hang on Demandbase, and Chrome as a guest works. Your Demandbase password is your own, not your TP login.</div>
+    </div>
+
+    <div class="section" id="motion">
+      <div class="section-label">The motion</div>
+      <h2>Where SDRs sit</h2>
+      <div class="tbl"><table>
+        <tr><th>Stage</th><th>List</th><th>Who works it</th><th>Goal</th></tr>
+        <tr><td>Researching</td><td>[US] Researching – Nurture</td><td>Marketing, always-on programs</td><td>Build awareness until engagement rises</td></tr>
+        <tr><td>Engaged</td><td>[US] Enterprise SDR and MM SDR Engaged lists</td><td>SDRs</td><td>Discovery, multithreading, a qualified meeting</td></tr>
+        <tr><td>Ready to Buy</td><td>[US] Ready to Buy, plus each BD's list</td><td>Business Developers</td><td>Pipeline</td></tr>
+      </table></div>
+      <p><b>The SDR job in one line:</b> take accounts that are already engaging with TP and showing intent, find the right people, and deliver a qualified meeting to the BD while the signal is fresh.</p>
+    </div>
+
+    <div class="section" id="lanes">
+      <div class="section-label">Two lanes</div>
+      <h2>Enterprise SDR and MM SDR</h2>
+      <div class="tbl"><table>
+        <tr><th></th><th>Enterprise SDR</th><th>MM SDR</th></tr>
+        <tr><td>Accounts</td><td>Tier 1A and Tier 1</td><td>Tier 2 and Tier 3</td></tr>
+        <tr><td>Relationship to the BD</td><td>The BD owns the executive relationship. You open doors one level down and in new lines of business. Agree with the BD before the first touch.</td><td>You're often the first TP voice. Prospect broadly, then bring the BD into the meeting.</td></tr>
+        <tr><td>Who you reach</td><td>VPs and Directors in CX, operations and line-of-business roles, plus vertical specialists</td><td>VP, Director and Head of CX, customer care and operations; Directors and Managers where the budget sits</td></tr>
+        <tr><td>Message style</td><td>Account-specific and research-led: intent topic, AI account summary, a TP proof point from that vertical</td><td>Topic-led: a vertical template personalized with the intent topic</td></tr>
+        <tr><td>Depth</td><td>Fewer accounts, 3 to 5 contacts each</td><td>More accounts, 2 to 3 contacts each</td></tr>
+        <tr><td>Watch out for</td><td>Don't reach the C-suite without the BD</td><td>Don't let an engaged account sit past 10 days</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section" id="rhythm">
+      <div class="section-label">Rhythm</div>
+      <h2>Daily and weekly rhythm</h2>
+      <div class="tbl"><table>
+        <tr><th>When</th><th>What</th></tr>
+        <tr><td>First 15 minutes</td><td>Open your Engaged list with No sales touches (14d) on. Sort by engagement points. Pick today's accounts.</td></tr>
+        <tr><td>Next 15 minutes</td><td>For each account: check intent topics in the account details, filter the buying committee by CX, line of business or vertical specialist, and read the AI account summary.</td></tr>
+        <tr><td>Outreach block</td><td>Run the sequence below. Lead every touch with the topic the account is researching.</td></tr>
+        <tr><td>End of day</td><td>Log every touch in Salesforce. Flag any account that moved to MQA to its BD.</td></tr>
+        <tr><td>Monday</td><td>15 minutes with your BDs: what moved, what's ready to hand off, which accounts to pause.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section" id="sequence">
+      <div class="section-label">Sequence</div>
+      <h2>The 10-day sequence</h2>
+      <p class="intro">Intent is most useful in its first 10 days. This sequence fits inside that window.</p>
+      <div class="tbl"><table>
+        <tr><th>Day</th><th>Channel</th><th>Touch</th><th>Enterprise adds</th></tr>
+        <tr><td>1</td><td>Email and LinkedIn</td><td>Lead with the intent topic, one sentence on why TP, a soft ask</td><td>Reference the account's own initiative from the AI summary</td></tr>
+        <tr><td>3</td><td>Phone and voicemail</td><td>20 seconds: the topic, one outcome, a reason to call back</td><td>Name the BD where the relationship exists</td></tr>
+        <tr><td>5</td><td>Email</td><td>Proof point: a TP result in the same vertical</td><td>Tailor to the business unit, not the company</td></tr>
+        <tr><td>7</td><td>LinkedIn message</td><td>Short, human, no attachment</td><td></td></tr>
+        <tr><td>10</td><td>Email and phone</td><td>Close the loop: offer value, like a benchmark or short readout, or ask for the right person</td><td>Copy the BD on the final note</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section" id="handoff">
+      <div class="section-label">Handoff</div>
+      <h2>Handoff rules</h2>
+      <div class="tbl"><table>
+        <tr><th>When this happens</th><th>Do this</th></tr>
+        <tr><td>The account lands in Ready to Buy or reaches MQA</td><td>Tell the BD the same day. The BD leads from here.</td></tr>
+        <tr><td>A decision maker agrees to a meeting</td><td>Book it for the BD and log the handoff note in Salesforce.</td></tr>
+        <tr><td>Interest, but not ready</td><td>Log it, tell the ABM team, and let nurture carry it.</td></tr>
+        <tr><td>No response after day 10</td><td>Return the account to nurture for 30 days. It comes back to your list if intent surges again.</td></tr>
+        <tr><td>Wrong persona or bad contact data</td><td>Flag it to NA Performance Marketing.</td></tr>
+      </table></div>
+      <h3>The handoff note (paste into Salesforce)</h3>
+      <ul class="clean">
+        <li><b>Account, contact and title:</b> who you spoke with.</li>
+        <li><b>Intent topic:</b> what the account is researching.</li>
+        <li><b>What they said:</b> pain, timing, current provider.</li>
+        <li><b>Next step:</b> meeting date and attendees.</li>
+        <li><b>BD:</b> the account owner taking it from here.</li>
+      </ul>
+    </div>
+
+    <div class="section" id="prompts">
+      <div class="section-label">Prompts</div>
+      <h2>AI prompts for SDRs</h2>
+      <p class="intro">Where AI Chat is turned on for your group, copy a prompt, swap in your details, and go. Start with your full name and "US accounts only," because AI Chat doesn't know who "me" is and the platform is shared with other regions.</p>
+
+      <div class="prompt"><span class="when">Every morning: your call list</span><div class="ptext">I'm {your full name}, an SDR. From {list name}, US accounts only, show the accounts I should work first today with no sales touches in 14 days, ranked by engagement and Pipeline Predict, with the top topic of interest and the most engaged US contact for each.</div></div>
+      <p class="good">Good looks like: a ranked call list with a topic and a name on every row. 15 to 25 rows is a day.</p>
+
+      <div class="prompt"><span class="when">Before every dial</span><div class="ptext">For {company}, give me a 60-second research brief: why it's surfacing (journey stage, engagement, intent topics), the high-value pages they visited, and any recent company news I can use as a hook.</div></div>
+      <p class="good">Good looks like: one hook to open with. Company news beats a web visit as an opener.</p>
+
+      <div class="prompt"><span class="when">Who to call first</span><div class="ptext">For {company}, who should I reach out to first? Show the most engaged US-based contacts by persona, with titles and what they engaged with, and rank the top 3 with a reason for each.</div></div>
+      <p class="good">Good looks like: three names with titles. Start with the VP or Director, not the C-suite.</p>
+
+      <div class="prompt"><span class="when">Writing the outreach</span><div class="ptext">Help me write a 4-part outreach email to {contact}, {title} at {company}. Their company is researching {topics}. Observation, problem, solution, ask, 1 to 2 sentences each, no section labels, non-salesy, under 120 words.</div></div>
+      <p class="good">Good looks like: one ask. Edit the first line so it sounds like you, and never say we saw their web activity.</p>
+
+      <div class="prompt"><span class="when">Who came back</span><div class="ptext">I'm {your full name}. Show the US accounts I've sequenced that re-engaged in the last 14 days after going quiet, what they re-engaged with and who. Recommend a timely follow-up.</div></div>
+      <p class="good">Good looks like: a short re-engagement list. These convert faster than cold, so call them first.</p>
+
+      <div class="prompt"><span class="when">Where you're single-threaded</span><div class="ptext">At the US accounts I'm working, where am I single-threaded? Show the buying-group personas I should add and a one-line angle for each.</div></div>
+      <p class="good">Good looks like: account, missing persona, angle. Add one new persona per account per week.</p>
+
+      <div class="prompt"><span class="when">The handoff</span><div class="ptext">Build a handoff brief for {company} for my Business Developer: the engaged buying group, intent topics, what's been said so far, and the recommended next step. Keep it to one page.</div></div>
+      <p class="good">Good looks like: one page the BD reads in a minute. Paste it into the meeting invite.</p>
+
+      <h3>Three plays to save in Builder</h3>
+      <div class="tbl"><table>
+        <tr><th>Play</th><th>What to tell Builder</th></tr>
+        <tr><td>Untouched and warm</td><td>VP and Director contacts at {list name}, country United States, with engagement in the last 30 days and no sales touch in 14 days, with the intent topic for each.</td></tr>
+        <tr><td>Website visitors</td><td>People at {list name}, country United States, who visited tp.com in the last 7 days and didn't fill out a form, with the pages they viewed and their title. Rank by number of visits.</td></tr>
+        <tr><td>Re-engaged</td><td>Accounts in {list name} that went quiet for 30 days and re-engaged in the last 7, with who re-engaged and what they touched.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section" id="rules">
+      <div class="section-label">Rules of the road</div>
+      <h2>Rules of the road</h2>
+      <ul class="clean">
+        <li><b>Log every touch in Salesforce.</b> The no-sales-touch filter only counts activities logged in Salesforce or synced through Demandbase email and calendar logging.</li>
+        <li><b>Check five rows</b> against the grid or the account page before you build a call list from an answer.</li>
+        <li><b>Credits:</b> every prompt spends AI credits, and every follow-up counts as a new prompt. One well-built prompt beats five quick ones. The priority actions queue and the account and person panels are free.</li>
+        <li><b>Never tell a prospect we saw their web activity.</b></li>
+        <li><b>Something broken?</b> Send a screenshot to NA Performance Marketing the day you see it.</li>
+      </ul>
+    </div>
+
+    <div class="next">
+      <div>
+        <div class="t">Working the same accounts as a BD?</div>
+        <div class="s">Read the BD playbook so you know what your Business Developer sees and how they bring campaigns to the ABM team.</div>
+      </div>
+      <a class="btn" href="../demandbase-sales-bd-playbook/index.html">Open the BD playbook</a>
+    </div>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('.prompt').forEach(function (p) {
+      var b = document.createElement('button');
+      b.className = 'copy'; b.type = 'button'; b.textContent = 'Copy';
+      b.addEventListener('click', function () {
+        var t = p.querySelector('.ptext').innerText;
+        navigator.clipboard.writeText(t).then(function () {
+          b.textContent = 'Copied';
+          setTimeout(function () { b.textContent = 'Copy'; }, 1500);
+        }).catch(function () {});
+      });
+      p.appendChild(b);
+    });
+  </script>
+</body>
+</html>

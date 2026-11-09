@@ -12,6 +12,10 @@
     const isPlatformGuide = currentPath.includes('platform-guide');
     const isJourneyStages = currentPath.includes('journey-stages');
     const isDemandbaseSales = currentPath.includes('demandbase-sales');
+    const isSalesBD = currentPath.includes('demandbase-sales-bd-playbook');
+    const isSalesSDR = currentPath.includes('demandbase-sales-sdr-playbook');
+    const isSalesABM = currentPath.includes('demandbase-sales-abm-campaign');
+    const isSalesHome = isDemandbaseSales && !isSalesBD && !isSalesSDR && !isSalesABM;
     const isDemandbaseMarketing = currentPath.includes('demandbase-marketing');
     const isPromptBook = currentPath.includes('prompt-book');
     const isBlueprint = currentPath.includes('blueprint');
@@ -37,7 +41,7 @@
     const isWorkspacesRef = currentPath.includes('workspaces-reference') || currentPath.includes('list-pulls');
     const isReferenceGroup = isAdvancedReporting || isPlanner;
     const isDemandbaseGroup = isPlatformGuide || isOrchestration || isWorkspacesRef || isBuyingGroups
-        || isCampaignMonitoring || isBestPractices || isDemandbaseMarketing || isDemandbaseSales || isJourneyStages || isGuideGroup;
+        || isCampaignMonitoring || isBestPractices || isDemandbaseMarketing || isJourneyStages || isGuideGroup;
 
     function getBasePath() {
         if (isGuideGroup) return '../../';
@@ -85,7 +89,20 @@
                             <a href="${bp}guides/build-your-list/index.html" class="tp-nav-drop-link ${isBuildList ? 'active' : ''}">Build your account list</a>
                             <span class="tp-nav-drop-label">AI</span>
                             <a href="${bp}demandbase-marketing/index.html" class="tp-nav-drop-link ${isDemandbaseMarketing ? 'active' : ''}">DB AI Prompt Library</a>
-                            <a href="${bp}demandbase-sales/index.html" class="tp-nav-drop-link tp-nav-soon ${isDemandbaseSales ? 'active' : ''}">DB Sales<span class="tp-soon-badge">Soon</span></a>
+                        </div>
+                    </div>
+
+                    <div class="tp-nav-group ${isDemandbaseSales ? 'active' : ''}">
+                        <button class="tp-nav-link tp-nav-group-btn" aria-expanded="false" aria-haspopup="true">DB Sales
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="tp-nav-dropdown">
+                            <span class="tp-nav-drop-label">Demandbase One for Sales</span>
+                            <a href="${bp}demandbase-sales/index.html" class="tp-nav-drop-link ${isSalesHome ? 'active' : ''}">Start here</a>
+                            <a href="${bp}demandbase-sales-bd-playbook/index.html" class="tp-nav-drop-link ${isSalesBD ? 'active' : ''}">BD playbook</a>
+                            <a href="${bp}demandbase-sales-sdr-playbook/index.html" class="tp-nav-drop-link ${isSalesSDR ? 'active' : ''}">SDR playbook</a>
+                            <span class="tp-nav-drop-label">Work with marketing</span>
+                            <a href="${bp}demandbase-sales-abm-campaign/index.html" class="tp-nav-drop-link ${isSalesABM ? 'active' : ''}">Build a campaign with your ABM manager</a>
                         </div>
                     </div>
 
@@ -269,6 +286,10 @@
             }
             .tp-nav-toggle span { width: 20px; height: 2px; background: #C2C7CD; border-radius: 1px; transition: all 0.3s; }
             body { padding-top: 56px !important; }
+            @media (min-width: 1321px) and (max-width: 1640px) {
+                .tp-nav-inner { gap: 2px; }
+                .tp-nav-link { padding: 8px 6px; font-size: 0.75rem; }
+            }
             @media (max-width: 1320px) {
                 .tp-access-badge { display: none; }
                 .tp-nav-links {
@@ -307,6 +328,10 @@
         'buying-groups':      ['Targeting', 'The personas inside an account. <b>This is the targeting layer</b> — align titles here, never to LinkedIn seniority buckets.'],
         'campaign-monitoring':['Campaigns', 'Reading a campaign once it is live — what matters, what is noise. <b>Lift needs a baseline</b>, not a gut feel.'],
         'demandbase-marketing':['AI', 'Prompts that work against our data. <b>Ask in plain English</b>, export the list, route it to a tracked campaign.'],
+        'demandbase-sales-bd-playbook':['DB Sales', 'The Business Developer guide to Demandbase One for Sales. <b>Start every AI Chat prompt with your full name and "US accounts only."</b>'],
+        'demandbase-sales-sdr-playbook':['DB Sales', 'The SDR guide: daily start, the 10-day sequence and the handoff. <b>Log every touch in Salesforce</b> so the no-sales-touch filter stays true.'],
+        'demandbase-sales-abm-campaign':['DB Sales', 'Turn what you find into a campaign request. <b>You bring the accounts and the field insight</b>; your ABM manager owns strategy, messaging and budget.'],
+        'demandbase-sales':   ['DB Sales', 'Demandbase One for Sales, by role. <b>Bookmark this page</b> instead of saving copies.'],
         'competitive-intel':  ['Market', 'Who we run into and how they position. <b>Direct and indirect</b> are separated — indirect are not TP competitors.'],
         'personas':           ['Market', 'Who the buyers are by role and vertical — what they care about and what makes them move. <b>Use before writing to a title.</b>'],
         'global-dashboard':   ['Reporting', 'Find your market, understand the results, and <b>send reporting requests to Ana</b> through one form.'],

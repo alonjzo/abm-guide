@@ -54,12 +54,16 @@
   .callout.slate{background:var(--pastel-slate-light);border-left:3px solid var(--slate)}
   .callout.pink{background:#ffe6f2;border-left:3px solid var(--pink)}
 
-  .soon-banner{margin-top:48px;border:1px dashed var(--pastel-slate);border-radius:14px;padding:40px;text-align:center;background:var(--pastel-slate-light)}
-  .soon-pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--pink);border-radius:12px;padding:4px 12px;margin-bottom:14px}
-  .soon-banner h3{font-size:1.3rem;color:var(--black);margin-bottom:8px;font-weight:700}
-  .soon-banner p{color:var(--body-gray);max-width:56ch;margin:0 auto;font-size:14px}
+  .pick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:8px}
+  .pick{display:flex;flex-direction:column;justify-content:space-between;gap:14px;border:1px solid var(--pastel-slate-light);border-top:3px solid var(--pink);border-radius:12px;padding:22px;box-shadow:var(--shadow-sm);background:var(--white);color:var(--dark-gray);text-decoration:none;transition:box-shadow .15s,transform .15s}
+  .pick:hover{box-shadow:0 6px 18px rgba(0,0,0,0.08);transform:translateY(-2px)}
+  .pick .who{font-size:12.5px;font-weight:700;color:var(--pink)}
+  .pick .t{font-size:1.2rem;font-weight:700;color:var(--black);line-height:1.25;margin:4px 0 6px}
+  .pick .d{font-size:14px;color:var(--body-gray);line-height:1.55}
+  .pick .go{font-size:14px;font-weight:600;color:var(--slate)}
+  .start-strip{margin-top:18px;background:var(--pastel-slate-light);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.6}
 
-  @media(max-width:900px){.bench-grid{grid-template-columns:repeat(2,1fr)}.hero,.page{padding-left:24px;padding-right:24px}}
+  @media(max-width:900px){.bench-grid{grid-template-columns:repeat(2,1fr)}.pick-grid{grid-template-columns:1fr}.hero,.page{padding-left:24px;padding-right:24px}}
 </style>
 </head>
 <body>
@@ -72,6 +76,27 @@
   </div>
 
   <div class="page">
+    <div class="section-label">Pick your playbook</div>
+    <h2>Demandbase One for Sales, by role</h2>
+    <p class="section-intro">One place for everything the Sales pilot needs. Bookmark this page instead of saving copies.</p>
+    <div class="pick-grid">
+      <a class="pick" href="../demandbase-sales-bd-playbook/index.html">
+        <div><div class="who">Business Developers</div><div class="t">BD playbook</div><div class="d">Get in, your Monday in four clicks, build a preset, and your week in prompts.</div></div>
+        <div class="go">Open the BD playbook &rsaquo;</div>
+      </a>
+      <a class="pick" href="../demandbase-sales-sdr-playbook/index.html">
+        <div><div class="who">SDRs</div><div class="t">SDR playbook</div><div class="d">Your daily start, the two lanes, the 10-day sequence and the handoff to your BD.</div></div>
+        <div class="go">Open the SDR playbook &rsaquo;</div>
+      </a>
+      <a class="pick" href="../demandbase-sales-abm-campaign/index.html">
+        <div><div class="who">Work with marketing</div><div class="t">Build a campaign with your ABM manager</div><div class="d">Turn what you find into a 1:1, 1:few, 1:many or acceleration request your ABM manager can plan from.</div></div>
+        <div class="go">Build a campaign &rsaquo;</div>
+      </a>
+    </div>
+    <div class="start-strip"><b>Before anything else:</b> use Chrome, open Demandbase One for Sales, widen the date range to 90 days, and start every AI Chat prompt with your full name and "US accounts only."</div>
+
+    <div style="height:1px;background:var(--pastel-slate-light);margin:56px 0 44px"></div>
+
     <div class="section-label">Industry validation</div>
     <h2>ABM drives the sales metrics that move reps to quota</h2>
     <p class="section-intro">These are <strong>industry benchmarks published by Demandbase</strong> and attributed to Forrester, Gartner, and ITSMA — not TP's internal numbers. They show why an account-based selling motion, with SQA at its center, is where the outcomes come from.</p>
@@ -141,18 +166,12 @@
       </a>
     </div>
 
-    <div class="soon-banner">
-      <div class="soon-pill">Coming Soon</div>
-      <h3>The full US Demandbase Sales playbook</h3>
-      <p>The complete Account-Based Selling surface — BD hand-off package, the in-market read, the SQA-to-opportunity motion, and how it ties to the US Workspace journey — is in build. This is the opener.</p>
-    </div>
-
     <div style="height:1px;background:var(--pastel-slate-light);margin:56px 0 44px"></div>
 
     <!-- SHARED PROMPT LIBRARY -->
     <div class="section-label">The Demandbase AI Prompt Library</div>
     <h2>Every prompt, organized by topic</h2>
-    <p class="section-intro">While the full Sales playbook is in build, the whole team already works from one shared prompt library. Search, then copy any prompt straight into AI Chat.</p>
+    <p class="section-intro">The whole team works from one shared prompt library. Search, then copy any prompt straight into AI Chat.</p>
     <div id="prompt-library"></div>
   </div>
 

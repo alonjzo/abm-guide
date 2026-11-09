@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script defer src="/_vercel/insights/script.js"></script>
+<title>Build a Campaign with Your ABM Manager | ABM Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/design-system.css">
+<script src="../assets/js/navigation.js"></script>
+<style>
+  :root{--slate:#484C6A;--slate-dark:#2e3150;--pastel-slate:#c2c7cd;--pastel-slate-light:#edeaf0;--pink:#ff0082;--white:#ffffff;--black:#1a1a1a;--dark-gray:#414141;--body-gray:#6b6e85;--shadow-sm:0 1px 3px rgba(0,0,0,0.06)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans',Arial,sans-serif;background:var(--white);color:var(--dark-gray);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+  .hero{background:var(--slate);color:var(--white);padding:72px 60px 56px;position:relative;overflow:hidden}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:22px}
+  .hero-kicker span{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+  .hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.02em;max-width:22ch;line-height:1.12;margin-bottom:14px}
+  .hero-sub{font-size:16px;opacity:.82;max-width:64ch;line-height:1.6}
+  .jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .jump a{font-size:13px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:4px 12px;text-decoration:none}
+  .jump a:hover{background:rgba(255,255,255,.1)}
+  .page{max-width:1100px;margin:0 auto;padding:40px 60px 90px}
+  .section{margin-top:52px;scroll-margin-top:110px}
+  .section-label{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--pink);margin-bottom:10px}
+  .section-label::before{content:'';width:26px;height:3px;background:var(--pink);display:inline-block;border-radius:2px}
+  h2{font-size:clamp(1.6rem,2.6vw,2.2rem);font-weight:800;color:var(--black);letter-spacing:-.02em;line-height:1.15;margin-bottom:10px}
+  h3{font-size:17px;color:var(--black);margin:26px 0 6px;font-weight:700}
+  p{margin-bottom:10px}
+  .intro{color:var(--body-gray);max-width:72ch;margin-bottom:20px}
+  .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .step{border:1px solid var(--pastel-slate-light);border-top:3px solid var(--pink);border-radius:12px;padding:16px;box-shadow:var(--shadow-sm);background:#fff;font-size:14px}
+  .step b{display:block;color:var(--black);margin-bottom:4px;font-size:15px}
+  .tbl{overflow-x:auto;margin:8px 0 16px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{background:var(--slate-dark);color:#fff;text-align:left;padding:10px 12px;font-weight:600}
+  td{border-bottom:1px solid var(--pastel-slate-light);padding:10px 12px;vertical-align:top}
+  td:first-child{font-weight:600;color:var(--black)}
+  ul.clean{padding-left:20px;margin:6px 0 14px}
+  ul.clean li{margin-bottom:6px}
+  .prompt{position:relative;background:var(--pastel-slate-light);border-left:3px solid var(--slate);border-radius:10px;padding:14px 92px 14px 16px;margin:8px 0 6px}
+  .prompt .when{font-size:12.5px;font-weight:700;color:var(--slate);display:block;margin-bottom:4px}
+  .prompt .ptext{font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.55;color:var(--black)}
+  .prompt .copy{position:absolute;top:12px;right:12px;background:var(--slate);color:#fff;border:0;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+  .prompt .copy:hover{background:var(--slate-dark)}
+  .good{font-size:13.5px;color:var(--body-gray);margin:0 0 14px}
+  .callout{border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.6;margin:14px 0}
+  .callout.slate{background:var(--pastel-slate-light);border-left:3px solid var(--slate)}
+  .callout.pink{background:#ffe6f2;border-left:3px solid var(--pink)}
+  .next{margin-top:48px;border:2px solid var(--slate);border-radius:12px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .next .t{font-size:17px;font-weight:700;color:var(--black);margin-bottom:4px}
+  .next .s{font-size:14px;color:var(--body-gray);max-width:60ch}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--slate);color:#fff;padding:12px 22px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+  .btn:hover{background:var(--slate-dark)}
+  @media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.hero,.page{padding-left:24px;padding-right:24px}.prompt{padding:44px 16px 14px}}
+  @media(max-width:560px){.flow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-kicker"><span></span> Demandbase One for Sales · Work with marketing</div>
+      <h1>Build a campaign with your ABM manager.</h1>
+      <p class="hero-sub">Turn what you find in AI Chat into a campaign request your ABM manager can plan from. Pick the motion, run the find prompt, then the brief prompt in the same thread.</p>
+      <div class="jump">
+        <a href="#how">How it gets built</a><a href="#motion">Pick the motion</a><a href="#one">1:1</a><a href="#few">1:few</a><a href="#many">1:many</a><a href="#accelerate">Acceleration</a><a href="#after">After launch</a><a href="#checklist">Checklist</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="section" id="how" style="margin-top:8px">
+      <div class="section-label">How it gets built</div>
+      <h2>Four steps, four owners</h2>
+      <div class="flow">
+        <div class="step"><b>1. You find it</b>Use AI Chat to pick the accounts, the signal and the people.</div>
+        <div class="step"><b>2. You brief</b>Send the brief from these prompts to your ABM manager.</div>
+        <div class="step"><b>3. ABM plans</b>Your ABM manager owns strategy, messaging and budget, and submits the Asana intake request.</div>
+        <div class="step"><b>4. We build</b>Performance Marketing builds, tests and launches it, then reports the results.</div>
+      </div>
+      <p style="margin-top:16px">Your part is the part nobody else has: which accounts matter, what you're hearing in the field, and the outcome you want. Leave ad copy, campaign codes and budget to your ABM manager. Requests outside the intake process go to NA Performance Marketing to prioritize, and late inputs move the launch date.</p>
+    </div>
+
+    <div class="section" id="motion">
+      <div class="section-label">Pick the motion</div>
+      <h2>Which campaign fits</h2>
+      <div class="tbl"><table>
+        <tr><th>Motion</th><th>Accounts</th><th>When to use it</th><th>What you bring</th></tr>
+        <tr><td>1:1</td><td>Your top accounts, one campaign each</td><td>Accounts you can't break into, worth the heaviest spend per account</td><td>The named buying group, the field context, the meeting you want</td></tr>
+        <tr><td>1:few</td><td>Clusters of 25 to 50</td><td>Accounts that are aware or engaged but stuck, sharing a theme or line of business</td><td>The theme, why they belong together, what you're hearing</td></tr>
+        <tr><td>1:many</td><td>Hundreds</td><td>Quiet accounts that need to hear the TP name for a quarter or two before anyone calls</td><td>Which accounts go in and what should hand them back to you</td></tr>
+        <tr><td>Acceleration</td><td>Your open opportunities</td><td>Deals sitting in the same stage too long</td><td>The deals, the people missing from them, the next meeting</td></tr>
+      </table></div>
+      <div class="callout slate">Every prompt below starts with your full name and "US accounts only." Fill in the braces. Run the find prompt first, then the brief prompt in the same thread so it builds on the answer.</div>
+    </div>
+
+    <div class="section" id="one">
+      <div class="section-label">1:1</div>
+      <h2>1:1 for the accounts that matter most</h2>
+      <div class="prompt"><span class="when">Find the accounts</span><div class="ptext">I'm {your full name}, a Business Developer covering {vertical}. From my US accounts only, find the 5 to 10 accounts I should consider for 1:1 campaigns. Prioritize high Pipeline Predict or trending intent on {topics}, with few engaged people or no open opportunity. For each, show journey stage, Pipeline Predict score, top 3 intent topics with dates, people engaged in the last 90 days, and known decision makers by role. Then flag the buying-group roles where we have no engagement.</div></div>
+      <p class="good">You get: a ranked short list with the gaps marked. Pick the ones worth the spend.</p>
+      <div class="prompt"><span class="when">Write the brief</span><div class="ptext">For {company}, write a one-page 1:1 campaign brief for my ABM manager. Include: why now (intent topics and dates, journey stage, recent engagement); the buying group to reach, US-based only, with names, titles and roles; what Salesforce shows (open or past opportunities, current TP services); the three themes I'm hearing in my conversations: {your notes}; the outcome I want: {a meeting with role by date}; and what I'll do alongside the ads (calls, emails, events). Under 300 words. Do not write ad copy.</div></div>
+      <p class="good">You get: a brief your ABM manager can plan from without a meeting.</p>
+    </div>
+
+    <div class="section" id="few">
+      <div class="section-label">1:few</div>
+      <h2>1:few for clusters that are stuck</h2>
+      <div class="prompt"><span class="when">Find the clusters</span><div class="ptext">I'm {your full name}. From my US accounts only, find accounts at the aware or engaged stage that haven't changed stage in 90 days. Group them into clusters of 25 to 50 that share an intent theme or line of business, such as {CX, trust and safety, AI operations}. For each cluster, give the shared theme, the account count, the top intent topics and the roles most engaged.</div></div>
+      <p class="good">You get: two or three clusters with a reason each one hangs together.</p>
+      <div class="prompt"><span class="when">Write the brief</span><div class="ptext">Turn the {cluster name} cluster into a 1:few campaign brief for my ABM manager: the theme, the account list, why these accounts belong together, the proof points TP should lead with based on what they're researching, the roles to reach, the outcome I want, and accounts to exclude (open opportunities, clients I already cover, competitors). Under 300 words. Do not write ad copy.</div></div>
+    </div>
+
+    <div class="section" id="many">
+      <div class="section-label">1:many</div>
+      <h2>1:many for the quiet accounts</h2>
+      <div class="prompt"><span class="when">Find the quiet accounts and the trigger</span><div class="ptext">I'm {your full name}. Find my US accounts at the target or aware stage with little or no engagement in the last 90 days. Recommend which ones should go into a 1:many awareness campaign for one to two quarters, grouped by vertical. Tell me which engagement signals should hand an account back to me or an SDR, and what my next step is for the accounts left out.</div></div>
+      <p class="good">You get: an air-cover list and the signal that tells you when to pick the phone back up.</p>
+    </div>
+
+    <div class="section" id="accelerate">
+      <div class="section-label">Acceleration</div>
+      <h2>Acceleration for the stuck deals</h2>
+      <div class="prompt"><span class="when">Find the deals and write the brief</span><div class="ptext">I'm {your full name}. Show my open opportunities on US accounts that have been in the same stage for more than {60} days. For each: stage, days in stage, buying-group contacts engaged in the last 30 days, intent topics and missing roles. Then write a short acceleration brief for my ABM manager: which deals, which people to reach, the angle based on what they're researching, and the meeting I want next.</div></div>
+    </div>
+
+    <div class="section" id="after">
+      <div class="section-label">After launch</div>
+      <h2>The weekly check</h2>
+      <div class="prompt"><span class="when">Every Monday once it's live</span><div class="ptext">For the accounts in {campaign or list name}, show which ones moved journey stage, gained engagement or showed new intent since {launch date}. Rank the ones I should call this week and tell me why.</div></div>
+      <div class="callout slate">Ad engagement is counted by company, not by person. The people it lists are contacts at engaged accounts, not confirmed clickers. Treat them as warm accounts to work, not as people who clicked.</div>
+    </div>
+
+    <div class="section" id="checklist">
+      <div class="section-label">Checklist</div>
+      <h2>What a good request includes</h2>
+      <ul class="clean">
+        <li><b>The accounts</b> and the motion: 1:1, 1:few, 1:many or acceleration.</li>
+        <li><b>Why now:</b> the intent topics and dates, the journey stage, the engagement.</li>
+        <li><b>The people:</b> the roles you need to reach, and the ones you already talk to.</li>
+        <li><b>Your field insight:</b> what you're hearing that the data can't show.</li>
+        <li><b>The outcome and the date</b> you need it by, plus the accounts to exclude.</li>
+        <li><b>Your plan</b> alongside the ads, so the touches line up.</li>
+      </ul>
+      <div class="callout pink"><b>Plan ahead.</b> A LinkedIn audience needs about a week to match before ads can run, and new intent keywords take a few days to collect signals. Get your brief to your ABM manager early. These are long prompts, so send one well-built prompt instead of five quick ones, and check five rows against the account page before you act on an answer.</div>
+    </div>
+
+    <div class="next">
+      <div>
+        <div class="t">New to the Sales dashboard?</div>
+        <div class="s">Start with the BD playbook: getting in, your Monday in four clicks, and your week in prompts.</div>
+      </div>
+      <a class="btn" href="../demandbase-sales-bd-playbook/index.html">Open the BD playbook</a>
+    </div>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('.prompt').forEach(function (p) {
+      var b = document.createElement('button');
+      b.className = 'copy'; b.type = 'button'; b.textContent = 'Copy';
+      b.addEventListener('click', function () {
+        var t = p.querySelector('.ptext').innerText;
+        navigator.clipboard.writeText(t).then(function () {
+          b.textContent = 'Copied';
+          setTimeout(function () { b.textContent = 'Copy'; }, 1500);
+        }).catch(function () {});
+      });
+      p.appendChild(b);
+    });
+  </script>
+</body>
+</html>
