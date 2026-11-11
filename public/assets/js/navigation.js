@@ -110,7 +110,7 @@
                     <a href="${bp}competitive-intel/index.html" class="tp-nav-link ${isCompetitiveIntel ? 'active' : ''}">Competitive Intel</a>
                     <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Cards</a>
                     <a href="${bp}global-dashboard/index.html" class="tp-nav-link ${isGlobalDashboard ? 'active' : ''}" title="Read the Global Dashboard and request reporting help">Global Dashboard</a>
-                    <a href="${bp}tracked-links/index.html" class="tp-nav-link ${isTrackedLinks ? 'active' : ''}" title="Build every campaign link in the UTM Generator">Tracked Links</a>
+                    <a href="${bp}tracked-links/index.html" class="tp-nav-link ${isTrackedLinks ? 'active' : ''}" title="How to build tracked campaign links">UTM Generator</a>
                     <a href="${bp}training/index.html" class="tp-nav-link ${isTraining ? 'active' : ''}">Training</a>
 
                     <div class="tp-nav-group ${isReferenceGroup ? 'active' : ''}">
