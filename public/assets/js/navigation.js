@@ -5,7 +5,7 @@
     'use strict';
 
     const currentPath = window.location.pathname;
-    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides') && !currentPath.includes('tp-services') && !currentPath.includes('campaign-playbook') && !currentPath.includes('best-practices') && !currentPath.includes('start-here') && !currentPath.includes('guides/') && !currentPath.includes('lighthouse') && !currentPath.includes('account-planner') && !currentPath.includes('training') && !currentPath.includes('global-dashboard'));
+    const isRoot = currentPath === '/' || (currentPath.includes('index.html') && !currentPath.includes('personas') && !currentPath.includes('command-center') && !currentPath.includes('platform-guide') && !currentPath.includes('advanced-reporting') && !currentPath.includes('prompts-lab') && !currentPath.includes('roi-calculator') && !currentPath.includes('competitive-intel') && !currentPath.includes('orchestration') && !currentPath.includes('campaign-monitoring') && !currentPath.includes('guides') && !currentPath.includes('tp-services') && !currentPath.includes('campaign-playbook') && !currentPath.includes('best-practices') && !currentPath.includes('start-here') && !currentPath.includes('guides/') && !currentPath.includes('lighthouse') && !currentPath.includes('account-planner') && !currentPath.includes('training') && !currentPath.includes('global-dashboard') && !currentPath.includes('tracked-links'));
     const isPersonas = currentPath.includes('personas');
     const isCompetitiveIntel = currentPath.includes('competitive-intel') || currentPath.includes('command-center');
     const isOrchestration = currentPath.includes('orchestration');
@@ -21,6 +21,7 @@
     const isBlueprint = currentPath.includes('blueprint');
     const isCampaignMonitoring = currentPath.includes('campaign-monitoring');
     const isGlobalDashboard = currentPath.includes('global-dashboard');
+    const isTrackedLinks = currentPath.includes('tracked-links');
     const isAdvancedReporting = currentPath.includes('advanced-reporting');
     const isPromptsLab = currentPath.includes('prompts-lab');
     const isROICalculator = currentPath.includes('roi-calculator');
@@ -45,7 +46,7 @@
 
     function getBasePath() {
         if (isGuideGroup) return '../../';
-        if (isGlobalDashboard || isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides || isBuyingGroups || isWorkspacesRef || isTPServices || isCampaignPlaybook || isBestPractices || isStartHere || isLighthouse || isPlanner) return '../';
+        if (isGlobalDashboard || isTrackedLinks || isCompetitiveIntel || isPlatformGuide || isDemandbaseSales || isDemandbaseMarketing || isAdvancedReporting || isPromptsLab || isROICalculator || isOrchestration || isCampaignMonitoring || isGuides || isBuyingGroups || isWorkspacesRef || isTPServices || isCampaignPlaybook || isBestPractices || isStartHere || isLighthouse || isPlanner) return '../';
         if (isPersonas && !currentPath.endsWith('personas/index.html') && currentPath.split('/').filter(Boolean).length > 2) return '../../';
         if (isPersonas) return '../';
         return './';
@@ -109,6 +110,7 @@
                     <a href="${bp}competitive-intel/index.html" class="tp-nav-link ${isCompetitiveIntel ? 'active' : ''}">Competitive Intel</a>
                     <a href="${bp}personas/index.html" class="tp-nav-link ${isPersonas ? 'active' : ''}">Persona Cards</a>
                     <a href="${bp}global-dashboard/index.html" class="tp-nav-link ${isGlobalDashboard ? 'active' : ''}" title="Read the Global Dashboard and request reporting help">Global Dashboard</a>
+                    <a href="${bp}tracked-links/index.html" class="tp-nav-link ${isTrackedLinks ? 'active' : ''}" title="Build every campaign link in the UTM Generator">Tracked Links</a>
                     <a href="${bp}training/index.html" class="tp-nav-link ${isTraining ? 'active' : ''}">Training</a>
 
                     <div class="tp-nav-group ${isReferenceGroup ? 'active' : ''}">
